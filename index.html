@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PixSort — Your Camera Roll, Finally Organized</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400;1,9..40,700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #0F0F0F;
+      --bg2:      #1A1A1A;
+      --bg3:      #141414;
+      --gold:     #C4A060;
+      --golddark: #A8864A;
+      --white:    #FFFFFF;
+      --grey:     #999999;
+      --grey2:    #555555;
+      --border:   #2A2A2A;
+      --app-bg:   #F0EBE0;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      font-family: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── Nav ─────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 64px;
+      background: rgba(15,15,15,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: background .3s;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo img { width: 28px; height: 28px; border-radius: 7px; }
+    .nav-logo span { font-size: 16px; font-weight: 800; color: var(--white); letter-spacing: -0.02em; }
+    .nav-cta {
+      background: var(--gold); color: #0F0F0F; border: none;
+      font-family: inherit; font-size: 13px; font-weight: 800;
+      padding: 10px 22px; border-radius: 999px; cursor: pointer;
+      transition: background .15s, transform .1s; text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .nav-cta:hover { background: var(--golddark); transform: translateY(-1px); }
+
+    /* ── Hero ────────────────────────────────────────── */
+    .hero {
+      min-height: 100svh;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; text-align: center;
+      padding: 100px 24px 80px 2px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(196,160,96,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid rgba(196,160,96,0.3);
+      color: var(--gold); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      border-radius: 999px; padding: 6px 16px; margin-bottom: 36px;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(52px, 9vw, 120px);
+      font-weight: 400; line-height: 1.0; letter-spacing: -0.03em;
+      color: var(--white); max-width: 900px; margin-bottom: 24px;
+      text-wrap: balance;
+    }
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 20px); color: var(--grey);
+      line-height: 1.6; max-width: 480px; margin-bottom: 48px;
+      text-wrap: pretty;
+    }
+    .cta-block { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; max-width: 420px; }
+    .input-row {
+      display: flex; width: 100%;
+      background: #1A1A1A; border: 1.5px solid var(--border);
+      border-radius: 999px; overflow: hidden;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .input-row:focus-within {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(196,160,96,0.15);
+    }
+    .input-row input {
+      flex: 1; border: none; outline: none; background: transparent;
+      font-family: inherit; font-size: 16px; color: var(--white);
+      padding: 14px 20px;
+    }
+    .input-row input::placeholder { color: var(--grey2); }
+    .input-row button {
+      background: var(--gold); color: #0F0F0F; border: none; cursor: pointer;
+      font-family: inherit; font-size: 13px; font-weight: 800;
+      padding: 0 20px; white-space: nowrap;
+      border-radius: 999px; margin: 4px;
+      transition: background .15s;
+    }
+    .input-row button:hover { background: var(--golddark); }
+    .microcopy {
+      font-size: 12px; color: var(--grey2);
+      display: flex; gap: 0; align-items: center;
+    }
+    .microcopy span { display: flex; align-items: center; gap: 8px; }
+    .microcopy span + span::before { content: '·'; margin: 0 10px; color: var(--grey2); }
+    .success-msg {
+      display: none;
+      background: rgba(139,155,94,0.1); border: 1px solid rgba(139,155,94,0.3);
+      color: #A8C070; font-size: 15px; font-weight: 600;
+      border-radius: 16px; padding: 16px 24px; width: 100%;
+      text-align: center; line-height: 1.5;
+    }
+    .hero-phone {
+      margin-top: 72px; position: relative;
+      transform: perspective(1000px) rotateX(4deg) rotateY(-3deg);
+      filter: drop-shadow(0 60px 120px rgba(0,0,0,0.8)) drop-shadow(0 0 60px rgba(196,160,96,0.08));
+      transition: transform .4s ease;
+    }
+    .hero-phone:hover { transform: perspective(1000px) rotateX(2deg) rotateY(0deg); }
+
+    /* ── Statement ───────────────────────────────────── */
+    .statement {
+      padding: 120px 24px;
+      text-align: center; border-top: 1px solid var(--border);
+    }
+    .statement p {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(40px, 7vw, 96px);
+      font-weight: 400; letter-spacing: -0.03em; line-height: 1.1;
+      color: var(--white); max-width: 900px; margin: 0 auto;
+      text-wrap: balance;
+    }
+    .statement p em { font-style: italic; color: var(--gold); }
+
+    /* ── Feature rows ─────────────────────────────────── */
+    .features { padding: 0 40px 120px; max-width: 1200px; margin: 0 auto; }
+    .feature-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+      padding: 120px 0;
+      border-top: 1px solid var(--border);
+    }
+    .feature-row:first-child { border-top: none; }
+    .feature-kw {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(56px, 8vw, 100px);
+      font-weight: 400; font-style: italic;
+      color: var(--gold); letter-spacing: -0.04em;
+      line-height: 1; margin-bottom: 28px;
+    }
+    .feature-caption {
+      font-size: clamp(16px, 1.8vw, 20px); color: var(--grey);
+      line-height: 1.65; max-width: 400px;
+      text-wrap: pretty;
+    }
+    .feature-phone-wrap {
+      display: flex; justify-content: center; align-items: center;
+    }
+    .feature-phone-wrap .phone-tilt-l {
+      transform: perspective(800px) rotateY(8deg) rotateX(2deg);
+      filter: drop-shadow(0 40px 80px rgba(0,0,0,0.7)) drop-shadow(0 0 40px rgba(196,160,96,0.06));
+    }
+    .feature-phone-wrap .phone-tilt-r {
+      transform: perspective(800px) rotateY(-8deg) rotateX(2deg);
+      filter: drop-shadow(0 40px 80px rgba(0,0,0,0.7)) drop-shadow(0 0 40px rgba(196,160,96,0.06));
+    }
+
+    /* ── Social proof ─────────────────────────────────── */
+    .social { background: var(--bg2); padding: 120px 40px; }
+    .social-inner { max-width: 1100px; margin: 0 auto; }
+    .social-label {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 64px;
+      text-align: center;
+    }
+    .quotes-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .quote-card {
+      background: #111; padding: 48px 36px;
+      display: flex; flex-direction: column; gap: 32px;
+    }
+    .quote-text {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(18px, 1.8vw, 22px);
+      font-style: italic; color: var(--white);
+      line-height: 1.6; flex: 1;
+    }
+    .quote-attr { font-size: 13px; font-weight: 700; color: var(--gold); letter-spacing: 0.02em; }
+
+    /* ── FAQ ──────────────────────────────────────────── */
+    .faq { padding: 120px 40px; max-width: 800px; margin: 0 auto; }
+    .faq-label {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 48px;
+    }
+    .faq-item { border-top: 1px solid var(--border); }
+    .faq-item:last-child { border-bottom: 1px solid var(--border); }
+    .faq-q {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 0; cursor: pointer; gap: 16px;
+      font-size: 18px; font-weight: 600; color: var(--white);
+      transition: color .15s;
+      list-style: none; user-select: none;
+    }
+    .faq-q:hover { color: var(--gold); }
+    .faq-icon {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: border-color .2s, transform .3s;
+    }
+    .faq-icon svg { transition: transform .3s; }
+    .faq-item.open .faq-icon { border-color: var(--gold); }
+    .faq-item.open .faq-icon svg { transform: rotate(45deg); }
+    .faq-a {
+      font-size: 16px; color: var(--grey); line-height: 1.7;
+      max-height: 0; overflow: hidden;
+      transition: max-height .35s ease, padding .35s ease;
+    }
+    .faq-item.open .faq-a { max-height: 200px; padding-bottom: 24px; }
+
+    /* ── Final CTA ────────────────────────────────────── */
+    .final-cta {
+      background: var(--bg3); border-top: 1px solid var(--border);
+      padding: 140px 24px; text-align: center;
+    }
+    .final-cta h2 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(48px, 7vw, 100px);
+      font-weight: 400; letter-spacing: -0.03em; line-height: 1;
+      color: var(--white); margin-bottom: 20px; text-wrap: balance;
+    }
+    .final-cta p { font-size: 18px; color: var(--grey); margin-bottom: 48px; }
+    .final-cta .cta-block { margin: 0 auto; }
+
+    /* ── Footer ───────────────────────────────────────── */
+    footer {
+      background: var(--bg); border-top: 1px solid var(--border);
+      padding: 32px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-logo { display: flex; align-items: center; gap: 10px; }
+    .footer-logo img { width: 22px; height: 22px; border-radius: 6px; opacity: 0.5; }
+    .footer-logo span { font-size: 14px; font-weight: 800; color: rgba(255,255,255,0.4); }
+    footer p { font-size: 13px; color: var(--grey2); }
+
+    /* ── Responsive ───────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .features { padding: 0 20px 80px; }
+      .feature-row { grid-template-columns: 1fr; gap: 40px; padding: 80px 0; }
+      .feature-phone-wrap .phone-tilt-l,
+      .feature-phone-wrap .phone-tilt-r { transform: none; filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7)); }
+      .quotes-grid { grid-template-columns: 1fr; gap: 2px; }
+      .social { padding: 80px 20px; }
+      .faq { padding: 80px 20px; }
+      .final-cta { padding: 100px 20px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+    @media (max-width: 500px) {
+      .input-row { flex-direction: column; border-radius: 20px; padding: 4px; gap: 4px; }
+      .input-row button { border-radius: 16px; padding: 14px; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#top">
+    <img src="assets/pixsort-logo.jpeg" alt="PixSort">
+    <span>PixSort</span>
+  </a>
+  <a class="nav-cta" href="#hero-cta">Download Now</a>
+</nav>
+
+<section class="hero" id="top">
+  <div class="hero-eyebrow">✦ AI-Powered Camera Organization</div>
+  <h1>Your camera roll.<br><em>Finally organized.</em></h1>
+  <p class="hero-sub">Built for creators who shoot everything and can never find anything.</p>
+  <div class="cta-block" id="hero-cta">
+    <div class="input-row" id="hero-input-row" style="background-color: rgb(240,237,237)">
+      <input type="tel" id="hero-phone" placeholder="Your phone number" inputmode="tel" autocomplete="tel">
+      <button onclick="handleSubmit('hero')">Download Now — It's Free</button>
+    </div>
+    <div class="microcopy">
+      <span>iOS only</span>
+      <span>Free to download</span>
+      <span>No spam</span>
+    </div>
+    <div class="success-msg" id="hero-success">
+      You're in. We'll text you the moment PixSort is ready to download.
+    </div>
+  </div>
+  <div class="hero-phone" id="hero-phone-wrap"></div>
+</section>
+
+<div class="statement">
+  <p>Stop scrolling<br>through <em>your clips.</em></p>
+</div>
+
+<div class="features">
+  <div class="feature-row">
+    <div>
+      <div class="feature-kw">Find it.</div>
+      <p class="feature-caption">Search your entire camera roll by keyword. Gym. Bali. Sunset. PixSort finds it instantly.</p>
+    </div>
+    <div class="feature-phone-wrap">
+      <div class="phone-tilt-r" id="phone-search"></div>
+    </div>
+  </div>
+  <div class="feature-row">
+    <div class="feature-phone-wrap" style="order:-1">
+      <div class="phone-tilt-l" id="phone-sort"></div>
+    </div>
+    <div>
+      <div class="feature-kw">Sort it.</div>
+      <p class="feature-caption">AI builds your albums automatically. You decide the categories — PixSort fills them.</p>
+    </div>
+  </div>
+  <div class="feature-row">
+    <div>
+      <div class="feature-kw">Send it.</div>
+      <p class="feature-caption">Push any album straight to your camera roll. Ready for CapCut, InShot, or your editor.</p>
+    </div>
+    <div class="feature-phone-wrap">
+      <div class="phone-tilt-r" id="phone-send"></div>
+    </div>
+  </div>
+</div>
+
+<section class="social">
+  <div class="social-inner">
+    <div class="social-label">What creators say</div>
+    <div class="quotes-grid">
+      <div class="quote-card">
+        <p class="quote-text">"If you work with an editor, you can't just give them your whole camera roll. You have to send them something."</p>
+        <div class="quote-attr">— Carlos, Creator</div>
+      </div>
+      <div class="quote-card">
+        <p class="quote-text">"Content that used to take an hour, two hours, three hours — now you're making it in 15 minutes."</p>
+        <div class="quote-attr">— Jaylin, 42K Instagram</div>
+      </div>
+      <div class="quote-card">
+        <p class="quote-text">"When I hire another editor again, I would use this specifically to have them go through my B-roll."</p>
+        <div class="quote-attr">— Antoine, $100K+ in brand deals</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="faq-label">Common questions</div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>What is PixSort?</span>
+      <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+    </div>
+    <div class="faq-a">PixSort is an iPhone app that uses AI to automatically organize your camera roll into smart albums — by subject, date, location, and more. No manual sorting required.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>Does it work on videos too?</span>
+      <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+    </div>
+    <div class="faq-a">Yes. PixSort organizes both photos and videos. It's built specifically for creators who shoot a lot of B-roll and need to find specific clips fast.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>Will it delete my photos?</span>
+      <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+    </div>
+    <div class="faq-a">Never. PixSort only organizes — it never deletes anything without your explicit approval. The Clean Up feature shows you what to delete, and you decide.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>When is it available to download?</span>
+      <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+    </div>
+    <div class="faq-a">PixSort is launching soon on the App Store. Enter your phone number above and we'll text you the moment it's available — you'll be first in line.</div>
+  </div>
+</section>
+
+<section class="final-cta">
+  <h2>Be first<br>to download.</h2>
+  <p>We'll text you the moment it's live.</p>
+  <div class="cta-block">
+    <div class="input-row" id="final-input-row">
+      <input type="tel" id="final-phone" placeholder="Your phone number" inputmode="tel" autocomplete="tel">
+      <button onclick="handleSubmit('final')">Download Now — It's Free</button>
+    </div>
+    <div class="microcopy">
+      <span>iOS only</span>
+      <span>Free to download</span>
+      <span>No spam</span>
+    </div>
+    <div class="success-msg" id="final-success">
+      You're in. We'll text you the moment PixSort is ready to download.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">
+    <img src="assets/pixsort-logo.jpeg" alt="PixSort">
+    <span>PixSort</span>
+  </div>
+  <p>© 2026 PixSort</p>
+</footer>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel">
+const C = {
+  bg:'#F0EBE0', card:'#E8E2D6', inner:'#EDE7DB', gold:'#C4A060',
+  goldDk:'#A8864A', olive:'#9B8B3A', prog:'#8B9B5E', t1:'#2D2A22',
+  t2:'#8A7E6E', t3:'#B0A898', badge:'#D4704A', border:'#DDD7CB',
+  iconBg:'#E8C87A', pill:'#E4DDD1',
+};
+const F = "'DM Sans','Helvetica Neue',Helvetica,Arial,sans-serif";
+const PW = 390; const PH = 844;
+const HERO_DW = 280;
+const FEAT_DW = 260;
+
+const StatusBar = () => (
+  <div style={{height:52,display:'flex',alignItems:'flex-end',justifyContent:'space-between',padding:'0 28px 10px',fontFamily:F}}>
+    <span style={{fontSize:16,fontWeight:700,color:C.t1,letterSpacing:'-0.02em'}}>9:41</span>
+    <div style={{display:'flex',gap:7,alignItems:'center'}}>
+      <svg width="18" height="13" viewBox="0 0 18 13" fill={C.t1}>
+        <rect x="0" y="6" width="3" height="7" rx="0.6"/>
+        <rect x="5" y="4" width="3" height="9" rx="0.6"/>
+        <rect x="10" y="2" width="3" height="11" rx="0.6"/>
+        <rect x="15" y="0" width="3" height="13" rx="0.6" opacity="0.28"/>
+      </svg>
+      <svg width="17" height="13" viewBox="0 0 17 13" fill="none" stroke={C.t1} strokeWidth="1.6" strokeLinecap="round">
+        <path d="M1 5.5c4-5 11-5 15 0M3.5 8.5c2.5-3 8-3 10 0M6.5 11.5c1.5-1.8 3.5-1.8 4 0"/>
+      </svg>
+      <div style={{display:'flex',alignItems:'center',gap:1.5}}>
+        <div style={{width:24,height:12,border:`1.5px solid ${C.t1}`,borderRadius:3.5,padding:'1.5px',display:'flex'}}>
+          <div style={{flex:1,background:C.t1,borderRadius:1.5}}/>
+        </div>
+        <div style={{width:2.5,height:6,background:C.t1,borderRadius:1}}/>
+      </div>
+    </div>
+  </div>
+);
+
+const TabBar = ({ active='home' }) => {
+  const tabs = [
+    {id:'home',label:'Albums',icon:(a)=>(<svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke={a?C.gold:C.t2} strokeWidth="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>)},
+    {id:'search',label:'Search',icon:(a)=>(<svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke={a?C.gold:C.t2} strokeWidth="1.8"><circle cx="11" cy="11" r="7"/><line x1="17" y1="17" x2="21.5" y2="21.5"/></svg>)},
+    {id:'cleanup',label:'Clean Up',icon:(a)=>(<svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke={a?C.gold:C.t2} strokeWidth="1.8"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" strokeLinecap="round" strokeLinejoin="round"/></svg>)},
+    {id:'settings',label:'Settings',icon:(a)=>(<svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke={a?C.gold:C.t2} strokeWidth="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>)},
+  ];
+  return (
+    <div style={{height:88,background:'rgba(240,235,224,0.97)',backdropFilter:'blur(12px)',borderTop:`1px solid ${C.border}`,display:'flex',padding:'10px 0 26px',fontFamily:F}}>
+      {tabs.map(tab=>(
+        <div key={tab.id} style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',gap:4}}>
+          {tab.icon(active===tab.id)}
+          <span style={{fontSize:10.5,fontWeight:700,color:active===tab.id?C.gold:C.t2}}>{tab.label}</span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const Phone = ({ children, active='home', dw=FEAT_DW }) => {
+  const dh = Math.round(dw * PH / PW);
+  const sc = dw / PW;
+  return (
+    <div style={{width:dw+16,height:dh+16,borderRadius:Math.round(56*sc)+8,padding:8,background:'linear-gradient(155deg,#2A2A2A 0%,#141414 100%)',boxShadow:'0 40px 100px rgba(0,0,0,0.9),0 0 0 1px rgba(255,255,255,0.07),inset 0 1px 0 rgba(255,255,255,0.05)',position:'relative',flexShrink:0}}>
+      <div style={{position:'absolute',left:-3.5,top:'19%',width:3.5,height:'5%',background:'#333',borderRadius:'2px 0 0 2px'}}/>
+      <div style={{position:'absolute',left:-3.5,top:'27%',width:3.5,height:'8.5%',background:'#333',borderRadius:'2px 0 0 2px'}}/>
+      <div style={{position:'absolute',left:-3.5,top:'38%',width:3.5,height:'8.5%',background:'#333',borderRadius:'2px 0 0 2px'}}/>
+      <div style={{position:'absolute',right:-3.5,top:'25%',width:3.5,height:'13%',background:'#333',borderRadius:'0 2px 2px 0'}}/>
+      <div style={{width:dw,height:dh,borderRadius:Math.round(56*sc),overflow:'hidden',background:C.bg,position:'relative',WebkitMaskImage:'-webkit-radial-gradient(white,black)'}}>
+        <div style={{position:'absolute',top:Math.round(52*sc*0.35),left:'50%',transform:'translateX(-50%)',width:Math.round(130*sc),height:Math.round(36*sc),background:'#111',borderRadius:999,zIndex:20,pointerEvents:'none'}}/>
+        <div style={{position:'absolute',top:0,left:0,transform:`scale(${sc})`,transformOrigin:'top left',width:PW,height:PH,display:'flex',flexDirection:'column'}}>
+          <StatusBar/>
+          <div style={{flex:1,overflow:'hidden'}}>{children}</div>
+          <TabBar active={active}/>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const AlbumRow = ({ icon, name, count, imgA, imgB, extra }) => (
+  <div style={{display:'flex',alignItems:'center',gap:14,background:C.card,borderRadius:16,padding:'13px 16px',marginBottom:9,boxShadow:'0 1px 4px rgba(45,42,34,0.05)'}}>
+    <div style={{width:46,height:46,background:C.iconBg,borderRadius:13,display:'flex',alignItems:'center',justifyContent:'center',fontSize:22,flexShrink:0}}>{icon}</div>
+    <div style={{flex:1}}>
+      <div style={{fontSize:16,fontWeight:700,color:C.t1}}>{name}</div>
+      <div style={{fontSize:13,color:C.t2,marginTop:2}}>{count} photos</div>
+    </div>
+    <div style={{display:'flex',gap:3}}>
+      <div style={{width:42,height:42,background:'#C8C0B0',borderRadius:7,overflow:'hidden'}}>{imgA&&<img src={imgA} style={{width:'100%',height:'100%',objectFit:'cover'}}/>}</div>
+      <div style={{width:42,height:42,background:'#D0C8B8',borderRadius:7,overflow:'hidden'}}>{imgB&&<img src={imgB} style={{width:'100%',height:'100%',objectFit:'cover'}}/>}</div>
+      <div style={{width:42,height:42,background:'#DDD7CB',borderRadius:7,overflow:'hidden',display:'flex',alignItems:'center',justifyContent:'center',fontSize:11,fontWeight:700,color:C.t2}}>{extra?<img src={extra} style={{width:'100%',height:'100%',objectFit:'cover'}}/>:`+${count-2}`}</div>
+    </div>
+  </div>
+);
+
+const Screen1 = () => (
+  <div style={{padding:'8px 20px 20px',fontFamily:F}}>
+    <div style={{fontSize:30,fontWeight:800,color:C.t1,marginBottom:18,letterSpacing:'-0.02em'}}>Pixsort</div>
+    <div style={{background:C.card,borderRadius:26,padding:22,marginBottom:20,boxShadow:'0 1px 3px rgba(45,42,34,0.06)'}}>
+      <div style={{display:'flex',alignItems:'flex-end',gap:10}}>
+        <div style={{fontSize:60,fontWeight:800,color:C.olive,lineHeight:1,letterSpacing:'-0.03em'}}>150</div>
+        <div style={{fontSize:14,color:C.t2,lineHeight:1.35,paddingBottom:7}}>photos<br/>organized</div>
+      </div>
+      <div style={{display:'inline-flex',alignItems:'center',gap:7,background:C.pill,borderRadius:999,padding:'6px 14px',marginTop:11}}>
+        <div style={{width:13,height:13,border:`2px solid ${C.t3}`,borderTopColor:C.prog,borderRadius:'50%',animation:'spin 0.9s linear infinite'}}/>
+        <span style={{fontSize:13,fontWeight:600,color:C.t2}}>Sorting now</span>
+      </div>
+      <div style={{background:C.inner,borderRadius:16,padding:'13px 15px',marginTop:13,display:'flex',gap:13,alignItems:'flex-start'}}>
+        <div style={{fontSize:28,lineHeight:1,marginTop:2}}>🌸</div>
+        <div>
+          <div style={{fontSize:13,fontWeight:700,color:C.gold}}>Uploading photos</div>
+          <div style={{fontSize:12,color:C.t1,marginTop:3,lineHeight:1.4}}>Working through your library.</div>
+        </div>
+      </div>
+      <div style={{background:C.border,borderRadius:999,height:7,marginTop:15,overflow:'hidden'}}>
+        <div style={{background:C.prog,width:'30%',height:'100%',borderRadius:999}}/>
+      </div>
+      <div style={{display:'flex',justifyContent:'space-between',marginTop:6}}>
+        <span style={{fontSize:12,color:C.t2}}>30% sorted</span>
+        <span style={{fontSize:12,color:C.t2}}>500 total</span>
+      </div>
+    </div>
+    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:13}}>
+      <span style={{fontSize:20,fontWeight:800,color:C.t1}}>Your Albums</span>
+      <span style={{fontSize:15,fontWeight:600,color:C.gold}}>Edit</span>
+    </div>
+    <AlbumRow icon="📱" name="Screenshots" count={35} imgA="assets/crop_ss_r1c1.jpg" imgB="assets/crop_ss_r1c2.jpg" extra="assets/crop_ss_r2c1.jpg"/>
+    <AlbumRow icon="🍔" name="Food" count={30} imgA="assets/crop_food_r1c1.jpg" imgB="assets/crop_food_r1c2.jpg" extra="assets/crop_food_r2c1.jpg"/>
+    <AlbumRow icon="✈️" name="Travel" count={124} imgA="assets/crop_travel_r1c2.jpg" imgB="assets/crop_travel_r2c1.jpg" extra="assets/crop_travel_r4c2.jpg"/>
+    <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+  </div>
+);
+
+const Screen2 = () => {
+  const gymThumbs = [
+    {src:'assets/crop_gym_r1c1.jpg',v:true},{src:'assets/crop_gym_r1c2.jpg',v:false},{src:'assets/crop_gym_r1c3.jpg',v:false},
+    {src:'assets/crop_gym_r2c1.jpg',v:true},{src:'assets/crop_gym_r2c2.jpg',v:false},{src:'assets/crop_gym_r2c3.jpg',v:false},
+    {src:'assets/crop_gym_r3c1.jpg',v:false},{src:'assets/crop_gym_r3c2.jpg',v:true},{src:'assets/crop_gym_r3c3.jpg',v:false},
+  ];
+  return (
+    <div style={{padding:'8px 20px 16px',fontFamily:F}}>
+      <div style={{fontSize:30,fontWeight:800,color:C.t1,marginBottom:15,letterSpacing:'-0.02em'}}>Search</div>
+      <div style={{display:'flex',alignItems:'center',gap:10,background:C.card,borderRadius:16,padding:'13px 18px',marginBottom:18,boxShadow:`0 0 0 2.5px ${C.gold},0 2px 8px rgba(196,160,96,0.2)`}}>
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke={C.gold} strokeWidth="2.2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+        <span style={{fontSize:16,color:C.t1,flex:1,fontWeight:500}}>gym</span>
+        <div style={{background:C.t3,borderRadius:999,width:20,height:20,display:'flex',alignItems:'center',justifyContent:'center'}}>
+          <svg width="10" height="10" viewBox="0 0 10 10" stroke="white" strokeWidth="2"><line x1="2" y1="2" x2="8" y2="8"/><line x1="8" y1="2" x2="2" y2="8"/></svg>
+        </div>
+      </div>
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}}>
+        <span style={{fontSize:12,fontWeight:700,letterSpacing:'0.06em',textTransform:'uppercase',color:C.t2}}>9 results</span>
+        <span style={{fontSize:13,fontWeight:600,color:C.gold}}>Sort ↓</span>
+      </div>
+      <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:4}}>
+        {gymThumbs.map((t,i)=>(
+          <div key={i} style={{aspectRatio:'1',borderRadius:8,position:'relative',overflow:'hidden'}}>
+            <img src={t.src} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
+            {t.v&&<div style={{position:'absolute',bottom:5,left:5,background:'rgba(45,42,34,0.55)',borderRadius:4,width:18,height:18,display:'flex',alignItems:'center',justifyContent:'center'}}><svg width="8" height="8" viewBox="0 0 8 8" fill="white"><polygon points="2,1 7,4 2,7"/></svg></div>}
+          </div>
+        ))}
+      </div>
+      <div style={{display:'flex',gap:8,marginTop:18,flexWrap:'wrap'}}>
+        {['gym','workout','fitness'].map((k,i)=>(
+          <div key={k} style={{background:i===0?C.gold:C.card,color:i===0?'#fff':C.t2,borderRadius:999,padding:'6px 14px',fontSize:13,fontWeight:700}}>{k}</div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const Screen4 = () => (
+  <div style={{padding:'8px 20px 16px',fontFamily:F}}>
+    <div style={{fontSize:30,fontWeight:800,color:C.t1,marginBottom:15,letterSpacing:'-0.02em'}}>Search</div>
+    <div style={{display:'flex',alignItems:'center',gap:10,background:C.card,borderRadius:16,padding:'13px 18px',marginBottom:18,boxShadow:`0 0 0 2.5px ${C.gold}`}}>
+      <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke={C.gold} strokeWidth="2.2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+      <span style={{fontSize:17,color:C.t1,fontWeight:500,flex:1}}>beach sunset</span>
+      <div style={{background:C.t3,borderRadius:999,width:21,height:21,display:'flex',alignItems:'center',justifyContent:'center'}}>
+        <svg width="10" height="10" viewBox="0 0 10 10" stroke="white" strokeWidth="2"><line x1="2" y1="2" x2="8" y2="8"/><line x1="8" y1="2" x2="2" y2="8"/></svg>
+      </div>
+    </div>
+    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:14}}>
+      <span style={{fontSize:12,fontWeight:700,letterSpacing:'0.06em',textTransform:'uppercase',color:C.t2}}>3 results</span>
+      <span style={{fontSize:13,fontWeight:600,color:C.gold}}>Sort ↓</span>
+    </div>
+    <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:4}}>
+      {['assets/crop_sunset_r1c1.jpg','assets/crop_sunset_r1c2.jpg','assets/crop_sunset_r2c1.jpg'].map((src,i)=>(
+        <div key={i} style={{aspectRatio:'1',borderRadius:8,position:'relative',overflow:'hidden'}}>
+          <img src={src} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
+          <div style={{position:'absolute',top:6,right:6,width:18,height:18,background:C.gold,borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center'}}>
+            <svg width="9" height="9" viewBox="0 0 9 9" fill="none" stroke="white" strokeWidth="2"><polyline points="1.5,4.5 3.5,7 7.5,2"/></svg>
+          </div>
+          {(i===0||i===2)&&<div style={{position:'absolute',bottom:5,left:5,background:'rgba(45,42,34,0.55)',borderRadius:4,width:18,height:18,display:'flex',alignItems:'center',justifyContent:'center'}}><svg width="8" height="8" viewBox="0 0 8 8" fill="white"><polygon points="2,1 7,4 2,7"/></svg></div>}
+        </div>
+      ))}
+    </div>
+    <div style={{marginTop:18,background:C.inner,borderRadius:16,padding:'14px 16px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.gold}}>Save as smart album</div>
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke={C.gold} strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+  </div>
+);
+
+const Screen5 = () => {
+  const pixTiles = [
+    'assets/crop_travel5_r1c2.jpg','assets/crop_travel5_r1c3.jpg','assets/crop_travel5_r2c1.jpg',
+    'assets/crop_travel5_r2c2.jpg','assets/crop_travel5_r4c1.jpg','assets/crop_travel5_r4c2.jpg',
+    'assets/crop_travel5_r1c2.jpg','assets/crop_travel5_r2c1.jpg','assets/crop_travel5_r4c1.jpg',
+  ];
+  return (
+    <div style={{padding:'12px 16px 8px',fontFamily:F,height:'100%',display:'flex',flexDirection:'column',gap:12}}>
+      <div style={{background:C.card,borderRadius:20,overflow:'hidden',boxShadow:'0 2px 12px rgba(45,42,34,0.1)'}}>
+        <div style={{padding:'12px 14px 10px',display:'flex',alignItems:'center',gap:10,borderBottom:`1px solid ${C.border}`}}>
+          <img src="assets/pixsort-logo.jpeg" alt="" style={{width:26,height:26,borderRadius:7}}/>
+          <div style={{flex:1}}>
+            <div style={{fontSize:14,fontWeight:800,color:C.t1}}>Travel</div>
+            <div style={{fontSize:11,color:C.t2}}>60 photos · sorted</div>
+          </div>
+          <div style={{background:'rgba(196,160,96,0.15)',borderRadius:8,padding:'3px 8px'}}>
+            <span style={{fontSize:10,fontWeight:800,color:C.gold}}>✦ Ready</span>
+          </div>
+        </div>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:2,padding:'2px'}}>
+          {pixTiles.map((src,i)=>(
+            <div key={i} style={{aspectRatio:'1',overflow:'hidden'}}>
+              <img src={src} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div style={{background:C.t1,borderRadius:18,padding:'16px',textAlign:'center',boxShadow:'0 4px 20px rgba(45,42,34,0.25)'}}>
+        <span style={{fontSize:15,fontWeight:800,color:'#F0EBE0',letterSpacing:'-0.01em'}}>Send to camera roll →</span>
+      </div>
+      <div style={{background:'#FFFFFF',borderRadius:18,padding:'12px',display:'flex',alignItems:'center',gap:10,boxShadow:'0 2px 12px rgba(0,0,0,0.08)'}}>
+        <div style={{width:48,height:48,borderRadius:12,overflow:'hidden',display:'grid',gridTemplateColumns:'1fr 1fr',gap:1}}>
+          <img src="assets/crop_travel5_r1c2.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
+          <img src="assets/crop_travel5_r2c1.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
+        </div>
+        <div style={{flex:1}}>
+          <div style={{fontSize:13,fontWeight:700,color:'#1C1C1E'}}>Added to Photos</div>
+          <div style={{fontSize:11,color:'#8A8A8E',marginTop:2}}>60 items · Travel</div>
+        </div>
+        <div style={{width:28,height:28,background:'#F0F0F0',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center'}}>
+          <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="#34C759" strokeWidth="3"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('hero-phone-wrap')).render(<Phone dw={HERO_DW} active="home"><Screen1/></Phone>);
+ReactDOM.createRoot(document.getElementById('phone-search')).render(<Phone dw={FEAT_DW} active="search"><Screen2/></Phone>);
+ReactDOM.createRoot(document.getElementById('phone-sort')).render(<Phone dw={FEAT_DW} active="search"><Screen4/></Phone>);
+ReactDOM.createRoot(document.getElementById('phone-send')).render(<Phone dw={FEAT_DW} active="home"><Screen5/></Phone>);
+</script>
+
+<script>
+function handleSubmit(prefix) {
+  const input = document.getElementById(prefix + '-phone');
+  const row = document.getElementById(prefix + '-input-row');
+  const success = document.getElementById(prefix + '-success');
+  const val = (input ? input.value : '').trim();
+  if (!val) {
+    if (input) { input.style.boxShadow = '0 0 0 2px #D4704A inset'; input.focus(); }
+    setTimeout(() => { if(input) input.style.boxShadow = ''; }, 1500);
+    return;
+  }
+  if (row) row.style.display = 'none';
+  if (success) success.style.display = 'block';
+}
+document.querySelectorAll('input[type="tel"]').forEach(el => {
+  el.addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleSubmit(el.id.replace('-phone', ''));
+  });
+});
+function toggleFaq(el) {
+  const item = el.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>
