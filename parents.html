@@ -196,7 +196,9 @@
       font-style: italic; color: var(--dark);
       line-height: 1.6; flex: 1;
     }
-    .quote-attr { font-size: 13px; font-weight: 700; color: var(--coral); letter-spacing: 0.02em; }
+    .quote-attr { display: flex; align-items: center; gap: 12px; }
+    .quote-attr img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; flex-shrink: 0; opacity: 0.92; }
+    .quote-attr span { font-size: 13px; font-weight: 700; color: var(--coral); letter-spacing: 0.02em; }
 
     /* ── FAQ ──────────────────────────────────────────── */
     .faq { padding: 120px 40px; max-width: 800px; margin: 0 auto; }
@@ -355,19 +357,19 @@
     <div class="quotes-grid">
       <div class="quote-card">
         <p class="quote-text">"I was trying to find Jake's first soccer practice for his end-of-year video. I scrolled for an hour. PixSort found it in 10 seconds."</p>
-        <div class="quote-attr">— Sarah, mom of three</div>
+        <div class="quote-attr"><img src="assets/avatar-parents-1.jpg" alt="Sarah"><span>— Sarah, mom of three</span></div>
       </div>
       <div class="quote-card">
         <p class="quote-text">"My mom asked me for photos from Lily's first birthday. I had 800 photos from that month alone. PixSort just... found them."</p>
-        <div class="quote-attr">— Marcus, dad of two</div>
+        <div class="quote-attr"><img src="assets/avatar-parents-2.jpg" alt="Marcus"><span>— Marcus, dad of two</span></div>
       </div>
       <div class="quote-card">
         <p class="quote-text">"We made a 'Core Memories' album for my daughter's 5th birthday. I cried. I didn't think I'd ever be able to find all of that."</p>
-        <div class="quote-attr">— Jen, mom of one</div>
+        <div class="quote-attr"><img src="assets/avatar-parents-3.jpg" alt="Jen"><span>— Jen, mom of one</span></div>
       </div>
       <div class="quote-card">
         <p class="quote-text">"Before PixSort I had 40,000 photos and felt like I had none. Now I actually look at them."</p>
-        <div class="quote-attr">— Priya, mom of two</div>
+        <div class="quote-attr"><img src="assets/avatar-parents-4.jpg" alt="Priya"><span>— Priya, mom of two</span></div>
       </div>
     </div>
   </div>

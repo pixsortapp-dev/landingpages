@@ -195,7 +195,9 @@
       font-style: italic; color: var(--text);
       line-height: 1.6; flex: 1;
     }
-    .quote-attr { font-size: 13px; font-weight: 700; color: var(--gold); letter-spacing: 0.02em; }
+    .quote-attr { display: flex; align-items: center; gap: 12px; }
+    .quote-attr img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; flex-shrink: 0; opacity: 0.92; }
+    .quote-attr span { font-size: 13px; font-weight: 700; color: var(--gold); letter-spacing: 0.02em; }
 
     /* ── FAQ ──────────────────────────────────────────── */
     .faq { padding: 120px 40px; max-width: 800px; margin: 0 auto; }
@@ -354,19 +356,19 @@
     <div class="quotes-grid">
       <div class="quote-card">
         <p class="quote-text">"Every one of my friends has 40,000 photos they've never organized."</p>
-        <div class="quote-attr">— Emma, London</div>
+        <div class="quote-attr"><img src="assets/avatar-archivist-1.jpg" alt="Emma"><span>— Emma, London</span></div>
       </div>
       <div class="quote-card">
         <p class="quote-text">"My mom asked for photos from Dad's retirement party. I searched for 20 minutes and gave up. PixSort found everything in seconds."</p>
-        <div class="quote-attr">— Karen, mom of three</div>
+        <div class="quote-attr"><img src="assets/avatar-archivist-2.jpg" alt="Karen"><span>— Karen, mom of three</span></div>
       </div>
       <div class="quote-card">
         <p class="quote-text">"I've been meaning to organize our photos for six years. Every phone upgrade made it worse. PixSort finally fixed it."</p>
-        <div class="quote-attr">— Linda, grandmother of five</div>
+        <div class="quote-attr"><img src="assets/avatar-archivist-3.jpg" alt="Linda"><span>— Linda, grandmother of five</span></div>
       </div>
       <div class="quote-card">
         <p class="quote-text">"My daughter left for college and I wanted to make her a slideshow. I had 60,000 photos and no idea where anything was. PixSort changed everything."</p>
-        <div class="quote-attr">— Diane, empty nester</div>
+        <div class="quote-attr"><img src="assets/avatar-archivist-4.jpg" alt="Diane"><span>— Diane, empty nester</span></div>
       </div>
     </div>
   </div>

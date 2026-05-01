@@ -199,7 +199,9 @@
       font-style: italic; color: var(--white);
       line-height: 1.6; flex: 1;
     }
-    .quote-attr { font-size: 13px; font-weight: 700; color: var(--gold); letter-spacing: 0.02em; }
+    .quote-attr { display: flex; align-items: center; gap: 12px; }
+    .quote-attr img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; flex-shrink: 0; opacity: 0.92; }
+    .quote-attr span { font-size: 13px; font-weight: 700; color: var(--gold); letter-spacing: 0.02em; }
 
     /* ── FAQ ──────────────────────────────────────────── */
     .faq { padding: 120px 40px; max-width: 800px; margin: 0 auto; }
@@ -348,15 +350,15 @@
     <div class="quotes-grid">
       <div class="quote-card">
         <p class="quote-text">"If you work with an editor, you can't just give them your whole camera roll. You have to send them something."</p>
-        <div class="quote-attr">— Carlos, Creator</div>
+        <div class="quote-attr"><img src="assets/avatar-creators-1.jpg" alt="Carlos"><span>— Carlos, Creator</span></div>
       </div>
       <div class="quote-card">
         <p class="quote-text">"Content that used to take an hour, two hours, three hours — now you're making it in 15 minutes."</p>
-        <div class="quote-attr">— Jaylin, 42K Instagram</div>
+        <div class="quote-attr"><img src="assets/avatar-creators-2.jpg" alt="Jaylin"><span>— Jaylin, 42K Instagram</span></div>
       </div>
       <div class="quote-card">
         <p class="quote-text">"When I hire another editor again, I would use this specifically to have them go through my B-roll."</p>
-        <div class="quote-attr">— Antoine, $100K+ in brand deals</div>
+        <div class="quote-attr"><img src="assets/avatar-creators-3.jpg" alt="Antoine"><span>— Antoine, $100K+ in brand deals</span></div>
       </div>
     </div>
   </div>
