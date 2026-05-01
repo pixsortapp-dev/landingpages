@@ -677,23 +677,17 @@ ReactDOM.createRoot(document.getElementById('phone-send')).render(<Phone dw={FEA
 </script>
 
 <script>
-// ── Supabase config ── paste your values here after setup ──
-const SUPABASE_URL  = 'YOUR_SUPABASE_URL';
-const SUPABASE_ANON = 'YOUR_SUPABASE_ANON_KEY';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzc6k607rRZ2PlRKjGO7kjpuzGXLFiDiO7TjnXLmjBhkyZHhGELauQokFzLb2QNTq459A/exec';
 
 async function savePhone(phone) {
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+    await fetch(SCRIPT_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_ANON,
-        'Authorization': `Bearer ${SUPABASE_ANON}`,
-        'Prefer': 'return=minimal'
-      },
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ phone })
     });
-    return res.ok || res.status === 201;
+    return true;
   } catch (e) {
     console.error('Save failed:', e);
     return false;
