@@ -421,6 +421,7 @@
   <p>© 2026 PixSort</p>
 </footer>
 
+<script src="https://tally.so/widgets/embed.js" async></script>
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
@@ -676,24 +677,54 @@ ReactDOM.createRoot(document.getElementById('phone-send')).render(<Phone dw={FEA
 </script>
 
 <script>
-function handleSubmit(prefix) {
-  const input = document.getElementById(prefix + '-phone');
-  const row = document.getElementById(prefix + '-input-row');
+// ── Supabase config ── paste your values here after setup ──
+const SUPABASE_URL  = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON = 'YOUR_SUPABASE_ANON_KEY';
+
+async function savePhone(phone) {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON,
+        'Authorization': `Bearer ${SUPABASE_ANON}`,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ phone })
+    });
+    return res.ok || res.status === 201;
+  } catch (e) {
+    console.error('Save failed:', e);
+    return false;
+  }
+}
+
+async function handleSubmit(prefix) {
+  const input   = document.getElementById(prefix + '-phone');
+  const row     = document.getElementById(prefix + '-input-row');
   const success = document.getElementById(prefix + '-success');
-  const val = (input ? input.value : '').trim();
+  const btn     = row ? row.querySelector('button') : null;
+  const val     = (input ? input.value : '').trim();
+
   if (!val) {
     if (input) { input.style.boxShadow = '0 0 0 2px #D4704A inset'; input.focus(); }
-    setTimeout(() => { if(input) input.style.boxShadow = ''; }, 1500);
+    setTimeout(() => { if (input) input.style.boxShadow = ''; }, 1500);
     return;
   }
-  if (row) row.style.display = 'none';
+
+  if (btn) { btn.textContent = 'Saving…'; btn.disabled = true; }
+  await savePhone(val);
+  if (row)     row.style.display = 'none';
   if (success) success.style.display = 'block';
 }
+
 document.querySelectorAll('input[type="tel"]').forEach(el => {
   el.addEventListener('keydown', e => {
     if (e.key === 'Enter') handleSubmit(el.id.replace('-phone', ''));
   });
 });
+
 function toggleFaq(el) {
   const item = el.closest('.faq-item');
   const wasOpen = item.classList.contains('open');

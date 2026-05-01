@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PixSort — Waitlist Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0F0F0F; color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh; padding: 40px 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Login ── */
+    #login-screen {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; min-height: 100vh; gap: 16px;
+    }
+    #login-screen h1 {
+      font-size: 24px; font-weight: 800; letter-spacing: -0.03em;
+      color: #C4A060; margin-bottom: 8px;
+    }
+    #login-screen input {
+      background: #1A1A1A; border: 1.5px solid #2A2A2A;
+      color: #fff; font-family: inherit; font-size: 16px;
+      padding: 14px 20px; border-radius: 12px; width: 320px;
+      outline: none; transition: border-color .2s;
+    }
+    #login-screen input:focus { border-color: #C4A060; }
+    #login-screen button {
+      background: #C4A060; color: #0F0F0F; border: none;
+      font-family: inherit; font-size: 14px; font-weight: 800;
+      padding: 14px 32px; border-radius: 12px; cursor: pointer;
+      width: 320px; transition: background .15s;
+    }
+    #login-screen button:hover { background: #A8864A; }
+    .login-error {
+      color: #D4704A; font-size: 13px; font-weight: 600;
+      display: none;
+    }
+
+    /* ── Dashboard ── */
+    #dashboard { display: none; max-width: 800px; margin: 0 auto; }
+    .dash-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 40px; flex-wrap: wrap; gap: 16px;
+    }
+    .dash-header h1 {
+      font-size: 28px; font-weight: 800; letter-spacing: -0.03em;
+    }
+    .dash-header h1 span { color: #C4A060; }
+    .dash-meta { font-size: 13px; color: #555; }
+    .stat-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 12px; margin-bottom: 32px;
+    }
+    .stat {
+      background: #1A1A1A; border: 1px solid #2A2A2A;
+      border-radius: 16px; padding: 24px;
+    }
+    .stat-num {
+      font-size: 40px; font-weight: 800; color: #C4A060;
+      letter-spacing: -0.04em; line-height: 1;
+    }
+    .stat-label { font-size: 12px; color: #555; margin-top: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+
+    .table-wrap {
+      background: #1A1A1A; border: 1px solid #2A2A2A;
+      border-radius: 16px; overflow: hidden;
+    }
+    .table-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px; border-bottom: 1px solid #2A2A2A;
+    }
+    .table-header span { font-size: 14px; font-weight: 700; color: #999; }
+    .copy-btn {
+      background: transparent; border: 1px solid #2A2A2A;
+      color: #C4A060; font-family: inherit; font-size: 12px; font-weight: 700;
+      padding: 7px 16px; border-radius: 8px; cursor: pointer;
+      transition: background .15s, border-color .15s;
+    }
+    .copy-btn:hover { background: rgba(196,160,96,0.08); border-color: #C4A060; }
+
+    .phone-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 24px; border-bottom: 1px solid #1E1E1E;
+      transition: background .1s;
+    }
+    .phone-row:last-child { border-bottom: none; }
+    .phone-row:hover { background: rgba(255,255,255,0.02); }
+    .phone-num { font-size: 15px; font-weight: 600; letter-spacing: 0.01em; }
+    .phone-date { font-size: 12px; color: #555; }
+
+    .empty-state {
+      text-align: center; padding: 60px 24px; color: #555;
+    }
+    .empty-state p { font-size: 15px; }
+
+    #refresh-btn {
+      background: transparent; border: 1px solid #2A2A2A; color: #999;
+      font-family: inherit; font-size: 13px; font-weight: 600;
+      padding: 8px 18px; border-radius: 8px; cursor: pointer;
+      transition: border-color .15s, color .15s;
+    }
+    #refresh-btn:hover { border-color: #C4A060; color: #C4A060; }
+
+    .loading { text-align: center; padding: 40px; color: #555; font-size: 14px; }
+  </style>
+</head>
+<body>
+
+<!-- ── Login ── -->
+<div id="login-screen">
+  <h1>PixSort Admin</h1>
+  <input type="password" id="pwd-input" placeholder="Password" autocomplete="current-password">
+  <button onclick="tryLogin()">Enter</button>
+  <div class="login-error" id="login-error">Wrong password.</div>
+</div>
+
+<!-- ── Dashboard ── -->
+<div id="dashboard">
+  <div class="dash-header">
+    <h1>Waitlist <span id="count-badge"></span></h1>
+    <div style="display:flex;gap:10px;align-items:center">
+      <span class="dash-meta" id="last-refresh"></span>
+      <button id="refresh-btn" onclick="loadNumbers()">↻ Refresh</button>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat">
+      <div class="stat-num" id="stat-total">—</div>
+      <div class="stat-label">Total signups</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="stat-today">—</div>
+      <div class="stat-label">Today</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="stat-week">—</div>
+      <div class="stat-label">This week</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <div class="table-header">
+      <span>Phone numbers</span>
+      <button class="copy-btn" onclick="copyAll()">Copy all</button>
+    </div>
+    <div id="phone-list"><div class="loading">Loading…</div></div>
+  </div>
+</div>
+
+<script>
+// ── Config — same values as index.html ──────────────────────
+const SUPABASE_URL  = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON = 'YOUR_SUPABASE_ANON_KEY';
+const ADMIN_PASSWORD = 'YOUR_ADMIN_PASSWORD'; // change this to whatever you want
+
+let allNumbers = [];
+
+function tryLogin() {
+  const val = document.getElementById('pwd-input').value;
+  if (val === ADMIN_PASSWORD) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    loadNumbers();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+  }
+}
+
+document.getElementById('pwd-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') tryLogin();
+});
+
+async function loadNumbers() {
+  document.getElementById('phone-list').innerHTML = '<div class="loading">Loading…</div>';
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/waitlist?select=phone,created_at&order=created_at.desc`,
+      {
+        headers: {
+          'apikey': SUPABASE_ANON,
+          'Authorization': `Bearer ${SUPABASE_ANON}`
+        }
+      }
+    );
+    const data = await res.json();
+    allNumbers = data;
+    render(data);
+  } catch(e) {
+    document.getElementById('phone-list').innerHTML =
+      '<div class="loading" style="color:#D4704A">Failed to load. Check Supabase config.</div>';
+  }
+}
+
+function render(data) {
+  const now = new Date();
+  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const weekStart  = new Date(todayStart - 6 * 864e5);
+
+  const todayCount = data.filter(r => new Date(r.created_at) >= todayStart).length;
+  const weekCount  = data.filter(r => new Date(r.created_at) >= weekStart).length;
+
+  document.getElementById('stat-total').textContent = data.length;
+  document.getElementById('stat-today').textContent = todayCount;
+  document.getElementById('stat-week').textContent  = weekCount;
+  document.getElementById('count-badge').textContent = data.length ? `(${data.length})` : '';
+  document.getElementById('last-refresh').textContent =
+    'Updated ' + now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+
+  if (!data.length) {
+    document.getElementById('phone-list').innerHTML =
+      '<div class="empty-state"><p>No signups yet. Share that link! 🚀</p></div>';
+    return;
+  }
+
+  document.getElementById('phone-list').innerHTML = data.map(row => {
+    const d = new Date(row.created_at);
+    const dateStr = d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' }) +
+                    ' · ' + d.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+    return `<div class="phone-row">
+      <span class="phone-num">${row.phone}</span>
+      <span class="phone-date">${dateStr}</span>
+    </div>`;
+  }).join('');
+}
+
+function copyAll() {
+  const phones = allNumbers.map(r => r.phone).join('\n');
+  navigator.clipboard.writeText(phones).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = 'Copied ✓';
+    setTimeout(() => btn.textContent = 'Copy all', 2000);
+  });
+}
+</script>
+</body>
+</html>
