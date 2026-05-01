@@ -192,7 +192,9 @@
       font-style: italic; color: var(--text);
       line-height: 1.6; flex: 1;
     }
-    .quote-attr { font-size: 13px; font-weight: 700; color: var(--rose); letter-spacing: 0.02em; }
+    .quote-attr { display: flex; align-items: center; gap: 12px; }
+    .quote-attr img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+    .quote-attr span { font-size: 13px; font-weight: 700; color: var(--rose); letter-spacing: 0.02em; }
 
     /* ── FAQ ──────────────────────────────────────────── */
     .faq { padding: 80px 24px; max-width: 720px; margin: 0 auto; }
@@ -351,7 +353,7 @@
 
 <!-- ── Statement ── -->
 <div class="statement">
-  <p>Client asks to see your work.<br>You spend 10 minutes <em>searching.</em></p>
+  <p>Somewhere in 3,000 photos<br>is your <em>best work.</em></p>
 </div>
 
 <!-- ── Features ── -->
@@ -396,15 +398,15 @@
     <div class="quotes-grid">
       <div class="quote-card">
         <p class="quote-text">"I shoot every single client. Finding a specific style later takes forever."</p>
-        <div class="quote-attr">— Nail tech, Los Angeles</div>
+        <div class="quote-attr"><img src="assets/avatar-beauty-1.jpg" alt=""><span>— Nail tech, Los Angeles</span></div>
       </div>
       <div class="quote-card">
         <p class="quote-text">"I'd save so much time just finding the right photo to post."</p>
-        <div class="quote-attr">— Esthetician, Miami</div>
+        <div class="quote-attr"><img src="assets/avatar-beauty-2.jpg" alt=""><span>— Esthetician, Miami</span></div>
       </div>
       <div class="quote-card">
         <p class="quote-text">"My camera roll is my portfolio. It's completely disorganized."</p>
-        <div class="quote-attr">— Lash tech, New York</div>
+        <div class="quote-attr"><img src="assets/avatar-beauty-3.jpg" alt=""><span>— Lash tech, New York</span></div>
       </div>
     </div>
   </div>
