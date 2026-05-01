@@ -182,26 +182,21 @@
       text-transform: uppercase; color: var(--coral); margin-bottom: 64px;
       text-align: center;
     }
-    .stat-card {
-      background: #fff; border-radius: 24px;
-      padding: 64px 48px; text-align: center;
-      box-shadow: 0 2px 40px rgba(28,23,19,0.06);
-      max-width: 700px; margin: 0 auto;
+    .quotes-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
     }
-    .stat-num {
+    .quote-card {
+      background: #fff; padding: 48px 36px;
+      display: flex; flex-direction: column; gap: 32px;
+    }
+    .quote-text {
       font-family: 'DM Serif Display', Georgia, serif;
-      font-size: clamp(64px, 10vw, 120px);
-      font-weight: 400; color: var(--coral);
-      letter-spacing: -0.04em; line-height: 1;
+      font-size: clamp(16px, 1.6vw, 20px);
+      font-style: italic; color: var(--dark);
+      line-height: 1.6; flex: 1;
     }
-    .stat-label {
-      font-size: clamp(18px, 2vw, 24px); color: var(--grey);
-      line-height: 1.5; margin-top: 16px; max-width: 480px; margin-left: auto; margin-right: auto;
-    }
-    .stat-attr {
-      font-size: 13px; font-weight: 700; color: var(--grey2);
-      margin-top: 32px; letter-spacing: 0.02em;
-    }
+    .quote-attr { font-size: 13px; font-weight: 700; color: var(--coral); letter-spacing: 0.02em; }
 
     /* ── FAQ ──────────────────────────────────────────── */
     .faq { padding: 120px 40px; max-width: 800px; margin: 0 auto; }
@@ -266,6 +261,7 @@
       .feature-row { grid-template-columns: 1fr; gap: 40px; padding: 80px 0; }
       .feature-phone-wrap .phone-tilt-l,
       .feature-phone-wrap .phone-tilt-r { transform: none; filter: drop-shadow(0 30px 60px rgba(28,23,19,0.15)); }
+      .quotes-grid { grid-template-columns: 1fr; }
       .social { padding: 80px 20px; }
       .faq { padding: 80px 20px; }
       .final-cta { padding: 100px 20px; }
@@ -291,8 +287,8 @@
 <!-- ── Hero ── -->
 <section class="hero" id="top">
   <div class="hero-eyebrow">✦ AI-Powered Photo Organization</div>
-  <h1>40,000 photos.<br><em>Find the first steps.</em></h1>
-  <p class="hero-sub">AI automatically organizes your camera roll into albums — by milestone, moment, and person. In minutes.</p>
+  <h1>First steps. First birthday. First day.<br><em>Find any of it in seconds.</em></h1>
+  <p class="hero-sub">PixSort's AI scans your entire camera roll and finds any photo, any moment, instantly. Just search for it.</p>
 
   <div class="cta-block" id="hero-cta">
     <div class="input-row" id="hero-input-row">
@@ -356,10 +352,23 @@
 <section class="social">
   <div class="social-inner">
     <div class="social-label">The reality</div>
-    <div class="stat-card">
-      <div class="stat-num">40,000</div>
-      <div class="stat-label">"Every one of my friends has 40,000 photos they've never organized."</div>
-      <div class="stat-attr">— Emma, mom of two</div>
+    <div class="quotes-grid">
+      <div class="quote-card">
+        <p class="quote-text">"I was trying to find Jake's first soccer practice for his end-of-year video. I scrolled for an hour. PixSort found it in 10 seconds."</p>
+        <div class="quote-attr">— Sarah, mom of three</div>
+      </div>
+      <div class="quote-card">
+        <p class="quote-text">"My mom asked me for photos from Lily's first birthday. I had 800 photos from that month alone. PixSort just... found them."</p>
+        <div class="quote-attr">— Marcus, dad of two</div>
+      </div>
+      <div class="quote-card">
+        <p class="quote-text">"We made a 'Core Memories' album for my daughter's 5th birthday. I cried. I didn't think I'd ever be able to find all of that."</p>
+        <div class="quote-attr">— Jen, mom of one</div>
+      </div>
+      <div class="quote-card">
+        <p class="quote-text">"Before PixSort I had 40,000 photos and felt like I had none. Now I actually look at them."</p>
+        <div class="quote-attr">— Priya, mom of two</div>
+      </div>
     </div>
   </div>
 </section>
