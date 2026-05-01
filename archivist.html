@@ -3,26 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PixSort — Every First. Every Laugh. Actually Findable.</title>
+  <title>PixSort — 30 Years of Family Memories. Finally Organized.</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400;1,9..40,700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg:       #FAF8F5;
-      --bg2:      #F2EDE6;
-      --bg3:      #F7F3EE;
-      --coral:    #E8735A;
-      --coraldark:#C9573F;
-      --dark:     #1C1713;
-      --grey:     #7A7067;
-      --grey2:    #B0A89E;
-      --border:   #E4DDD5;
+      --bg:       #0F0F0F;
+      --bg2:      #141414;
+      --bg3:      #111111;
+      --gold:     #C4A060;
+      --golddark: #A8864A;
+      --text:     #FFFFFF;
+      --grey:     #888888;
+      --grey2:    #555555;
+      --border:   #222222;
     }
     html { scroll-behavior: smooth; }
     body {
       background: var(--bg);
       font-family: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      color: var(--dark);
+      color: var(--text);
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
@@ -32,21 +32,20 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 40px; height: 64px;
-      background: rgba(250,248,245,0.88); backdrop-filter: blur(20px);
+      background: rgba(15,15,15,0.88); backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
-      transition: background .3s;
     }
     .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
     .nav-logo img { width: 28px; height: 28px; border-radius: 7px; }
-    .nav-logo span { font-size: 16px; font-weight: 800; color: var(--dark); letter-spacing: -0.02em; }
+    .nav-logo span { font-size: 16px; font-weight: 800; color: var(--text); letter-spacing: -0.02em; }
     .nav-cta {
-      background: var(--coral); color: #fff; border: none;
+      background: var(--gold); color: #0F0F0F; border: none;
       font-family: inherit; font-size: 13px; font-weight: 800;
       padding: 10px 22px; border-radius: 999px; cursor: pointer;
       transition: background .15s, transform .1s; text-decoration: none;
       letter-spacing: -0.01em;
     }
-    .nav-cta:hover { background: var(--coraldark); transform: translateY(-1px); }
+    .nav-cta:hover { background: var(--golddark); transform: translateY(-1px); }
 
     /* ── Hero ────────────────────────────────────────── */
     .hero {
@@ -59,72 +58,72 @@
     .hero::before {
       content: '';
       position: absolute; inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232,115,90,0.07) 0%, transparent 70%);
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(196,160,96,0.08) 0%, transparent 70%);
       pointer-events: none;
     }
     .hero-eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
-      border: 1px solid rgba(232,115,90,0.3);
-      color: var(--coral); font-size: 11px; font-weight: 700;
+      border: 1px solid rgba(196,160,96,0.3);
+      color: var(--gold); font-size: 11px; font-weight: 700;
       letter-spacing: 0.1em; text-transform: uppercase;
       border-radius: 999px; padding: 6px 16px; margin-bottom: 36px;
     }
     .hero h1 {
       font-family: 'DM Serif Display', Georgia, serif;
-      font-size: clamp(48px, 8vw, 110px);
-      font-weight: 400; line-height: 1.02; letter-spacing: -0.03em;
-      color: var(--dark); max-width: 900px; margin-bottom: 24px;
+      font-size: clamp(44px, 7.5vw, 104px);
+      font-weight: 400; line-height: 1.04; letter-spacing: -0.03em;
+      color: var(--text); max-width: 960px; margin-bottom: 24px;
       text-wrap: balance;
     }
-    .hero h1 em { font-style: italic; color: var(--coral); }
+    .hero h1 em { font-style: italic; color: var(--gold); }
     .hero-sub {
       font-size: clamp(16px, 2vw, 20px); color: var(--grey);
-      line-height: 1.6; max-width: 500px; margin-bottom: 48px;
+      line-height: 1.6; max-width: 520px; margin-bottom: 48px;
       text-wrap: pretty;
     }
     .cta-block { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; max-width: 420px; }
     .input-row {
       display: flex; width: 100%;
-      background: #fff; border: 1.5px solid var(--border);
+      background: #1A1A1A; border: 1.5px solid var(--border);
       border-radius: 999px; overflow: hidden;
-      box-shadow: 0 2px 20px rgba(28,23,19,0.08);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.4);
       transition: border-color .2s, box-shadow .2s;
     }
     .input-row:focus-within {
-      border-color: var(--coral);
-      box-shadow: 0 0 0 3px rgba(232,115,90,0.12);
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(196,160,96,0.12);
     }
     .input-row input {
       flex: 1; border: none; outline: none; background: transparent;
-      font-family: inherit; font-size: 16px; color: var(--dark);
+      font-family: inherit; font-size: 16px; color: var(--text);
       padding: 14px 20px;
     }
     .input-row input::placeholder { color: var(--grey2); }
     .input-row button {
-      background: var(--coral); color: #fff; border: none; cursor: pointer;
+      background: var(--gold); color: #0F0F0F; border: none; cursor: pointer;
       font-family: inherit; font-size: 13px; font-weight: 800;
       padding: 0 20px; white-space: nowrap;
       border-radius: 999px; margin: 4px;
       transition: background .15s;
     }
-    .input-row button:hover { background: var(--coraldark); }
+    .input-row button:hover { background: var(--golddark); }
     .microcopy {
       font-size: 12px; color: var(--grey2);
-      display: flex; gap: 0; align-items: center;
+      display: flex; align-items: center;
     }
     .microcopy span { display: flex; align-items: center; gap: 8px; }
     .microcopy span + span::before { content: '·'; margin: 0 10px; color: var(--grey2); }
     .success-msg {
       display: none;
-      background: rgba(232,115,90,0.08); border: 1px solid rgba(232,115,90,0.25);
-      color: var(--coraldark); font-size: 15px; font-weight: 600;
+      background: rgba(196,160,96,0.08); border: 1px solid rgba(196,160,96,0.25);
+      color: var(--gold); font-size: 15px; font-weight: 600;
       border-radius: 16px; padding: 16px 24px; width: 100%;
       text-align: center; line-height: 1.5;
     }
     .hero-phone {
       margin-top: 72px; position: relative;
       transform: perspective(1000px) rotateX(4deg) rotateY(-3deg);
-      filter: drop-shadow(0 60px 120px rgba(28,23,19,0.18)) drop-shadow(0 0 60px rgba(232,115,90,0.06));
+      filter: drop-shadow(0 60px 120px rgba(0,0,0,0.6)) drop-shadow(0 0 60px rgba(196,160,96,0.06));
       transition: transform .4s ease;
     }
     .hero-phone:hover { transform: perspective(1000px) rotateX(2deg) rotateY(0deg); }
@@ -138,10 +137,10 @@
       font-family: 'DM Serif Display', Georgia, serif;
       font-size: clamp(36px, 6vw, 88px);
       font-weight: 400; letter-spacing: -0.03em; line-height: 1.1;
-      color: var(--dark); max-width: 900px; margin: 0 auto;
+      color: var(--text); max-width: 900px; margin: 0 auto;
       text-wrap: balance;
     }
-    .statement p em { font-style: italic; color: var(--coral); }
+    .statement p em { font-style: italic; color: var(--gold); }
 
     /* ── Feature rows ─────────────────────────────────── */
     .features { padding: 0 40px 120px; max-width: 1200px; margin: 0 auto; }
@@ -156,7 +155,7 @@
       font-family: 'DM Serif Display', Georgia, serif;
       font-size: clamp(56px, 8vw, 100px);
       font-weight: 400; font-style: italic;
-      color: var(--coral); letter-spacing: -0.04em;
+      color: var(--gold); letter-spacing: -0.04em;
       line-height: 1; margin-bottom: 28px;
     }
     .feature-caption {
@@ -167,11 +166,11 @@
     .feature-phone-wrap { display: flex; justify-content: center; align-items: center; }
     .feature-phone-wrap .phone-tilt-l {
       transform: perspective(800px) rotateY(8deg) rotateX(2deg);
-      filter: drop-shadow(0 40px 80px rgba(28,23,19,0.15)) drop-shadow(0 0 40px rgba(232,115,90,0.06));
+      filter: drop-shadow(0 40px 80px rgba(0,0,0,0.5)) drop-shadow(0 0 40px rgba(196,160,96,0.06));
     }
     .feature-phone-wrap .phone-tilt-r {
       transform: perspective(800px) rotateY(-8deg) rotateX(2deg);
-      filter: drop-shadow(0 40px 80px rgba(28,23,19,0.15)) drop-shadow(0 0 40px rgba(232,115,90,0.06));
+      filter: drop-shadow(0 40px 80px rgba(0,0,0,0.5)) drop-shadow(0 0 40px rgba(196,160,96,0.06));
     }
 
     /* ── Social proof ─────────────────────────────────── */
@@ -179,7 +178,7 @@
     .social-inner { max-width: 1100px; margin: 0 auto; }
     .social-label {
       font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--coral); margin-bottom: 64px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 64px;
       text-align: center;
     }
     .quotes-grid {
@@ -187,32 +186,32 @@
       gap: 2px;
     }
     .quote-card {
-      background: #fff; padding: 48px 36px;
+      background: #1C1C1C; padding: 48px 36px;
       display: flex; flex-direction: column; gap: 32px;
     }
     .quote-text {
       font-family: 'DM Serif Display', Georgia, serif;
       font-size: clamp(16px, 1.6vw, 20px);
-      font-style: italic; color: var(--dark);
+      font-style: italic; color: var(--text);
       line-height: 1.6; flex: 1;
     }
-    .quote-attr { font-size: 13px; font-weight: 700; color: var(--coral); letter-spacing: 0.02em; }
+    .quote-attr { font-size: 13px; font-weight: 700; color: var(--gold); letter-spacing: 0.02em; }
 
     /* ── FAQ ──────────────────────────────────────────── */
     .faq { padding: 120px 40px; max-width: 800px; margin: 0 auto; }
     .faq-label {
       font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--coral); margin-bottom: 48px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 48px;
     }
     .faq-item { border-top: 1px solid var(--border); }
     .faq-item:last-child { border-bottom: 1px solid var(--border); }
     .faq-q {
       display: flex; align-items: center; justify-content: space-between;
       padding: 24px 0; cursor: pointer; gap: 16px;
-      font-size: 18px; font-weight: 600; color: var(--dark);
+      font-size: 18px; font-weight: 600; color: var(--text);
       transition: color .15s; list-style: none; user-select: none;
     }
-    .faq-q:hover { color: var(--coral); }
+    .faq-q:hover { color: var(--gold); }
     .faq-icon {
       width: 28px; height: 28px; border-radius: 50%;
       border: 1.5px solid var(--border);
@@ -220,7 +219,7 @@
       flex-shrink: 0; transition: border-color .2s;
     }
     .faq-icon svg { transition: transform .3s; }
-    .faq-item.open .faq-icon { border-color: var(--coral); }
+    .faq-item.open .faq-icon { border-color: var(--gold); }
     .faq-item.open .faq-icon svg { transform: rotate(45deg); }
     .faq-a {
       font-size: 16px; color: var(--grey); line-height: 1.7;
@@ -238,7 +237,7 @@
       font-family: 'DM Serif Display', Georgia, serif;
       font-size: clamp(48px, 7vw, 100px);
       font-weight: 400; letter-spacing: -0.03em; line-height: 1;
-      color: var(--dark); margin-bottom: 20px; text-wrap: balance;
+      color: var(--text); margin-bottom: 20px; text-wrap: balance;
     }
     .final-cta p { font-size: 18px; color: var(--grey); margin-bottom: 48px; }
     .final-cta .cta-block { margin: 0 auto; }
@@ -260,7 +259,7 @@
       .features { padding: 0 20px 80px; }
       .feature-row { grid-template-columns: 1fr; gap: 40px; padding: 80px 0; }
       .feature-phone-wrap .phone-tilt-l,
-      .feature-phone-wrap .phone-tilt-r { transform: none; filter: drop-shadow(0 30px 60px rgba(28,23,19,0.15)); }
+      .feature-phone-wrap .phone-tilt-r { transform: none; filter: drop-shadow(0 30px 60px rgba(0,0,0,0.5)); }
       .quotes-grid { grid-template-columns: 1fr; }
       .social { padding: 80px 20px; }
       .faq { padding: 80px 20px; }
@@ -287,8 +286,8 @@
 <!-- ── Hero ── -->
 <section class="hero" id="top">
   <div class="hero-eyebrow">✦ AI-Powered Photo Organization</div>
-  <h1>From chaos to<br><em>core memories.</em></h1>
-  <p class="hero-sub">We help you organize your camera roll so you can find the moments that matter most.</p>
+  <h1>30 years of family memories.<br><em>Finally organized.</em></h1>
+  <p class="hero-sub">PixSort uses AI to sort your entire camera roll into smart albums — by year, event, and person. In minutes.</p>
 
   <div class="cta-block" id="hero-cta">
     <div class="input-row" id="hero-input-row">
@@ -310,7 +309,7 @@
 
 <!-- ── Statement ── -->
 <div class="statement">
-  <p>You took the photo.<br>Can you <em>find it?</em></p>
+  <p>You have 40,000 photos.<br>Can you find <em>that Christmas?</em></p>
 </div>
 
 <!-- ── Features ── -->
@@ -319,7 +318,7 @@
   <div class="feature-row">
     <div>
       <div class="feature-kw">Find it.</div>
-      <p class="feature-caption">First birthday. First day of school. That beach trip last summer. Just search for it — PixSort finds it instantly.</p>
+      <p class="feature-caption">That Christmas in 2019. Mom's 60th. The beach trip three years ago. Just search for it — PixSort finds it instantly without scrolling through decades of photos.</p>
     </div>
     <div class="feature-phone-wrap">
       <div class="phone-tilt-r" id="phone-search"></div>
@@ -332,14 +331,14 @@
     </div>
     <div>
       <div class="feature-kw">Sort it.</div>
-      <p class="feature-caption">AI scans your camera roll and builds albums automatically. Birthdays. Beach days. Bath time. Done.</p>
+      <p class="feature-caption">AI scans your entire camera roll and builds albums automatically. Holidays. Birthdays. Vacations. Every decade, every milestone — organized without lifting a finger.</p>
     </div>
   </div>
 
   <div class="feature-row">
     <div>
       <div class="feature-kw">Share it.</div>
-      <p class="feature-caption">Send Grandma the album she's been asking for. Push any album straight to your camera roll, share however you want.</p>
+      <p class="feature-caption">Finally put together that family album. Push any album straight to your camera roll to print, share, or send to whoever's been asking.</p>
     </div>
     <div class="feature-phone-wrap">
       <div class="phone-tilt-r" id="phone-send"></div>
@@ -354,20 +353,20 @@
     <div class="social-label">The reality</div>
     <div class="quotes-grid">
       <div class="quote-card">
-        <p class="quote-text">"I was trying to find Jake's first soccer practice for his end-of-year video. I scrolled for an hour. PixSort found it in 10 seconds."</p>
-        <div class="quote-attr">— Sarah, mom of three</div>
+        <p class="quote-text">"Every one of my friends has 40,000 photos they've never organized."</p>
+        <div class="quote-attr">— Emma, London</div>
       </div>
       <div class="quote-card">
-        <p class="quote-text">"My mom asked me for photos from Lily's first birthday. I had 800 photos from that month alone. PixSort just... found them."</p>
-        <div class="quote-attr">— Marcus, dad of two</div>
+        <p class="quote-text">"My mom asked for photos from Dad's retirement party. I searched for 20 minutes and gave up. PixSort found everything in seconds."</p>
+        <div class="quote-attr">— Karen, mom of three</div>
       </div>
       <div class="quote-card">
-        <p class="quote-text">"We made a 'Core Memories' album for my daughter's 5th birthday. I cried. I didn't think I'd ever be able to find all of that."</p>
-        <div class="quote-attr">— Jen, mom of one</div>
+        <p class="quote-text">"I've been meaning to organize our photos for six years. Every phone upgrade made it worse. PixSort finally fixed it."</p>
+        <div class="quote-attr">— Linda, grandmother of five</div>
       </div>
       <div class="quote-card">
-        <p class="quote-text">"Before PixSort I had 40,000 photos and felt like I had none. Now I actually look at them."</p>
-        <div class="quote-attr">— Priya, mom of two</div>
+        <p class="quote-text">"My daughter left for college and I wanted to make her a slideshow. I had 60,000 photos and no idea where anything was. PixSort changed everything."</p>
+        <div class="quote-attr">— Diane, empty nester</div>
       </div>
     </div>
   </div>
@@ -379,26 +378,26 @@
 
   <div class="faq-item">
     <div class="faq-q" onclick="toggleFaq(this)">
-      <span>What is PixSort?</span>
+      <span>Will it work on photos from old phones?</span>
       <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
     </div>
-    <div class="faq-a">PixSort is an iPhone app that uses AI to automatically organize your camera roll into smart albums — by milestone, person, and moment. No manual sorting required.</div>
+    <div class="faq-a">Yes — all of them. PixSort scans your entire camera roll, including photos imported from old phones, and organizes them by year, event, and person automatically.</div>
   </div>
 
   <div class="faq-item">
     <div class="faq-q" onclick="toggleFaq(this)">
-      <span>Will it work on my existing photos?</span>
+      <span>What if I have 50,000+ photos?</span>
       <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
     </div>
-    <div class="faq-a">Yes — all of them. PixSort scans your entire camera roll, even photos from years ago, and organizes them into albums automatically.</div>
+    <div class="faq-a">That's exactly who PixSort is built for. The bigger the backlog, the bigger the relief. PixSort handles libraries of 100,000+ photos with no problem.</div>
   </div>
 
   <div class="faq-item">
     <div class="faq-q" onclick="toggleFaq(this)">
-      <span>Will it delete any of my photos?</span>
+      <span>Will it delete anything?</span>
       <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
     </div>
-    <div class="faq-a">Never. PixSort only organizes — it never deletes anything without your explicit approval. Your photos are always safe.</div>
+    <div class="faq-a">Never. PixSort only organizes — it never deletes anything without your explicit approval. Every photo is safe, always.</div>
   </div>
 
   <div class="faq-item">
@@ -412,7 +411,7 @@
 
 <!-- ── Final CTA ── -->
 <section class="final-cta">
-  <h2>Find every<br><em style="color:var(--coral)">first.</em></h2>
+  <h2>Every memory.<br><em style="color:var(--gold)">Finally found.</em></h2>
   <p>We'll text you the moment it's live.</p>
   <div class="cta-block">
     <div class="input-row" id="final-input-row">
@@ -446,9 +445,9 @@
 
 <script type="text/babel">
 const C = {
-  bg:'#FAF8F5', card:'#F0EBE3', inner:'#F5F0E8', coral:'#E8735A',
-  coralDk:'#C9573F', olive:'#9B6B3A', prog:'#C8845A', t1:'#1C1713',
-  t2:'#8A7E72', t3:'#B8AFA6', border:'#E4DDD5', iconBg:'#F5C9A8', pill:'#EDE5DA',
+  bg:'#0F0F0F', card:'#1A1A1A', inner:'#222222', gold:'#C4A060',
+  goldDk:'#A8864A', t1:'#FFFFFF', t2:'#888888', t3:'#555555',
+  border:'#2A2A2A', iconBg:'#2A2318', pill:'#1E1A12', prog:'#C4A060',
 };
 const F = "'DM Sans','Helvetica Neue',Helvetica,Arial,sans-serif";
 const PW = 390; const PH = 844;
@@ -480,17 +479,17 @@ const StatusBar = () => (
 
 const TabBar = ({ active='home' }) => {
   const tabs = [
-    {id:'home',label:'Albums',icon:(a)=>(<svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke={a?C.coral:C.t2} strokeWidth="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>)},
-    {id:'search',label:'Search',icon:(a)=>(<svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke={a?C.coral:C.t2} strokeWidth="1.8"><circle cx="11" cy="11" r="7"/><line x1="17" y1="17" x2="21.5" y2="21.5"/></svg>)},
-    {id:'cleanup',label:'Clean Up',icon:(a)=>(<svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke={a?C.coral:C.t2} strokeWidth="1.8"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" strokeLinecap="round" strokeLinejoin="round"/></svg>)},
-    {id:'settings',label:'Settings',icon:(a)=>(<svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke={a?C.coral:C.t2} strokeWidth="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>)},
+    {id:'home',label:'Albums',icon:(a)=>(<svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke={a?C.gold:C.t2} strokeWidth="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>)},
+    {id:'search',label:'Search',icon:(a)=>(<svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke={a?C.gold:C.t2} strokeWidth="1.8"><circle cx="11" cy="11" r="7"/><line x1="17" y1="17" x2="21.5" y2="21.5"/></svg>)},
+    {id:'cleanup',label:'Clean Up',icon:(a)=>(<svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke={a?C.gold:C.t2} strokeWidth="1.8"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" strokeLinecap="round" strokeLinejoin="round"/></svg>)},
+    {id:'settings',label:'Settings',icon:(a)=>(<svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke={a?C.gold:C.t2} strokeWidth="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>)},
   ];
   return (
-    <div style={{height:88,background:'rgba(250,248,245,0.97)',backdropFilter:'blur(12px)',borderTop:`1px solid ${C.border}`,display:'flex',padding:'10px 0 26px',fontFamily:F}}>
+    <div style={{height:88,background:'rgba(15,15,15,0.97)',backdropFilter:'blur(12px)',borderTop:`1px solid ${C.border}`,display:'flex',padding:'10px 0 26px',fontFamily:F}}>
       {tabs.map(tab=>(
         <div key={tab.id} style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',gap:4}}>
           {tab.icon(active===tab.id)}
-          <span style={{fontSize:10.5,fontWeight:700,color:active===tab.id?C.coral:C.t2}}>{tab.label}</span>
+          <span style={{fontSize:10.5,fontWeight:700,color:active===tab.id?C.gold:C.t2}}>{tab.label}</span>
         </div>
       ))}
     </div>
@@ -501,7 +500,7 @@ const Phone = ({ children, active='home', dw=FEAT_DW }) => {
   const dh = Math.round(dw * PH / PW);
   const sc = dw / PW;
   return (
-    <div style={{width:dw+16,height:dh+16,borderRadius:Math.round(56*sc)+8,padding:8,background:'linear-gradient(155deg,#2A2A2A 0%,#141414 100%)',boxShadow:'0 40px 100px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.07),inset 0 1px 0 rgba(255,255,255,0.05)',position:'relative',flexShrink:0}}>
+    <div style={{width:dw+16,height:dh+16,borderRadius:Math.round(56*sc)+8,padding:8,background:'linear-gradient(155deg,#2A2A2A 0%,#141414 100%)',boxShadow:'0 40px 100px rgba(0,0,0,0.7),0 0 0 1px rgba(255,255,255,0.07),inset 0 1px 0 rgba(255,255,255,0.05)',position:'relative',flexShrink:0}}>
       <div style={{position:'absolute',left:-3.5,top:'19%',width:3.5,height:'5%',background:'#333',borderRadius:'2px 0 0 2px'}}/>
       <div style={{position:'absolute',left:-3.5,top:'27%',width:3.5,height:'8.5%',background:'#333',borderRadius:'2px 0 0 2px'}}/>
       <div style={{position:'absolute',left:-3.5,top:'38%',width:3.5,height:'8.5%',background:'#333',borderRadius:'2px 0 0 2px'}}/>
@@ -519,7 +518,7 @@ const Phone = ({ children, active='home', dw=FEAT_DW }) => {
 };
 
 const AlbumRow = ({ icon, name, count, imgs=[] }) => (
-  <div style={{display:'flex',alignItems:'center',gap:14,background:C.card,borderRadius:16,padding:'13px 16px',marginBottom:9,boxShadow:'0 1px 4px rgba(28,23,19,0.05)'}}>
+  <div style={{display:'flex',alignItems:'center',gap:14,background:C.card,borderRadius:16,padding:'13px 16px',marginBottom:9,boxShadow:'0 1px 4px rgba(0,0,0,0.3)'}}>
     <div style={{width:46,height:46,background:C.iconBg,borderRadius:13,display:'flex',alignItems:'center',justifyContent:'center',fontSize:22,flexShrink:0}}>{icon}</div>
     <div style={{flex:1}}>
       <div style={{fontSize:16,fontWeight:700,color:C.t1}}>{name}</div>
@@ -535,156 +534,156 @@ const AlbumRow = ({ icon, name, count, imgs=[] }) => (
   </div>
 );
 
-// Screen 1: Albums home
+// Screen 1: Albums home — decades + milestones
 const Screen1 = () => (
-  <div style={{padding:'8px 20px 20px',fontFamily:F}}>
+  <div style={{padding:'8px 20px 20px',fontFamily:F,background:C.bg,minHeight:'100%'}}>
     <div style={{fontSize:30,fontWeight:800,color:C.t1,marginBottom:18,letterSpacing:'-0.02em'}}>Pixsort</div>
     <div style={{background:C.card,borderRadius:26,padding:22,marginBottom:20}}>
       <div style={{display:'flex',alignItems:'flex-end',gap:10}}>
-        <div style={{fontSize:60,fontWeight:800,color:C.olive,lineHeight:1,letterSpacing:'-0.03em'}}>247</div>
-        <div style={{fontSize:14,color:C.t2,lineHeight:1.35,paddingBottom:7}}>photos<br/>organized</div>
+        <div style={{fontSize:60,fontWeight:800,color:C.gold,lineHeight:1,letterSpacing:'-0.03em'}}>42K</div>
+        <div style={{fontSize:14,color:C.t2,lineHeight:1.35,paddingBottom:7}}>photos<br/>organizing</div>
       </div>
       <div style={{display:'inline-flex',alignItems:'center',gap:7,background:C.pill,borderRadius:999,padding:'6px 14px',marginTop:11}}>
-        <div style={{width:13,height:13,border:`2px solid ${C.t3}`,borderTopColor:C.prog,borderRadius:'50%',animation:'spin 0.9s linear infinite'}}/>
+        <div style={{width:13,height:13,border:`2px solid ${C.t3}`,borderTopColor:C.gold,borderRadius:'50%',animation:'spin 0.9s linear infinite'}}/>
         <span style={{fontSize:13,fontWeight:600,color:C.t2}}>Sorting now</span>
       </div>
       <div style={{background:C.border,borderRadius:999,height:7,marginTop:15,overflow:'hidden'}}>
-        <div style={{background:C.prog,width:'48%',height:'100%',borderRadius:999}}/>
+        <div style={{background:C.gold,width:'35%',height:'100%',borderRadius:999}}/>
       </div>
       <div style={{display:'flex',justifyContent:'space-between',marginTop:6}}>
-        <span style={{fontSize:12,color:C.t2}}>48% sorted</span>
-        <span style={{fontSize:12,color:C.t2}}>512 total</span>
+        <span style={{fontSize:12,color:C.t2}}>35% sorted</span>
+        <span style={{fontSize:12,color:C.t2}}>42,186 total</span>
       </div>
     </div>
     <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:13}}>
       <span style={{fontSize:20,fontWeight:800,color:C.t1}}>Your Albums</span>
-      <span style={{fontSize:15,fontWeight:600,color:C.coral}}>Edit</span>
+      <span style={{fontSize:15,fontWeight:600,color:C.gold}}>Edit</span>
     </div>
-    <AlbumRow icon="🎂" name="Birthdays" count={42} imgs={['assets/family-bday-1.jpg','assets/family-bday-2.jpg','assets/family-bday-3.jpg']}/>
-    <AlbumRow icon="🏖️" name="Beach Days" count={88} imgs={['assets/family-beach-1.jpg','assets/family-beach-2.jpg','assets/family-beach-3.jpg']}/>
-    <AlbumRow icon="👶" name="First Steps" count={31} imgs={['assets/family-steps-1.jpg','assets/family-steps-2.jpg','assets/family-steps-3.jpg']}/>
+    <AlbumRow icon="🎄" name="Christmas" count={214} imgs={['assets/archive-holiday-1.jpg','assets/archive-holiday-2.jpg','assets/archive-holiday-3.jpg']}/>
+    <AlbumRow icon="👨‍👩‍👧‍👦" name="Family Reunions" count={389} imgs={['assets/archive-gather-1.jpg','assets/archive-gather-2.jpg','assets/archive-gather-3.jpg']}/>
+    <AlbumRow icon="✈️" name="Vacations" count={1204} imgs={['assets/archive-vacation-1.jpg','assets/archive-vacation-2.jpg','assets/archive-vacation-3.jpg']}/>
     <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
   </div>
 );
 
-// Screen 2: Search — first steps
+// Screen 2: Search — "Christmas 2019"
 const Screen2 = () => {
   const tiles = [
-    {src:'assets/family-steps-1.jpg',v:false},
-    {src:'assets/family-steps-2.jpg',v:true},
-    {src:'assets/family-steps-3.jpg',v:false},
-    {src:'assets/family-steps-4.jpg',v:false},
-    {src:'assets/family-steps-5.jpg',v:true},
-    {src:'assets/family-steps-6.jpg',v:false},
+    {src:'assets/archive-gather-1.jpg',v:false},
+    {src:'assets/archive-gather-2.jpg',v:true},
+    {src:'assets/archive-gather-3.jpg',v:false},
+    {src:'assets/archive-gather-4.jpg',v:false},
+    {src:'assets/archive-gather-5.jpg',v:true},
+    {src:'assets/archive-gather-6.jpg',v:false},
   ];
   return (
-    <div style={{padding:'8px 20px 16px',fontFamily:F}}>
+    <div style={{padding:'8px 20px 16px',fontFamily:F,background:C.bg}}>
       <div style={{fontSize:30,fontWeight:800,color:C.t1,marginBottom:15,letterSpacing:'-0.02em'}}>Search</div>
-      <div style={{display:'flex',alignItems:'center',gap:10,background:C.card,borderRadius:16,padding:'13px 18px',marginBottom:18,boxShadow:`0 0 0 2.5px ${C.coral},0 2px 8px rgba(232,115,90,0.15)`}}>
-        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke={C.coral} strokeWidth="2.2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
-        <span style={{fontSize:16,color:C.t1,flex:1,fontWeight:500}}>first steps</span>
+      <div style={{display:'flex',alignItems:'center',gap:10,background:C.card,borderRadius:16,padding:'13px 18px',marginBottom:18,boxShadow:`0 0 0 2.5px ${C.gold},0 2px 8px rgba(196,160,96,0.15)`}}>
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke={C.gold} strokeWidth="2.2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+        <span style={{fontSize:16,color:C.t1,flex:1,fontWeight:500}}>Christmas 2019</span>
         <div style={{background:C.t3,borderRadius:999,width:20,height:20,display:'flex',alignItems:'center',justifyContent:'center'}}>
           <svg width="10" height="10" viewBox="0 0 10 10" stroke="white" strokeWidth="2"><line x1="2" y1="2" x2="8" y2="8"/><line x1="8" y1="2" x2="2" y2="8"/></svg>
         </div>
       </div>
       <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}}>
         <span style={{fontSize:12,fontWeight:700,letterSpacing:'0.06em',textTransform:'uppercase',color:C.t2}}>6 results</span>
-        <span style={{fontSize:13,fontWeight:600,color:C.coral}}>Sort ↓</span>
+        <span style={{fontSize:13,fontWeight:600,color:C.gold}}>Sort ↓</span>
       </div>
       <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:4}}>
         {tiles.map((t,i)=>(
           <div key={i} style={{aspectRatio:'1',borderRadius:8,position:'relative',overflow:'hidden'}}>
             <img src={t.src} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
-            {t.v&&<div style={{position:'absolute',bottom:5,left:5,background:'rgba(28,23,19,0.5)',borderRadius:4,width:18,height:18,display:'flex',alignItems:'center',justifyContent:'center'}}><svg width="8" height="8" viewBox="0 0 8 8" fill="white"><polygon points="2,1 7,4 2,7"/></svg></div>}
+            {t.v&&<div style={{position:'absolute',bottom:5,left:5,background:'rgba(0,0,0,0.5)',borderRadius:4,width:18,height:18,display:'flex',alignItems:'center',justifyContent:'center'}}><svg width="8" height="8" viewBox="0 0 8 8" fill="white"><polygon points="2,1 7,4 2,7"/></svg></div>}
           </div>
         ))}
       </div>
       <div style={{display:'flex',gap:8,marginTop:18,flexWrap:'wrap'}}>
-        {['first steps','walking','baby'].map((k,i)=>(
-          <div key={k} style={{background:i===0?C.coral:C.card,color:i===0?'#fff':C.t2,borderRadius:999,padding:'6px 14px',fontSize:13,fontWeight:700}}>{k}</div>
+        {['Christmas 2019','family','holiday'].map((k,i)=>(
+          <div key={k} style={{background:i===0?C.gold:C.card,color:i===0?'#0F0F0F':C.t2,borderRadius:999,padding:'6px 14px',fontSize:13,fontWeight:700}}>{k}</div>
         ))}
       </div>
     </div>
   );
 };
 
-// Screen 3: Birthday search/sort
+// Screen 3: Holiday albums — sorted by event
 const Screen3 = () => {
-  const bdayImgs = [
-    'assets/family-bday-1.jpg','assets/family-bday-2.jpg','assets/family-bday-3.jpg',
-    'assets/family-bday-4.jpg','assets/family-bday-5.jpg','assets/family-bday-6.jpg',
+  const holidayImgs = [
+    'assets/archive-holiday-1.jpg','assets/archive-holiday-2.jpg','assets/archive-holiday-3.jpg',
+    'assets/archive-holiday-4.jpg','assets/archive-holiday-5.jpg','assets/archive-holiday-6.jpg',
   ];
   return (
-    <div style={{padding:'8px 20px 16px',fontFamily:F}}>
+    <div style={{padding:'8px 20px 16px',fontFamily:F,background:C.bg}}>
       <div style={{fontSize:30,fontWeight:800,color:C.t1,marginBottom:15,letterSpacing:'-0.02em'}}>Search</div>
-      <div style={{display:'flex',alignItems:'center',gap:10,background:C.card,borderRadius:16,padding:'13px 18px',marginBottom:18,boxShadow:`0 0 0 2.5px ${C.coral}`}}>
-        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke={C.coral} strokeWidth="2.2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
-        <span style={{fontSize:17,color:C.t1,fontWeight:500,flex:1}}>first birthday</span>
+      <div style={{display:'flex',alignItems:'center',gap:10,background:C.card,borderRadius:16,padding:'13px 18px',marginBottom:18,boxShadow:`0 0 0 2.5px ${C.gold}`}}>
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke={C.gold} strokeWidth="2.2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+        <span style={{fontSize:17,color:C.t1,fontWeight:500,flex:1}}>Mom's 60th birthday</span>
         <div style={{background:C.t3,borderRadius:999,width:21,height:21,display:'flex',alignItems:'center',justifyContent:'center'}}>
           <svg width="10" height="10" viewBox="0 0 10 10" stroke="white" strokeWidth="2"><line x1="2" y1="2" x2="8" y2="8"/><line x1="8" y1="2" x2="2" y2="8"/></svg>
         </div>
       </div>
       <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:14}}>
         <span style={{fontSize:12,fontWeight:700,letterSpacing:'0.06em',textTransform:'uppercase',color:C.t2}}>6 results</span>
-        <span style={{fontSize:13,fontWeight:600,color:C.coral}}>Sort ↓</span>
+        <span style={{fontSize:13,fontWeight:600,color:C.gold}}>Sort ↓</span>
       </div>
       <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:4}}>
-        {bdayImgs.map((src,i)=>(
+        {holidayImgs.map((src,i)=>(
           <div key={i} style={{aspectRatio:'1',borderRadius:8,position:'relative',overflow:'hidden'}}>
             <img src={src} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
-            <div style={{position:'absolute',top:6,right:6,width:18,height:18,background:C.coral,borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center'}}>
-              <svg width="9" height="9" viewBox="0 0 9 9" fill="none" stroke="white" strokeWidth="2"><polyline points="1.5,4.5 3.5,7 7.5,2"/></svg>
+            <div style={{position:'absolute',top:6,right:6,width:18,height:18,background:C.gold,borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center'}}>
+              <svg width="9" height="9" viewBox="0 0 9 9" fill="none" stroke="#0F0F0F" strokeWidth="2.2"><polyline points="1.5,4.5 3.5,7 7.5,2"/></svg>
             </div>
           </div>
         ))}
       </div>
       <div style={{marginTop:18,background:C.inner,borderRadius:16,padding:'14px 16px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-        <div style={{fontSize:13,fontWeight:700,color:C.coral}}>Save as "1st Birthday" album</div>
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke={C.coral} strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <div style={{fontSize:13,fontWeight:700,color:C.gold}}>Save as "Mom's 60th" album</div>
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke={C.gold} strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </div>
     </div>
   );
 };
 
-// Screen 4: Share with Grandma
+// Screen 4: Share the family album
 const Screen4 = () => {
-  const beachImgs = [
-    'assets/family-beach-1.jpg','assets/family-beach-2.jpg','assets/family-beach-3.jpg',
-    'assets/family-beach-4.jpg','assets/family-beach-5.jpg','assets/family-beach-6.jpg',
+  const vacImgs = [
+    'assets/archive-vacation-1.jpg','assets/archive-vacation-2.jpg','assets/archive-vacation-3.jpg',
+    'assets/archive-vacation-4.jpg','assets/archive-vacation-5.jpg','assets/archive-vacation-6.jpg',
   ];
   return (
-    <div style={{padding:'12px 16px 8px',fontFamily:F,height:'100%',display:'flex',flexDirection:'column',gap:12}}>
-      <div style={{background:C.card,borderRadius:20,overflow:'hidden',boxShadow:'0 2px 12px rgba(28,23,19,0.08)'}}>
+    <div style={{padding:'12px 16px 8px',fontFamily:F,height:'100%',display:'flex',flexDirection:'column',gap:12,background:C.bg}}>
+      <div style={{background:C.card,borderRadius:20,overflow:'hidden',boxShadow:'0 2px 12px rgba(0,0,0,0.4)'}}>
         <div style={{padding:'12px 14px 10px',display:'flex',alignItems:'center',gap:10,borderBottom:`1px solid ${C.border}`}}>
           <img src="assets/pixsort-logo.jpeg" alt="" style={{width:26,height:26,borderRadius:7}}/>
           <div style={{flex:1}}>
-            <div style={{fontSize:14,fontWeight:800,color:C.t1}}>Beach Trip 🏖️</div>
-            <div style={{fontSize:11,color:C.t2}}>60 photos · sorted</div>
+            <div style={{fontSize:14,fontWeight:800,color:C.t1}}>Family Vacation 🌴</div>
+            <div style={{fontSize:11,color:C.t2}}>186 photos · sorted</div>
           </div>
-          <div style={{background:'rgba(232,115,90,0.12)',borderRadius:8,padding:'3px 8px'}}>
-            <span style={{fontSize:10,fontWeight:800,color:C.coral}}>✦ Ready</span>
+          <div style={{background:'rgba(196,160,96,0.12)',borderRadius:8,padding:'3px 8px'}}>
+            <span style={{fontSize:10,fontWeight:800,color:C.gold}}>✦ Ready</span>
           </div>
         </div>
         <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:2,padding:'2px'}}>
-          {beachImgs.map((src,i)=>(
+          {vacImgs.map((src,i)=>(
             <div key={i} style={{aspectRatio:'1',overflow:'hidden'}}>
               <img src={src} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
             </div>
           ))}
         </div>
       </div>
-      <div style={{background:C.t1,borderRadius:18,padding:'16px',textAlign:'center'}}>
-        <span style={{fontSize:15,fontWeight:800,color:C.bg,letterSpacing:'-0.01em'}}>Send to camera roll →</span>
+      <div style={{background:C.gold,borderRadius:18,padding:'16px',textAlign:'center'}}>
+        <span style={{fontSize:15,fontWeight:800,color:'#0F0F0F',letterSpacing:'-0.01em'}}>Send to camera roll →</span>
       </div>
-      <div style={{background:'#FFFFFF',borderRadius:18,padding:'12px',display:'flex',alignItems:'center',gap:10,boxShadow:'0 2px 12px rgba(0,0,0,0.06)'}}>
+      <div style={{background:C.card,borderRadius:18,padding:'12px',display:'flex',alignItems:'center',gap:10,boxShadow:'0 2px 12px rgba(0,0,0,0.3)'}}>
         <div style={{width:48,height:48,borderRadius:12,overflow:'hidden'}}>
-          <img src="assets/family-beach-1.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
+          <img src="assets/archive-vacation-1.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
         </div>
         <div style={{flex:1}}>
-          <div style={{fontSize:13,fontWeight:700,color:'#1C1C1E'}}>Added to Photos</div>
-          <div style={{fontSize:11,color:'#8A8A8E',marginTop:2}}>60 items · Beach Trip</div>
+          <div style={{fontSize:13,fontWeight:700,color:C.t1}}>Added to Photos</div>
+          <div style={{fontSize:11,color:C.t2,marginTop:2}}>186 items · Family Vacation</div>
         </div>
-        <div style={{width:28,height:28,background:'#F0F0F0',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center'}}>
+        <div style={{width:28,height:28,background:'#1E1E1E',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center'}}>
           <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="#34C759" strokeWidth="3"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
       </div>
@@ -707,7 +706,7 @@ async function savePhone(phone) {
     await fetch(SCRIPT_URL, {
       method: 'POST', mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phone, source: 'parents' })
+      body: JSON.stringify({ phone, source: 'archivist' })
     });
   } catch(e) { console.error(e); }
 }
@@ -719,7 +718,7 @@ async function handleSubmit(prefix) {
   const btn     = row ? row.querySelector('button') : null;
   const val     = (input ? input.value : '').trim();
   if (!val) {
-    if (input) { input.style.boxShadow = '0 0 0 2px #E8735A inset'; input.focus(); }
+    if (input) { input.style.boxShadow = '0 0 0 2px #C4A060 inset'; input.focus(); }
     setTimeout(() => { if(input) input.style.boxShadow = ''; }, 1500);
     return;
   }
