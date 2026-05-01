@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080, height=1350">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:   #0F0F0F;
+      --bg2:  #161616;
+      --gold: #C4A060;
+      --goldd:#A8864A;
+      --white:#FFFFFF;
+      --grey: #888888;
+      --grey2:#444444;
+    }
+    html, body { width: 1080px; height: 1350px; overflow: hidden; background: var(--bg); }
+    body { font-family: 'DM Sans','Helvetica Neue',Helvetica,Arial,sans-serif; -webkit-font-smoothing: antialiased; }
+
+    .slide {
+      width: 1080px; height: 1350px;
+      display: none; position: absolute; inset: 0;
+      overflow: hidden;
+    }
+    .slide.active { display: flex; }
+
+    /* ── Nav dots ── */
+    .nav {
+      position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 10px; z-index: 999;
+    }
+    .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--grey2); cursor: pointer;
+      transition: background .2s;
+    }
+    .dot.active { background: var(--gold); }
+
+    /* ─────────────────────────────────────────
+       SLIDE 1 — Hook / problem
+    ───────────────────────────────────────── */
+    #s1 {
+      flex-direction: column;
+      align-items: center; justify-content: center;
+      background: var(--bg);
+      text-align: center;
+    }
+    #s1::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 90% 70% at 50% 40%, rgba(196,160,96,0.08) 0%, transparent 70%);
+    }
+    #s1 .eyebrow {
+      font-size: 18px; font-weight: 800; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 64px; position: relative;
+      display: flex; align-items: center; gap: 14px;
+    }
+    #s1 .eyebrow::before, #s1 .eyebrow::after {
+      content: ''; flex: 1; height: 1px; background: rgba(196,160,96,0.3);
+      width: 60px;
+    }
+    #s1 h1 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 128px; font-weight: 400; line-height: 1.0;
+      letter-spacing: -0.03em; color: var(--white);
+      max-width: 900px; text-wrap: balance;
+      position: relative;
+    }
+    #s1 h1 em { font-style: italic; color: var(--gold); }
+    #s1 .sub {
+      font-size: 30px; color: var(--grey);
+      margin-top: 56px; line-height: 1.6;
+      max-width: 720px; position: relative;
+    }
+    #s1 .slide-num {
+      position: absolute; bottom: 48px; right: 52px;
+      font-size: 20px; font-weight: 800; color: var(--grey2);
+      letter-spacing: 0.08em;
+    }
+
+    /* ─────────────────────────────────────────
+       SLIDE 2 — The pain (list)
+    ───────────────────────────────────────── */
+    #s2 {
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 100px 120px 110px;
+      background: var(--bg);
+    }
+    #s2 .label {
+      font-size: 17px; font-weight: 800; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 64px;
+    }
+    #s2 h2 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 84px; font-weight: 400; line-height: 1.1;
+      letter-spacing: -0.025em; color: var(--white);
+      margin-bottom: 72px;
+    }
+    #s2 .pain-list { display: flex; flex-direction: column; gap: 36px; }
+    #s2 .pain-item {
+      display: flex; align-items: flex-start; gap: 24px;
+    }
+    #s2 .pain-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--gold); flex-shrink: 0; margin-top: 16px;
+    }
+    #s2 .pain-text {
+      font-size: 30px; color: var(--grey); line-height: 1.5;
+    }
+    #s2 .pain-text strong { color: var(--white); font-weight: 700; }
+    #s2 .slide-num {
+      position: absolute; bottom: 48px; right: 52px;
+      font-size: 20px; font-weight: 800; color: var(--grey2); letter-spacing: 0.08em;
+    }
+
+    /* ─────────────────────────────────────────
+       SLIDE 3 — Brand reveal
+    ───────────────────────────────────────── */
+    #s3 {
+      flex-direction: column;
+      align-items: center; justify-content: center;
+      background: var(--bg); text-align: center;
+    }
+    #s3::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 100% 80% at 50% 50%, rgba(196,160,96,0.1) 0%, transparent 65%);
+    }
+    #s3 .logo-lockup {
+      position: relative;
+      display: flex; flex-direction: column; align-items: center; gap: 28px;
+      margin-bottom: 64px;
+    }
+    #s3 .logo-img {
+      width: 140px; height: 140px; border-radius: 32px;
+      background: var(--gold); display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 100px rgba(196,160,96,0.35);
+    }
+    #s3 .logo-img svg { width: 72px; height: 72px; }
+    #s3 .wordmark {
+      font-size: 84px; font-weight: 900; color: var(--white);
+      letter-spacing: -0.04em;
+    }
+    #s3 h2 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 92px; font-weight: 400; line-height: 1.1;
+      letter-spacing: -0.03em; color: var(--white);
+      position: relative; text-wrap: balance;
+    }
+    #s3 h2 em { font-style: italic; color: var(--gold); }
+    #s3 .tagline {
+      font-size: 28px; color: var(--grey); margin-top: 44px;
+      position: relative; max-width: 680px;
+    }
+    #s3 .slide-num {
+      position: absolute; bottom: 48px; right: 52px;
+      font-size: 20px; font-weight: 800; color: var(--grey2); letter-spacing: 0.08em;
+    }
+
+    /* ─────────────────────────────────────────
+       SLIDE 4 — Find it
+    ───────────────────────────────────────── */
+    #s4 {
+      flex-direction: column;
+      align-items: flex-start;
+      background: var(--bg);
+      padding: 100px 90px 60px 90px;
+      gap: 0;
+    }
+    #s4 .copy { width: 100%; padding-bottom: 56px; }
+    #s4 .kw {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 128px; font-weight: 400; font-style: italic;
+      color: var(--gold); letter-spacing: -0.04em;
+      line-height: 1; margin-bottom: 28px;
+    }
+    #s4 .desc {
+      font-size: 28px; color: var(--grey); line-height: 1.6;
+      max-width: 760px;
+    }
+    #s4 .desc strong { color: var(--white); }
+    .phone-mock {
+      flex-shrink: 0;
+      width: 380px; height: 820px;
+      border-radius: 52px;
+      background: linear-gradient(160deg, #232323 0%, #161616 100%);
+      box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.07);
+      position: relative; overflow: hidden;
+      padding: 12px;
+    }
+    .phone-mock .inner {
+      width: 100%; height: 100%;
+      border-radius: 38px;
+      background: #F0EBE0;
+      overflow: hidden;
+      position: relative;
+    }
+    .phone-mock .notch {
+      position: absolute; top: 8px; left: 50%;
+      transform: translateX(-50%);
+      width: 100px; height: 28px;
+      background: #111; border-radius: 99px;
+      z-index: 10;
+    }
+    /* Search screen */
+    .search-screen { padding: 56px 20px 16px; }
+    .search-screen .sbar {
+      display: flex; align-items: center; gap: 8px;
+      background: #E8E2D6; border-radius: 12px;
+      padding: 11px 14px; margin-bottom: 18px;
+      box-shadow: 0 0 0 2px #C4A060;
+    }
+    .search-screen .sbar-icon { font-size: 14px; }
+    .search-screen .sbar-text { font-size: 14px; font-weight: 600; color: #2D2A22; }
+    .search-screen .grid3 {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 3px;
+    }
+    .search-screen .thumb {
+      aspect-ratio: 1; border-radius: 6px; overflow: hidden;
+    }
+    .search-screen .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .search-screen .pills {
+      display: flex; gap: 6px; flex-wrap: wrap; margin-top: 14px;
+    }
+    .search-screen .pill {
+      background: #E8E2D6; border-radius: 99px;
+      padding: 4px 10px; font-size: 12px; font-weight: 700; color: #8A7E6E;
+    }
+    .search-screen .pill.active { background: #C4A060; color: #fff; }
+    /* Album screen */
+    .album-screen { padding: 56px 16px 16px; }
+    .album-screen .title { font-size: 22px; font-weight: 800; color: #2D2A22; margin-bottom: 14px; letter-spacing: -0.02em; }
+    .album-row {
+      display: flex; align-items: center; gap: 10px;
+      background: #E8E2D6; border-radius: 12px;
+      padding: 10px 12px; margin-bottom: 7px;
+    }
+    .album-row .aico { font-size: 20px; width: 38px; height: 38px; background: #DDD0B0; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .album-row .aname { font-size: 13px; font-weight: 700; color: #2D2A22; }
+    .album-row .acount { font-size: 11px; color: #8A7E6E; margin-top: 1px; }
+    .album-row .athumbs { display: flex; gap: 2px; margin-left: auto; }
+    .album-row .at { width: 32px; height: 32px; border-radius: 5px; overflow: hidden; background: #C8C0B0; }
+    .album-row .at img { width: 100%; height: 100%; object-fit: cover; }
+    /* Send screen */
+    .send-screen { padding: 56px 16px 16px; }
+    .send-screen .album-header {
+      background: #E8E2D6; border-radius: 14px; overflow: hidden; margin-bottom: 12px;
+    }
+    .send-screen .album-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; padding: 2px; }
+    .send-screen .ag { aspect-ratio: 1; overflow: hidden; }
+    .send-screen .ag img { width: 100%; height: 100%; object-fit: cover; }
+    .send-screen .album-top { padding: 10px 12px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #DDD7CB; }
+    .send-screen .album-top .aname2 { font-size: 13px; font-weight: 800; color: #2D2A22; }
+    .send-screen .album-top .acount2 { font-size: 11px; color: #8A7E6E; }
+    .send-screen .send-btn {
+      background: #2D2A22; border-radius: 14px;
+      padding: 14px; text-align: center;
+      font-size: 14px; font-weight: 800; color: #F0EBE0;
+      letter-spacing: -0.01em;
+    }
+    #s4 .slide-num {
+      position: absolute; bottom: 48px; right: 52px;
+      font-size: 20px; font-weight: 800; color: var(--grey2); letter-spacing: 0.08em;
+    }
+
+    /* ─────────────────────────────────────────
+       SLIDE 5 — Sort it
+    ───────────────────────────────────────── */
+    #s5 {
+      flex-direction: column;
+      align-items: flex-start;
+      background: var(--bg);
+      padding: 100px 90px 60px 90px;
+    }
+    #s5 .copy { width: 100%; padding-bottom: 56px; }
+    #s5 .kw {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 128px; font-weight: 400; font-style: italic;
+      color: var(--gold); letter-spacing: -0.04em;
+      line-height: 1; margin-bottom: 28px;
+    }
+    #s5 .desc { font-size: 28px; color: var(--grey); line-height: 1.6; max-width: 760px; }
+    #s5 .desc strong { color: var(--white); }
+    #s5 .slide-num {
+      position: absolute; bottom: 48px; right: 90px;
+      font-size: 20px; font-weight: 800; color: var(--grey2); letter-spacing: 0.08em;
+    }
+
+    /* ─────────────────────────────────────────
+       SLIDE 6 — Send it + CTA
+    ───────────────────────────────────────── */
+    #s6 {
+      flex-direction: column;
+      align-items: center; justify-content: center;
+      background: var(--bg); text-align: center;
+    }
+    #s6::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 90% 80% at 50% 60%, rgba(196,160,96,0.09) 0%, transparent 70%);
+    }
+    #s6 .kw {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 140px; font-weight: 400; font-style: italic;
+      color: var(--gold); letter-spacing: -0.04em;
+      line-height: 1; margin-bottom: 44px;
+      position: relative;
+    }
+    #s6 .desc {
+      font-size: 32px; color: var(--grey); line-height: 1.6;
+      max-width: 780px; margin-bottom: 88px; position: relative;
+    }
+    #s6 .desc strong { color: var(--white); }
+    #s6 .cta-badge {
+      position: relative;
+      display: inline-flex; align-items: center; gap: 16px;
+      background: var(--gold);
+      color: #0F0F0F; font-size: 30px; font-weight: 900;
+      padding: 28px 64px; border-radius: 999px;
+      letter-spacing: -0.02em;
+    }
+    #s6 .url {
+      position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%);
+      font-size: 20px; color: var(--grey2); letter-spacing: 0.04em; font-weight: 600;
+      white-space: nowrap;
+    }
+    #s6 .slide-num {
+      position: absolute; bottom: 48px; right: 52px;
+      font-size: 20px; font-weight: 800; color: var(--grey2); letter-spacing: 0.08em;
+    }
+
+    /* Global decorative elements */
+    .gold-line-top {
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0.5;
+    }
+    .gold-line-bot {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0.3;
+    }
+    .corner-mark {
+      position: absolute; top: 44px; left: 52px;
+      font-size: 17px; font-weight: 800; color: var(--gold);
+      letter-spacing: 0.06em; opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── SLIDE 1: Hook ── -->
+<div class="slide active" id="s1">
+  <div class="gold-line-top"></div>
+  <span class="corner-mark">✦ PIXSORT</span>
+  <div class="eyebrow">AI-Powered Camera Organization</div>
+  <h1>3,000 photos.<br><em>Zero system.</em></h1>
+  <p class="sub">Sound familiar? Your best content is buried in your camera roll with no way to find it fast.</p>
+  <span class="slide-num">01 / 06</span>
+  <div class="gold-line-bot"></div>
+</div>
+
+<!-- ── SLIDE 2: Pain ── -->
+<div class="slide" id="s2">
+  <div class="gold-line-top"></div>
+  <span class="corner-mark">✦ PIXSORT</span>
+  <div class="label">The problem</div>
+  <h2>Your camera roll<br>is working against you.</h2>
+  <div class="pain-list">
+    <div class="pain-item">
+      <div class="pain-dot"></div>
+      <div class="pain-text"><strong>Scrolling for 10 minutes</strong> to find one clip</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-dot"></div>
+      <div class="pain-text"><strong>3,000 photos</strong> with zero organization</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-dot"></div>
+      <div class="pain-text"><strong>Personal photos, memes, screenshots</strong> all mixed in</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-dot"></div>
+      <div class="pain-text"><strong>Your best content</strong> buried and never posted</div>
+    </div>
+  </div>
+  <span class="slide-num">02 / 06</span>
+  <div class="gold-line-bot"></div>
+</div>
+
+<!-- ── SLIDE 3: Brand reveal ── -->
+<div class="slide" id="s3">
+  <div class="gold-line-top"></div>
+  <div class="logo-lockup">
+    <div class="logo-img">
+      <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="6" y="6" width="20" height="20" rx="4" fill="#0F0F0F"/>
+        <rect x="34" y="6" width="20" height="20" rx="4" fill="#0F0F0F"/>
+        <rect x="6" y="34" width="20" height="20" rx="4" fill="#0F0F0F"/>
+        <rect x="34" y="34" width="20" height="20" rx="4" fill="#0F0F0F" opacity="0.4"/>
+        <circle cx="43" cy="43" r="8" fill="#0F0F0F"/>
+        <path d="M40 43h6M43 40v6" stroke="#C4A060" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="wordmark">PixSort</div>
+  </div>
+  <h2>Your camera roll.<br><em>Finally organized.</em></h2>
+  <p class="tagline">AI sorts every photo and video automatically. No manual work.</p>
+  <span class="slide-num">03 / 06</span>
+  <div class="gold-line-bot"></div>
+</div>
+
+<!-- ── SLIDE 4: Find it ── -->
+<div class="slide" id="s4">
+  <div class="gold-line-top"></div>
+  <span class="corner-mark">✦ PIXSORT</span>
+  <div class="copy">
+    <div class="kw">Find<br>it.</div>
+    <p class="desc">Type any keyword.<br><strong>Find any photo.</strong><br>Instantly — no scrolling.</p>
+  </div>
+  <!-- Phone mockup: Search screen -->
+  <div class="phone-mock" style="margin: 0 auto;">
+    <div class="inner">
+      <div class="notch"></div>
+      <div class="search-screen">
+        <div style="font-size:22px;font-weight:800;color:#2D2A22;margin-bottom:14px;letter-spacing:-0.02em;">Search</div>
+        <div class="sbar">
+          <span class="sbar-icon">🔍</span>
+          <span class="sbar-text">gym</span>
+        </div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#8A7E6E;margin-bottom:10px;">9 results</div>
+        <div class="grid3">
+          <div class="thumb"><img src="assets/crop_gym_r1c1.jpg" onerror="this.parentNode.style.background='#C8C0B0'"/></div>
+          <div class="thumb"><img src="assets/crop_gym_r1c2.jpg" onerror="this.parentNode.style.background='#D0C8B8'"/></div>
+          <div class="thumb"><img src="assets/crop_gym_r1c3.jpg" onerror="this.parentNode.style.background='#BEB6A6'"/></div>
+          <div class="thumb"><img src="assets/crop_gym_r2c1.jpg" onerror="this.parentNode.style.background='#C8C0B0'"/></div>
+          <div class="thumb"><img src="assets/crop_gym_r2c2.jpg" onerror="this.parentNode.style.background='#D4CCC0'"/></div>
+          <div class="thumb"><img src="assets/crop_gym_r2c3.jpg" onerror="this.parentNode.style.background='#C0B8A8'"/></div>
+          <div class="thumb"><img src="assets/crop_gym_r3c1.jpg" onerror="this.parentNode.style.background='#BFBAAC'"/></div>
+          <div class="thumb"><img src="assets/crop_gym_r3c2.jpg" onerror="this.parentNode.style.background='#CAC2B2'"/></div>
+          <div class="thumb" style="background:#C4A060;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:10px;font-weight:800;color:#fff;">+more</div>
+        </div>
+        <div class="pills">
+          <div class="pill active">gym</div>
+          <div class="pill">workout</div>
+          <div class="pill">fitness</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">04 / 06</span>
+  <div class="gold-line-bot"></div>
+</div>
+
+<!-- ── SLIDE 5: Sort it ── -->
+<div class="slide" id="s5">
+  <div class="gold-line-top"></div>
+  <span class="corner-mark">✦ PIXSORT</span>
+  <div class="copy">
+    <div class="kw">Sort<br>it.</div>
+    <p class="desc"><strong>AI builds your albums</strong> automatically. Every type of content, organized without lifting a finger.</p>
+  </div>
+  <!-- Phone mockup: Albums screen -->
+  <div class="phone-mock" style="margin: 0 auto; flex-shrink: 0;">
+    <div class="inner">
+      <div class="notch"></div>
+      <div class="album-screen">
+        <div class="title">PixSort</div>
+        <div style="background:#DDD7CB;border-radius:14px;padding:14px 14px 10px;margin-bottom:14px;">
+          <div style="font-size:40px;font-weight:800;color:#9B8B3A;line-height:1;letter-spacing:-0.03em;">150</div>
+          <div style="font-size:12px;color:#8A7E6E;margin-top:2px;">photos organized</div>
+          <div style="background:#C8C0B0;border-radius:99px;height:5px;margin-top:10px;overflow:hidden;">
+            <div style="background:#8B9B5E;width:30%;height:100%;border-radius:99px;"></div>
+          </div>
+        </div>
+        <div style="font-size:15px;font-weight:800;color:#2D2A22;margin-bottom:9px;">Your Albums</div>
+        <div class="album-row">
+          <div class="aico">📱</div>
+          <div><div class="aname">Screenshots</div><div class="acount">35 photos</div></div>
+          <div class="athumbs">
+            <div class="at"><img src="assets/crop_ss_r1c1.jpg" onerror="this.style.background='#C8C0B0'"/></div>
+            <div class="at" style="background:#C8C0B0;"></div>
+          </div>
+        </div>
+        <div class="album-row">
+          <div class="aico">🍔</div>
+          <div><div class="aname">Food</div><div class="acount">30 photos</div></div>
+          <div class="athumbs">
+            <div class="at"><img src="assets/crop_food_r1c1.jpg" onerror="this.style.background='#C0B8A8'"/></div>
+            <div class="at" style="background:#C0B8A8;"></div>
+          </div>
+        </div>
+        <div class="album-row">
+          <div class="aico">✈️</div>
+          <div><div class="aname">Travel</div><div class="acount">124 photos</div></div>
+          <div class="athumbs">
+            <div class="at"><img src="assets/crop_travel_r1c2.jpg" onerror="this.style.background='#B8B0A0'"/></div>
+            <div class="at" style="background:#B8B0A0;"></div>
+          </div>
+        </div>
+        <div class="album-row" style="opacity:0.5;">
+          <div class="aico">🏋️</div>
+          <div><div class="aname">Gym</div><div class="acount">91 photos</div></div>
+          <div class="athumbs"><div class="at" style="background:#BEB6A6;"></div><div class="at" style="background:#C6BEB2;"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">05 / 06</span>
+  <div class="gold-line-bot"></div>
+</div>
+
+<!-- ── SLIDE 6: Send it + CTA ── -->
+<div class="slide" id="s6">
+  <div class="gold-line-top"></div>
+  <span class="corner-mark">✦ PIXSORT</span>
+  <div class="kw">Send it.</div>
+  <p class="desc">Push any album <strong>straight to your camera roll.</strong> Ready for CapCut, InShot, Instagram — instantly.</p>
+  <a class="cta-badge" href="#">
+    ✦ &nbsp;Download Now — It's Free
+  </a>
+  <div class="url">pixsort.app</div>
+  <span class="slide-num">06 / 06</span>
+  <div class="gold-line-bot"></div>
+</div>
+
+<!-- ── Nav dots ── -->
+<div class="nav">
+  <div class="dot active" onclick="goTo(1)"></div>
+  <div class="dot" onclick="goTo(2)"></div>
+  <div class="dot" onclick="goTo(3)"></div>
+  <div class="dot" onclick="goTo(4)"></div>
+  <div class="dot" onclick="goTo(5)"></div>
+  <div class="dot" onclick="goTo(6)"></div>
+</div>
+
+<script>
+let current = 1;
+function goTo(n) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
+  document.getElementById('s' + n).classList.add('active');
+  document.querySelectorAll('.dot')[n-1].classList.add('active');
+  current = n;
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(Math.min(6, current+1));
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   goTo(Math.max(1, current-1));
+});
+</script>
+</body>
+</html>
