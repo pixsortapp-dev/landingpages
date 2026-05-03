@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PixSort × Alex - Bali Creator Retreat</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0F0F0F; --bg2:#1A1A1A; --bg3:#141414;
+    --gold:#C4A060; --gold-dk:#A8864A; --gold-soft:rgba(196,160,96,0.12);
+    --white:#FFFFFF; --grey:#999999; --grey2:#6A6A6A;
+    --border:#2A2A2A; --border-soft:rgba(255,255,255,0.08);
+    --app-bg:#F0EBE0;
+  }
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    font-family:'DM Sans','Helvetica Neue',Arial,sans-serif;
+    color:var(--white);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    line-height:1.5;
+  }
+  .serif{font-family:'DM Serif Display',Georgia,serif;font-weight:400;letter-spacing:-0.02em}
+  em{font-style:italic;color:var(--gold)}
+
+  /* ── Page wrapper for print ───────────── */
+  .page{
+    max-width:1100px;
+    margin:0 auto;
+    padding:0 48px;
+  }
+
+  /* ── Cover ────────────────────────────── */
+  .cover{
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:space-between;
+    padding:64px 48px 48px;
+    position:relative;overflow:hidden;
+    page-break-after:always;
+  }
+  .cover::before{
+    content:'';position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 20%,rgba(196,160,96,0.10) 0%,transparent 60%),
+      radial-gradient(ellipse 70% 50% at 10% 90%,rgba(196,160,96,0.06) 0%,transparent 60%);
+    pointer-events:none;
+  }
+  .cover-top{display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand img{width:36px;height:36px;border-radius:9px}
+  .brand-name{font-weight:800;font-size:18px;letter-spacing:-0.02em}
+  .doc-tag{
+    border:1px solid rgba(196,160,96,0.4); color:var(--gold);
+    font-size:10.5px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;
+    border-radius:999px;padding:7px 16px;
+  }
+  .cover-mid{position:relative;z-index:2;max-width:900px;margin-top:auto}
+  .cover-eyebrow{
+    color:var(--gold);font-size:12px;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;
+    margin-bottom:32px;
+  }
+  .cover-title{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-size:clamp(64px,9vw,128px);
+    line-height:0.95;letter-spacing:-0.035em;
+    margin-bottom:28px;
+  }
+  .cover-sub{
+    font-size:22px;color:var(--grey);max-width:640px;line-height:1.45;
+    font-weight:400;
+  }
+  .cover-bottom{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    position:relative;z-index:2;margin-top:64px;
+    padding-top:32px;border-top:1px solid var(--border-soft);
+  }
+  .cover-meta{display:flex;gap:48px;flex-wrap:wrap}
+  .cover-meta-item .label{font-size:10.5px;color:var(--grey2);font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:6px}
+  .cover-meta-item .val{font-size:15px;color:var(--white);font-weight:600}
+  .cover-bottom .doc-tag{align-self:flex-end}
+
+  /* ── Section base ─────────────────────── */
+  section{padding:96px 0;position:relative}
+  .section-eyebrow{
+    color:var(--gold);font-size:11px;font-weight:800;letter-spacing:0.22em;text-transform:uppercase;
+    margin-bottom:20px;
+  }
+  .section-title{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-size:clamp(40px,5.5vw,72px);
+    line-height:1.0;letter-spacing:-0.025em;
+    margin-bottom:24px;
+  }
+  .section-sub{
+    font-size:19px;color:var(--grey);max-width:680px;line-height:1.55;margin-bottom:48px;
+  }
+
+  /* ── The hook (problem) ───────────────── */
+  .hook{
+    background:var(--bg2);
+    border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);
+  }
+  .hook-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+  .stat-stack{display:flex;flex-direction:column;gap:32px}
+  .stat{
+    background:var(--bg3);border:1px solid var(--border);
+    padding:28px 32px;border-radius:16px;
+  }
+  .stat-num{font-family:'DM Serif Display',Georgia,serif;font-size:64px;color:var(--gold);line-height:1;letter-spacing:-0.02em}
+  .stat-num.italic{font-style:italic}
+  .stat-label{font-size:14px;color:var(--grey);margin-top:10px;line-height:1.5}
+
+  /* ── What PixSort is ──────────────────── */
+  .three-acts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:24px}
+  .act{
+    background:var(--bg2);border:1px solid var(--border);border-radius:20px;
+    padding:36px 32px;position:relative;overflow:hidden;
+  }
+  .act-num{font-family:'DM Serif Display',Georgia,serif;font-size:68px;color:var(--gold);font-style:italic;line-height:0.9;letter-spacing:-0.03em;margin-bottom:18px}
+  .act-name{font-family:'DM Serif Display',Georgia,serif;font-size:32px;margin-bottom:10px;letter-spacing:-0.02em}
+  .act-desc{font-size:15px;color:var(--grey);line-height:1.55}
+
+  /* ── Phone showcase ───────────────────── */
+  .showcase{
+    background:linear-gradient(180deg,var(--bg) 0%,#0a0a0a 100%);
+    text-align:center;
+  }
+  .showcase-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+    margin-top:56px;
+  }
+  .phone-card{
+    background:var(--bg2);border:1px solid var(--border);border-radius:24px;
+    padding:32px 24px 28px;text-align:center;
+  }
+  .phone-frame{
+    background:#000;border-radius:34px;padding:8px;
+    box-shadow:0 30px 60px rgba(0,0,0,0.4),0 0 0 1px rgba(255,255,255,0.05);
+    margin:0 auto 24px;
+    max-width:260px;
+  }
+  .phone-frame img{
+    width:100%;display:block;border-radius:26px;
+  }
+  .phone-title{font-family:'DM Serif Display',Georgia,serif;font-size:22px;margin-bottom:6px;letter-spacing:-0.01em}
+  .phone-cap{font-size:13px;color:var(--grey);line-height:1.5}
+
+  /* ── Use case archetypes ──────────────── */
+  .archetypes{background:var(--bg2);border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft)}
+  .arch-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px}
+  .arch{
+    background:var(--bg3);border:1px solid var(--border);border-radius:20px;
+    padding:36px;position:relative;overflow:hidden;
+    display:flex;flex-direction:column;gap:24px;
+  }
+  .arch-head{display:flex;align-items:center;gap:16px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+  .arch-avatar{
+    width:60px;height:60px;border-radius:50%;
+    background-size:cover;background-position:center;
+    border:2px solid var(--gold);flex-shrink:0;
+  }
+  .arch-name{font-family:'DM Serif Display',Georgia,serif;font-size:28px;letter-spacing:-0.01em;line-height:1.1}
+  .arch-tag{font-size:11px;color:var(--gold);font-weight:800;letter-spacing:0.18em;text-transform:uppercase;margin-top:6px}
+
+  .arch-block-label{
+    font-size:10.5px;color:var(--gold);font-weight:800;letter-spacing:0.2em;
+    text-transform:uppercase;margin-bottom:14px;
+  }
+  .arch-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+  .arch-list li{
+    position:relative;padding-left:22px;
+    font-size:15px;color:var(--white);line-height:1.5;
+  }
+  .arch-list li::before{
+    content:'';position:absolute;left:0;top:9px;
+    width:8px;height:1.5px;background:var(--gold);
+  }
+  .arch-list.numbered{counter-reset:step}
+  .arch-list.numbered li{counter-increment:step;padding-left:32px}
+  .arch-list.numbered li::before{
+    content:counter(step,decimal-leading-zero);
+    background:transparent;width:auto;height:auto;
+    top:0;font-family:'DM Serif Display',Georgia,serif;
+    font-style:italic;font-size:14px;color:var(--gold);font-weight:400;
+    letter-spacing:0;
+  }
+  .arch-list strong{color:var(--gold);font-weight:700}
+
+  .arch-quote{
+    font-family:'DM Serif Display',Georgia,serif;font-style:italic;
+    font-size:17px;color:var(--white);line-height:1.45;
+    border-left:2px solid var(--gold);padding-left:18px;
+    margin-top:auto;
+  }
+  .arch-attr{font-size:12px;color:var(--grey2);font-weight:700;letter-spacing:0.06em;margin-top:10px;font-style:normal;font-family:'DM Sans',sans-serif}
+
+  /* ── Validation strip ─────────────────── */
+  .validation{padding:72px 0}
+  .v-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:center}
+  .v-shots{display:flex;flex-direction:row;gap:14px;align-items:center;justify-content:center}
+  .v-phone{
+    background:#000;border-radius:30px;padding:6px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.45),0 0 0 1px rgba(255,255,255,0.05);
+    flex:1;max-width:200px;
+  }
+  .v-phone img{width:100%;display:block;border-radius:24px}
+  .v-quotes{display:flex;flex-direction:column;gap:20px}
+  .v-quote{
+    background:var(--bg2);border:1px solid var(--border);border-radius:16px;
+    padding:24px 28px;
+  }
+  .v-quote p{
+    font-family:'DM Serif Display',Georgia,serif;font-style:italic;
+    font-size:19px;line-height:1.45;letter-spacing:-0.005em;color:var(--white);
+    margin-bottom:14px;
+  }
+  .v-quote .who{font-size:12.5px;color:var(--gold);font-weight:800;letter-spacing:0.06em}
+
+  /* ── Retreat fit ──────────────────────── */
+  .fit{
+    background:linear-gradient(180deg,#0a0a0a 0%,var(--bg) 100%);
+    border-top:1px solid var(--border-soft);
+  }
+  .day-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:48px}
+  .day{
+    background:var(--bg2);border:1px solid var(--border);border-radius:14px;
+    padding:24px 20px;
+  }
+  .day-num{
+    color:var(--gold);font-size:11px;font-weight:800;letter-spacing:0.18em;
+    text-transform:uppercase;margin-bottom:12px;
+  }
+  .day-title{font-family:'DM Serif Display',Georgia,serif;font-size:19px;line-height:1.15;margin-bottom:10px;letter-spacing:-0.01em}
+  .day-desc{font-size:13px;color:var(--grey);line-height:1.55}
+
+  /* ── Why pixsort fits ─────────────────── */
+  .pillars{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-top:32px}
+  .pillar{
+    background:var(--bg2);border:1px solid var(--border);border-radius:16px;
+    padding:30px;
+  }
+  .pillar-num{font-family:'DM Serif Display',Georgia,serif;font-size:18px;font-style:italic;color:var(--gold);margin-bottom:18px}
+  .pillar h4{font-family:'DM Serif Display',Georgia,serif;font-size:24px;line-height:1.15;letter-spacing:-0.01em;margin-bottom:12px;font-weight:400}
+  .pillar p{font-size:14.5px;color:var(--grey);line-height:1.6}
+
+  /* ── The ask ──────────────────────────── */
+  .ask{padding:96px 0 88px}
+  .ask-card{
+    background:linear-gradient(135deg,rgba(196,160,96,0.10) 0%,rgba(196,160,96,0.02) 100%);
+    border:1px solid rgba(196,160,96,0.3);border-radius:24px;
+    padding:64px;text-align:center;position:relative;overflow:hidden;
+  }
+  .ask-card::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(196,160,96,0.08) 0%,transparent 70%);
+    pointer-events:none;
+  }
+  .ask-title{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-size:clamp(44px,6vw,72px);line-height:1.0;letter-spacing:-0.025em;
+    margin-bottom:24px;position:relative;z-index:2;
+  }
+  .ask-sub{font-size:19px;color:var(--grey);max-width:580px;margin:0 auto 36px;line-height:1.55;position:relative;z-index:2}
+  .offers{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px;position:relative;z-index:2;text-align:left}
+  .offer{
+    background:var(--bg2);border:1px solid var(--border);border-radius:14px;
+    padding:24px 26px;
+  }
+  .offer-aff{border-color:rgba(196,160,96,0.4);background:linear-gradient(135deg,rgba(196,160,96,0.08) 0%,var(--bg2) 100%)}
+  .offer-name{font-size:11px;color:var(--gold);font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:10px}
+  .offer-detail{font-size:14.5px;color:var(--white);line-height:1.55;font-weight:500}
+  .offer-detail strong{color:var(--gold);font-weight:700}
+  .ask-foot{font-size:12px;color:var(--grey2);margin-top:24px;font-style:italic;position:relative;z-index:2;letter-spacing:0.01em}
+
+  /* ── Sign-off ─────────────────────────── */
+  .signoff{
+    border-top:1px solid var(--border-soft);
+    padding:48px 0 64px;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;
+  }
+  .signoff-text{font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-size:24px;letter-spacing:-0.01em;color:var(--white)}
+  .signoff-tag{font-size:12px;color:var(--grey2);font-weight:700;letter-spacing:0.16em;text-transform:uppercase}
+
+  /* ── Print ────────────────────────────── */
+  @media print{
+    body{background:var(--bg);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    section{padding:64px 0;page-break-inside:avoid}
+    .cover{min-height:100vh;page-break-after:always}
+    .hook,.archetypes,.fit,.ask,.validation,.showcase{page-break-inside:avoid}
+  }
+
+  /* ── Mobile ───────────────────────────── */
+  @media (max-width:880px){
+    .page{padding:0 24px}
+    .cover{padding:40px 24px}
+    .hook-grid,.v-grid,.arch-grid{grid-template-columns:1fr;gap:32px}
+    .three-acts,.showcase-grid,.pillars,.offers{grid-template-columns:1fr;gap:16px}
+    .day-grid{grid-template-columns:1fr 1fr;gap:14px}
+    .ask-card{padding:40px 24px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     COVER
+═════════════════════════════════════════════════════════════ -->
+<section class="cover">
+  <div class="cover-top">
+    <div class="brand">
+      <img src="assets/pixsort-logo.jpeg" alt="PixSort">
+      <span class="brand-name">PixSort</span>
+    </div>
+    <span class="doc-tag">For Alex · Confidential</span>
+  </div>
+
+  <div class="cover-mid">
+    <div class="cover-eyebrow">Bali Creator Retreat · 5-Day Partnership</div>
+    <h1 class="cover-title">Your camera roll<br><em>is the asset.</em></h1>
+    <p class="cover-sub">PixSort turns the chaos in every creator's phone into searchable, sortable, send-ready content. Built for the iPhone. Built for the people in Alex's room.</p>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <div class="label">From</div>
+        <div class="val">Tiffany Parra · Co-founder</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="label">For</div>
+        <div class="val">Alex × Bali Creator Retreat</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="label">Stage</div>
+        <div class="val">TestFlight · App Store imminent</div>
+      </div>
+    </div>
+    <span class="doc-tag">PixSort.app</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     THE HOOK
+═════════════════════════════════════════════════════════════ -->
+<section class="hook">
+  <div class="page">
+    <div class="hook-grid">
+      <div>
+        <div class="section-eyebrow">The room you're filling</div>
+        <h2 class="section-title">Every person at the retreat has the <em>same problem.</em></h2>
+        <p class="section-sub">Whether they're a UGC creator with 100K followers, a travel videographer cutting their first reel, or a business owner finally getting in front of the camera - they all have a phone full of unsorted content they can't find when they need it.</p>
+        <p class="section-sub" style="margin-bottom:0">PixSort fixes that in five minutes. Then we spend the rest of the retreat showing them what to <em>do</em> with the time we just gave them back.</p>
+      </div>
+      <div class="stat-stack">
+        <div class="stat">
+          <div class="stat-num italic">10K+</div>
+          <div class="stat-label">Average items in a working creator's camera roll. Antoine - UGC creator, $100K+ in brand deals - has 7 SD cards plus 1TB+ on his phone.</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num italic">3 hrs</div>
+          <div class="stat-label">Time creators spend per project hunting for clips. "Content that used to take an hour, two, three - now you're making it in fifteen minutes." - Jaylin, 42K IG.</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num italic">$0</div>
+          <div class="stat-label">What it costs to test PixSort during the retreat. Free tier sorts up to 500 photos. Founder-tier deal for attendees.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     WHAT IT IS - THREE ACTS
+═════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="page">
+    <div class="section-eyebrow">What PixSort does</div>
+    <h2 class="section-title">Three things. One app.<br><em>No cloud. No sharing. No nonsense.</em></h2>
+    <p class="section-sub">PixSort lives entirely on the iPhone. AI organizes the camera roll into smart albums you can actually use - by subject, location, person, vibe - and pushes them straight back to Apple Photos so any editing app can pick them up.</p>
+
+    <div class="three-acts">
+      <div class="act">
+        <div class="act-num">01</div>
+        <div class="act-name">Find it.</div>
+        <p class="act-desc">Search the entire camera roll by what's actually <em>in</em> the photo. "Beach sunset." "Gym mirror selfie." "B-roll, Bali, motorbike." Three taps, three seconds.</p>
+      </div>
+      <div class="act">
+        <div class="act-num">02</div>
+        <div class="act-name">Sort it.</div>
+        <p class="act-desc">AI builds smart albums automatically - and lets the creator define their own categories. The AI fills them. Screenshots, duplicates, and junk get separated from the keepers.</p>
+      </div>
+      <div class="act">
+        <div class="act-num">03</div>
+        <div class="act-name">Send it.</div>
+        <p class="act-desc">Push any sorted album to Apple Photos so it shows up natively in CapCut, InShot, Final Cut, or whatever the editor uses. No exporting. No links. No cloud.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     APP SHOWCASE
+═════════════════════════════════════════════════════════════ -->
+<section class="showcase">
+  <div class="page">
+    <div class="section-eyebrow">Inside the app</div>
+    <h2 class="section-title">Real screens. Real <em>camera roll.</em></h2>
+    <p class="section-sub" style="margin-left:auto;margin-right:auto;text-align:center">Pulled directly from Tiffany's TestFlight build. This is the experience attendees will see day one of the retreat.</p>
+
+    <div class="showcase-grid">
+      <div class="phone-card">
+        <div class="phone-frame">
+          <img src="assets/camera-roll-ui.PNG" alt="PixSort albums view">
+        </div>
+        <div class="phone-title">Smart Albums</div>
+        <p class="phone-cap">B-Roll · Product · Pets · Screenshots · Padel game · Beach Sunset. The AI builds these the moment you open the app.</p>
+      </div>
+      <div class="phone-card">
+        <div class="phone-frame">
+          <img src="assets/screen-search.PNG" alt="PixSort search beach sunset">
+        </div>
+        <div class="phone-title">Search by Subject</div>
+        <p class="phone-cap">Type "beach sunset." Three results in under a second - across photos and videos. Save it as a smart album in one tap.</p>
+      </div>
+      <div class="phone-card">
+        <div class="phone-frame">
+          <img src="assets/screen-fashion.PNG" alt="PixSort fashion album send to camera roll">
+        </div>
+        <div class="phone-title">Send to Camera Roll</div>
+        <p class="phone-cap">60 photos. One tap. The album shows up in Apple Photos and is ready for the editor - or the user's own CapCut session.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ARCHETYPES - USE CASES
+═════════════════════════════════════════════════════════════ -->
+<section class="archetypes">
+  <div class="page">
+    <div class="section-eyebrow">Who it's for at the retreat</div>
+    <h2 class="section-title">Four people in the room.<br>One app, <em>four wins.</em></h2>
+    <p class="section-sub">Alex's audience isn't homogenous - and that's the point. PixSort isn't a niche tool. It's a layer underneath everything else they're trying to do.</p>
+
+    <div class="arch-grid">
+      <!-- Archetype 1 -->
+      <div class="arch">
+        <div class="arch-head">
+          <div class="arch-avatar" style="background-image:url('assets/avatar-creators-1.jpg')"></div>
+          <div>
+            <div class="arch-name">The UGC Creator</div>
+            <div class="arch-tag">Brand deals · Editor handoff</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="arch-block-label">The pain</div>
+          <ul class="arch-list">
+            <li>Films talking head, B-roll, product, and lifestyle in the same week.</li>
+            <li>Pays an editor and wastes half a day packaging clips for handoff.</li>
+            <li>Loses billable time every project searching the camera roll.</li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="arch-block-label">At the retreat</div>
+          <ol class="arch-list numbered">
+            <li>Open PixSort. AI sorts the last 90 days automatically.</li>
+            <li>Create a custom album: <strong>"Brand X B-roll."</strong></li>
+            <li>Push to camera roll. Drop the link to the editor.</li>
+          </ol>
+        </div>
+
+        <div class="arch-quote">
+          "When I hire another editor again, I would use this specifically to have them go through my B-roll."
+          <div class="arch-attr">Antoine · $100K+ in brand deals</div>
+        </div>
+      </div>
+
+      <!-- Archetype 2 -->
+      <div class="arch">
+        <div class="arch-head">
+          <div class="arch-avatar" style="background-image:url('assets/avatar-creators-2.jpg')"></div>
+          <div>
+            <div class="arch-name">The Travel Creator</div>
+            <div class="arch-tag">Trip-based content · Reels</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="arch-block-label">The pain</div>
+          <ul class="arch-list">
+            <li>Five countries this year. Ten thousand photos. Zero structure.</li>
+            <li>Bali footage mixed with three other trips and a year of gym selfies.</li>
+            <li>Wants to ship the reel before the retreat ends.</li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="arch-block-label">At the retreat</div>
+          <ol class="arch-list numbered">
+            <li>Search <strong>"Bali"</strong> or <strong>"rice fields"</strong> or <strong>"motorbike."</strong></li>
+            <li>Smart album auto-builds in seconds. Save it.</li>
+            <li>Cut the reel that night. The trip becomes a deliverable.</li>
+          </ol>
+        </div>
+
+        <div class="arch-quote">
+          "If I were going on a trip, that's when I would <em>definitely</em> use it. Every one of my friends has 40,000 photos they've never organized."
+          <div class="arch-attr">Emma · ex-Brentford FC SMM</div>
+        </div>
+      </div>
+
+      <!-- Archetype 3 -->
+      <div class="arch">
+        <div class="arch-head">
+          <div class="arch-avatar" style="background-image:url('assets/avatar-creators-3.jpg')"></div>
+          <div>
+            <div class="arch-name">The Business Owner Going on Camera</div>
+            <div class="arch-tag">First-time creator · Coaches, founders</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="arch-block-label">The pain</div>
+          <ul class="arch-list">
+            <li>Just decided to start posting. Doesn't know where to begin.</li>
+            <li>Phone is full of product shots, customer wins, whiteboards, life.</li>
+            <li>Can't tell what's content from what's just a photo.</li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="arch-block-label">At the retreat</div>
+          <ol class="arch-list numbered">
+            <li>One tap. Screenshots and junk separated from keepers.</li>
+            <li>PixSort surfaces the moments worth posting.</li>
+            <li>Walks out with <strong>3 months of content</strong> already in the phone.</li>
+          </ol>
+        </div>
+
+        <div class="arch-quote">
+          "You sort pictures, you get an album, and you make more money. That's the whole pitch."
+          <div class="arch-attr">Antoine · on framing for non-creators</div>
+        </div>
+      </div>
+
+      <!-- Archetype 4 -->
+      <div class="arch">
+        <div class="arch-head">
+          <div class="arch-avatar" style="background-image:url('assets/avatar-creators-4.jpg')"></div>
+          <div>
+            <div class="arch-name">The Lifestyle Creator</div>
+            <div class="arch-tag">Day-in-the-life · Multi-niche</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="arch-block-label">The pain</div>
+          <ul class="arch-list">
+            <li>Shoots across food, fitness, travel, friends, fashion.</li>
+            <li>Camera roll is genuinely impossible to navigate.</li>
+            <li>Tried Apple's "Memories." Breaks past 500 photos.</li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="arch-block-label">At the retreat</div>
+          <ol class="arch-list numbered">
+            <li>Define 5 custom albums: <strong>Gym, Golden Hour, Outfits, Food, Friends.</strong></li>
+            <li>PixSort fills them automatically as new content lands.</li>
+            <li>Every shoot day is sortable in one swipe. Posting cadence triples.</li>
+          </ol>
+        </div>
+
+        <div class="arch-quote">
+          "Custom album creation would save me so much time. I would <em>actually</em> use it for sure."
+          <div class="arch-attr">Jaylin · 42K IG, priced it at $9.99 unprompted</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     VALIDATION - REAL SCREENS, REAL QUOTES
+═════════════════════════════════════════════════════════════ -->
+<section class="validation">
+  <div class="page">
+    <div class="section-eyebrow">Why this works</div>
+    <h2 class="section-title">Beta testers told us <em>before</em> we asked.</h2>
+    <p class="section-sub">PixSort is in TestFlight with real creators sorting real camera rolls right now. We've run 10+ in-person interviews in Canggu and reviewed 26 Reddit threads on the same exact pain. The signal is consistent.</p>
+
+    <div class="v-grid">
+      <div class="v-shots">
+        <div class="v-phone"><img src="assets/screen-search.PNG" alt="PixSort search by subject"></div>
+        <div class="v-phone"><img src="assets/camera-roll-ui.PNG" alt="iPhone albums sorted by PixSort"></div>
+      </div>
+      <div class="v-quotes">
+        <div class="v-quote">
+          <p>"If you work with an editor, you can't just give them your whole camera roll. You have to send them something."</p>
+          <div class="who">Carlos · Creator, Canggu</div>
+        </div>
+        <div class="v-quote">
+          <p>"Content that used to take an hour, two hours, three hours - now you're making it in fifteen minutes."</p>
+          <div class="who">Jaylin · 42K Instagram</div>
+        </div>
+        <div class="v-quote">
+          <p>"The duplicate review is actually really cool. The blurry photo detection is super cool. Pricing point is good."</p>
+          <div class="who">TestFlight beta tester · live reaction</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     RETREAT FIT - 5-DAY ARC
+═════════════════════════════════════════════════════════════ -->
+<section class="fit">
+  <div class="page">
+    <div class="section-eyebrow">5-day fit</div>
+    <h2 class="section-title">PixSort across the <em>whole arc.</em></h2>
+    <p class="section-sub">This isn't a logo on a slide. PixSort can play a real, useful role on every day of the retreat - and attendees walk out the other end with a phone that finally feels like a creative tool.</p>
+
+    <div class="day-grid">
+      <div class="day">
+        <div class="day-num">Day 01</div>
+        <div class="day-title">Onboard the room</div>
+        <p class="day-desc">10-min welcome demo. Everyone installs PixSort, hits sort, lets it run during dinner. Day one ends with everyone's camera roll already organizing in the background.</p>
+      </div>
+      <div class="day">
+        <div class="day-num">Day 02</div>
+        <div class="day-title">The content audit</div>
+        <p class="day-desc">Workshop: "What's already in your phone?" Attendees discover the content bank they didn't know they had. Custom albums get created live.</p>
+      </div>
+      <div class="day">
+        <div class="day-num">Day 03</div>
+        <div class="day-title">Shoot day</div>
+        <p class="day-desc">Group shoot. Everyone films. PixSort sorts on-device that night. No exporting, no syncing - by the morning, it's all categorized.</p>
+      </div>
+      <div class="day">
+        <div class="day-num">Day 04</div>
+        <div class="day-title">Editor handoff</div>
+        <p class="day-desc">Attendees package an album, push to camera roll, hand off to an editor (or themselves in CapCut). They feel the time savings in real time.</p>
+      </div>
+      <div class="day">
+        <div class="day-num">Day 05</div>
+        <div class="day-title">Ship & systemize</div>
+        <p class="day-desc">Everyone leaves with a posting workflow. Custom albums set up. Phone organized. Founder-tier PixSort access. Attendees become the case study.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     WHY IT FITS - 3 PILLARS
+═════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="page">
+    <div class="section-eyebrow">Why this partnership</div>
+    <h2 class="section-title">PixSort and Alex's retreat<br>are <em>solving the same problem.</em></h2>
+    <p class="section-sub">Alex is teaching people to ship more content. PixSort is the prerequisite - because nobody ships consistently from a camera roll they can't navigate.</p>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-num">i.</div>
+        <h4>Hands-on, not theoretical.</h4>
+        <p>PixSort produces a visible, immediate change in five minutes. It's the kind of demo that wakes a room up. Attendees see results during the session, not after.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">ii.</div>
+        <h4>Made in the same room.</h4>
+        <p>Tiffany is in Canggu. The product was shaped by interviews with creators living and working in Bali. The retreat is the natural next venue - same audience, same insight, same energy.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">iii.</div>
+        <h4>Real launch leverage.</h4>
+        <p>PixSort is launching publicly the week of the retreat. Attendees become first users, first testimonials, first case studies. They get the founder access. Alex gets to be the room where the launch happened.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     THE ASK
+═════════════════════════════════════════════════════════════ -->
+<section class="ask">
+  <div class="page">
+    <div class="ask-card">
+      <h2 class="ask-title">Let's <em>do this</em> together.</h2>
+      <p class="ask-sub">Four concrete offers. Pick what fits the retreat and we'll build the rest around it.</p>
+
+      <div class="offers">
+        <div class="offer">
+          <div class="offer-name">01 · The Demo</div>
+          <p class="offer-detail">A 10-minute hands-on PixSort onboarding on Day 1. Everyone installs and sorts. Becomes the talking point of the week.</p>
+        </div>
+        <div class="offer">
+          <div class="offer-name">02 · The Workshop</div>
+          <p class="offer-detail">A 60-minute workshop: "Your camera roll is the asset." Content audit framework + custom album setup tailored per attendee.</p>
+        </div>
+        <div class="offer">
+          <div class="offer-name">03 · Founder Deal</div>
+          <p class="offer-detail">Every attendee gets the <strong>$80 lifetime founder tier</strong> - free, on us. PixSort gets the testimonials. Alex gets the perk that lands.</p>
+        </div>
+        <div class="offer offer-aff">
+          <div class="offer-name">04 · Creator Affiliate*</div>
+          <p class="offer-detail">Each attendee gets a personal discount code. Every friend who downloads, sorts 500+ photos, and redeems it = revenue share back to the creator.</p>
+        </div>
+      </div>
+
+      <p class="ask-foot">*Affiliate % TBD - finalizing with co-founder Spencer this week.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SIGN-OFF
+═════════════════════════════════════════════════════════════ -->
+<footer class="page">
+  <div class="signoff">
+    <div class="signoff-text">"Your camera roll. <em>Organized by AI.</em>"</div>
+    <div class="signoff-tag">PixSort · Tiffany Parra · tiffany@firepitsurplus.com</div>
+  </div>
+</footer>
+
+</body>
+</html>
