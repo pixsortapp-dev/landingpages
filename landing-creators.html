@@ -745,22 +745,17 @@ ReactDOM.createRoot(document.getElementById('phone-send')).render(
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzc6k607rRZ2PlRKjGO7kjpuzGXLFiDiO7TjnXLmjBhkyZHhGELauQokFzLb2QNTq459A/exec';
 const APP_STORE_URL = 'https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464';
 
-async function savePhone(phone) {
-  try {
-    await fetch(SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phone, source: 'creators' })
-    });
-    return true;
-  } catch (e) {
-    console.error('Save failed:', e);
-    return false;
-  }
+function savePhone(phone) {
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    keepalive: true,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ phone, source: 'creators' })
+  }).catch(() => {});
 }
 
-async function handleSubmit(prefix) {
+function handleSubmit(prefix) {
   const input = document.getElementById(prefix + '-phone');
   const row   = document.getElementById(prefix + '-input-row');
   const btn   = row ? row.querySelector('button') : null;
@@ -771,7 +766,7 @@ async function handleSubmit(prefix) {
     return;
   }
   if (btn) { btn.textContent = 'Opening App Store…'; btn.disabled = true; }
-  await savePhone(val);
+  savePhone(val);
   window.location.href = APP_STORE_URL;
 }
 
