@@ -420,13 +420,13 @@
       <span>When is it available to download?</span>
       <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
     </div>
-    <div class="faq-a">PixSort is launching soon on the App Store. Enter your phone number above and we'll text you the moment it's available — you'll be first in line.</div>
+    <div class="faq-a">PixSort is live on the App Store. Enter your phone number above and we'll send you straight to the install page.</div>
   </div>
 </section>
 
 <section class="final-cta">
-  <h2>Be first<br>to download.</h2>
-  <p>We'll text you the moment it's live.</p>
+  <h2>Available now<br>on the App Store.</h2>
+  <p>Enter your number — we'll send you straight to install.</p>
   <div class="cta-block">
     <div class="input-row" id="final-input-row">
       <input type="tel" id="final-phone" placeholder="Your phone number" inputmode="tel" autocomplete="tel">
@@ -708,6 +708,7 @@ ReactDOM.createRoot(document.getElementById('phone-send')).render(<Phone dw={FEA
 
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzc6k607rRZ2PlRKjGO7kjpuzGXLFiDiO7TjnXLmjBhkyZHhGELauQokFzLb2QNTq459A/exec';
+const APP_STORE_URL = 'https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464';
 
 async function savePhone(phone) {
   try {
@@ -725,11 +726,10 @@ async function savePhone(phone) {
 }
 
 async function handleSubmit(prefix) {
-  const input   = document.getElementById(prefix + '-phone');
-  const row     = document.getElementById(prefix + '-input-row');
-  const success = document.getElementById(prefix + '-success');
-  const btn     = row ? row.querySelector('button') : null;
-  const val     = (input ? input.value : '').trim();
+  const input = document.getElementById(prefix + '-phone');
+  const row   = document.getElementById(prefix + '-input-row');
+  const btn   = row ? row.querySelector('button') : null;
+  const val   = (input ? input.value : '').trim();
 
   if (!val) {
     if (input) { input.style.boxShadow = '0 0 0 2px #D4704A inset'; input.focus(); }
@@ -737,10 +737,9 @@ async function handleSubmit(prefix) {
     return;
   }
 
-  if (btn) { btn.textContent = 'Saving…'; btn.disabled = true; }
+  if (btn) { btn.textContent = 'Opening App Store…'; btn.disabled = true; }
   await savePhone(val);
-  if (row)     row.style.display = 'none';
-  if (success) success.style.display = 'block';
+  window.location.href = APP_STORE_URL;
 }
 
 document.querySelectorAll('input[type="tel"]').forEach(el => {
