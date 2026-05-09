@@ -843,5 +843,79 @@ function toggleFaq(el) {
 }
 </script>
 
+<!-- ── Android/Desktop Waitlist Modal ───────────────────── -->
+<style>
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1000; padding: 20px;
+  }
+  .modal-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 16px; padding: 36px 28px 28px;
+    max-width: 440px; width: 100%; position: relative;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  }
+  .modal-close {
+    position: absolute; top: 8px; right: 14px;
+    background: none; border: none; color: var(--grey);
+    font-size: 28px; cursor: pointer; line-height: 1; padding: 4px 8px;
+  }
+  .modal-close:hover { color: var(--white); }
+  .modal-title {
+    font-size: 24px; font-weight: 700; color: var(--white);
+    margin: 0 0 10px;
+  }
+  .modal-subtitle {
+    color: var(--grey); margin: 0 0 20px; line-height: 1.45; font-size: 15px;
+  }
+</style>
+
+<div class="modal-overlay" id="waitlist-modal" style="display:none;" onclick="if(event.target===this)hideWaitlistModal()">
+  <div class="modal-card">
+    <button class="modal-close" onclick="hideWaitlistModal()" aria-label="Close">&times;</button>
+    <h3 class="modal-title">Sign up for the wait list</h3>
+    <p class="modal-subtitle" id="modal-subtitle">We'll text you as soon as we're live on the Play Store.</p>
+    <div class="input-row" id="modal-input-row">
+      <input type="tel" id="modal-phone" placeholder="Your phone number" inputmode="tel" autocomplete="tel">
+      <button onclick="handleSubmit('modal')">Notify Me</button>
+    </div>
+    <div class="success-msg" id="modal-success" style="display:none;">
+      You're in. We'll text you the moment PixSort is ready for you.
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.nav-cta').forEach(link => {
+  link.addEventListener('click', e => {
+    const platform = detectPlatform();
+    if (platform === 'ios') return;
+    e.preventDefault();
+    showWaitlistModal(platform);
+  });
+});
+function showWaitlistModal(platform) {
+  const sub = document.getElementById('modal-subtitle');
+  if (sub) {
+    sub.textContent = platform === 'android'
+      ? "We'll text you as soon as we're live on the Play Store."
+      : "Drop your number — we'll text you the App Store link to install on your iPhone.";
+  }
+  document.getElementById('waitlist-modal').style.display = 'flex';
+  setTimeout(() => document.getElementById('modal-phone')?.focus(), 50);
+}
+function hideWaitlistModal() {
+  document.getElementById('waitlist-modal').style.display = 'none';
+}
+document.getElementById('modal-phone')?.addEventListener('keydown', e => {
+  if (e.key === 'Enter') handleSubmit('modal');
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') hideWaitlistModal();
+});
+</script>
+
 </body>
 </html>
