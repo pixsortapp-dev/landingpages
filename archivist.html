@@ -761,6 +761,15 @@ document.querySelectorAll('input[type="tel"]').forEach(el => {
   });
 });
 
+// Make every phone mockup tappable → App Store
+['#hero-phone-wrap', '#phone-search', '#phone-sort', '#phone-send', '#phone-post'].forEach(sel => {
+  const el = document.querySelector(sel);
+  if (el) {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', () => { window.location.href = APP_STORE_URL; });
+  }
+});
+
 function toggleFaq(el) {
   const item = el.closest('.faq-item');
   const wasOpen = item.classList.contains('open');
