@@ -753,27 +753,44 @@ ReactDOM.createRoot(document.getElementById('phone-send')).render(<Phone dw={FEA
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzc6k607rRZ2PlRKjGO7kjpuzGXLFiDiO7TjnXLmjBhkyZHhGELauQokFzLb2QNTq459A/exec';
 const APP_STORE_URL = 'https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464';
 
-function savePhone(phone) {
+function savePhone(phone, platform) {
   fetch(SCRIPT_URL, {
     method: 'POST', mode: 'no-cors', keepalive: true,
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ phone, source: 'archivist' })
+    body: JSON.stringify({ phone, source: 'archivist', platform })
   }).catch(() => {});
 }
 
+function detectPlatform() {
+  const ua = navigator.userAgent;
+  if (/android/i.test(ua)) return 'android';
+  if (/iphone|ipad|ipod/i.test(ua)) return 'ios';
+  return 'desktop';
+}
+
 function handleSubmit(prefix) {
-  const input = document.getElementById(prefix + '-phone');
-  const row   = document.getElementById(prefix + '-input-row');
-  const btn   = row ? row.querySelector('button') : null;
-  const val   = (input ? input.value : '').trim();
+  const input   = document.getElementById(prefix + '-phone');
+  const row     = document.getElementById(prefix + '-input-row');
+  const success = document.getElementById(prefix + '-success');
+  const btn     = row ? row.querySelector('button') : null;
+  const val     = (input ? input.value : '').trim();
   if (!val) {
     if (input) { input.style.boxShadow = '0 0 0 2px #C4A060 inset'; input.focus(); }
     setTimeout(() => { if(input) input.style.boxShadow = ''; }, 1500);
     return;
   }
-  if (btn) { btn.textContent = 'Opening App Store…'; btn.disabled = true; }
-  savePhone(val);
-  window.location.href = APP_STORE_URL;
+  const platform = detectPlatform();
+  if (btn) {
+    btn.textContent = platform === 'ios' ? 'Opening App Store…' : 'Saving…';
+    btn.disabled = true;
+  }
+  savePhone(val, platform);
+  if (platform === 'ios') {
+    window.location.href = APP_STORE_URL;
+  } else {
+    if (row)     row.style.display = 'none';
+    if (success) success.style.display = 'block';
+  }
 }
 
 document.querySelectorAll('input[type="tel"]').forEach(el => {
