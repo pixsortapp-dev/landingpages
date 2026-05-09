@@ -753,11 +753,23 @@ ReactDOM.createRoot(document.getElementById('phone-send')).render(<Phone dw={FEA
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzc6k607rRZ2PlRKjGO7kjpuzGXLFiDiO7TjnXLmjBhkyZHhGELauQokFzLb2QNTq459A/exec';
 const APP_STORE_URL = 'https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464';
 
+function getSubmitMeta() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    userAgent: navigator.userAgent,
+    page: window.location.pathname,
+    referrer: document.referrer,
+    utm_source: params.get('utm_source') || '',
+    utm_campaign: params.get('utm_campaign') || '',
+    utm_medium: params.get('utm_medium') || ''
+  };
+}
+
 function savePhone(phone, platform) {
   fetch(SCRIPT_URL, {
     method: 'POST', mode: 'no-cors', keepalive: true,
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ phone, source: 'archivist', platform })
+    body: JSON.stringify({ phone, source: 'archivist', platform, ...getSubmitMeta() })
   }).catch(() => {});
 }
 
