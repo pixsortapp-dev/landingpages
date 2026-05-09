@@ -342,16 +342,16 @@
 
   <div class="cta-block" id="hero-cta">
     <div class="input-row" id="hero-input-row">
-      <input type="tel" id="hero-phone" placeholder="Your phone number" inputmode="tel" autocomplete="tel">
+      <input type="tel" id="hero-phone" placeholder="Your phone number" inputmode="tel" autocomplete="tel" maxlength="14">
       <button onclick="handleSubmit('hero')">Download Now — It's Free</button>
+    </div>
+    <div class="success-msg" id="hero-success">
+      You're in. We'll text you the moment PixSort is ready to download.
     </div>
     <div class="microcopy">
       <span>iOS only</span>
       <span>Free to download</span>
       <span>No spam</span>
-    </div>
-    <div class="success-msg" id="hero-success">
-      You're in. We'll text you the moment PixSort is ready to download.
     </div>
   </div>
 
@@ -466,16 +466,16 @@
   <p>Available now on the App Store — tap to install.</p>
   <div class="cta-block">
     <div class="input-row" id="final-input-row">
-      <input type="tel" id="final-phone" placeholder="Your phone number" inputmode="tel" autocomplete="tel">
+      <input type="tel" id="final-phone" placeholder="Your phone number" inputmode="tel" autocomplete="tel" maxlength="14">
       <button onclick="handleSubmit('final')">Download Now — It's Free</button>
+    </div>
+    <div class="success-msg" id="final-success">
+      You're in. We'll text you the moment PixSort is ready to download.
     </div>
     <div class="microcopy">
       <span>iOS only</span>
       <span>Free to download</span>
       <span>No spam</span>
-    </div>
-    <div class="success-msg" id="final-success">
-      You're in. We'll text you the moment PixSort is ready to download.
     </div>
   </div>
 </section>
@@ -780,6 +780,30 @@ function detectPlatform() {
   return 'desktop';
 }
 
+function formatPhoneInput(el) {
+  const digits = el.value.replace(/\D/g, '').slice(0, 10);
+  let f = '';
+  if (digits.length > 0) f = '(' + digits.slice(0, 3);
+  if (digits.length >= 4) f += ') ' + digits.slice(3, 6);
+  if (digits.length >= 7) f += '-' + digits.slice(6, 10);
+  el.value = f;
+}
+
+function showPhoneError(prefix, msg) {
+  const row = document.getElementById(prefix + '-input-row');
+  if (!row) return;
+  const parent = row.parentElement;
+  let err = parent.querySelector('.phone-error');
+  if (!err) {
+    err = document.createElement('div');
+    err.className = 'phone-error';
+    parent.insertBefore(err, row.nextSibling);
+  }
+  err.textContent = msg;
+  err.style.display = 'block';
+  setTimeout(() => { err.style.display = 'none'; }, 4000);
+}
+
 function handleSubmit(prefix) {
   const input   = document.getElementById(prefix + '-phone');
   const row     = document.getElementById(prefix + '-input-row');
@@ -791,12 +815,19 @@ function handleSubmit(prefix) {
     setTimeout(() => { if(input) input.style.boxShadow = ''; }, 1500);
     return;
   }
+  const digits = val.replace(/\D/g, '');
+  if (digits.length !== 10) {
+    if (input) { input.style.boxShadow = '0 0 0 2px #D14848 inset'; input.focus(); }
+    showPhoneError(prefix, 'Please enter a valid 10-digit phone number.');
+    setTimeout(() => { if (input) input.style.boxShadow = ''; }, 1500);
+    return;
+  }
   const platform = detectPlatform();
   if (btn) {
     btn.textContent = platform === 'ios' ? 'Opening App Store…' : 'Saving…';
     btn.disabled = true;
   }
-  savePhone(val, platform);
+  savePhone(digits, platform);
   if (platform === 'ios') {
     window.location.href = APP_STORE_URL;
   } else {
@@ -804,6 +835,15 @@ function handleSubmit(prefix) {
     if (success) success.style.display = 'block';
   }
 }
+
+document.addEventListener('input', e => {
+  if (e.target.matches && e.target.matches('input[type="tel"]')) {
+    formatPhoneInput(e.target);
+    e.target.style.boxShadow = '';
+    const err = e.target.closest('.cta-block, .modal-card')?.querySelector('.phone-error');
+    if (err) err.style.display = 'none';
+  }
+});
 
 document.querySelectorAll('input[type="tel"]').forEach(el => {
   el.addEventListener('keydown', e => {
@@ -836,23 +876,32 @@ function toggleFaq(el) {
     z-index: 1000; padding: 20px;
   }
   .modal-card {
-    background: var(--bg2); border: 1px solid var(--border);
+    background: #FFFFFF; border: 1px solid #E5E5E5;
     border-radius: 16px; padding: 36px 28px 28px;
     max-width: 440px; width: 100%; position: relative;
     box-shadow: 0 30px 80px rgba(0,0,0,0.5);
   }
   .modal-close {
     position: absolute; top: 8px; right: 14px;
-    background: none; border: none; color: var(--grey);
+    background: none; border: none; color: #888;
     font-size: 28px; cursor: pointer; line-height: 1; padding: 4px 8px;
   }
-  .modal-close:hover { color: var(--white); }
+  .modal-close:hover { color: #1A1A1A; }
   .modal-title {
-    font-size: 24px; font-weight: 700; color: var(--white);
+    font-size: 24px; font-weight: 700; color: #1A1A1A;
     margin: 0 0 10px;
   }
   .modal-subtitle {
-    color: var(--grey); margin: 0 0 20px; line-height: 1.45; font-size: 15px;
+    color: #555; margin: 0 0 20px; line-height: 1.45; font-size: 15px;
+  }
+  #modal-input-row { background-color: rgb(240,237,237); }
+  #modal-success {
+    color: #1A6B3D; background: rgba(40, 167, 69, 0.1);
+    border: 1px solid rgba(40, 167, 69, 0.3);
+  }
+  .phone-error {
+    color: #D14848; margin-top: 10px; font-size: 14px;
+    text-align: center; font-weight: 500;
   }
 </style>
 
