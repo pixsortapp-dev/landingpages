@@ -1,0 +1,12 @@
+{
+  "name": "pixsort",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PixSort landing site",
+  "scripts": {
+    "serve": "npx --yes serve -l 5173 ."
+  },
+  "devDependencies": {
+    "playwright": "^1.59.1"
+  }
+}
