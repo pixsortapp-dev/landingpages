@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pixsort — Synced</title>
+<style>
+  :root {
+    --bg:     #F0EBE0;
+    --frame:  #FFFCF5;
+    --text:   #2D2A22;
+    --muted:  #8A7E6E;
+    --gold:   #C4A060;
+    --gold-d: #A8864A;
+    --row:    #EDE5D2;
+    --row-2:  #E4DDC9;
+  }
+
+  html, body { margin: 0; padding: 0; min-height: 100%; background: #1f1d1a; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+  body { display: flex; align-items: center; justify-content: center; padding: 40px 20px; box-sizing: border-box; min-height: 100vh; }
+
+  .scene {
+    width: 460px; height: 760px;
+    background: var(--bg);
+    border-radius: 36px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.12);
+  }
+
+  .nav-back {
+    position: absolute;
+    top: 22px; left: 18px;
+    width: 42px; height: 42px;
+    background: #fff;
+    border: 0; border-radius: 999px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(45,42,34,0.08);
+    text-decoration: none;
+    z-index: 5;
+  }
+
+  /* Hero */
+  .hero {
+    position: absolute;
+    top: 90px; left: 0; right: 0;
+    display: flex; flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 28px;
+    box-sizing: border-box;
+    z-index: 3;
+  }
+  .check-wrap {
+    width: 88px; height: 88px;
+    border-radius: 999px;
+    background: linear-gradient(160deg, #D4B578 0%, #C4A060 100%);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 22px;
+    box-shadow: 0 8px 24px rgba(196,160,96,0.40), 0 2px 6px rgba(45,42,34,0.08);
+    animation: check-pop 700ms cubic-bezier(.2,.7,.2,1.4) both;
+  }
+  @keyframes check-pop {
+    0%   { opacity: 0; transform: scale(0.5); }
+    60%  { opacity: 1; transform: scale(1.08); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  .check-wrap svg {
+    animation: check-draw 500ms ease 400ms both;
+    stroke-dasharray: 20;
+    stroke-dashoffset: 20;
+  }
+  @keyframes check-draw {
+    to { stroke-dashoffset: 0; }
+  }
+  .hero-headline {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin: 0;
+  }
+  .hero-subhead {
+    margin: 14px 0 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--muted);
+    line-height: 1.4;
+    letter-spacing: -0.005em;
+    max-width: 320px;
+    text-wrap: balance;
+  }
+  .hero-subhead strong { color: var(--text); font-weight: 700; }
+
+  /* Steps */
+  .steps-eyebrow {
+    position: absolute;
+    top: 360px; left: 28px;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 800;
+    z-index: 3;
+  }
+  .steps {
+    position: absolute;
+    top: 388px; left: 18px; right: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 3;
+  }
+  .step {
+    background: var(--row);
+    border-radius: 16px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .step-num {
+    width: 28px; height: 28px;
+    border-radius: 999px;
+    background: var(--gold);
+    color: #fffdf5;
+    font-size: 14px;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex: 0 0 auto;
+    box-shadow: 0 2px 6px rgba(196,160,96,0.30);
+  }
+  .step-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    flex: 1;
+    line-height: 1.25;
+  }
+  .step-text em {
+    font-style: normal;
+    font-weight: 800;
+    color: var(--text);
+    background: rgba(196,160,96,0.18);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+  .step-icon {
+    flex: 0 0 auto;
+    width: 36px; height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* CTA */
+  .cta-zone {
+    position: absolute;
+    bottom: 26px; left: 24px; right: 24px;
+    z-index: 4;
+  }
+  .pix-cta {
+    display: block; width: 100%;
+    padding: 18px 0;
+    background: var(--gold);
+    color: #fffdf5;
+    border: 0;
+    border-radius: 999px;
+    font: 700 17px/1 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    letter-spacing: -0.005em;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(168,134,74,0.35), 0 10px 28px rgba(196,160,96,0.30);
+    transition: transform 120ms ease, background 120ms ease;
+    text-decoration: none;
+    text-align: center;
+  }
+  .pix-cta:active { transform: scale(0.985); background: var(--gold-d); }
+  .secondary-link {
+    display: block;
+    text-align: center;
+    background: transparent;
+    border: 0;
+    color: var(--muted);
+    font: 500 14px/1 inherit;
+    padding: 14px 0 2px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .secondary-link:hover { color: var(--text); }
+</style>
+</head>
+<body>
+<div class="scene">
+
+  <a class="nav-back" href="album.html" aria-label="Back">
+    <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="#2D2A22" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2L4 7l5 5"/></svg>
+  </a>
+
+  <div class="hero">
+    <div class="check-wrap">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#fffdf5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12.5l5 5 9-10"/>
+      </svg>
+    </div>
+    <h1 class="hero-headline">Synced!</h1>
+    <p class="hero-subhead"><strong>120 Travel photos</strong> are now in your camera roll, ready to share.</p>
+  </div>
+
+  <div class="steps-eyebrow">Here's where to find them</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">Open Photos</div>
+      <div class="step-icon">
+        <svg width="32" height="32" viewBox="0 0 64 64">
+          <g style="mix-blend-mode: multiply">
+            <circle cx="32" cy="19" r="11" fill="#FFCC00" opacity="0.88"/>
+            <circle cx="42.3" cy="25.5" r="11" fill="#FF3B30" opacity="0.88"/>
+            <circle cx="42.3" cy="38.5" r="11" fill="#FF2D55" opacity="0.88"/>
+            <circle cx="32" cy="45" r="11" fill="#AF52DE" opacity="0.88"/>
+            <circle cx="21.7" cy="38.5" r="11" fill="#0A84FF" opacity="0.88"/>
+            <circle cx="21.7" cy="25.5" r="11" fill="#34C759" opacity="0.88"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">Search <em>Pixsort</em></div>
+      <div class="step-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <rect x="2" y="9" width="28" height="14" rx="7" fill="#E4DDC9"/>
+          <circle cx="9" cy="16" r="3.2" stroke="#8A7E6E" stroke-width="1.6" fill="none"/>
+          <path d="M11.5 18.5l2 2" stroke="#8A7E6E" stroke-width="1.6" stroke-linecap="round"/>
+          <rect x="15" y="14.5" width="10" height="3" rx="1" fill="#C4A060"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">Find it in Collections</div>
+      <div class="step-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <rect x="3"  y="3"  width="11" height="11" rx="2" fill="#C8B8DC"/>
+          <rect x="18" y="3"  width="11" height="11" rx="2" fill="#B0D49E"/>
+          <rect x="3"  y="18" width="11" height="11" rx="2.5" fill="#C4A060" stroke="#A8864A" stroke-width="1"/>
+          <rect x="18" y="18" width="11" height="11" rx="2" fill="#F0A8BE"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-zone">
+    <a class="pix-cta" href="#">Open Photos</a>
+    <a class="secondary-link" href="album.html">Got it</a>
+  </div>
+</div>
+</body>
+</html>
