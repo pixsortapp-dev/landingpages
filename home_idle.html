@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pixsort — Home (Idle)</title>
+<style>
+  :root {
+    --bg:           #F0EBE0;
+    --frame:        #FFFCF5;
+    --text:         #2D2A22;
+    --muted:        #8A7E6E;
+    --gold:         #C4A060;
+    --tile-green:   #B0D49E;
+    --tile-olive:   #D4D89A;
+    --tile-pink:    #F0A8BE;
+    --tile-peach:   #F0B5A0;
+    --tile-lavender:#C8B8DC;
+    --tile-yellow:  #E8C87A;
+  }
+
+  html, body {
+    margin: 0; padding: 0; min-height: 100%;
+    background: #1f1d1a;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+  body { display: flex; align-items: center; justify-content: center; padding: 40px 20px; box-sizing: border-box; min-height: 100vh; }
+
+  .scene {
+    width: 460px;
+    height: 760px;
+    background: var(--bg);
+    border-radius: 36px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.12);
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .header {
+    position: absolute;
+    top: 24px; left: 24px; right: 24px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    z-index: 3;
+  }
+  .stat {
+    background: var(--frame);
+    border-radius: 14px;
+    padding: 10px 14px;
+    box-shadow: 0 1px 2px rgba(45,42,34,0.04), 0 4px 12px rgba(45,42,34,0.06);
+    min-width: 140px;
+  }
+  .stat--right { text-align: right; }
+  .stat .num {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.05;
+    margin-top: 4px;
+  }
+  .stat .eyebrow { font-size: 9px; }
+
+  /* Idle prompt replaces the source/stack area */
+  .idle-message {
+    position: absolute;
+    top: 168px; left: 50%;
+    transform: translateX(-50%);
+    width: 320px;
+    text-align: center;
+    z-index: 2;
+  }
+  .idle-icon {
+    width: 60px; height: 60px;
+    margin: 0 auto 16px;
+    display: block;
+    animation: idle-breath 3.6s ease-in-out infinite;
+  }
+  @keyframes idle-breath {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+  }
+  .idle-prompt {
+    margin: 10px 0 0;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .albums {
+    position: absolute;
+    top: 460px; left: 24px; right: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 100px 100px;
+    gap: 12px;
+    z-index: 2;
+  }
+  .album-tile {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(45,42,34,0.05), 0 8px 24px rgba(45,42,34,0.10);
+  }
+  .album-art {
+    height: 56px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .album-meta {
+    padding: 8px 10px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .album-label { font-size: 12px; font-weight: 700; color: var(--text); letter-spacing: -0.005em; }
+  .album-count { font-size: 11px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+  .create-btn {
+    position: absolute;
+    bottom: 28px; left: 24px; right: 24px;
+    padding: 16px 0;
+    background: var(--gold);
+    color: #fffdf5;
+    border: 0;
+    border-radius: 999px;
+    font: 700 15px/1 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    letter-spacing: -0.005em;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(168,134,74,0.35), 0 10px 28px rgba(196,160,96,0.30);
+    z-index: 3;
+    transition: transform 120ms ease, background 120ms ease;
+  }
+  .create-btn:active { transform: scale(0.985); background: #A8864A; }
+</style>
+</head>
+<body>
+<div class="scene">
+
+  <div class="header">
+    <div class="stat">
+      <div class="eyebrow">COUNTER</div>
+      <div class="num">0</div>
+    </div>
+    <div class="stat stat--right">
+      <div class="eyebrow">PHOTOS LEFT TO SORT</div>
+      <div class="num">0</div>
+    </div>
+  </div>
+
+  <div class="idle-message">
+    <svg class="idle-icon" viewBox="0 0 48 48" fill="none">
+      <rect x="6" y="14" width="36" height="26" rx="4" stroke="#C4A060" stroke-width="2.2"/>
+      <path d="M16 14l3-5h10l3 5" stroke="#C4A060" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+      <circle cx="24" cy="27" r="7" stroke="#C4A060" stroke-width="2.2"/>
+      <circle cx="36" cy="20" r="1.5" fill="#C4A060"/>
+    </svg>
+    <div class="eyebrow">All caught up</div>
+    <p class="idle-prompt">Time to take some more photos so we can sort them for you.</p>
+  </div>
+
+  <div class="albums">
+    <div class="album-tile">
+      <div class="album-art" style="background: var(--tile-green);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2D2A22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l8-1 4-7 2 1-2 7 7 2 .5 2-7 .5-2 6h-2l-1-7-6 .5z"/></svg>
+      </div>
+      <div class="album-meta"><span class="album-label">Travel</span><span class="album-count">211</span></div>
+    </div>
+    <div class="album-tile">
+      <div class="album-art" style="background: var(--tile-olive);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2D2A22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="9.5" width="3" height="5" rx="1"/><rect x="18.5" y="9.5" width="3" height="5" rx="1"/><rect x="5.5" y="7.5" width="3" height="9" rx="1"/><rect x="15.5" y="7.5" width="3" height="9" rx="1"/><path d="M8.5 12h7"/></svg>
+      </div>
+      <div class="album-meta"><span class="album-label">Fitness</span><span class="album-count">47</span></div>
+    </div>
+    <div class="album-tile">
+      <div class="album-art" style="background: var(--tile-pink);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2D2A22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="4"/><path d="M5 20c1-3.5 4-5 7-5s6 1.5 7 5"/></svg>
+      </div>
+      <div class="album-meta"><span class="album-label">Selfie</span><span class="album-count">92</span></div>
+    </div>
+    <div class="album-tile">
+      <div class="album-art" style="background: var(--tile-peach);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2D2A22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h16"/><path d="M5 11c0 4 3 7 7 7s7-3 7-7"/><path d="M8 8c0-1.2 1-2 2-2s2 .8 2 2"/><path d="M14 8c0-1.2 1-2 2-2s2 .8 2 2"/></svg>
+      </div>
+      <div class="album-meta"><span class="album-label">Food</span><span class="album-count">38</span></div>
+    </div>
+    <div class="album-tile">
+      <div class="album-art" style="background: var(--tile-lavender);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#2D2A22"><ellipse cx="7" cy="9" rx="1.6" ry="2.2"/><ellipse cx="17" cy="9" rx="1.6" ry="2.2"/><ellipse cx="10" cy="6" rx="1.4" ry="1.9"/><ellipse cx="14" cy="6" rx="1.4" ry="1.9"/><path d="M12 11c-3.5 0-5.5 3-5.5 5.5 0 1.6 1.2 2.5 2.8 2.5 1.2 0 1.8-.6 2.7-.6s1.5.6 2.7.6c1.6 0 2.8-.9 2.8-2.5C17.5 14 15.5 11 12 11z"/></svg>
+      </div>
+      <div class="album-meta"><span class="album-label">Pets</span><span class="album-count">56</span></div>
+    </div>
+    <div class="album-tile">
+      <div class="album-art" style="background: var(--tile-yellow);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2D2A22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3l4 2 4-2 5 3-2 4-3-1v11H6V9L3 10 1 6z" transform="translate(1 0)"/></svg>
+      </div>
+      <div class="album-meta"><span class="album-label">Fashion</span><span class="album-count">31</span></div>
+    </div>
+  </div>
+
+  <button class="create-btn">+ Create new album</button>
+</div>
+</body>
+</html>
