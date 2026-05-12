@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pixsort — Home</title>
+<style>
+  :root {
+    --bg:           #F0EBE0;
+    --frame:        #FFFCF5;
+    --text:         #2D2A22;
+    --muted:        #8A7E6E;
+    --gold:         #C4A060;
+    --tile-green:   #B0D49E;
+    --tile-olive:   #D4D89A;
+    --tile-pink:    #F0A8BE;
+    --tile-peach:   #F0B5A0;
+    --tile-lavender:#C8B8DC;
+    --tile-yellow:  #E8C87A;
+  }
+
+  html, body {
+    margin: 0; padding: 0; min-height: 100%;
+    background: #1f1d1a;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+  body { display: flex; align-items: center; justify-content: center; padding: 40px 20px; box-sizing: border-box; min-height: 100vh; }
+
+  .scene {
+    width: 460px;
+    height: 760px;
+    background: var(--bg);
+    border-radius: 36px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.12);
+  }
+
+  /* Faint dashed gold arrows — flow guides behind everything */
+  .bg-arrows {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .bg-arrows path {
+    fill: none;
+    stroke: var(--gold);
+    stroke-opacity: 0.22;
+    stroke-width: 1.5;
+    stroke-dasharray: 3 5;
+    animation: flow 1.6s linear infinite;
+  }
+  @keyframes flow {
+    from { stroke-dashoffset: 0; }
+    to   { stroke-dashoffset: -16; }
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  /* Header: counter + photos-left */
+  .header {
+    position: absolute;
+    top: 24px; left: 24px; right: 24px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    z-index: 3;
+  }
+  .stat {
+    background: var(--frame);
+    border-radius: 14px;
+    padding: 10px 14px;
+    box-shadow: 0 1px 2px rgba(45,42,34,0.04), 0 4px 12px rgba(45,42,34,0.06);
+    min-width: 140px;
+  }
+  .stat--right { text-align: right; }
+  .stat .num {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.05;
+    margin-top: 4px;
+  }
+  .stat .eyebrow { font-size: 9px; }
+
+  /* Source label */
+  .source-label {
+    position: absolute;
+    top: 124px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--frame);
+    border-radius: 14px;
+    padding: 10px 16px;
+    text-align: center;
+    box-shadow: 0 1px 2px rgba(45,42,34,0.04), 0 4px 12px rgba(45,42,34,0.06);
+    z-index: 2;
+  }
+  .source-label .title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    margin-top: 3px;
+    letter-spacing: -0.005em;
+  }
+
+  /* Static stack — suggests an infinite pile */
+  .stack {
+    position: absolute;
+    top: 210px; left: 50%;
+    width: 60px; height: 72px;
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+  .stack-card {
+    position: absolute;
+    width: 56px; height: 68px;
+    background: #fff;
+    border-radius: 7px;
+    padding: 4px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 6px rgba(45,42,34,0.12), 0 8px 18px rgba(45,42,34,0.08);
+    left: 50%; top: 0; margin-left: -28px;
+  }
+  .stack-card .img { width: 100%; height: 100%; border-radius: 3px; }
+  .stack-card:nth-child(1) { transform: rotate(-7deg) translate(-3px, 1px); z-index: 1; }
+  .stack-card:nth-child(2) { transform: rotate(4deg) translate(3px, -1px); z-index: 2; }
+  .stack-card:nth-child(3) { transform: rotate(-1deg); z-index: 3; }
+
+  /* Animated photos that fly to albums */
+  .photo {
+    position: absolute;
+    width: 56px; height: 68px;
+    background: #fff;
+    border-radius: 7px;
+    padding: 4px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 6px rgba(45,42,34,0.18), 0 8px 18px rgba(45,42,34,0.10);
+    top: 210px; left: 50%; margin-left: -28px;
+    z-index: 5;
+    opacity: 0;
+  }
+  .photo .img { width: 100%; height: 100%; border-radius: 3px; }
+
+  .photo--travel  .img { background: linear-gradient(180deg, #BEDFFB 0%, #B0D49E 60%, #D4A574 100%); }
+  .photo--fitness .img { background: linear-gradient(135deg, #FFC093, #F08A6E); }
+  .photo--selfie  .img { background: linear-gradient(135deg, #F0A8BE, #FBE5EE); }
+  .photo--food    .img { background: linear-gradient(135deg, #F0B5A0, #DCD0A8); }
+  .photo--pets    .img { background: linear-gradient(135deg, #C8B8DC, #B8A8CC); }
+  .photo--fashion .img { background: linear-gradient(135deg, #E8C87A, #D4B578); }
+
+  /* Flight paths — each photo gets a 3-keypoint curve */
+  /* Row 1: short flight (Δy ≈ 237px) */
+  @keyframes fly-travel {
+    0%   { transform: translate(0, 0)        rotate(0deg)   scale(0.85); opacity: 0; }
+    8%   { transform: translate(0, 6px)      rotate(-3deg)  scale(1);    opacity: 1; }
+    45%  { transform: translate(-110px, 100px) rotate(-8deg)  scale(1);    opacity: 1; }
+    82%  { transform: translate(-141px, 237px) rotate(-12deg) scale(1);    opacity: 1; }
+    92%  { transform: translate(-141px, 245px) rotate(-12deg) scale(0.6); opacity: 0; }
+    100% { transform: translate(-141px, 245px) rotate(-12deg) scale(0.5); opacity: 0; }
+  }
+  @keyframes fly-fitness {
+    0%   { transform: translate(0, 0)        rotate(0deg)  scale(0.85); opacity: 0; }
+    8%   { transform: translate(0, 6px)      rotate(2deg)  scale(1);    opacity: 1; }
+    45%  { transform: translate(0, 110px)    rotate(4deg)  scale(1);    opacity: 1; }
+    82%  { transform: translate(0, 237px)    rotate(6deg)  scale(1);    opacity: 1; }
+    92%  { transform: translate(0, 245px)    rotate(6deg)  scale(0.6); opacity: 0; }
+    100% { transform: translate(0, 245px)    rotate(6deg)  scale(0.5); opacity: 0; }
+  }
+  @keyframes fly-selfie {
+    0%   { transform: translate(0, 0)        rotate(0deg)  scale(0.85); opacity: 0; }
+    8%   { transform: translate(0, 6px)      rotate(3deg)  scale(1);    opacity: 1; }
+    45%  { transform: translate(110px, 100px) rotate(8deg)  scale(1);    opacity: 1; }
+    82%  { transform: translate(141px, 237px) rotate(12deg) scale(1);    opacity: 1; }
+    92%  { transform: translate(141px, 245px) rotate(12deg) scale(0.6); opacity: 0; }
+    100% { transform: translate(141px, 245px) rotate(12deg) scale(0.5); opacity: 0; }
+  }
+  /* Row 2: deeper flight (Δy ≈ 337px) */
+  @keyframes fly-food {
+    0%   { transform: translate(0, 0)        rotate(0deg)   scale(0.85); opacity: 0; }
+    7%   { transform: translate(0, 6px)      rotate(-3deg)  scale(1);    opacity: 1; }
+    45%  { transform: translate(-95px, 160px) rotate(-9deg)  scale(1);    opacity: 1; }
+    82%  { transform: translate(-141px, 337px) rotate(-12deg) scale(1);    opacity: 1; }
+    92%  { transform: translate(-141px, 345px) rotate(-12deg) scale(0.6); opacity: 0; }
+    100% { transform: translate(-141px, 345px) rotate(-12deg) scale(0.5); opacity: 0; }
+  }
+  @keyframes fly-pets {
+    0%   { transform: translate(0, 0)       rotate(0deg)  scale(0.85); opacity: 0; }
+    7%   { transform: translate(0, 6px)     rotate(2deg)  scale(1);    opacity: 1; }
+    45%  { transform: translate(0, 165px)   rotate(4deg)  scale(1);    opacity: 1; }
+    82%  { transform: translate(0, 337px)   rotate(6deg)  scale(1);    opacity: 1; }
+    92%  { transform: translate(0, 345px)   rotate(6deg)  scale(0.6); opacity: 0; }
+    100% { transform: translate(0, 345px)   rotate(6deg)  scale(0.5); opacity: 0; }
+  }
+  @keyframes fly-fashion {
+    0%   { transform: translate(0, 0)        rotate(0deg)  scale(0.85); opacity: 0; }
+    7%   { transform: translate(0, 6px)      rotate(3deg)  scale(1);    opacity: 1; }
+    45%  { transform: translate(95px, 160px) rotate(9deg)  scale(1);    opacity: 1; }
+    82%  { transform: translate(141px, 337px) rotate(12deg) scale(1);    opacity: 1; }
+    92%  { transform: translate(141px, 345px) rotate(12deg) scale(0.6); opacity: 0; }
+    100% { transform: translate(141px, 345px) rotate(12deg) scale(0.5); opacity: 0; }
+  }
+
+  .photo--travel  { animation: fly-travel  3.6s ease-in-out infinite; animation-delay: 0.0s; }
+  .photo--fitness { animation: fly-fitness 3.6s ease-in-out infinite; animation-delay: 0.6s; }
+  .photo--selfie  { animation: fly-selfie  3.6s ease-in-out infinite; animation-delay: 1.2s; }
+  .photo--food    { animation: fly-food    3.6s ease-in-out infinite; animation-delay: 1.8s; }
+  .photo--pets    { animation: fly-pets    3.6s ease-in-out infinite; animation-delay: 2.4s; }
+  .photo--fashion { animation: fly-fashion 3.6s ease-in-out infinite; animation-delay: 3.0s; }
+
+  /* Album grid */
+  .albums {
+    position: absolute;
+    top: 460px; left: 24px; right: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 100px 100px;
+    gap: 12px;
+    z-index: 2;
+  }
+  .album-tile {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(45,42,34,0.05), 0 8px 24px rgba(45,42,34,0.10);
+    transition: box-shadow 200ms ease, transform 200ms ease;
+  }
+  .album-tile.is-pulse {
+    box-shadow: 0 0 0 2.5px var(--gold), 0 2px 4px rgba(45,42,34,0.05), 0 12px 28px rgba(196,160,96,0.25);
+    transform: translateY(-2px);
+  }
+  .album-art {
+    height: 56px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .album-meta {
+    padding: 8px 10px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .album-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.005em;
+  }
+  .album-count {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Gold pill CTA */
+  .create-btn {
+    position: absolute;
+    bottom: 28px; left: 24px; right: 24px;
+    padding: 16px 0;
+    background: var(--gold);
+    color: #fffdf5;
+    border: 0;
+    border-radius: 999px;
+    font: 700 15px/1 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    letter-spacing: -0.005em;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(168,134,74,0.35), 0 10px 28px rgba(196,160,96,0.30);
+    z-index: 3;
+    transition: transform 120ms ease, background 120ms ease;
+  }
+  .create-btn:active { transform: scale(0.985); background: #A8864A; }
+</style>
+</head>
+<body>
+<div class="scene">
+
+  <!-- Flow guides -->
+  <svg class="bg-arrows" viewBox="0 0 460 760" preserveAspectRatio="none">
+    <path d="M 230 244 C 180 320, 130 400, 100 480"/>
+    <path d="M 230 244 C 230 340, 230 420, 230 480"/>
+    <path d="M 230 244 C 280 320, 330 400, 360 480"/>
+    <path d="M 230 244 C 160 380, 120 480, 100 580"/>
+    <path d="M 230 244 C 230 420, 230 520, 230 580"/>
+    <path d="M 230 244 C 300 380, 340 480, 360 580"/>
+  </svg>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="stat">
+      <div class="eyebrow">COUNTER</div>
+      <div class="num"><span id="sorted">0</span></div>
+    </div>
+    <div class="stat stat--right">
+      <div class="eyebrow">PHOTOS LEFT TO SORT</div>
+      <div class="num"><span id="left">247</span></div>
+    </div>
+  </div>
+
+  <!-- Source label -->
+  <div class="source-label">
+    <div class="eyebrow">PHOTOS FROM</div>
+    <div class="title">USER CAMERA</div>
+  </div>
+
+  <!-- Static photo stack -->
+  <div class="stack">
+    <div class="stack-card"><div class="img" style="background: linear-gradient(135deg, #C8B8DC, #F0A8BE);"></div></div>
+    <div class="stack-card"><div class="img" style="background: linear-gradient(135deg, #F0B5A0, #DCD0A8);"></div></div>
+    <div class="stack-card"><div class="img" style="background: linear-gradient(180deg, #BEDFFB, #B0D49E);"></div></div>
+  </div>
+
+  <!-- Animated photos -->
+  <div class="photo photo--travel"><div class="img"></div></div>
+  <div class="photo photo--fitness"><div class="img"></div></div>
+  <div class="photo photo--selfie"><div class="img"></div></div>
+  <div class="photo photo--food"><div class="img"></div></div>
+  <div class="photo photo--pets"><div class="img"></div></div>
+  <div class="photo photo--fashion"><div class="img"></div></div>
+
+  <!-- Albums -->
+  <div class="albums">
+    <div class="album-tile" id="album-travel">
+      <div class="album-art" style="background: var(--tile-green);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2D2A22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l8-1 4-7 2 1-2 7 7 2 .5 2-7 .5-2 6h-2l-1-7-6 .5z"/></svg>
+      </div>
+      <div class="album-meta">
+        <span class="album-label">Travel</span>
+        <span class="album-count" id="count-travel">211</span>
+      </div>
+    </div>
+
+    <div class="album-tile" id="album-fitness">
+      <div class="album-art" style="background: var(--tile-olive);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2D2A22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2.5" y="9.5" width="3" height="5" rx="1"/>
+          <rect x="18.5" y="9.5" width="3" height="5" rx="1"/>
+          <rect x="5.5" y="7.5" width="3" height="9" rx="1"/>
+          <rect x="15.5" y="7.5" width="3" height="9" rx="1"/>
+          <path d="M8.5 12h7"/>
+        </svg>
+      </div>
+      <div class="album-meta">
+        <span class="album-label">Fitness</span>
+        <span class="album-count" id="count-fitness">47</span>
+      </div>
+    </div>
+
+    <div class="album-tile" id="album-selfie">
+      <div class="album-art" style="background: var(--tile-pink);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2D2A22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="9" r="4"/>
+          <path d="M5 20c1-3.5 4-5 7-5s6 1.5 7 5"/>
+        </svg>
+      </div>
+      <div class="album-meta">
+        <span class="album-label">Selfie</span>
+        <span class="album-count" id="count-selfie">92</span>
+      </div>
+    </div>
+
+    <div class="album-tile" id="album-food">
+      <div class="album-art" style="background: var(--tile-peach);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2D2A22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 11h16"/>
+          <path d="M5 11c0 4 3 7 7 7s7-3 7-7"/>
+          <path d="M8 8c0-1.2 1-2 2-2s2 .8 2 2"/>
+          <path d="M14 8c0-1.2 1-2 2-2s2 .8 2 2"/>
+        </svg>
+      </div>
+      <div class="album-meta">
+        <span class="album-label">Food</span>
+        <span class="album-count" id="count-food">38</span>
+      </div>
+    </div>
+
+    <div class="album-tile" id="album-pets">
+      <div class="album-art" style="background: var(--tile-lavender);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#2D2A22">
+          <ellipse cx="7" cy="9" rx="1.6" ry="2.2"/>
+          <ellipse cx="17" cy="9" rx="1.6" ry="2.2"/>
+          <ellipse cx="10" cy="6" rx="1.4" ry="1.9"/>
+          <ellipse cx="14" cy="6" rx="1.4" ry="1.9"/>
+          <path d="M12 11c-3.5 0-5.5 3-5.5 5.5 0 1.6 1.2 2.5 2.8 2.5 1.2 0 1.8-.6 2.7-.6s1.5.6 2.7.6c1.6 0 2.8-.9 2.8-2.5C17.5 14 15.5 11 12 11z"/>
+        </svg>
+      </div>
+      <div class="album-meta">
+        <span class="album-label">Pets</span>
+        <span class="album-count" id="count-pets">56</span>
+      </div>
+    </div>
+
+    <div class="album-tile" id="album-fashion">
+      <div class="album-art" style="background: var(--tile-yellow);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2D2A22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 3l4 2 4-2 5 3-2 4-3-1v11H6V9L3 10 1 6z" transform="translate(1 0)"/>
+        </svg>
+      </div>
+      <div class="album-meta">
+        <span class="album-label">Fashion</span>
+        <span class="album-count" id="count-fashion">31</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gold CTA -->
+  <button class="create-btn">+ Create new album</button>
+</div>
+
+<script>
+  // Sync counters with photo arrivals.
+  // 6 photos on a 3.6s loop, 0.6s stagger → one photo lands every 0.6s.
+  const sortedEl = document.getElementById('sorted');
+  const leftEl   = document.getElementById('left');
+  const albums = ['travel', 'fitness', 'selfie', 'food', 'pets', 'fashion'];
+  const counts = {};
+  albums.forEach(a => {
+    counts[a] = parseInt(document.getElementById('count-' + a).textContent, 10);
+  });
+
+  const INITIAL_LEFT = 247;
+  let sorted = 0;
+  let left = INITIAL_LEFT;
+
+  // First photo lands at ~82% of 3.6s = 2.95s into the loop.
+  setTimeout(() => {
+    let idx = 0;
+    setInterval(() => {
+      if (left <= 0) {
+        sorted = 0;
+        left = INITIAL_LEFT;
+      }
+      const album = albums[idx % albums.length];
+      counts[album] += 1;
+      sorted += 1;
+      left -= 1;
+
+      sortedEl.textContent = sorted;
+      leftEl.textContent = left;
+      document.getElementById('count-' + album).textContent = counts[album];
+
+      const tile = document.getElementById('album-' + album);
+      tile.classList.add('is-pulse');
+      setTimeout(() => tile.classList.remove('is-pulse'), 360);
+
+      idx += 1;
+    }, 600);
+  }, 2950);
+</script>
+</body>
+</html>

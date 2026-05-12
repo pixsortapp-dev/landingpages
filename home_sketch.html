@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pixsort — Home sketch</title>
+<style>
+  html, body { margin: 0; padding: 0; min-height: 100%; background: #F5F1E8; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+  body { display: flex; align-items: center; justify-content: center; padding: 40px 20px; box-sizing: border-box; }
+  .canvas { max-width: 560px; width: 100%; }
+  svg { width: 100%; height: auto; display: block; }
+
+  .frame   { fill: #FFFCF5; stroke: #2D2A22; stroke-width: 3; }
+  .box     { fill: #FFFCF5; stroke: #2D2A22; stroke-width: 2.5; }
+  .box-cta { fill: #FFFCF5; stroke: #2D2A22; stroke-width: 2.5; }
+  .arrow   { fill: none; stroke: #2D2A22; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .arrow-head { fill: #2D2A22; }
+
+  .lbl  { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 700; fill: #2D2A22; text-anchor: middle; dominant-baseline: middle; letter-spacing: 0.02em; }
+  .lbl--sm  { font-size: 13px; }
+  .lbl--md  { font-size: 15px; }
+  .lbl--lg  { font-size: 17px; }
+  .lbl-multi { font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="canvas">
+<svg viewBox="0 0 560 760" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Outer phone-screen frame -->
+  <rect class="frame" x="50" y="50" width="460" height="660" rx="18"/>
+
+  <!-- Top-left: Counter -->
+  <rect class="box" x="80"  y="90" width="170" height="60" rx="8"/>
+  <text class="lbl lbl--lg" x="165" y="120">COUNTER</text>
+
+  <!-- Top-right: Photos left to sort -->
+  <rect class="box" x="340" y="90" width="140" height="80" rx="8"/>
+  <text class="lbl lbl--sm" x="410" y="118">PHOTOS LEFT</text>
+  <text class="lbl lbl--sm" x="410" y="138">TO SORT</text>
+
+  <!-- Center: Photos from user camera (source) -->
+  <rect class="box" x="170" y="190" width="220" height="100" rx="8"/>
+  <text class="lbl lbl--md" x="280" y="218">PHOTOS FROM</text>
+  <text class="lbl lbl--md" x="280" y="240">USER CAMERA</text>
+
+  <!-- Three curved arrows from source down to top row of albums -->
+  <!-- arrow 1 → Travel (left, big sweeping curve) -->
+  <path class="arrow" d="M 200 290 C 150 340, 130 380, 145 425"/>
+  <polygon class="arrow-head" points="138,418 145,432 152,418"/>
+
+  <!-- arrow 2 → Fitness (center, gentle curve) -->
+  <path class="arrow" d="M 280 290 C 280 330, 280 360, 280 415"/>
+  <polygon class="arrow-head" points="273,408 280,422 287,408"/>
+
+  <!-- arrow 3 → Selfie (right, mirror curve) -->
+  <path class="arrow" d="M 360 290 C 410 340, 420 380, 415 425"/>
+  <polygon class="arrow-head" points="408,418 415,432 422,418"/>
+
+  <!-- Top row of albums: Travel / Fitness / Selfie -->
+  <rect class="box" x="80"  y="430" width="130" height="70" rx="8"/>
+  <text class="lbl lbl--md" x="145" y="466">TRAVEL</text>
+
+  <rect class="box" x="215" y="430" width="130" height="70" rx="8"/>
+  <text class="lbl lbl--md" x="280" y="466">FITNESS</text>
+
+  <rect class="box" x="350" y="430" width="130" height="70" rx="8"/>
+  <text class="lbl lbl--md" x="415" y="466">SELFIE</text>
+
+  <!-- Wrap-around arrows showing flow continues to second row -->
+  <!-- Travel → Food (down-left wrap) -->
+  <path class="arrow" d="M 145 500 C 145 520, 145 540, 145 555"/>
+  <polygon class="arrow-head" points="138,548 145,562 152,548"/>
+
+  <!-- Fitness → Pets (down) -->
+  <path class="arrow" d="M 280 500 C 280 520, 280 540, 280 555"/>
+  <polygon class="arrow-head" points="273,548 280,562 287,548"/>
+
+  <!-- Selfie → Fashion (down + slight sweep) -->
+  <path class="arrow" d="M 415 500 C 415 520, 415 540, 415 555"/>
+  <polygon class="arrow-head" points="408,548 415,562 422,548"/>
+
+  <!-- Second row of albums: Food / Pets / Fashion -->
+  <rect class="box" x="80"  y="560" width="130" height="70" rx="8"/>
+  <text class="lbl lbl--md" x="145" y="596">FOOD</text>
+
+  <rect class="box" x="215" y="560" width="130" height="70" rx="8"/>
+  <text class="lbl lbl--md" x="280" y="596">PETS</text>
+
+  <rect class="box" x="350" y="560" width="130" height="70" rx="8"/>
+  <text class="lbl lbl--md" x="415" y="596">FASHION</text>
+
+  <!-- Bottom bar: + Create new album -->
+  <rect class="box-cta" x="80" y="650" width="400" height="50" rx="10"/>
+  <text class="lbl lbl--md" x="280" y="676">+ CREATE NEW ALBUM</text>
+
+</svg>
+</div>
+</body>
+</html>
