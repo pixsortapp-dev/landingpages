@@ -4,3 +4,5 @@
 .claude/
 node_modules/
 screenshots/
+tools/
+CLAUDE.md
