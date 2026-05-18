@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    if (/iphone|ipad|ipod/i.test(navigator.userAgent)) document.documentElement.classList.add('is-ios');
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PixSort — Find Every First Step, Laugh, and Milestone</title>
@@ -129,6 +132,15 @@
       transition: background .15s;
     }
     .input-row button:hover { background: var(--coraldark); }
+
+    /* iOS-direct CTA: only shown when html.is-ios. */
+    .ios-cta { display: none; text-align: center; transition: transform .1s; }
+    .ios-cta img { width: 220px; height: auto; display: block; margin: 0 auto; }
+    .ios-cta:active { transform: scale(0.97); }
+    html.is-ios #hero-cta .input-row,
+    html.is-ios #hero-cta .success-msg,
+    html.is-ios #hero-cta .phone-error { display: none !important; }
+    html.is-ios #hero-cta .ios-cta { display: inline-block; }
     .microcopy {
       font-size: 12px; color: var(--grey2);
       display: flex; gap: 0; align-items: center;
@@ -342,9 +354,14 @@
   <p class="hero-sub">We help you organize your camera roll so you can find the moments that matter most.</p>
 
   <div class="cta-block" id="hero-cta">
+    <!-- iOS variant: direct App Store link, no phone gate -->
+    <a class="ios-cta" href="https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464" aria-label="Download on the App Store">
+      <img src="assets/app-store-badge.svg" alt="Download on the App Store" width="220" height="73">
+    </a>
+    <!-- Default variant: phone-input flow for Android/desktop -->
     <div class="input-row" id="hero-input-row">
       <input type="tel" id="hero-phone" placeholder="Your phone number" inputmode="tel" autocomplete="tel" maxlength="14">
-      <button onclick="handleSubmit('hero')">Download Now — It's Free</button>
+      <button onclick="handleSubmit('hero')">Text me the link</button>
     </div>
     <div class="success-msg" id="hero-success">
       You're in. We'll text you the moment PixSort is ready to download.
