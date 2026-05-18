@@ -1,0 +1,31 @@
+name: stale-interested-leads-bot
+
+on:
+  schedule:
+    # Daily at 9:00 AM America/Detroit (= 13:00 UTC during DST, 14:00 UTC during standard time)
+    # GitHub Actions cron only supports UTC. 13:00 UTC = 9 AM EDT (summer) / 8 AM EST (winter).
+    # If you'd rather it always hit 9 AM ET, switch to 14:00 UTC and accept 10 AM EDT in summer.
+    - cron: '0 13 * * *'
+  workflow_dispatch:    # allow manual runs from the GitHub UI
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install requests
+        run: pip install requests
+
+      - name: Run stale leads bot
+        env:
+          INSTANTLY_API_KEY: ${{ secrets.INSTANTLY_API_KEY }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          PROJECT: pixsort
+          STALE_DAYS: '3'
+        run: python automation/stale_leads_bot.py
