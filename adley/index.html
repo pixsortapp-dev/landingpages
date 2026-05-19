@@ -127,10 +127,15 @@
     }
     .hero h1 {
       font-family: 'DM Serif Display', Georgia, serif;
-      font-size: clamp(40px, 6.2vw, 80px);
-      font-weight: 400; line-height: 1.0; letter-spacing: -0.03em;
+      font-size: clamp(36px, 5.4vw, 68px);
+      font-weight: 400; line-height: 1.05; letter-spacing: -0.03em;
       color: var(--ink); margin-bottom: 22px;
-      text-wrap: balance;
+    }
+    .hero h1 .h1-line {
+      display: block; white-space: nowrap;
+    }
+    @media (max-width: 480px) {
+      .hero h1 .h1-line { white-space: normal; }
     }
     .hero h1 em {
       font-style: italic; color: var(--ink); position: relative; display: inline-block;
@@ -440,7 +445,10 @@
       <span class="collab-x">×</span>
       <span>PixSort</span>
     </div>
-    <h1>Stop sorting clips.<br>Start <em>scaling content.</em></h1>
+    <h1>
+      <span class="h1-line">Stop sorting clips.</span>
+      <span class="h1-line">Start <em>scaling content.</em></span>
+    </h1>
     <p class="hero-sub">PixSort organizes every photo and video on your iPhone into smart albums, so your editor can grab what they need. No more "send me the clip from Tuesday" texts.</p>
     <p class="hero-discount-line"><span>Adley's audience saves 30%.</span></p>
 
@@ -1049,7 +1057,7 @@ function toggleFaq(el) {
 </div>
 
 <script>
-document.querySelectorAll('.nav-cta').forEach(link => {
+document.querySelectorAll('.nav-cta, .appstore-pill').forEach(link => {
   link.addEventListener('click', e => {
     const platform = detectPlatform();
     if (platform === 'ios') return;
