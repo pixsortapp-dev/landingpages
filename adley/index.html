@@ -210,23 +210,49 @@
     .discount-banner {
       background: var(--lime);
       border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
-      padding: 64px 24px; text-align: center;
+      padding: 64px 40px;
     }
+    .discount-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.4fr auto;
+      gap: 64px; align-items: center;
+    }
+    .discount-text { text-align: left; }
     .discount-eyebrow {
       font-size: 11px; font-weight: 800; letter-spacing: 0.12em;
       text-transform: uppercase; color: var(--ink); margin-bottom: 18px;
     }
     .discount-banner h2 {
       font-family: 'DM Serif Display', Georgia, serif;
-      font-size: clamp(36px, 5.5vw, 64px);
+      font-size: clamp(36px, 5vw, 60px);
       font-weight: 400; letter-spacing: -0.03em; line-height: 1.05;
       color: var(--ink); margin-bottom: 14px; text-wrap: balance;
     }
     .discount-price { font-style: italic; }
     .discount-strike { text-decoration: line-through; opacity: 0.5; font-size: 0.62em; margin-right: 14px; font-style: normal; }
     .discount-banner p {
-      font-size: 16px; color: var(--ink); opacity: 0.8; max-width: 580px;
-      margin: 0 auto; line-height: 1.5;
+      font-size: 16px; color: var(--ink); opacity: 0.8; max-width: 540px;
+      margin: 0; line-height: 1.5;
+    }
+    .discount-qr { text-align: center; }
+    .discount-qr-card {
+      background: var(--bg); border: 1.5px solid var(--ink);
+      border-radius: 16px; padding: 14px;
+      box-shadow: 6px 6px 0 var(--ink);
+      display: inline-block;
+    }
+    .discount-qr-card img {
+      display: block; width: 200px; height: 200px;
+    }
+    .discount-qr-label {
+      margin-top: 14px; font-size: 12px; font-weight: 800;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink);
+    }
+    @media (max-width: 760px) {
+      .discount-inner { grid-template-columns: 1fr; gap: 32px; text-align: center; }
+      .discount-text { text-align: center; }
+      .discount-banner p { margin: 0 auto; }
+      .discount-qr { display: none; }
     }
 
     /* ── Statement ───────────────────────────────────── */
@@ -484,9 +510,19 @@
 
 <!-- ── Discount banner ─────────────────────────────── -->
 <section class="discount-banner">
-  <div class="discount-eyebrow">✦ Adley's audience exclusive</div>
-  <h2><span class="discount-strike">$69.99</span><span class="discount-price">$49.99/year</span></h2>
-  <p>30% off the annual plan. Sort your entire camera roll, push organized albums into native iOS Photos, and hand them off to your team in seconds.</p>
+  <div class="discount-inner">
+    <div class="discount-text">
+      <div class="discount-eyebrow">✦ Adley's audience exclusive</div>
+      <h2><span class="discount-strike">$69.99</span><span class="discount-price">$49.99/year</span></h2>
+      <p>30% off the annual plan. Sort your entire camera roll, push organized albums into native iOS Photos, and hand them off to your team in seconds.</p>
+    </div>
+    <div class="discount-qr">
+      <div class="discount-qr-card">
+        <img src="../assets/adley-qr.png" alt="Scan with your iPhone to install PixSort">
+      </div>
+      <div class="discount-qr-label">Scan with your iPhone</div>
+    </div>
+  </div>
 </section>
 
 <!-- ── Statement ─────────────────────────────────────── -->
