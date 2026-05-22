@@ -194,6 +194,10 @@
     }
     .microcopy span { display: flex; align-items: center; gap: 8px; }
     .microcopy span + span::before { content: '·'; margin: 0 10px; color: var(--grey2); }
+    .sms-disclosure {
+      font-size: 11px; color: var(--grey2); line-height: 1.45;
+      margin-top: 4px; max-width: 460px; text-align: center;
+    }
     .success-msg {
       display: none;
       background: rgba(229,255,118,0.4); border: 1.5px solid var(--ink);
@@ -458,13 +462,14 @@
         <button onclick="handleSubmit('hero')">Get 30% Off</button>
       </div>
       <div class="success-msg" id="hero-success">
-        You're in. We'll text you the App Store link with your 30% discount.
+        You're in. Adley's 30% off is locked to your number.
       </div>
       <div class="microcopy">
         <span>iOS</span>
         <span>$49.99/yr (was $69.99)</span>
         <span>No spam</span>
       </div>
+      <p class="sms-disclosure">By submitting, you agree to receive occasional SMS updates from PixSort. Reply STOP to opt out anytime. Msg &amp; data rates may apply.</p>
     </div>
   </div>
 
@@ -597,13 +602,14 @@
       <button onclick="handleSubmit('final')">Get 30% Off</button>
     </div>
     <div class="success-msg" id="final-success">
-      You're in. We'll text you the App Store link with your 30% discount.
+      You're in. Adley's 30% off is locked to your number.
     </div>
     <div class="microcopy">
       <span>iOS</span>
       <span>$49.99/yr (was $69.99)</span>
       <span>No spam</span>
     </div>
+    <p class="sms-disclosure">By submitting, you agree to receive occasional SMS updates from PixSort. Reply STOP to opt out anytime. Msg &amp; data rates may apply.</p>
   </div>
 </section>
 
@@ -1045,14 +1051,15 @@ function toggleFaq(el) {
   <div class="modal-card">
     <button class="modal-close" onclick="hideWaitlistModal()" aria-label="Close">&times;</button>
     <h3 class="modal-title">Claim Adley's 30% off</h3>
-    <p class="modal-subtitle" id="modal-subtitle">We'll text you as soon as we're live on the Play Store.</p>
+    <p class="modal-subtitle" id="modal-subtitle">Drop your number to lock in Adley's 30% off.</p>
     <div class="input-row" id="modal-input-row">
       <input type="tel" id="modal-phone" placeholder="Your phone number" inputmode="tel" autocomplete="tel">
       <button onclick="handleSubmit('modal')">Notify Me</button>
     </div>
     <div class="success-msg" id="modal-success" style="display:none;">
-      You're in. We'll text you the moment PixSort is ready for you.
+      You're in. Adley's 30% off is locked to your number.
     </div>
+    <p class="sms-disclosure">By submitting, you agree to receive occasional SMS updates from PixSort. Reply STOP to opt out. Msg &amp; data rates may apply.</p>
   </div>
 </div>
 
@@ -1069,8 +1076,8 @@ function showWaitlistModal(platform) {
   const sub = document.getElementById('modal-subtitle');
   if (sub) {
     sub.textContent = platform === 'android'
-      ? "We'll text you the moment PixSort lands on the Play Store, with Adley's 30% discount applied."
-      : "Drop your number and we'll text you the App Store link with Adley's 30% off applied.";
+      ? "Drop your number to lock in Adley's 30% off. We'll let you know when PixSort lands on Android."
+      : "Drop your number to lock in Adley's 30% off. Install on your iPhone to redeem.";
   }
   document.getElementById('waitlist-modal').style.display = 'flex';
   setTimeout(() => document.getElementById('modal-phone')?.focus(), 50);
