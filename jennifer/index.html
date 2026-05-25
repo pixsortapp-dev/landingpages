@@ -328,8 +328,21 @@
       border: 1.5px solid var(--ink); border-radius: 20px;
       overflow: hidden; box-shadow: 8px 8px 0 var(--ink);
       background: var(--ink);
+      position: relative; cursor: pointer;
     }
     .jennifer-video-player video { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .video-mute-toggle {
+      position: absolute; bottom: 14px; right: 14px;
+      background: rgba(0,0,0,0.72); color: #fff;
+      border: 1px solid rgba(255,255,255,0.4); border-radius: 999px;
+      padding: 7px 13px; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 6px;
+      cursor: pointer; backdrop-filter: blur(8px);
+      transition: opacity .2s;
+    }
+    .video-mute-toggle svg { width: 12px; height: 12px; }
+    .jennifer-video-player.is-unmuted .video-mute-toggle { opacity: 0; pointer-events: none; }
     .jennifer-video-text { max-width: 480px; }
     .jennifer-video-label { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); margin-bottom: 20px; }
     .jennifer-video-text h3 {
@@ -615,8 +628,12 @@
 <!-- ── Jennifer video spotlight ──────────────────────────────── -->
 <section class="jennifer-video">
   <div class="jennifer-video-inner">
-    <div class="jennifer-video-player">
-      <video src="../assets/jennifer-using-app.mp4" poster="../assets/jennifer-using-app-poster.jpg" autoplay muted loop playsinline preload="auto"></video>
+    <div class="jennifer-video-player" id="jen-video-card">
+      <video id="jen-video" src="../assets/jennifer-using-app.mp4" poster="../assets/jennifer-using-app-poster.jpg" autoplay muted loop playsinline preload="auto"></video>
+      <button class="video-mute-toggle" type="button" aria-label="Tap for sound">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+        Tap for sound
+      </button>
     </div>
     <div class="jennifer-video-text">
       <div class="jennifer-video-label">Watch Jennifer try it</div>
@@ -1182,6 +1199,18 @@ document.getElementById('modal-phone')?.addEventListener('keydown', e => {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') hideWaitlistModal();
 });
+
+// Tap-to-unmute on Jennifer's demo video
+(function() {
+  const card = document.getElementById('jen-video-card');
+  const v = document.getElementById('jen-video');
+  if (!card || !v) return;
+  card.addEventListener('click', () => {
+    v.muted = !v.muted;
+    card.classList.toggle('is-unmuted', !v.muted);
+    if (!v.muted) { v.play().catch(() => {}); }
+  });
+})();
 </script>
 
 </body>
