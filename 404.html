@@ -70,7 +70,7 @@
       if (parts.length !== 1) return null;
       const slug = parts[0].trim().toLowerCase();
       if (RESERVED_PATHS.has(slug)) return null;
-      if (!/^[a-z0-9][a-z0-9-]{1,47}$/.test(slug)) return null;
+      if (!/^[a-z0-9][a-z0-9-]{0,47}$/.test(slug)) return null;
       return slug;
     }
 
@@ -80,6 +80,8 @@
       const clickId = `pixsort-app-${slug}`;
       const publicUrl = `https://pixsort.app/${encodeURIComponent(slug)}/`;
       const fallback = new URL(`sortscout://collab/${encodeURIComponent(slug)}`);
+      fallback.searchParams.set('utm_source', slug);
+      fallback.searchParams.set('utm_medium', 'influencer');
       fallback.searchParams.set('utm_campaign', campaign);
       fallback.searchParams.set('click_id', clickId);
 
