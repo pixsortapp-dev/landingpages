@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PixSort · From stressed to sorted</title>
+<link rel="icon" type="image/jpeg" href="assets/pixsort-logo.jpeg">
+<link rel="apple-touch-icon" href="assets/pixsort-logo.jpeg">
+<meta property="og:title" content="PixSort · From stressed to sorted">
+<meta property="og:description" content="Open your phone and feel calm, not overwhelmed. The transformation we offer creators at the Bali Creator Retreat.">
+<meta property="og:image" content="assets/pixsort-logo.jpeg">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#F2EAD3;
+    --bg2:#EBE0C5;
+    --bg3:#E3D5B5;
+    --text:#1F1812;
+    --text-grey:#4D4234;
+    --text-grey2:#6E624F;
+    --gold:#B8924F;
+    --gold-dk:#8B6F3E;
+    --pink:#D98F8F;
+    --sage:#8FA37D;
+    --peach:#D9886A;
+    --border:#D9CFB5;
+  }
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    font-family:'DM Sans','Helvetica Neue',Arial,sans-serif;
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.55;
+    min-height:100vh;
+  }
+  em{font-style:italic;color:var(--gold)}
+
+  .wrap{max-width:860px;margin:0 auto;padding:28px 28px 48px}
+
+  /* Header */
+  header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{width:32px;height:32px;border-radius:8px}
+  .brand-name{font-weight:800;font-size:16px;letter-spacing:-0.01em}
+  .doc-tag{
+    border:1px solid var(--gold);color:var(--gold);
+    font-size:10.5px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;
+    border-radius:999px;padding:6px 14px;background:rgba(255,255,255,0.4);
+  }
+
+  /* Hero */
+  .hero{margin-bottom:28px;text-align:center}
+  .eyebrow{
+    color:var(--gold);font-size:11px;font-weight:800;letter-spacing:0.22em;
+    text-transform:uppercase;margin-bottom:12px;
+  }
+  h1{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-size:clamp(36px,4.4vw,52px);line-height:1.02;letter-spacing:-0.025em;
+    margin-bottom:16px;color:var(--text);
+  }
+  h1 em{font-style:italic;color:var(--gold)}
+  .lede{
+    font-family:'DM Sans','Helvetica Neue',Arial,sans-serif;
+    font-size:16.5px;line-height:1.55;color:var(--text);
+    max-width:620px;margin:0 auto;font-weight:500;
+  }
+  .lede em{color:var(--gold);font-style:italic;font-weight:500}
+
+  /* Before/After transformation block */
+  .ba{
+    display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:center;
+    margin-bottom:28px;max-width:700px;margin-left:auto;margin-right:auto;
+  }
+  .ba-side{
+    background:transparent !important;border:none !important;box-shadow:none !important;
+    padding:8px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;
+  }
+  .ba-side.before,.ba-side.after{background:transparent !important;border:none !important}
+  .ba-tag{
+    font-size:10px;font-weight:800;letter-spacing:0.22em;text-transform:uppercase;
+    padding:5px 12px;border-radius:999px;color:#fff;
+  }
+  .ba-side.before .ba-tag{background:var(--pink)}
+  .ba-side.after .ba-tag{background:var(--sage)}
+  .ba-meme{
+    width:120px;height:120px;border-radius:14px;overflow:hidden;
+    box-shadow:0 14px 28px rgba(31,24,18,0.18);border:1px solid var(--border);
+  }
+  .ba-meme img{width:100%;height:100%;object-fit:cover;display:block}
+  .ba-label{
+    font-family:'DM Serif Display',Georgia,serif;font-style:italic;
+    font-size:15px;color:var(--text);line-height:1.3;letter-spacing:-0.005em;
+  }
+  .ba-side.before .ba-label em{color:var(--pink)}
+  .ba-side.after .ba-label em{color:var(--sage)}
+  .ba-arrow{display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 4px}
+  .ba-arrow-line{
+    font-family:'DM Serif Display',Georgia,serif;font-style:italic;
+    font-size:40px;color:var(--gold);line-height:1;
+  }
+  .ba-arrow-label{
+    font-size:10px;color:var(--gold);font-weight:800;letter-spacing:0.22em;text-transform:uppercase;
+  }
+
+  /* App screenshots row */
+  .phones{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+    max-width:600px;margin:0 auto 28px;
+  }
+  .phone-card{
+    background:transparent !important;border:none !important;box-shadow:none !important;
+    padding:0;text-align:center;
+  }
+  .phone-frame{
+    background:var(--text);border-radius:16px;padding:4px;
+    box-shadow:0 10px 22px rgba(31,24,18,0.16),0 0 0 1px rgba(31,24,18,0.05);
+    margin:0 auto 8px;max-width:120px;
+  }
+  .phone-frame img{width:100%;display:block;border-radius:13px}
+  .phone-cap{
+    font-family:'DM Sans',sans-serif;font-size:11.5px;font-weight:700;
+    color:var(--gold-dk);letter-spacing:0.04em;
+  }
+
+  /* Section */
+  .section{margin-bottom:22px}
+  .section-h{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-size:clamp(22px,2.6vw,30px);letter-spacing:-0.02em;
+    margin-bottom:4px;color:var(--text);text-align:center;
+  }
+  .section-h em{font-style:italic;color:var(--gold)}
+  .section-sub{
+    font-size:13.5px;color:var(--text-grey);text-align:center;
+    max-width:520px;margin:0 auto 18px;
+  }
+
+  /* Offer cards */
+  .offers{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+  }
+  .offer-card{
+    background:var(--bg2);border:1px solid var(--border);border-radius:14px;
+    padding:18px 18px;display:flex;flex-direction:column;gap:6px;
+    position:relative;
+  }
+  .offer-card.free{border-color:var(--sage)}
+  .offer-card.paid{border-color:var(--gold);background:linear-gradient(180deg,rgba(184,146,79,0.10) 0%,var(--bg2) 100%)}
+  .offer-card.affiliate{border-color:var(--peach);background:linear-gradient(180deg,rgba(217,136,106,0.10) 0%,var(--bg2) 100%)}
+  .offer-tag{
+    font-size:10.5px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;
+  }
+  .offer-card.free .offer-tag{color:var(--sage)}
+  .offer-card.paid .offer-tag{color:var(--gold-dk)}
+  .offer-card.affiliate .offer-tag{color:var(--peach)}
+  .offer-price{
+    font-family:'DM Serif Display',Georgia,serif;font-style:italic;
+    font-size:36px;line-height:1;letter-spacing:-0.02em;color:var(--text);
+    margin-top:2px;
+  }
+  .offer-card.free .offer-price{color:var(--sage)}
+  .offer-card.paid .offer-price{color:var(--gold)}
+  .offer-card.affiliate .offer-price{color:var(--peach)}
+  .offer-strike{
+    font-size:12px;color:var(--text-grey2);text-decoration:line-through;text-decoration-color:var(--peach);
+    margin-top:4px;font-weight:500;
+  }
+  .offer-strike.noline{text-decoration:none;color:var(--peach);font-style:italic;font-weight:600}
+  .offer-body{font-size:13px;color:var(--text);line-height:1.45;margin-top:4px;font-weight:500}
+  .offer-body strong{color:var(--gold-dk);font-weight:700}
+
+  /* QR + scan */
+  .scan-block{
+    background:var(--bg2);border:1px solid var(--border);border-radius:14px;
+    padding:18px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;
+    margin-top:18px;
+  }
+  .scan-qr{
+    background:#fff;border:2px solid var(--gold);border-radius:12px;padding:8px;
+    box-shadow:0 12px 24px rgba(31,24,18,0.12);
+  }
+  .scan-qr img{width:108px;height:108px;display:block}
+  .scan-text .label{
+    font-size:10px;color:var(--gold);font-weight:800;letter-spacing:0.2em;
+    text-transform:uppercase;margin-bottom:4px;
+  }
+  .scan-text .title{
+    font-family:'DM Serif Display',Georgia,serif;font-size:20px;letter-spacing:-0.01em;
+    margin-bottom:4px;color:var(--text);
+  }
+  .scan-text .title em{font-style:italic;color:var(--gold)}
+  .scan-text .note{font-size:12.5px;color:var(--text-grey);line-height:1.5}
+
+  /* Footer */
+  footer{
+    margin-top:20px;padding-top:14px;border-top:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+    font-size:10.5px;color:var(--text-grey2);font-weight:700;letter-spacing:0.16em;text-transform:uppercase;
+  }
+  footer a{color:var(--gold-dk);text-decoration:none}
+
+  /* Print — full bleed cream background, tight internal spacing */
+  @page{size:letter;margin:0}
+  @media print{
+    html,body{background:var(--bg);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .wrap{padding:0.45in 0.55in;max-width:none}
+    header{margin-bottom:10px;padding-bottom:8px}
+    .brand img{width:24px;height:24px}
+    .brand-name{font-size:13px}
+    .doc-tag{font-size:9px;padding:3px 10px}
+    .hero{margin-bottom:12px}
+    .eyebrow{font-size:9.5px;margin-bottom:6px}
+    h1{font-size:30px !important;line-height:1.02 !important;margin-bottom:8px}
+    .lede{font-size:12px !important;line-height:1.45;max-width:560px}
+    .ba{margin-bottom:14px;gap:14px;max-width:620px}
+    .ba-side{padding:12px;gap:6px;border-radius:14px}
+    .ba-tag{font-size:9px;padding:3px 10px}
+    .ba-meme{width:80px;height:80px;border-radius:12px}
+    .ba-label{font-size:11.5px;line-height:1.3}
+    .ba-arrow-line{font-size:22px}
+    .ba-arrow-label{font-size:9px}
+    .phones{gap:10px;margin-bottom:14px;max-width:520px}
+    .phone-card{padding:8px 6px 6px;border-radius:10px}
+    .phone-frame{max-width:88px;margin-bottom:5px;padding:2px;border-radius:12px}
+    .phone-frame img{border-radius:10px}
+    .phone-cap{font-size:9.5px}
+    .section{margin-bottom:10px}
+    .section-h{font-size:18px !important;margin-bottom:2px}
+    .section-sub{display:none}
+    .offers{gap:8px}
+    .offer-card{padding:10px 12px;border-radius:10px;gap:3px}
+    .offer-price{font-size:26px !important;margin-top:2px}
+    .offer-tag{font-size:9px}
+    .offer-strike{font-size:9.5px;margin-top:2px}
+    .offer-body{font-size:10.5px;line-height:1.35;margin-top:3px}
+    .scan-block{padding:10px;margin-top:10px;gap:14px;border-radius:10px}
+    .scan-qr{padding:5px;border-radius:8px}
+    .scan-qr img{width:74px;height:74px}
+    .scan-text .label{font-size:9px;margin-bottom:2px}
+    .scan-text .title{font-size:16px;margin-bottom:2px}
+    .scan-text .note{font-size:10.5px;line-height:1.35}
+    footer{margin-top:8px;padding-top:6px;font-size:8.5px;gap:6px}
+  }
+
+  /* Mobile */
+  @media (max-width:720px){
+    .wrap{padding:24px 18px 40px}
+    .ba{grid-template-columns:1fr;gap:14px}
+    .ba-arrow{transform:rotate(90deg)}
+    .offers{grid-template-columns:1fr;gap:12px}
+    .scan-block{grid-template-columns:1fr;text-align:center}
+    .scan-qr{margin:0 auto}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand">
+      <img src="assets/pixsort-logo.jpeg" alt="PixSort">
+      <span class="brand-name">PixSort</span>
+    </div>
+    <span class="doc-tag">Bali Creator Retreat</span>
+  </header>
+
+  <!-- Hero — the transformation -->
+  <div class="hero">
+    <div class="eyebrow">The transformation</div>
+    <h1>From buried clips<br>to <em>content that ships.</em></h1>
+    <p class="lede">PixSort organizes your photos and videos automatically, so you stop hunting for clips and start posting the content that grows your <em>audience,</em> your <em>brand,</em> and your <em>income.</em></p>
+  </div>
+
+  <!-- Before / After -->
+  <div class="ba">
+    <div class="ba-side before">
+      <span class="ba-tag">Before</span>
+      <div class="ba-meme">
+        <img src="assets/stressed-hamster.jpg" alt="Stressed">
+      </div>
+      <div class="ba-label">10K photos, <em>zero structure,</em><br>nothing ever ships.</div>
+    </div>
+    <div class="ba-arrow">
+      <div class="ba-arrow-line">→</div>
+      <div class="ba-arrow-label">PixSort</div>
+    </div>
+    <div class="ba-side after">
+      <span class="ba-tag">After</span>
+      <div class="ba-meme">
+        <img src="assets/happy-dog.jpg" alt="Calm">
+      </div>
+      <div class="ba-label">Sorted, searchable,<br><em>ready to post.</em></div>
+    </div>
+  </div>
+
+  <!-- App screenshots row -->
+  <div class="phones">
+    <div class="phone-card">
+      <div class="phone-frame">
+        <img src="assets/screen-albums-home.PNG" alt="Smart Albums auto-fill">
+      </div>
+      <div class="phone-cap">Smart Albums auto-fill</div>
+    </div>
+    <div class="phone-card">
+      <div class="phone-frame">
+        <img src="assets/screen-search-new.PNG" alt="Search by anything">
+      </div>
+      <div class="phone-cap">Search by anything</div>
+    </div>
+    <div class="phone-card">
+      <div class="phone-frame">
+        <img src="assets/screen-synced.PNG" alt="Synced and ready to share">
+      </div>
+      <div class="phone-cap">Sync &amp; share anywhere</div>
+    </div>
+  </div>
+
+  <!-- Three ways to work together -->
+  <div class="section">
+    <div class="section-h">Three ways to <em>work together.</em></div>
+    <p class="section-sub">Pick your starting point. They stack.</p>
+    <div class="offers">
+      <div class="offer-card free">
+        <span class="offer-tag">Start free</span>
+        <div class="offer-price">$0</div>
+        <p class="offer-body">First <strong>500 photos sort free.</strong> No login wall, no card. Just download.</p>
+      </div>
+      <div class="offer-card paid">
+        <span class="offer-tag">Retreat special</span>
+        <div class="offer-price">$50<span style="font-size:0.4em;color:var(--text-grey);font-style:normal;letter-spacing:0">/yr</span></div>
+        <div class="offer-strike">$100/yr standard</div>
+        <p class="offer-body"><strong>50% off,</strong> just for the room. Full library, every new photo auto-sorts forever.</p>
+      </div>
+      <div class="offer-card affiliate">
+        <span class="offer-tag">Share &amp; earn</span>
+        <div class="offer-price">20%<span style="font-size:0.4em;color:var(--text-grey);font-style:normal;letter-spacing:0">/yr</span></div>
+        <div class="offer-strike noline">recurring · for life</div>
+        <p class="offer-body">Custom landing page. Your audience gets <strong>$50/yr.</strong> You get <strong>20%</strong> of every renewal. Forever.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scan -->
+  <div class="scan-block">
+    <div class="scan-qr">
+      <img src="assets/qr-appstore.png" alt="Scan to download PixSort on the App Store">
+    </div>
+    <div class="scan-text">
+      <div class="label">Scan → App Store</div>
+      <div class="title">Try it for yourself, <em>for free.</em></div>
+      <div class="note">If you download it, please leave us a review. It really helps. <strong style="color:var(--gold-dk)">pixsort.app</strong></div>
+    </div>
+  </div>
+
+  <footer>
+    <span>PixSort · <a href="https://pixsort.app">pixsort.app</a></span>
+    <span>Questions? WhatsApp <a href="https://wa.me/18053978582">+1 805 397 8582</a></span>
+  </footer>
+
+</div>
+</body>
+</html>
