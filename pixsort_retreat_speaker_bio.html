@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiffany Parra · Speaker · Bali Creator Retreat 2026</title>
+<link rel="icon" type="image/jpeg" href="assets/pixsort-logo.jpeg">
+<link rel="apple-touch-icon" href="assets/pixsort-logo.jpeg">
+<meta property="og:title" content="Tiffany Parra · PixSort · Bali Creator Retreat 2026">
+<meta property="og:description" content="Founder of Fire Pit Surplus ($12.4M+ lifetime) and co-founder of PixSort. Speaking on leverage, content systems, and giving creators their time back.">
+<meta property="og:image" content="assets/tiff-headshot.jpg">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#F2EAD3;
+    --bg2:#EBE0C5;
+    --bg3:#E3D5B5;
+    --text:#1F1812;
+    --text-grey:#4D4234;
+    --text-grey2:#6E624F;
+    --gold:#B8924F;
+    --gold-dk:#8B6F3E;
+    --pink:#D98F8F;
+    --sage:#8FA37D;
+    --peach:#D9886A;
+    --border:#D9CFB5;
+  }
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    font-family:'DM Sans','Helvetica Neue',Arial,sans-serif;
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.55;
+    min-height:100vh;
+  }
+  em{font-style:italic;color:var(--gold)}
+
+  .wrap{max-width:1100px;margin:0 auto;padding:32px 32px 64px}
+
+  /* Header */
+  header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding-bottom:24px;border-bottom:1px solid var(--border);margin-bottom:48px;
+  }
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{width:32px;height:32px;border-radius:8px}
+  .brand-name{font-weight:800;font-size:16px;letter-spacing:-0.01em}
+  .doc-tag{
+    border:1px solid var(--gold);color:var(--gold);
+    font-size:10.5px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;
+    border-radius:999px;padding:6px 14px;background:rgba(255,255,255,0.4);
+  }
+
+  /* Hero — headshot + intro */
+  .hero{
+    display:grid;grid-template-columns:0.85fr 1.15fr;gap:56px;align-items:center;
+    margin-bottom:64px;
+  }
+  .hero-photo{
+    aspect-ratio:4/5;border-radius:24px;overflow:hidden;
+    box-shadow:0 30px 60px rgba(31,24,18,0.22);
+    border:1px solid var(--border);position:relative;
+  }
+  .hero-photo img{width:100%;height:100%;object-fit:cover;display:block;image-orientation:from-image}
+  .hero-photo::after{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(180deg,transparent 65%,rgba(31,24,18,0.45) 100%);
+    pointer-events:none;
+  }
+  .hero-photo-cap{
+    position:absolute;left:20px;bottom:18px;z-index:2;
+    color:#F2EAD3;font-family:'DM Serif Display',Georgia,serif;font-style:italic;
+    font-size:18px;letter-spacing:-0.005em;
+  }
+
+  .hero-text .eyebrow{
+    color:var(--gold);font-size:11.5px;font-weight:800;letter-spacing:0.22em;
+    text-transform:uppercase;margin-bottom:18px;
+  }
+  .hero-text h1{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-size:clamp(48px,6.5vw,84px);line-height:0.95;letter-spacing:-0.03em;
+    margin-bottom:24px;color:var(--text);
+  }
+  .hero-text h1 em{font-style:italic;color:var(--gold)}
+  .roles{
+    display:flex;gap:14px;flex-wrap:wrap;align-items:center;
+    font-size:14.5px;color:var(--text-grey);font-weight:500;
+  }
+  .roles .dot{width:5px;height:5px;border-radius:50%;background:var(--gold)}
+
+  /* Section heading */
+  .section-eyebrow{
+    color:var(--gold);font-size:11px;font-weight:800;letter-spacing:0.22em;
+    text-transform:uppercase;margin-bottom:14px;
+  }
+  .section-h2{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-size:clamp(32px,4vw,48px);letter-spacing:-0.025em;line-height:1.05;
+    color:var(--text);margin-bottom:28px;
+  }
+  .section-h2 em{font-style:italic;color:var(--gold)}
+
+  /* Bullet card stack */
+  .bullets{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:16px;
+  }
+  .bullet{
+    background:var(--bg2);border:1px solid var(--border);border-radius:16px;
+    padding:22px 24px;display:flex;align-items:flex-start;gap:16px;
+  }
+  .bullet-num{
+    font-family:'DM Serif Display',Georgia,serif;font-style:italic;
+    font-size:24px;color:var(--gold);width:32px;flex-shrink:0;line-height:1;
+  }
+  .bullet-text{font-size:16px;color:var(--text);line-height:1.5;font-weight:500}
+  .bullet-text strong{color:var(--gold-dk);font-weight:700}
+  .bullet-text em{color:var(--gold);font-style:italic}
+
+  /* Color-coded bullet numbers */
+  .bullets.about .bullet:nth-child(1) .bullet-num{color:var(--pink)}
+  .bullets.about .bullet:nth-child(2) .bullet-num{color:var(--sage)}
+  .bullets.about .bullet:nth-child(3) .bullet-num{color:var(--peach)}
+  .bullets.about .bullet:nth-child(4) .bullet-num{color:var(--gold)}
+  .bullets.topic .bullet:nth-child(1) .bullet-num{color:var(--gold)}
+  .bullets.topic .bullet:nth-child(2) .bullet-num{color:var(--pink)}
+  .bullets.topic .bullet:nth-child(3) .bullet-num{color:var(--sage)}
+  .bullets.topic .bullet:nth-child(4) .bullet-num{color:var(--peach)}
+
+  /* Section spacing */
+  .section{margin-bottom:56px}
+
+  /* Footer */
+  footer{
+    padding-top:28px;border-top:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px;
+    font-size:11.5px;color:var(--text-grey2);font-weight:700;letter-spacing:0.16em;text-transform:uppercase;
+  }
+  footer a{color:var(--gold-dk);text-decoration:none}
+  footer a:hover{text-decoration:underline}
+
+  /* Mobile */
+  @media (max-width:780px){
+    .wrap{padding:24px 20px 48px}
+    .hero{grid-template-columns:1fr;gap:32px;margin-bottom:48px}
+    .hero-photo{max-width:340px;margin:0 auto}
+    .bullets{grid-template-columns:1fr}
+    .section{margin-bottom:40px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand">
+      <img src="assets/pixsort-logo.jpeg" alt="PixSort">
+      <span class="brand-name">PixSort</span>
+    </div>
+    <span class="doc-tag">Bali Creator Retreat · Speaker</span>
+  </header>
+
+  <!-- HERO: headshot + intro -->
+  <section class="hero">
+    <div class="hero-photo">
+      <img src="assets/tiff-headshot.jpg" alt="Tiffany Parra">
+      <div class="hero-photo-cap">Bali · most weekends</div>
+    </div>
+    <div class="hero-text">
+      <div class="eyebrow">May 20 → 25, 2026 · Villa Ahoy</div>
+      <h1>Hi, <em>I'm Tiff.</em></h1>
+      <div class="roles">
+        <span>2nd-time founder</span>
+        <span class="dot"></span>
+        <span>e-comm operator</span>
+        <span class="dot"></span>
+        <span>Bali-based</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT ME — 3-4 bullets -->
+  <section class="section">
+    <div class="section-eyebrow">About me</div>
+    <h2 class="section-h2">A founder, twice.</h2>
+    <div class="bullets about">
+      <div class="bullet">
+        <div class="bullet-num">01</div>
+        <div class="bullet-text"><strong>6 years</strong> full-time entrepreneur. No day job, no safety net.</div>
+      </div>
+      <div class="bullet">
+        <div class="bullet-num">02</div>
+        <div class="bullet-text">Founder of <strong>Fire Pit Surplus</strong>. <em>$12.4M+ lifetime sales</em>, $2.5M+ last year alone.</div>
+      </div>
+      <div class="bullet">
+        <div class="bullet-num">03</div>
+        <div class="bullet-text">Co-founder of <strong>PixSort</strong>. The iOS app that auto-sorts your camera roll. Live on the App Store.</div>
+      </div>
+      <div class="bullet">
+        <div class="bullet-num">04</div>
+        <div class="bullet-text">Bali-based. <em>Surf, freedive,</em> anything ocean. Always somewhere warm.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOPIC — 3-4 bullets -->
+  <section class="section">
+    <div class="section-eyebrow">What I'll be sharing</div>
+    <h2 class="section-h2">Leverage. <em>And how to get yours.</em></h2>
+    <div class="bullets topic">
+      <div class="bullet">
+        <div class="bullet-num">01</div>
+        <div class="bullet-text">How I made <em>$49K this week</em> at the retreat with 30–90 minutes of work a day.</div>
+      </div>
+      <div class="bullet">
+        <div class="bullet-num">02</div>
+        <div class="bullet-text">The bottleneck most creators don't realize is capping them: <strong>their camera roll.</strong></div>
+      </div>
+      <div class="bullet">
+        <div class="bullet-num">03</div>
+        <div class="bullet-text">The two ways to break the ceiling: <em>hire people</em> or <em>leverage AI.</em></div>
+      </div>
+      <div class="bullet">
+        <div class="bullet-num">04</div>
+        <div class="bullet-text">A live PixSort walkthrough + a <strong>$50/year retreat-only offer</strong> and a 20% affiliate share.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>PixSort · pixsort.app</span>
+    <span>tiffany@firepitsurplus.com</span>
+  </footer>
+
+</div>
+</body>
+</html>
