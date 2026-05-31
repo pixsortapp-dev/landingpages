@@ -850,25 +850,25 @@ const Screen1 = () => (
       <span style={{fontSize:20,fontWeight:800,color:C.t1}}>Your Albums</span>
       <span style={{fontSize:15,fontWeight:600,color:C.gold}}>Edit</span>
     </div>
-    <AlbumRow icon="📱" name="Screenshots" count={35} imgA="../assets/crop_ss_r1c1.jpg" imgB="../assets/crop_ss_r1c2.jpg" extra="../assets/crop_ss_r2c1.jpg"/>
-    <AlbumRow icon="🍔" name="Food" count={30} imgA="../assets/crop_food_r1c1.jpg" imgB="../assets/crop_food_r1c2.jpg" extra="../assets/crop_food_r2c1.jpg"/>
-    <AlbumRow icon="✈️" name="Travel" count={124} imgA="../assets/crop_travel_r1c2.jpg" imgB="../assets/crop_travel_r2c1.jpg" extra="../assets/crop_travel_r4c2.jpg"/>
+    <AlbumRow icon="🎂" name="Birthdays" count={86} imgA="../assets/family-bday-1.jpg" imgB="../assets/family-bday-2.jpg" extra="../assets/family-bday-3.jpg"/>
+    <AlbumRow icon="🏖️" name="Beach Trips" count={142} imgA="../assets/family-beach-1.jpg" imgB="../assets/family-beach-2.jpg" extra="../assets/family-beach-3.jpg"/>
+    <AlbumRow icon="🎄" name="Holidays" count={248} imgA="../assets/archive-holiday-1.jpg" imgB="../assets/archive-holiday-2.jpg" extra="../assets/archive-holiday-3.jpg"/>
     <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
   </div>
 );
 
 const Screen2 = () => {
   const gymThumbs = [
-    {src:'../assets/crop_gym_r1c1.jpg',v:true},{src:'../assets/crop_gym_r1c2.jpg',v:false},{src:'../assets/crop_gym_r1c3.jpg',v:false},
-    {src:'../assets/crop_gym_r2c1.jpg',v:true},{src:'../assets/crop_gym_r2c2.jpg',v:false},{src:'../assets/crop_gym_r2c3.jpg',v:false},
-    {src:'../assets/crop_gym_r3c1.jpg',v:false},{src:'../assets/crop_gym_r3c2.jpg',v:true},{src:'../assets/crop_gym_r3c3.jpg',v:false},
+    {src:'../assets/family-bday-1.jpg',v:false},{src:'../assets/family-bday-2.jpg',v:false},{src:'../assets/family-bday-3.jpg',v:false},
+    {src:'../assets/family-bday-4.jpg',v:false},{src:'../assets/family-bday-5.jpg',v:false},{src:'../assets/family-bday-6.jpg',v:false},
+    {src:'../assets/archive-gather-1.jpg',v:false},{src:'../assets/archive-gather-2.jpg',v:false},{src:'../assets/archive-gather-3.jpg',v:false},
   ];
   return (
     <div style={{padding:'8px 20px 16px',fontFamily:F}}>
       <div style={{fontSize:30,fontWeight:800,color:C.t1,marginBottom:15,letterSpacing:'-0.02em'}}>Search</div>
       <div style={{display:'flex',alignItems:'center',gap:10,background:C.card,borderRadius:16,padding:'13px 18px',marginBottom:18,boxShadow:`0 0 0 2.5px ${C.gold},0 2px 8px rgba(196,160,96,0.2)`}}>
         <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke={C.gold} strokeWidth="2.2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
-        <span style={{fontSize:16,color:C.t1,flex:1,fontWeight:500}}>gym</span>
+        <span style={{fontSize:16,color:C.t1,flex:1,fontWeight:500}}>birthday</span>
         <div style={{background:C.t3,borderRadius:999,width:20,height:20,display:'flex',alignItems:'center',justifyContent:'center'}}>
           <svg width="10" height="10" viewBox="0 0 10 10" stroke="white" strokeWidth="2"><line x1="2" y1="2" x2="8" y2="8"/><line x1="8" y1="2" x2="2" y2="8"/></svg>
         </div>
@@ -886,7 +886,7 @@ const Screen2 = () => {
         ))}
       </div>
       <div style={{display:'flex',gap:8,marginTop:18,flexWrap:'wrap'}}>
-        {['gym','workout','fitness'].map((k,i)=>(
+        {['birthday','party','cake'].map((k,i)=>(
           <div key={k} style={{background:i===0?C.gold:C.card,color:i===0?'#fff':C.t2,borderRadius:999,padding:'6px 14px',fontSize:13,fontWeight:700}}>{k}</div>
         ))}
       </div>
@@ -899,7 +899,7 @@ const Screen4 = () => (
     <div style={{fontSize:30,fontWeight:800,color:C.t1,marginBottom:15,letterSpacing:'-0.02em'}}>Search</div>
     <div style={{display:'flex',alignItems:'center',gap:10,background:C.card,borderRadius:16,padding:'13px 18px',marginBottom:18,boxShadow:`0 0 0 2.5px ${C.gold}`}}>
       <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke={C.gold} strokeWidth="2.2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
-      <span style={{fontSize:17,color:C.t1,fontWeight:500,flex:1}}>beach sunset</span>
+      <span style={{fontSize:17,color:C.t1,fontWeight:500,flex:1}}>graduation</span>
       <div style={{background:C.t3,borderRadius:999,width:21,height:21,display:'flex',alignItems:'center',justifyContent:'center'}}>
         <svg width="10" height="10" viewBox="0 0 10 10" stroke="white" strokeWidth="2"><line x1="2" y1="2" x2="8" y2="8"/><line x1="8" y1="2" x2="2" y2="8"/></svg>
       </div>
@@ -909,7 +909,7 @@ const Screen4 = () => (
       <span style={{fontSize:13,fontWeight:600,color:C.gold}}>Sort ↓</span>
     </div>
     <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:4}}>
-      {['../assets/crop_sunset_r1c1.jpg','../assets/crop_sunset_r1c2.jpg','../assets/crop_sunset_r2c1.jpg'].map((src,i)=>(
+      {['../assets/archive-grad-1.jpg','../assets/archive-grad-2.jpg','../assets/archive-grad-3.jpg'].map((src,i)=>(
         <div key={i} style={{aspectRatio:'1',borderRadius:8,position:'relative',overflow:'hidden'}}>
           <img src={src} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
           <div style={{position:'absolute',top:6,right:6,width:18,height:18,background:C.gold,borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center'}}>
@@ -928,9 +928,9 @@ const Screen4 = () => (
 
 const Screen5 = () => {
   const pixTiles = [
-    '../assets/crop_travel5_r1c2.jpg','../assets/crop_travel5_r1c3.jpg','../assets/crop_travel5_r2c1.jpg',
-    '../assets/crop_travel5_r2c2.jpg','../assets/crop_travel5_r4c1.jpg','../assets/crop_travel5_r4c2.jpg',
-    '../assets/crop_travel5_r1c2.jpg','../assets/crop_travel5_r2c1.jpg','../assets/crop_travel5_r4c1.jpg',
+    '../assets/family-bday-1.jpg','../assets/family-bday-2.jpg','../assets/family-bday-3.jpg',
+    '../assets/family-bday-4.jpg','../assets/family-bday-5.jpg','../assets/family-bday-6.jpg',
+    '../assets/archive-gather-1.jpg','../assets/archive-gather-2.jpg','../assets/archive-gather-3.jpg',
   ];
   return (
     <div style={{padding:'12px 16px 8px',fontFamily:F,height:'100%',display:'flex',flexDirection:'column',gap:12}}>
@@ -938,8 +938,8 @@ const Screen5 = () => {
         <div style={{padding:'12px 14px 10px',display:'flex',alignItems:'center',gap:10,borderBottom:`1px solid ${C.border}`}}>
           <img src="../assets/pixsort-logo.jpeg" alt="" style={{width:26,height:26,borderRadius:7}}/>
           <div style={{flex:1}}>
-            <div style={{fontSize:14,fontWeight:800,color:C.t1}}>Travel</div>
-            <div style={{fontSize:11,color:C.t2}}>60 photos · sorted</div>
+            <div style={{fontSize:14,fontWeight:800,color:C.t1}}>Mason's Birthday</div>
+            <div style={{fontSize:11,color:C.t2}}>52 photos · sorted</div>
           </div>
           <div style={{background:'rgba(196,160,96,0.15)',borderRadius:8,padding:'3px 8px'}}>
             <span style={{fontSize:10,fontWeight:800,color:C.gold}}>✦ Ready</span>
@@ -958,12 +958,12 @@ const Screen5 = () => {
       </div>
       <div style={{background:'#FFFFFF',borderRadius:18,padding:'12px',display:'flex',alignItems:'center',gap:10,boxShadow:'0 2px 12px rgba(0,0,0,0.08)'}}>
         <div style={{width:48,height:48,borderRadius:12,overflow:'hidden',display:'grid',gridTemplateColumns:'1fr 1fr',gap:1}}>
-          <img src="../assets/crop_travel5_r1c2.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
-          <img src="../assets/crop_travel5_r2c1.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
+          <img src="../assets/family-bday-1.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
+          <img src="../assets/family-bday-3.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
         </div>
         <div style={{flex:1}}>
           <div style={{fontSize:13,fontWeight:700,color:'#1C1C1E'}}>Added to Photos</div>
-          <div style={{fontSize:11,color:'#8A8A8E',marginTop:2}}>60 items · Travel</div>
+          <div style={{fontSize:11,color:'#8A8A8E',marginTop:2}}>52 items · Mason's Birthday</div>
         </div>
         <div style={{width:28,height:28,background:'#F0F0F0',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center'}}>
           <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="#34C759" strokeWidth="3"><polyline points="20 6 9 17 4 12"/></svg>
