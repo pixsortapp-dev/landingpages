@@ -177,22 +177,28 @@
     .cta-download:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--lime); }
     .cta-download svg { width: 18px; height: 18px; }
 
-    /* ── One-liner above features ─────────────────────── */
-    .what-is {
-      padding: 56px 24px 24px; text-align: center; max-width: 920px; margin: 0 auto;
+    /* ── Product bumper (between hero and offer) ──────── */
+    .product-bumper {
+      background: var(--ink); color: var(--bg);
+      padding: 56px 24px; text-align: center;
+      border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
     }
-    .what-is p {
+    .product-bumper .bumper-label {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--lime); margin-bottom: 18px;
+    }
+    .product-bumper p {
       font-family: 'DM Serif Display', Georgia, serif;
-      font-size: clamp(22px, 2.4vw, 32px);
-      line-height: 1.3; color: var(--ink); letter-spacing: -0.01em;
-      text-wrap: balance;
+      font-size: clamp(24px, 2.8vw, 38px);
+      line-height: 1.25; color: var(--bg); letter-spacing: -0.01em;
+      max-width: 920px; margin: 0 auto; text-wrap: balance;
     }
-    .what-is p em {
-      font-style: italic; color: var(--ink); position: relative; display: inline-block;
+    .product-bumper p em {
+      font-style: italic; color: var(--bg); position: relative; display: inline-block;
     }
-    .what-is p em::after {
+    .product-bumper p em::after {
       content: ''; position: absolute; left: -3px; right: -3px;
-      bottom: 0.06em; height: 0.30em; background: var(--lime); z-index: -1;
+      bottom: 0.06em; height: 0.32em; background: var(--lime); z-index: -1;
     }
     .input-row {
       display: flex; width: 100%;
@@ -241,23 +247,23 @@
     .discount-banner {
       background: var(--lime);
       border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
-      padding: 64px 40px;
+      padding: 110px 40px;
     }
     .discount-inner {
-      max-width: 1100px; margin: 0 auto;
+      max-width: 1200px; margin: 0 auto;
       display: grid; grid-template-columns: 1.4fr auto;
-      gap: 64px; align-items: center;
+      gap: 96px; align-items: center;
     }
     .discount-text { text-align: left; }
     .discount-eyebrow {
-      font-size: 11px; font-weight: 800; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--ink); margin-bottom: 18px;
+      font-size: 12px; font-weight: 800; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--ink); margin-bottom: 22px;
     }
     .discount-banner h2 {
       font-family: 'DM Serif Display', Georgia, serif;
-      font-size: clamp(36px, 5vw, 60px);
+      font-size: clamp(40px, 5.6vw, 72px);
       font-weight: 400; letter-spacing: -0.03em; line-height: 1.05;
-      color: var(--ink); margin-bottom: 14px; text-wrap: balance;
+      color: var(--ink); margin-bottom: 20px; text-wrap: balance;
     }
     .discount-banner h2 em.discount-price {
       font-style: italic; color: var(--ink);
@@ -269,21 +275,21 @@
       background: var(--bg); z-index: -1;
     }
     .discount-banner p {
-      font-size: 16px; color: var(--ink); opacity: 0.8; max-width: 540px;
-      margin: 0; line-height: 1.5;
+      font-size: 18px; color: var(--ink); opacity: 0.82; max-width: 560px;
+      margin: 0; line-height: 1.55;
     }
     .discount-qr { text-align: center; }
     .discount-qr-card {
       background: var(--bg); border: 1.5px solid var(--ink);
-      border-radius: 16px; padding: 14px;
-      box-shadow: 6px 6px 0 var(--ink);
+      border-radius: 20px; padding: 18px;
+      box-shadow: 8px 8px 0 var(--ink);
       display: inline-block;
     }
     .discount-qr-card img {
-      display: block; width: 200px; height: 200px;
+      display: block; width: 240px; height: 240px;
     }
     .discount-qr-label {
-      margin-top: 14px; font-size: 12px; font-weight: 800;
+      margin-top: 18px; font-size: 13px; font-weight: 800;
       letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink);
     }
     @media (max-width: 760px) {
@@ -517,7 +523,6 @@
       <span class="h1-line">Stop sorting clips.</span>
       <span class="h1-line">Start <em>scaling content.</em></span>
     </h1>
-    <p class="hero-sub">PixSort organizes every photo and video on your iPhone into smart albums, so your editor can grab what they need. No more "send me the clip from Tuesday" texts.</p>
     <p class="hero-discount-line"><span>100 photos sorted, on us.</span></p>
 
     <div class="cta-block" id="hero-cta">
@@ -542,6 +547,12 @@
   </div>
 </section>
 
+<!-- ── Product bumper (what PixSort is) ─────────────── -->
+<section class="product-bumper">
+  <div class="bumper-label">What is PixSort?</div>
+  <p>The iPhone app that auto-sorts your camera roll into <em>smart albums.</em></p>
+</section>
+
 <!-- ── Discount banner ─────────────────────────────── -->
 <section class="discount-banner">
   <div class="discount-inner">
@@ -562,11 +573,6 @@
 <!-- ── Statement ─────────────────────────────────────── -->
 <div class="statement">
   <p>Your camera roll is a<br><em>business asset.</em></p>
-</div>
-
-<!-- ── What is PixSort one-liner ────────────────────── -->
-<div class="what-is">
-  <p>PixSort is the iPhone app that auto-sorts your camera roll into <em>smart albums.</em></p>
 </div>
 
 <!-- ── Feature rows ──────────────────────────────────── -->
