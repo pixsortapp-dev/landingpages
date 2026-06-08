@@ -4,8 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>PixSort</title>
-<link rel="manifest" href="/manifest.json" />
-<meta name="theme-color" content="#1d1d20" />
+<link rel="manifest" href="/manifest_app_v2.json" />
+<meta name="theme-color" content="#000000" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -192,6 +192,12 @@
   .hero .screen{border-radius:0 !important;width:100% !important;height:100% !important;}
   .notch{display:none !important;}
   .replay{display:none !important;}
+  /* installed-as-app: real iOS status bar + safe areas, hide the fake bar */
+  @media (display-mode: standalone){
+    html,body{background:#000;}
+    .hero .phone{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom) !important;background:#000 !important;}
+    .status{display:none !important;}
+  }
 </style>
 </head>
 <body>
