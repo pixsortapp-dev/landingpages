@@ -347,7 +347,7 @@ const gridCards=[...grid.children];
 
 // ---- build scene2 cluster bubbles ----
 const cluster=document.getElementById('cluster');
-const positions=[[12,18],[78,18],[2,46],[88,46],[18,76],[74,76]];
+const positions=[[12,18],[66,18],[2,46],[76,46],[18,76],[60,76]];
 ALBUMS.forEach((a,i)=>{
   const [x,y]=positions[i];
   const b=document.createElement('div');b.className='bub';
@@ -381,6 +381,8 @@ const POOLS=[
   ["crop_gym_r1c1.jpg","crop_gym_r1c2.jpg","crop_gym_r1c3.jpg","crop_gym_r2c1.jpg","crop_gym_r2c2.jpg","crop_gym_r2c3.jpg","crop_gym_r3c1.jpg","crop_gym_r3c2.jpg","crop_gym_r4c1.jpg"],
   ["crop_sunset_r1c1.jpg","crop_sunset_r1c2.jpg","crop_sunset_r2c1.jpg"],
 ].map(arr=>arr.map(f=>T+f));
+// the photo that will be sorted on step k (cycles Travel→Food→Fitness→Sunset)
+function libImg(k){const p=POOLS[k%4];return p[Math.floor(k/4)%p.length];}
 
 function center(el,host){const r=el.getBoundingClientRect();return {x:r.left-host.left+r.width/2,y:r.top-host.top+r.height/2};}
 
@@ -420,11 +422,14 @@ function animateSort(dur,done){
     if(p<1) raf=requestAnimationFrame(step); else done&&done();
   }
   raf=requestAnimationFrame(step);
-  // stream of real photos flying into their album
+  // stream of real photos flying out of the library into their album
+  const stackFront=s1.querySelector('.stack i:nth-child(3)');
   let n=0; const total=22, gap=dur/total;
   flyTimer=setInterval(()=>{
-    const idx=n%4, pool=POOLS[idx];
-    spawnFlyer(srcC,tgts[idx],pool[Math.floor(n/4)%pool.length],gridCards[idx]);
+    const idx=n%4;
+    spawnFlyer(srcC,tgts[idx],libImg(n),gridCards[idx]);
+    // the top of the library pile becomes the next photo in line to sort
+    if(stackFront) stackFront.style.backgroundImage=`url('${libImg(n+1)}')`;
     n++; if(n>=total) clearInterval(flyTimer);
   },gap);
 }
@@ -436,6 +441,8 @@ function resetSort(){
   $('leftSort').textContent='500 left to sort';ring.style.strokeDashoffset=RINGLEN;
   $('pushcta').classList.remove('up');
   gridCards.forEach(c=>{c.classList.add('in');c.querySelector('.ct').textContent='0';});
+  const sf=s1.querySelector('.stack i:nth-child(3)');
+  if(sf) sf.style.backgroundImage=`url('${libImg(0)}')`;
 }
 
 function runCluster(){
@@ -499,7 +506,7 @@ const screenSort=`<div class="scene" style="opacity:1;transform:none">
   ${TABBAR}
 </div>`;
 
-const clusterStatic=()=>{const P=[[12,18],[78,18],[2,46],[88,46],[18,76],[74,76]];return ALBUMS.map((a,i)=>`<div class="bub in" style="left:${P[i][0]}%;top:${P[i][1]}%"><div class="img" style="background-image:url('${a.cover}')"></div><div class="nm">${a.nm}</div></div>`).join('');};
+const clusterStatic=()=>{const P=[[12,18],[66,18],[2,46],[76,46],[18,76],[60,76]];return ALBUMS.map((a,i)=>`<div class="bub in" style="left:${P[i][0]}%;top:${P[i][1]}%"><div class="img" style="background-image:url('${a.cover}')"></div><div class="nm">${a.nm}</div></div>`).join('');};
 
 const screenPush=`<div class="scene" style="opacity:1;transform:none;padding:74px 22px 0">
   <div class="s2head"><div class="lab">Send to camera roll</div><h2>Push any album to<br>your native camera roll.</h2><p>Hand a clean folder to your editor, your group chat, or your next post in one tap.</p></div>
