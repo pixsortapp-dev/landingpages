@@ -82,12 +82,15 @@
   .libcard .lab{font-size:10px;letter-spacing:.14em;color:var(--gold);font-weight:700;text-transform:uppercase;}
   .libcard .lib{font-size:16px;font-weight:700;margin-top:3px;letter-spacing:-.01em;}
   .libcard .left{font-size:11px;color:var(--ink-dim);margin-top:4px;}
-  .stack{width:58px;height:54px;position:relative;flex:0 0 auto;}
+  .stack{width:60px;height:56px;position:relative;flex:0 0 auto;
+    transition:transform .2s ease;transform-origin:80% 88%;}
   .stack i{position:absolute;inset:0;border-radius:9px;background-size:cover;background-position:center;
-    border:1.6px solid #fff;box-shadow:0 5px 12px rgba(0,0,0,.2);}
-  .stack i:nth-child(1){transform:rotate(-11deg) translate(-3px,2px);}
-  .stack i:nth-child(2){transform:rotate(-5deg) translate(-1px,1px);}
-  .stack i:nth-child(3){transform:rotate(4deg);}
+    border:1.6px solid #fff;box-shadow:0 5px 12px rgba(0,0,0,.22);transition:opacity .25s ease;}
+  .stack i:nth-child(1){transform:rotate(-18deg) translate(-12px,5px);}
+  .stack i:nth-child(2){transform:rotate(-11deg) translate(-8px,3px);}
+  .stack i:nth-child(3){transform:rotate(-5deg) translate(-4px,1px);}
+  .stack i:nth-child(4){transform:rotate(2deg) translate(-1px,0);}
+  .stack i:nth-child(5){transform:rotate(8deg) translate(3px,-1px);}
 
   .createbtn{margin-top:12px;background:var(--gold);color:#fff;text-align:center;
     border-radius:26px;padding:14px;font-size:14px;font-weight:600;letter-spacing:.01em;
@@ -257,6 +260,8 @@
           <div class="stack">
             <i style="background-image:url('assets/tiff-roll/crop_food_r1c1.jpg')"></i>
             <i style="background-image:url('assets/tiff-roll/crop_travel5_r2c1.jpg')"></i>
+            <i style="background-image:url('assets/tiff-roll/crop_gym_r1c1.jpg')"></i>
+            <i style="background-image:url('assets/tiff-roll/crop_ss_r1c1.jpg')"></i>
             <i style="background-image:url('assets/tiff-roll/crop_sunset_r1c1.jpg')"></i>
           </div>
         </div>
@@ -407,7 +412,10 @@ function spawnFlyer(srcC,tgtC,img,card){
 function animateSort(dur,done){
   const TARGET=500, start=performance.now();
   const host=s1.getBoundingClientRect();
-  const srcC=center(s1.querySelector('.stack'),host);
+  const stackEl=s1.querySelector('.stack');
+  const L=[...stackEl.querySelectorAll('i')];   // back ... front (last)
+  const stackFront=L[L.length-1];
+  const srcC=center(stackEl,host);
   const tgts=gridCards.map(c=>center(c.querySelector('.thumb'),host));
   // counters tick smoothly to 500
   function step(now){
@@ -419,11 +427,14 @@ function animateSort(dur,done){
     $('leftSort').textContent=(TARGET-val)+' left to sort';
     ring.style.strokeDashoffset=RINGLEN*(1-e);
     gridCards.forEach((c,i)=>c.querySelector('.ct').textContent=Math.round(Math.min(1,Math.max(0,(e-i*0.04)/0.92))*ALBUMS[i].ct));
+    // library pile shrinks + thins out card by card (from the back) as photos sort
+    stackEl.style.transform=`scale(${(1-e*0.30).toFixed(3)})`;
+    const k=L.length;
+    L.forEach((el,i)=>{const lim = i===k-1 ? 0.99 : (i+1)/k*0.82; el.style.opacity = e>lim?0:1;});
     if(p<1) raf=requestAnimationFrame(step); else done&&done();
   }
   raf=requestAnimationFrame(step);
   // stream of real photos flying out of the library into their album
-  const stackFront=s1.querySelector('.stack i:nth-child(3)');
   let n=0; const total=22, gap=dur/total;
   flyTimer=setInterval(()=>{
     const idx=n%4;
@@ -441,7 +452,9 @@ function resetSort(){
   $('leftSort').textContent='500 left to sort';ring.style.strokeDashoffset=RINGLEN;
   $('pushcta').classList.remove('up');
   gridCards.forEach(c=>{c.classList.add('in');c.querySelector('.ct').textContent='0';});
-  const sf=s1.querySelector('.stack i:nth-child(3)');
+  const st=s1.querySelector('.stack');
+  if(st){st.style.transform='scale(1)';st.querySelectorAll('i').forEach(i=>i.style.opacity='1');}
+  const sf=s1.querySelector('.stack i:last-child');
   if(sf) sf.style.backgroundImage=`url('${libImg(0)}')`;
 }
 
@@ -497,7 +510,7 @@ const screenSort=`<div class="scene" style="opacity:1;transform:none">
       <svg class="ring" viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="19"/><circle class="fg" cx="25" cy="25" r="19" style="stroke-dashoffset:45"/></svg>
       <div><div class="pct">62%</div><div class="frac">312 / 500</div></div></div></div>
   </div>
-  <div class="libcard"><div><div class="lab">Photos from</div><div class="lib">YOUR LIBRARY</div><div class="left">188 left to sort</div></div><div class="stack"><i style="background-image:url('${T}crop_food_r1c1.jpg')"></i><i style="background-image:url('${T}crop_travel5_r2c1.jpg')"></i><i style="background-image:url('${T}crop_sunset_r1c1.jpg')"></i></div></div>
+  <div class="libcard"><div><div class="lab">Photos from</div><div class="lib">YOUR LIBRARY</div><div class="left">188 left to sort</div></div><div class="stack"><i style="background-image:url('${T}crop_food_r1c1.jpg')"></i><i style="background-image:url('${T}crop_travel5_r2c1.jpg')"></i><i style="background-image:url('${T}crop_gym_r1c1.jpg')"></i><i style="background-image:url('${T}crop_ss_r1c1.jpg')"></i><i style="background-image:url('${T}crop_sunset_r1c1.jpg')"></i></div></div>
   <div class="createbtn">+ Create new album</div>
   <div class="albgrid">${gridStatic([64,52,58,26])}</div>
   <div class="flyer" style="left:60px;top:300px;background-image:url('${POOLS[0][3]}');transform:rotate(-9deg)"></div>
