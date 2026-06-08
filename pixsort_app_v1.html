@@ -140,10 +140,8 @@
   .photos-hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
     width:84px;text-align:center;z-index:5;}
   .photos-hub .ic{width:64px;height:64px;border-radius:16px;margin:0 auto;
-    background:conic-gradient(from 0deg,#ff5b5b,#ffd24c,#5bd86a,#3aa0ff,#a06bff,#ff5b5b);
+    background:#fff url('assets/photos-logo.jpeg') center/cover no-repeat;
     box-shadow:0 10px 24px rgba(0,0,0,.18);position:relative;}
-  .photos-hub .ic::after{content:"";position:absolute;inset:18px;border-radius:50%;
-    background:radial-gradient(circle at 50% 50%,#fff 0 34%,transparent 36%);}
   .photos-hub .t{font-size:11px;color:var(--ink-dim);margin-top:6px;}
   .bub{position:absolute;width:62px;text-align:center;opacity:0;transform:scale(.6);}
   .bub.in{animation:bub .4s cubic-bezier(.2,.8,.3,1.3) forwards;}
@@ -259,7 +257,6 @@
 
       <!-- ============ SCENE 1 ============ -->
       <div class="scene" id="s1">
-        <div class="tflight">◀ TestFlight</div>
         <div class="statcards">
           <div class="stat">
             <div class="k">Sorted</div>
@@ -328,7 +325,7 @@
 
       <!-- ============ SCENE 4 ============ -->
       <div class="scene" id="s4">
-        <div class="ph-head"><div class="ttl">Your Albums<span>12</span></div><div class="edit">Edit</div></div>
+        <div class="ph-head"><div class="ttl">Your Albums<span>10</span></div><div class="edit">Edit</div></div>
         <div class="ph-scroll" id="phscroll"></div>
         <div class="tabbar">
           <div class="tab active"><span class="gi">▦</span>Albums</div>
@@ -364,6 +361,14 @@ const ALBUMS = [
     thumbs:["crop_ss_r1c2.jpg","crop_ss_r2c1.jpg","crop_ss_r1c1.jpg","crop_ss_r2c1.jpg"]},
   {nm:"You",     ct:86,  c:"#ddd2ea", ic:"👤", cover:T+"crop_gym_r3c1.jpg",
     thumbs:["crop_gym_r3c2.jpg","crop_gym_r3c3.jpg","crop_gym_r4c1.jpg","crop_gym_r2c3.jpg"]},
+  {nm:"Beach",   ct:61,  c:"#cfe3e6", ic:"🏖️", cover:T+"crop_travel5_r2c2.jpg",
+    thumbs:["crop_travel5_r2c1.jpg","crop_travel5_r4c1.jpg","crop_sunset_r1c1.jpg","crop_travel_r1c2.jpg"]},
+  {nm:"Nature",  ct:53,  c:"#d8e0c6", ic:"🌿", cover:T+"crop_travel_r1c2.jpg",
+    thumbs:["crop_travel_r2c1.jpg","crop_travel5_r1c3.jpg","crop_sunset_r2c1.jpg","crop_travel_r4c2.jpg"]},
+  {nm:"Friends", ct:73,  c:"#ddd2ea", ic:"👯", cover:T+"crop_gym_r2c1.jpg",
+    thumbs:["crop_gym_r2c2.jpg","crop_gym_r2c3.jpg","crop_gym_r1c2.jpg","crop_gym_r3c3.jpg"]},
+  {nm:"Events",  ct:38,  c:"#f0d9c2", ic:"🎉", cover:T+"crop_food_r2c1.jpg",
+    thumbs:["crop_food_r1c2.jpg","crop_food_r2c2.jpg","crop_gym_r4c1.jpg","crop_food_r3c2.jpg"]},
 ];
 
 // ---- build scene1 album grid ----
@@ -379,7 +384,7 @@ const gridCards=[...grid.children];
 // ---- build scene2 cluster bubbles ----
 const cluster=document.getElementById('cluster');
 const positions=[[12,18],[66,18],[2,46],[76,46],[18,76],[60,76]];
-ALBUMS.forEach((a,i)=>{
+ALBUMS.slice(0,6).forEach((a,i)=>{
   const [x,y]=positions[i];
   const b=document.createElement('div');b.className='bub';
   b.style.left=x+'%';b.style.top=y+'%';
@@ -514,8 +519,8 @@ function play(){
     setScene('s4');
     ph.style.transition='none';ph.style.transform='translateY(0)';
     void ph.offsetWidth;
-    ph.style.transition='transform 2.6s linear';
-    t(()=>{ph.style.transform='translateY(-150px)';},400);
+    ph.style.transition='transform 4.5s linear';
+    t(()=>{ph.style.transform='translateY(-280px)';},400);
   }, 9300);
 }
 // tap the hero phone to replay
@@ -529,7 +534,6 @@ const TABBAR=`<div class="tabbar"><div class="tab active"><span class="gi">▦</
 const gridStatic=counts=>ALBUMS.slice(0,4).map((a,i)=>`<div class="acard in"><div class="thumb" style="background-image:url('${a.cover}')"></div><div class="meta"><span class="nm">${a.nm}</span><span class="ct">${counts[i]}</span></div></div>`).join('');
 
 const screenSort=`<div class="scene" style="opacity:1;transform:none">
-  <div class="tflight">◀ TestFlight</div>
   <div class="statcards">
     <div class="stat"><div class="k">Sorted</div><div class="big">312</div></div>
     <div class="stat"><div class="k">Progress</div><div class="progrow">
@@ -545,7 +549,7 @@ const screenSort=`<div class="scene" style="opacity:1;transform:none">
   ${TABBAR}
 </div>`;
 
-const clusterStatic=()=>{const P=[[12,18],[66,18],[2,46],[76,46],[18,76],[60,76]];return ALBUMS.map((a,i)=>`<div class="bub in" style="left:${P[i][0]}%;top:${P[i][1]}%"><div class="img" style="background-image:url('${a.cover}')"></div><div class="nm">${a.nm}</div></div>`).join('');};
+const clusterStatic=()=>{const P=[[12,18],[66,18],[2,46],[76,46],[18,76],[60,76]];return ALBUMS.slice(0,6).map((a,i)=>`<div class="bub in" style="left:${P[i][0]}%;top:${P[i][1]}%"><div class="img" style="background-image:url('${a.cover}')"></div><div class="nm">${a.nm}</div></div>`).join('');};
 
 const screenPush=`<div class="scene" style="opacity:1;transform:none;padding:74px 22px 0">
   <div class="s2head"><div class="lab">Send to camera roll</div><h2>Push any album to<br>your native camera roll.</h2><p>Hand a clean folder to your editor, your group chat, or your next post in one tap.</p></div>
@@ -562,7 +566,7 @@ const screenSynced=`<div class="scene" style="opacity:1;transform:none;display:f
 const photosRows=()=>ALBUMS.map(a=>{const strip=a.thumbs.map(t=>`<div class="t" style="background-image:url('${T+t}')"></div>`).join('');return `<div class="prow" style="--c:${a.c}"><div class="top"><div class="ic">${a.ic}</div><div><div class="nm">${a.nm}</div><div class="ct">${a.ct} photos</div></div></div><div class="strip">${strip}<div class="more">+${a.ct-4}</div></div></div>`;}).join('');
 
 const screenAlbums=`<div class="scene" style="opacity:1;transform:none;background:var(--cream);padding:60px 18px 0">
-  <div class="ph-head"><div class="ttl">Your Albums<span>12</span></div><div class="edit">Edit</div></div>
+  <div class="ph-head"><div class="ttl">Your Albums<span>10</span></div><div class="edit">Edit</div></div>
   <div class="ph-scroll" style="transform:none">${photosRows()}</div>
   ${TABBAR}
 </div>`;
