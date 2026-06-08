@@ -82,10 +82,12 @@
   .libcard .lab{font-size:10px;letter-spacing:.14em;color:var(--gold);font-weight:700;text-transform:uppercase;}
   .libcard .lib{font-size:16px;font-weight:700;margin-top:3px;letter-spacing:-.01em;}
   .libcard .left{font-size:11px;color:var(--ink-dim);margin-top:4px;}
-  .stack{width:54px;height:50px;position:relative;flex:0 0 auto;}
-  .stack i{position:absolute;inset:0;border-radius:10px;background:linear-gradient(135deg,#cfe0c9,#bcd2e6 55%,#e4cfdc);}
-  .stack i:nth-child(1){transform:rotate(-9deg) translate(-3px,2px);opacity:.55;}
-  .stack i:nth-child(2){transform:rotate(-4deg) translate(-1px,1px);opacity:.78;}
+  .stack{width:58px;height:54px;position:relative;flex:0 0 auto;}
+  .stack i{position:absolute;inset:0;border-radius:9px;background-size:cover;background-position:center;
+    border:1.6px solid #fff;box-shadow:0 5px 12px rgba(0,0,0,.2);}
+  .stack i:nth-child(1){transform:rotate(-11deg) translate(-3px,2px);}
+  .stack i:nth-child(2){transform:rotate(-5deg) translate(-1px,1px);}
+  .stack i:nth-child(3){transform:rotate(4deg);}
 
   .createbtn{margin-top:12px;background:var(--gold);color:#fff;text-align:center;
     border-radius:26px;padding:14px;font-size:14px;font-weight:600;letter-spacing:.01em;
@@ -253,7 +255,11 @@
             <div class="lib">YOUR LIBRARY</div>
             <div class="left" id="leftSort">500 left to sort</div>
           </div>
-          <div class="stack"><i></i><i></i></div>
+          <div class="stack">
+            <i style="background-image:url('assets/tiff-roll/crop_food_r1c1.jpg')"></i>
+            <i style="background-image:url('assets/tiff-roll/crop_travel5_r2c1.jpg')"></i>
+            <i style="background-image:url('assets/tiff-roll/crop_sunset_r1c1.jpg')"></i>
+          </div>
         </div>
 
         <div class="createbtn">+ Create new album</div>
@@ -485,7 +491,7 @@ const screenSort=`<div class="scene" style="position:static;opacity:1;transform:
       <svg class="ring" viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="19"/><circle class="fg" cx="25" cy="25" r="19" style="stroke-dashoffset:45"/></svg>
       <div><div class="pct">62%</div><div class="frac">312 / 500</div></div></div></div>
   </div>
-  <div class="libcard"><div><div class="lab">Photos from</div><div class="lib">YOUR LIBRARY</div><div class="left">188 left to sort</div></div><div class="stack"><i></i><i></i></div></div>
+  <div class="libcard"><div><div class="lab">Photos from</div><div class="lib">YOUR LIBRARY</div><div class="left">188 left to sort</div></div><div class="stack"><i style="background-image:url('${T}crop_food_r1c1.jpg')"></i><i style="background-image:url('${T}crop_travel5_r2c1.jpg')"></i><i style="background-image:url('${T}crop_sunset_r1c1.jpg')"></i></div></div>
   <div class="createbtn">+ Create new album</div>
   <div class="albgrid">${gridStatic([64,52,58,26])}</div>
   <div class="flyer" style="left:60px;top:300px;background-image:url('${POOLS[0][3]}');transform:rotate(-9deg)"></div>
