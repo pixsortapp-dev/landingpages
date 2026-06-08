@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>PixSort</title>
+<link rel="manifest" href="/manifest.json" />
+<meta name="theme-color" content="#1d1d20" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="PixSort" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+
+<style>
+  :root{
+    --cream:#efe7da;
+    --cream-2:#f5efe4;
+    --card:#fbf7ef;
+    --card-2:#fffdf8;
+    --gold:#bfa05c;
+    --gold-d:#a98a47;
+    --gold-soft:#d8c391;
+    --ink:#2b2926;
+    --ink-dim:#8d877a;
+    --ink-faint:#b3ac9d;
+    --line:#e7ded0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{
+    background:radial-gradient(120% 120% at 50% 0%, #20232a 0%, #14161b 60%, #0c0d11 100%);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;
+    display:flex;align-items:center;justify-content:center;
+    min-height:100vh;color:var(--ink);
+  }
+
+  /* ---------- phone frame ---------- */
+  .phone{
+    position:relative;width:330px;height:712px;border-radius:54px;
+    background:#0a0a0c;padding:13px;
+    box-shadow:0 40px 90px rgba(0,0,0,.55), inset 0 0 0 2px #2a2a2e;
+  }
+  .screen{
+    position:relative;width:100%;height:100%;border-radius:42px;overflow:hidden;
+    background:var(--cream);
+  }
+  .notch{
+    position:absolute;top:11px;left:50%;transform:translateX(-50%);
+    width:108px;height:30px;background:#0a0a0c;border-radius:18px;z-index:60;
+  }
+
+  /* status bar */
+  .status{
+    position:absolute;top:0;left:0;right:0;height:54px;z-index:55;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 26px 0;font-size:14px;font-weight:600;color:var(--ink);
+    background:var(--cream);
+  }
+  .status .right{display:flex;align-items:center;gap:6px;font-size:12px;}
+  .batt{border:1.4px solid var(--ink);border-radius:3px;width:22px;height:11px;position:relative;display:inline-block;}
+  .batt::after{content:"";position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:70%;background:var(--ink);border-radius:1px;}
+  .batt::before{content:"";position:absolute;right:-3px;top:3px;height:5px;width:2px;background:var(--ink);border-radius:1px;}
+
+  /* generic scene layer */
+  .scene{
+    position:absolute;inset:0;opacity:0;transform:translateY(8px);
+    transition:opacity .45s ease, transform .45s ease;pointer-events:none;
+    padding:62px 18px 0;
+  }
+  .scene.show{opacity:1;transform:none;}
+
+  /* ================= SCENE 1 : FAST SORT ================= */
+  .tflight{position:absolute;top:36px;left:20px;font-size:11px;color:var(--ink-dim);z-index:56;}
+  .statcards{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:6px;}
+  .stat{background:var(--card);border-radius:18px;padding:14px 15px;box-shadow:0 6px 16px rgba(120,100,60,.06);}
+  .stat .k{font-size:10px;letter-spacing:.16em;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:7px;}
+  .stat .big{font-size:34px;font-weight:700;letter-spacing:-.02em;line-height:1;}
+  .progrow{display:flex;align-items:center;gap:12px;}
+  .ring{width:50px;height:50px;flex:0 0 auto;}
+  .ring circle{fill:none;stroke-width:7;}
+  .ring .bg{stroke:#ece3d2;}
+  .ring .fg{stroke:var(--gold);stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%;
+    stroke-dasharray:119;stroke-dashoffset:119;transition:stroke-dashoffset .12s linear;}
+  .progrow .pct{font-size:24px;font-weight:700;letter-spacing:-.02em;}
+  .progrow .frac{font-size:11px;color:var(--ink-dim);margin-top:2px;}
+
+  .libcard{background:var(--card);border-radius:16px;padding:13px 15px;margin-top:11px;
+    display:flex;align-items:center;justify-content:space-between;box-shadow:0 6px 16px rgba(120,100,60,.06);}
+  .libcard .lab{font-size:10px;letter-spacing:.14em;color:var(--gold);font-weight:700;text-transform:uppercase;}
+  .libcard .lib{font-size:16px;font-weight:700;margin-top:3px;letter-spacing:-.01em;}
+  .libcard .left{font-size:11px;color:var(--ink-dim);margin-top:4px;}
+  .stack{width:60px;height:56px;position:relative;flex:0 0 auto;
+    transition:transform .2s ease;transform-origin:80% 88%;}
+  .stack i{position:absolute;inset:0;border-radius:9px;background-size:cover;background-position:center;
+    border:1.6px solid #fff;box-shadow:0 5px 12px rgba(0,0,0,.22);transition:opacity .25s ease;}
+  .stack i:nth-child(1){transform:rotate(-18deg) translate(-12px,5px);}
+  .stack i:nth-child(2){transform:rotate(-11deg) translate(-8px,3px);}
+  .stack i:nth-child(3){transform:rotate(-5deg) translate(-4px,1px);}
+  .stack i:nth-child(4){transform:rotate(2deg) translate(-1px,0);}
+  .stack i:nth-child(5){transform:rotate(8deg) translate(3px,-1px);}
+
+  .createbtn{margin-top:12px;background:var(--gold);color:#fff;text-align:center;
+    border-radius:26px;padding:14px;font-size:14px;font-weight:600;letter-spacing:.01em;
+    box-shadow:0 10px 22px rgba(150,120,60,.28);}
+
+  .albgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:13px;}
+  .acard{border-radius:14px;overflow:hidden;background:var(--card);box-shadow:0 6px 16px rgba(120,100,60,.07);
+    opacity:0;transform:scale(.9);}
+  .acard.in{animation:pop .32s cubic-bezier(.2,.8,.3,1.2) forwards;}
+  @keyframes pop{to{opacity:1;transform:scale(1);}}
+  .acard .thumb{height:78px;background:#ddd center/cover no-repeat;}
+  .acard .meta{display:flex;align-items:center;justify-content:space-between;padding:8px 11px;}
+  .acard .nm{font-size:13px;font-weight:600;}
+  .acard .ct{font-size:12px;color:var(--ink-faint);}
+
+  /* flying photo thumbnails (the sort) */
+  .flyer{position:absolute;width:44px;height:44px;border-radius:9px;
+    background-size:cover;background-position:center;z-index:45;
+    box-shadow:0 8px 18px rgba(0,0,0,.28);will-change:transform,opacity;
+    border:2px solid #fff;}
+
+  /* push CTA (rises after sort completes) */
+  .pushcta{position:absolute;left:18px;right:18px;bottom:20px;z-index:40;
+    background:linear-gradient(180deg,#c9a961,#ab8a45);color:#fff;text-align:center;
+    border-radius:30px;padding:17px;font-size:16px;font-weight:700;letter-spacing:.01em;
+    box-shadow:0 16px 34px rgba(150,120,60,.45);
+    transform:translateY(120px);opacity:0;transition:transform .5s cubic-bezier(.2,.9,.3,1.2),opacity .4s;}
+  .pushcta.up{transform:none;opacity:1;animation:cpulse 1.1s ease-in-out 1 .5s;}
+  @keyframes cpulse{0%,100%{box-shadow:0 16px 34px rgba(150,120,60,.45);}50%{box-shadow:0 16px 50px rgba(180,150,80,.75);}}
+  .pushcta small{display:block;font-size:11px;font-weight:500;opacity:.9;margin-top:3px;letter-spacing:.02em;}
+
+  /* ================= SCENE 2 : SEND TO ROLL ================= */
+  #s2{padding:74px 22px 0;}
+  .s2head{text-align:center;}
+  .s2head .lab{font-size:10px;letter-spacing:.16em;color:var(--gold);font-weight:700;text-transform:uppercase;}
+  .s2head h2{font-size:23px;font-weight:700;letter-spacing:-.02em;margin-top:9px;line-height:1.18;}
+  .s2head p{font-size:12.5px;color:var(--ink-dim);margin-top:9px;line-height:1.4;padding:0 6px;}
+  .cluster{position:relative;height:330px;margin-top:14px;}
+  .photos-hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:84px;text-align:center;z-index:5;}
+  .photos-hub .ic{width:64px;height:64px;border-radius:16px;margin:0 auto;
+    background:conic-gradient(from 0deg,#ff5b5b,#ffd24c,#5bd86a,#3aa0ff,#a06bff,#ff5b5b);
+    box-shadow:0 10px 24px rgba(0,0,0,.18);position:relative;}
+  .photos-hub .ic::after{content:"";position:absolute;inset:18px;border-radius:50%;
+    background:radial-gradient(circle at 50% 50%,#fff 0 34%,transparent 36%);}
+  .photos-hub .t{font-size:11px;color:var(--ink-dim);margin-top:6px;}
+  .bub{position:absolute;width:62px;text-align:center;opacity:0;transform:scale(.6);}
+  .bub.in{animation:bub .4s cubic-bezier(.2,.8,.3,1.3) forwards;}
+  @keyframes bub{to{opacity:1;transform:scale(1);}}
+  .bub .img{width:54px;height:42px;border-radius:9px;background:#ccc center/cover;margin:0 auto;
+    box-shadow:0 6px 14px rgba(0,0,0,.14);}
+  .bub .nm{font-size:9.5px;color:var(--ink);background:var(--card-2);border-radius:6px;
+    padding:2px 5px;margin-top:4px;display:inline-block;font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.05);}
+  .syncbtn{position:absolute;left:22px;right:22px;bottom:42px;
+    background:var(--gold);color:#fff;text-align:center;border-radius:30px;padding:17px;
+    font-size:16px;font-weight:700;box-shadow:0 16px 34px rgba(150,120,60,.4);transition:transform .12s;}
+  .syncbtn.press{transform:scale(.95);background:var(--gold-d);}
+
+  /* ================= SCENE 3 : SYNCED ================= */
+  #s3{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 34px;}
+  .check{width:96px;height:96px;border-radius:50%;background:var(--gold);
+    display:flex;align-items:center;justify-content:center;transform:scale(0);
+    box-shadow:0 14px 34px rgba(150,120,60,.4);}
+  #s3.show .check{animation:ckin .5s cubic-bezier(.2,.9,.3,1.4) forwards;}
+  @keyframes ckin{to{transform:scale(1);}}
+  .check svg{width:46px;height:46px;}
+  .check path{stroke:#fff;stroke-width:9;fill:none;stroke-linecap:round;stroke-linejoin:round;
+    stroke-dasharray:60;stroke-dashoffset:60;}
+  #s3.show .check path{animation:draw .45s ease .3s forwards;}
+  @keyframes draw{to{stroke-dashoffset:0;}}
+  #s3 h2{font-size:32px;font-weight:700;margin-top:24px;letter-spacing:-.02em;}
+  #s3 p{font-size:14px;color:var(--ink-dim);text-align:center;margin-top:12px;line-height:1.45;}
+  #s3 p b{color:var(--ink);font-weight:700;}
+
+  /* ================= SCENE 4 : PHOTOS ALBUMS ================= */
+  #s4{padding:60px 18px 0;background:var(--cream);}
+  .ph-head{display:flex;align-items:baseline;justify-content:space-between;padding:4px 4px 0;}
+  .ph-head .ttl{font-size:25px;font-weight:700;letter-spacing:-.02em;}
+  .ph-head .ttl span{font-size:15px;color:var(--ink-faint);font-weight:500;margin-left:6px;}
+  .ph-head .edit{font-size:14px;color:var(--gold);font-weight:600;}
+  .ph-scroll{margin-top:12px;display:flex;flex-direction:column;gap:13px;
+    transition:transform 2.4s linear;}
+  .prow{background:var(--card);border-radius:16px;padding:13px;box-shadow:0 6px 16px rgba(120,100,60,.06);position:relative;overflow:hidden;}
+  .prow::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:4px;border-radius:3px;background:var(--c,#bbb);}
+  .prow .top{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-left:6px;}
+  .prow .ic{width:34px;height:34px;border-radius:9px;background:var(--c,#bbb);display:flex;align-items:center;justify-content:center;font-size:17px;}
+  .prow .nm{font-size:16px;font-weight:700;letter-spacing:-.01em;}
+  .prow .ct{font-size:11px;color:var(--ink-dim);margin-top:1px;}
+  .strip{display:grid;grid-template-columns:repeat(4,1fr) auto;gap:6px;padding-left:6px;align-items:center;}
+  .strip .t{aspect-ratio:1;border-radius:8px;background:#ccc center/cover;}
+  .strip .more{font-size:12px;color:var(--ink-dim);font-weight:600;padding-left:2px;white-space:nowrap;}
+
+  /* bottom tab bar (scenes 1 & 4) */
+  .tabbar{position:absolute;bottom:0;left:0;right:0;height:58px;background:rgba(250,247,239,.92);
+    backdrop-filter:blur(8px);border-top:1px solid var(--line);
+    display:flex;align-items:flex-start;justify-content:space-around;padding-top:9px;z-index:30;}
+  .tab{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9px;color:var(--ink-faint);}
+  .tab.active{color:var(--gold);}
+  .tab .gi{font-size:16px;line-height:1;}
+
+  /* ---------- page scaffold ---------- */
+  body{display:block;}
+  .page{max-width:1280px;margin:0 auto;padding:54px 24px 100px;}
+  .pghead{text-align:center;color:#f3efe6;margin-bottom:34px;}
+  .pghead h1{font-size:30px;font-weight:700;letter-spacing:-.02em;}
+  .pghead .sub{font-size:15px;color:#a7a39a;margin-top:10px;}
+  .hero{display:flex;justify-content:center;}
+  .board{margin-top:74px;}
+  .bhead{text-align:center;color:#f3efe6;font-size:13px;letter-spacing:.22em;
+    text-transform:uppercase;font-weight:700;}
+  .bhead::after{content:"";display:block;width:46px;height:3px;background:var(--gold);
+    margin:14px auto 0;border-radius:2px;}
+  .screens{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+    gap:46px 28px;margin-top:44px;justify-items:center;align-items:start;}
+  .mp{display:flex;flex-direction:column;align-items:center;gap:18px;width:100%;max-width:300px;}
+  .mp .phone{transform:scale(.9);transform-origin:top center;margin-bottom:-60px;}
+  .cap{text-align:center;color:#eceae3;}
+  .cap .step{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;
+    color:#0d0e11;background:var(--gold);border-radius:20px;padding:3px 11px;margin-bottom:9px;}
+  .cap h3{font-size:16px;font-weight:600;letter-spacing:-.01em;}
+  .cap p{font-size:12.5px;color:#a7a39a;margin-top:5px;line-height:1.4;}
+  /* static mini phones: scenes laid out exactly like the hero, just always visible */
+  .mp .scene{opacity:1;transform:none;}
+</style>
+<style id="fsmode">
+  html,body{height:100%;margin:0;background:#000;overflow:hidden;}
+  body{display:block !important;}
+  .pghead,.board{display:none !important;}
+  .page{max-width:none !important;margin:0 !important;padding:0 !important;}
+  .hero{display:block !important;margin:0 !important;}
+  .hero .phone{width:100vw !important;height:100vh !important;height:100dvh !important;
+    border-radius:0 !important;padding:0 !important;box-shadow:none !important;background:#000 !important;}
+  .hero .screen{border-radius:0 !important;width:100% !important;height:100% !important;}
+  .notch{display:none !important;}
+  .replay{display:none !important;}
+</style>
+</head>
+<body>
+ <div class="page">
+  <header class="pghead">
+    <h1>Sort your whole camera roll in seconds</h1>
+    <p class="sub">Tap the phone to replay &middot; scroll down for the screen-by-screen</p>
+  </header>
+  <section class="hero">
+  <div class="phone">
+    <div class="screen">
+      <div class="notch"></div>
+      <div class="status">
+        <span>9:41</span>
+        <span class="right">•••&nbsp; <svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 1C5 1 2.6 2 1 3.6l7 6.4 7-6.4C13.4 2 11 1 8 1Z" fill="#2b2926" opacity=".9"/></svg> <span class="batt"></span></span>
+      </div>
+
+      <!-- ============ SCENE 1 ============ -->
+      <div class="scene" id="s1">
+        <div class="tflight">◀ TestFlight</div>
+        <div class="statcards">
+          <div class="stat">
+            <div class="k">Sorted</div>
+            <div class="big" id="sortedNum">0</div>
+          </div>
+          <div class="stat">
+            <div class="k">Progress</div>
+            <div class="progrow">
+              <svg class="ring" viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="19"/><circle class="fg" id="ring" cx="25" cy="25" r="19"/></svg>
+              <div>
+                <div class="pct" id="pct">0%</div>
+                <div class="frac" id="frac">0 / 500</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="libcard">
+          <div>
+            <div class="lab">Photos from</div>
+            <div class="lib">YOUR LIBRARY</div>
+            <div class="left" id="leftSort">500 left to sort</div>
+          </div>
+          <div class="stack">
+            <i style="background-image:url('assets/tiff-roll/crop_food_r1c1.jpg')"></i>
+            <i style="background-image:url('assets/tiff-roll/crop_travel5_r2c1.jpg')"></i>
+            <i style="background-image:url('assets/tiff-roll/crop_gym_r1c1.jpg')"></i>
+            <i style="background-image:url('assets/tiff-roll/crop_ss_r1c1.jpg')"></i>
+            <i style="background-image:url('assets/tiff-roll/crop_sunset_r1c1.jpg')"></i>
+          </div>
+        </div>
+
+        <div class="createbtn">+ Create new album</div>
+
+        <div class="albgrid" id="albgrid"></div>
+
+        <div class="pushcta" id="pushcta">Push to Camera Roll<small>500 photos sorted — send them over</small></div>
+
+        <div class="tabbar">
+          <div class="tab active"><span class="gi">▦</span>Albums</div>
+          <div class="tab"><span class="gi">⌕</span>Search</div>
+          <div class="tab"><span class="gi">✦</span>Clean Up</div>
+          <div class="tab"><span class="gi">⚙</span>Settings</div>
+        </div>
+      </div>
+
+      <!-- ============ SCENE 2 ============ -->
+      <div class="scene" id="s2">
+        <div class="s2head">
+          <div class="lab">Send to camera roll</div>
+          <h2>Push any album to<br>your native camera roll.</h2>
+          <p>Hand a clean folder to your editor, your group chat, or your next post in one tap.</p>
+        </div>
+        <div class="cluster" id="cluster">
+          <div class="photos-hub"><div class="ic"></div><div class="t">Photos</div></div>
+        </div>
+        <div class="syncbtn" id="syncbtn">Sync to camera roll</div>
+      </div>
+
+      <!-- ============ SCENE 3 ============ -->
+      <div class="scene" id="s3">
+        <div class="check"><svg viewBox="0 0 50 50"><path d="M13 26l8 8 16-17"/></svg></div>
+        <h2>Synced!</h2>
+        <p><b>500 photos</b> are now in your<br>camera roll, sorted into albums.</p>
+      </div>
+
+      <!-- ============ SCENE 4 ============ -->
+      <div class="scene" id="s4">
+        <div class="ph-head"><div class="ttl">Your Albums<span>12</span></div><div class="edit">Edit</div></div>
+        <div class="ph-scroll" id="phscroll"></div>
+        <div class="tabbar">
+          <div class="tab active"><span class="gi">▦</span>Albums</div>
+          <div class="tab"><span class="gi">⌕</span>Search</div>
+          <div class="tab"><span class="gi">✦</span>Clean Up</div>
+          <div class="tab"><span class="gi">⚙</span>Settings</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </section>
+
+  <section class="board">
+    <div class="bhead">Screen by screen</div>
+    <div class="screens" id="screens"></div>
+  </section>
+ </div>
+
+<script>
+const T = "assets/tiff-roll/";
+// album definitions (cover + count target + thumbs)
+const ALBUMS = [
+  {nm:"Travel",  ct:104, c:"#cfe3e6", ic:"✈️", cover:T+"crop_travel5_r1c2.jpg",
+    thumbs:["crop_travel5_r2c1.jpg","crop_travel5_r2c2.jpg","crop_travel_r1c2.jpg","crop_travel5_r4c1.jpg"]},
+  {nm:"Food",    ct:88,  c:"#f0d9c2", ic:"🍽️", cover:T+"crop_food_r1c1.jpg",
+    thumbs:["crop_food_r1c2.jpg","crop_food_r2c1.jpg","crop_food_r2c2.jpg","crop_food_r3c2.jpg"]},
+  {nm:"Fitness", ct:96,  c:"#d8e0c6", ic:"🏋️", cover:T+"crop_gym_r1c1.jpg",
+    thumbs:["crop_gym_r1c2.jpg","crop_gym_r1c3.jpg","crop_gym_r2c1.jpg","crop_gym_r2c2.jpg"]},
+  {nm:"Sunset",  ct:42,  c:"#f0d2cb", ic:"🌅", cover:T+"crop_sunset_r1c1.jpg",
+    thumbs:["crop_sunset_r1c2.jpg","crop_sunset_r2c1.jpg","crop_travel_r4c2.jpg","crop_travel5_r4c2.jpg"]},
+  {nm:"Screenshots", ct:84, c:"#e6dcc2", ic:"📱", cover:T+"crop_ss_r1c1.jpg",
+    thumbs:["crop_ss_r1c2.jpg","crop_ss_r2c1.jpg","crop_ss_r1c1.jpg","crop_ss_r2c1.jpg"]},
+  {nm:"You",     ct:86,  c:"#ddd2ea", ic:"👤", cover:T+"crop_gym_r3c1.jpg",
+    thumbs:["crop_gym_r3c2.jpg","crop_gym_r3c3.jpg","crop_gym_r4c1.jpg","crop_gym_r2c3.jpg"]},
+];
+
+// ---- build scene1 album grid ----
+const grid = document.getElementById('albgrid');
+ALBUMS.slice(0,4).forEach(a=>{
+  const d=document.createElement('div');d.className='acard';
+  d.innerHTML=`<div class="thumb" style="background-image:url('${a.cover}')"></div>
+    <div class="meta"><span class="nm">${a.nm}</span><span class="ct">0</span></div>`;
+  grid.appendChild(d);
+});
+const gridCards=[...grid.children];
+
+// ---- build scene2 cluster bubbles ----
+const cluster=document.getElementById('cluster');
+const positions=[[12,18],[66,18],[2,46],[76,46],[18,76],[60,76]];
+ALBUMS.forEach((a,i)=>{
+  const [x,y]=positions[i];
+  const b=document.createElement('div');b.className='bub';
+  b.style.left=x+'%';b.style.top=y+'%';
+  b.innerHTML=`<div class="img" style="background-image:url('${a.cover}')"></div><div class="nm">${a.nm}</div>`;
+  cluster.appendChild(b);
+});
+const bubbles=[...cluster.querySelectorAll('.bub')];
+
+// ---- build scene4 photos rows ----
+const ph=document.getElementById('phscroll');
+ALBUMS.forEach(a=>{
+  const r=document.createElement('div');r.className='prow';r.style.setProperty('--c',a.c);
+  const strip=a.thumbs.map(t=>`<div class="t" style="background-image:url('${T+t}')"></div>`).join('');
+  r.innerHTML=`<div class="top"><div class="ic">${a.ic}</div><div><div class="nm">${a.nm}</div><div class="ct">${a.ct} photos</div></div></div>
+    <div class="strip">${strip}<div class="more">+${a.ct-4}</div></div>`;
+  ph.appendChild(r);
+});
+
+// ---------- timeline helpers ----------
+const $=id=>document.getElementById(id);
+const s1=$('s1');
+const ring=$('ring'), RINGLEN=119;
+function setScene(id){['s1','s2','s3','s4'].forEach(s=>$(s).classList.toggle('show',s===id));}
+function easeOut(t){return 1-Math.pow(1-t,3);}
+
+// real-photo pools per grid card (Travel, Food, Fitness, Sunset)
+const POOLS=[
+  ["crop_travel5_r1c2.jpg","crop_travel5_r2c1.jpg","crop_travel5_r2c2.jpg","crop_travel_r1c2.jpg","crop_travel5_r4c1.jpg","crop_travel5_r1c3.jpg","crop_travel_r2c1.jpg","crop_travel5_r4c2.jpg","crop_travel_r4c2.jpg"],
+  ["crop_food_r1c1.jpg","crop_food_r1c2.jpg","crop_food_r2c1.jpg","crop_food_r2c2.jpg","crop_food_r3c2.jpg"],
+  ["crop_gym_r1c1.jpg","crop_gym_r1c2.jpg","crop_gym_r1c3.jpg","crop_gym_r2c1.jpg","crop_gym_r2c2.jpg","crop_gym_r2c3.jpg","crop_gym_r3c1.jpg","crop_gym_r3c2.jpg","crop_gym_r4c1.jpg"],
+  ["crop_sunset_r1c1.jpg","crop_sunset_r1c2.jpg","crop_sunset_r2c1.jpg"],
+].map(arr=>arr.map(f=>T+f));
+// the photo that will be sorted on step k (cycles Travel→Food→Fitness→Sunset)
+function libImg(k){const p=POOLS[k%4];return p[Math.floor(k/4)%p.length];}
+
+function center(el,host){const r=el.getBoundingClientRect();return {x:r.left-host.left+r.width/2,y:r.top-host.top+r.height/2};}
+
+let raf, flyTimer, flyers=[];
+function spawnFlyer(srcC,tgtC,img,card){
+  const f=document.createElement('div');f.className='flyer';
+  f.style.backgroundImage=`url('${img}')`;
+  f.style.left=(srcC.x-22)+'px';f.style.top=(srcC.y-22)+'px';
+  s1.appendChild(f);flyers.push(f);
+  const dx=tgtC.x-srcC.x, dy=tgtC.y-srcC.y;
+  // photo stays full-size + fully visible as it travels, then pops into the album
+  const anim=f.animate([
+    {transform:'translate(0,0) scale(1) rotate(-5deg)', opacity:0},
+    {transform:`translate(${dx*0.12}px,${dy*0.12}px) scale(1.05) rotate(-2deg)`, opacity:1, offset:0.12},
+    {transform:`translate(${dx*0.82}px,${dy*0.82}px) scale(1) rotate(3deg)`, opacity:1, offset:0.78},
+    {transform:`translate(${dx}px,${dy}px) scale(.28) rotate(7deg)`, opacity:0}
+  ],{duration:680, easing:'cubic-bezier(.4,0,.4,1)', fill:'forwards'});
+  setTimeout(()=>card.animate([{transform:'scale(1)'},{transform:'scale(1.08)'},{transform:'scale(1)'}],{duration:280,easing:'ease-out'}),600);
+  anim.onfinish=()=>f.remove();
+}
+
+function animateSort(dur,done){
+  const TARGET=500, start=performance.now();
+  const host=s1.getBoundingClientRect();
+  const stackEl=s1.querySelector('.stack');
+  const L=[...stackEl.querySelectorAll('i')];   // back ... front (last)
+  const stackFront=L[L.length-1];
+  const srcC=center(stackEl,host);
+  const tgts=gridCards.map(c=>center(c.querySelector('.thumb'),host));
+  // counters tick smoothly to 500
+  function step(now){
+    let p=Math.min(1,(now-start)/dur), e=easeOut(p);
+    const val=Math.round(e*TARGET);
+    $('sortedNum').textContent=val;
+    $('pct').textContent=Math.round(e*100)+'%';
+    $('frac').textContent=val+' / 500';
+    $('leftSort').textContent=(TARGET-val)+' left to sort';
+    ring.style.strokeDashoffset=RINGLEN*(1-e);
+    gridCards.forEach((c,i)=>c.querySelector('.ct').textContent=Math.round(Math.min(1,Math.max(0,(e-i*0.04)/0.92))*ALBUMS[i].ct));
+    // library pile shrinks + thins out card by card (from the back) as photos sort
+    stackEl.style.transform=`scale(${(1-e*0.30).toFixed(3)})`;
+    const k=L.length;
+    L.forEach((el,i)=>{const lim = i===k-1 ? 0.99 : (i+1)/k*0.82; el.style.opacity = e>lim?0:1;});
+    if(p<1) raf=requestAnimationFrame(step); else done&&done();
+  }
+  raf=requestAnimationFrame(step);
+  // stream of real photos flying out of the library into their album
+  let n=0; const total=22, gap=dur/total;
+  flyTimer=setInterval(()=>{
+    const idx=n%4;
+    spawnFlyer(srcC,tgts[idx],libImg(n),gridCards[idx]);
+    // the top of the library pile becomes the next photo in line to sort
+    if(stackFront) stackFront.style.backgroundImage=`url('${libImg(n+1)}')`;
+    n++; if(n>=total) clearInterval(flyTimer);
+  },gap);
+}
+
+function resetSort(){
+  clearInterval(flyTimer);cancelAnimationFrame(raf);
+  flyers.forEach(f=>f.remove());flyers=[];
+  $('sortedNum').textContent=0;$('pct').textContent='0%';$('frac').textContent='0 / 500';
+  $('leftSort').textContent='500 left to sort';ring.style.strokeDashoffset=RINGLEN;
+  $('pushcta').classList.remove('up');
+  gridCards.forEach(c=>{c.classList.add('in');c.querySelector('.ct').textContent='0';});
+  const st=s1.querySelector('.stack');
+  if(st){st.style.transform='scale(1)';st.querySelectorAll('i').forEach(i=>i.style.opacity='1');}
+  const sf=s1.querySelector('.stack i:last-child');
+  if(sf) sf.style.backgroundImage=`url('${libImg(0)}')`;
+}
+
+function runCluster(){
+  bubbles.forEach((b,i)=>{b.classList.remove('in');setTimeout(()=>b.classList.add('in'),120+i*110);});
+}
+
+// ---------- play once (tap to replay) ----------
+let timers=[];
+function t(fn,ms){timers.push(setTimeout(fn,ms));}
+function play(){
+  timers.forEach(clearTimeout);timers=[];
+
+  // SCENE 1 — fast sort
+  resetSort();
+  setScene('s1');
+  t(()=>animateSort(2300, ()=>{
+    t(()=>$('pushcta').classList.add('up'), 250);
+  }), 500);
+
+  // SCENE 2 — push to camera roll
+  t(()=>{ setScene('s2'); runCluster(); }, 4600);
+  t(()=>$('syncbtn').classList.add('press'), 7000);
+  t(()=>$('syncbtn').classList.remove('press'), 7250);
+
+  // SCENE 3 — synced
+  t(()=>setScene('s3'), 7400);
+
+  // SCENE 4 — photos albums (rests here)
+  t(()=>{
+    setScene('s4');
+    ph.style.transition='none';ph.style.transform='translateY(0)';
+    void ph.offsetWidth;
+    ph.style.transition='transform 2.6s linear';
+    t(()=>{ph.style.transform='translateY(-150px)';},400);
+  }, 9300);
+}
+// tap the hero phone to replay
+document.querySelector('.hero .phone').addEventListener('click',play);
+play();
+
+// ================= STATIC SCREEN-BY-SCREEN =================
+const STATUS=`<div class="notch"></div><div class="status"><span>9:41</span><span class="right">•••&nbsp; <svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 1C5 1 2.6 2 1 3.6l7 6.4 7-6.4C13.4 2 11 1 8 1Z" fill="#2b2926" opacity=".9"/></svg> <span class="batt"></span></span></div>`;
+const TABBAR=`<div class="tabbar"><div class="tab active"><span class="gi">▦</span>Albums</div><div class="tab"><span class="gi">⌕</span>Search</div><div class="tab"><span class="gi">✦</span>Clean Up</div><div class="tab"><span class="gi">⚙</span>Settings</div></div>`;
+
+const gridStatic=counts=>ALBUMS.slice(0,4).map((a,i)=>`<div class="acard in"><div class="thumb" style="background-image:url('${a.cover}')"></div><div class="meta"><span class="nm">${a.nm}</span><span class="ct">${counts[i]}</span></div></div>`).join('');
+
+const screenSort=`<div class="scene" style="opacity:1;transform:none">
+  <div class="tflight">◀ TestFlight</div>
+  <div class="statcards">
+    <div class="stat"><div class="k">Sorted</div><div class="big">312</div></div>
+    <div class="stat"><div class="k">Progress</div><div class="progrow">
+      <svg class="ring" viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="19"/><circle class="fg" cx="25" cy="25" r="19" style="stroke-dashoffset:45"/></svg>
+      <div><div class="pct">62%</div><div class="frac">312 / 500</div></div></div></div>
+  </div>
+  <div class="libcard"><div><div class="lab">Photos from</div><div class="lib">YOUR LIBRARY</div><div class="left">188 left to sort</div></div><div class="stack"><i style="background-image:url('${T}crop_food_r1c1.jpg')"></i><i style="background-image:url('${T}crop_travel5_r2c1.jpg')"></i><i style="background-image:url('${T}crop_gym_r1c1.jpg')"></i><i style="background-image:url('${T}crop_ss_r1c1.jpg')"></i><i style="background-image:url('${T}crop_sunset_r1c1.jpg')"></i></div></div>
+  <div class="createbtn">+ Create new album</div>
+  <div class="albgrid">${gridStatic([64,52,58,26])}</div>
+  <div class="flyer" style="left:60px;top:300px;background-image:url('${POOLS[0][3]}');transform:rotate(-9deg)"></div>
+  <div class="flyer" style="left:182px;top:296px;background-image:url('${POOLS[1][0]}');transform:rotate(7deg)"></div>
+  <div class="flyer" style="left:120px;top:340px;background-image:url('${POOLS[2][1]}');transform:rotate(-3deg)"></div>
+  ${TABBAR}
+</div>`;
+
+const clusterStatic=()=>{const P=[[12,18],[66,18],[2,46],[76,46],[18,76],[60,76]];return ALBUMS.map((a,i)=>`<div class="bub in" style="left:${P[i][0]}%;top:${P[i][1]}%"><div class="img" style="background-image:url('${a.cover}')"></div><div class="nm">${a.nm}</div></div>`).join('');};
+
+const screenPush=`<div class="scene" style="opacity:1;transform:none;padding:74px 22px 0">
+  <div class="s2head"><div class="lab">Send to camera roll</div><h2>Push any album to<br>your native camera roll.</h2><p>Hand a clean folder to your editor, your group chat, or your next post in one tap.</p></div>
+  <div class="cluster"><div class="photos-hub"><div class="ic"></div><div class="t">Photos</div></div>${clusterStatic()}</div>
+  <div class="syncbtn">Sync to camera roll</div>
+</div>`;
+
+const screenSynced=`<div class="scene" style="opacity:1;transform:none;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 34px">
+  <div class="check" style="transform:scale(1)"><svg viewBox="0 0 50 50"><path d="M13 26l8 8 16-17" style="stroke-dashoffset:0"/></svg></div>
+  <h2 style="font-size:32px;font-weight:700;margin-top:24px;letter-spacing:-.02em">Synced!</h2>
+  <p style="font-size:14px;color:var(--ink-dim);text-align:center;margin-top:12px;line-height:1.45"><b style="color:var(--ink)">500 photos</b> are now in your<br>camera roll, sorted into albums.</p>
+</div>`;
+
+const photosRows=()=>ALBUMS.map(a=>{const strip=a.thumbs.map(t=>`<div class="t" style="background-image:url('${T+t}')"></div>`).join('');return `<div class="prow" style="--c:${a.c}"><div class="top"><div class="ic">${a.ic}</div><div><div class="nm">${a.nm}</div><div class="ct">${a.ct} photos</div></div></div><div class="strip">${strip}<div class="more">+${a.ct-4}</div></div></div>`;}).join('');
+
+const screenAlbums=`<div class="scene" style="opacity:1;transform:none;background:var(--cream);padding:60px 18px 0">
+  <div class="ph-head"><div class="ttl">Your Albums<span>12</span></div><div class="edit">Edit</div></div>
+  <div class="ph-scroll" style="transform:none">${photosRows()}</div>
+  ${TABBAR}
+</div>`;
+
+const mp=(step,title,desc,inner)=>`<div class="mp"><div class="phone"><div class="screen">${STATUS}${inner}</div></div><div class="cap"><span class="step">${step}</span><h3>${title}</h3><p>${desc}</p></div></div>`;
+
+document.getElementById('screens').innerHTML=[
+  mp('Step 1','Sorts your library, fast','Every photo flies into the right album on its own.',screenSort),
+  mp('Step 2','Push to your camera roll','Send any album to your native Photos in one tap.',screenPush),
+  mp('Step 3','Synced','500 photos land in your camera roll, sorted into albums.',screenSynced),
+  mp('Step 4','Find them in Photos','Clean albums, ready to share or hand to an editor.',screenAlbums),
+].join('');
+</script>
+</body>
+</html>

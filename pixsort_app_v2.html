@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>PixSort</title>
+<link rel="manifest" href="/manifest.json" />
+<meta name="theme-color" content="#1d1d20" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="PixSort" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+
+<style>
+  :root{
+    --cream:#efe7da; --cream-2:#f5efe4; --card:#fbf7ef; --card-2:#fffdf8;
+    --gold:#bfa05c; --gold-d:#a98a47; --ink:#2b2926; --ink-dim:#8d877a;
+    --ink-faint:#b3ac9d; --line:#e7ded0; --pink:#e87bb0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#1d1d20;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;
+    min-height:100vh;color:var(--ink);}
+
+  /* ---------- phone ---------- */
+  .phone{position:relative;width:330px;height:712px;border-radius:54px;background:#0a0a0c;
+    padding:13px;box-shadow:0 40px 90px rgba(0,0,0,.55), inset 0 0 0 2px #2a2a2e;}
+  .screen{position:relative;width:100%;height:100%;border-radius:42px;overflow:hidden;background:var(--cream);}
+  .notch{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:108px;height:30px;
+    background:#0a0a0c;border-radius:18px;z-index:60;}
+  .status{position:absolute;top:0;left:0;right:0;height:54px;z-index:55;display:flex;align-items:center;
+    justify-content:space-between;padding:18px 26px 0;font-size:14px;font-weight:600;color:var(--ink);}
+  .status.light{color:#fff;}
+  .status .right{display:flex;align-items:center;gap:6px;font-size:12px;}
+  .batt{border:1.4px solid currentColor;border-radius:3px;width:22px;height:11px;position:relative;display:inline-block;}
+  .batt::after{content:"";position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:70%;background:currentColor;border-radius:1px;}
+  .batt::before{content:"";position:absolute;right:-3px;top:3px;height:5px;width:2px;background:currentColor;border-radius:1px;}
+
+  .scene{position:absolute;inset:0;opacity:0;transform:translateY(8px);
+    transition:opacity .4s ease, transform .45s ease;pointer-events:none;}
+  .scene.show{opacity:1;transform:none;}
+  .pad{padding:62px 18px 0;}
+
+  /* ===== messy collections (full-bleed photo wall) ===== */
+  .wall{position:absolute;inset:0;display:grid;grid-template-columns:repeat(5,1fr);gap:3px;}
+  .wall .t{aspect-ratio:1;background:#ccc center/cover;}
+  .collbar{position:absolute;top:0;left:0;right:0;padding:54px 18px 22px;z-index:10;color:#fff;
+    background:linear-gradient(180deg, rgba(18,14,12,.82) 38%, rgba(18,14,12,0));}
+  .collbar .t{font-size:27px;font-weight:800;letter-spacing:-.02em;}
+  .collbar .x{font-size:13px;color:rgba(255,255,255,.82);margin-top:3px;}
+  .collchip{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);z-index:10;white-space:nowrap;
+    font-size:12.5px;font-weight:700;color:#fff;background:rgba(196,30,118,.92);padding:8px 16px;border-radius:22px;
+    box-shadow:0 8px 22px rgba(0,0,0,.35);}
+
+  /* ===== permission sheet ===== */
+  #s1, .perm-dim{background:linear-gradient(180deg,#7d766b,#aaa396);}
+  .sheet{position:absolute;left:14px;right:14px;bottom:16px;background:#f3efe9;border-radius:26px;
+    padding:24px 22px 18px;text-align:center;box-shadow:0 -10px 50px rgba(0,0,0,.3);
+    transform:translateY(120%);transition:transform .5s cubic-bezier(.2,.9,.3,1.1);}
+  #s1.show .sheet, .sheet.up{transform:none;}
+  .sheet .ic{width:74px;height:74px;border-radius:18px;margin:0 auto 14px;background-size:cover;
+    box-shadow:0 8px 20px rgba(0,0,0,.18);}
+  .sheet h3{font-size:19px;font-weight:700;}
+  .sheet p{font-size:13px;color:var(--ink-dim);margin-top:8px;line-height:1.4;}
+  .sheet .allow{margin-top:18px;background:var(--gold);color:#fff;border-radius:28px;padding:15px;
+    font-size:16px;font-weight:700;transition:transform .12s, background .12s;}
+  .sheet .allow.press{transform:scale(.95);background:var(--gold-d);}
+  .sheet .deny{margin-top:10px;font-size:14px;color:var(--ink-dim);font-weight:600;}
+
+  /* ===== big rainbow SORT ===== */
+  .sortscene{display:flex;flex-direction:column;align-items:center;}
+  .brandrow{display:flex;align-items:center;gap:9px;margin-top:8px;}
+  .brandrow img{width:30px;height:30px;border-radius:8px;}
+  .brandrow span{font-size:18px;font-weight:800;color:var(--ink);letter-spacing:-.01em;}
+  .ready{margin-top:auto;font-size:14px;color:var(--ink-dim);}
+  .sortbtn{width:208px;height:208px;border-radius:50%;margin:22px 0 0;
+    background:conic-gradient(from 0deg,#ff5b6e,#ff9f43,#ffd93d,#6BCB77,#4D96FF,#9b6bff,#ff5b6e);
+    display:flex;align-items:center;justify-content:center;position:relative;
+    box-shadow:0 22px 55px rgba(120,80,160,.4);animation:breathe 2.4s ease-in-out infinite;transition:transform .14s;}
+  .sortbtn.press{transform:scale(.92);}
+  @keyframes breathe{0%,100%{box-shadow:0 22px 55px rgba(120,80,160,.4);}50%{box-shadow:0 22px 70px rgba(150,90,200,.65);}}
+  .sortbtn::after{content:"";position:absolute;inset:18px;border-radius:50%;
+    background:radial-gradient(circle at 50% 35%, rgba(255,255,255,.35), rgba(255,255,255,0) 60%);}
+  .sortbtn b{color:#fff;font-size:46px;font-weight:800;letter-spacing:.08em;text-shadow:0 2px 10px rgba(0,0,0,.25);z-index:2;}
+  .tip{margin:20px 0 auto;font-size:13px;color:var(--ink-faint);}
+
+  /* ===== brand splash ===== */
+  .splash{background:linear-gradient(165deg,#ffd9e8 0%,#ffc2dd 45%,#ffd3bf 100%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .splash .logo{width:124px;height:124px;border-radius:30px;background-size:cover;
+    box-shadow:0 24px 50px rgba(190,90,140,.35);transform:scale(.4);opacity:0;}
+  #s3.show .logo, .splash.stat .logo{animation:logoIn .6s cubic-bezier(.2,.9,.3,1.4) forwards;}
+  @keyframes logoIn{to{transform:scale(1);opacity:1;}}
+  .splash .wm{font-size:34px;font-weight:800;color:#bb3f7e;margin-top:22px;letter-spacing:-.01em;opacity:0;}
+  .splash .sub{font-size:14px;color:#b5658c;margin-top:8px;opacity:0;}
+  #s3.show .wm, .splash.stat .wm{animation:fadeUp .5s ease .35s forwards;}
+  #s3.show .sub, .splash.stat .sub{animation:fadeUp .5s ease .55s forwards;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+  .dots{display:flex;gap:6px;margin-top:18px;opacity:0;}
+  #s3.show .dots, .splash.stat .dots{animation:fadeUp .4s ease .7s forwards;}
+  .dots i{width:7px;height:7px;border-radius:50%;background:#c95e92;animation:blink 1s infinite;}
+  .dots i:nth-child(2){animation-delay:.2s;} .dots i:nth-child(3){animation-delay:.4s;}
+  @keyframes blink{0%,100%{opacity:.3;}50%{opacity:1;}}
+
+  /* ===== fast sort ===== */
+  .fastscene{display:flex;flex-direction:column;align-items:center;}
+  .fastscene .top{margin-top:auto;text-align:center;}
+  .fastscene .cat{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;height:16px;}
+  .fastscene .rot{width:172px;height:172px;border-radius:22px;margin:16px 0;background:#ddd center/cover;
+    border:4px solid #fff;box-shadow:0 18px 40px rgba(0,0,0,.22);}
+  .fastscene .num{font-size:44px;font-weight:800;letter-spacing:-.02em;}
+  .fastscene .lbl{font-size:13px;color:var(--ink-dim);margin-top:2px;}
+  .fastscene .bar{width:210px;height:8px;border-radius:6px;background:#e4dccb;margin:18px 0 auto;overflow:hidden;}
+  .fastscene .bar i{display:block;height:100%;width:0;border-radius:6px;background:var(--gold);}
+
+  /* ===== organized collections + add to apple ===== */
+  .a2a{position:absolute;top:54px;left:14px;right:14px;z-index:20;display:flex;align-items:center;
+    justify-content:center;gap:10px;background:#fff;border-radius:18px;padding:14px;
+    box-shadow:0 10px 26px rgba(0,0,0,.16);font-size:16px;font-weight:700;color:#111;transition:transform .12s;}
+  .a2a.press{transform:scale(.96);}
+  .a2a img{width:26px;height:26px;border-radius:6px;}
+  .s5scroll{position:absolute;top:118px;left:0;right:0;padding:0 16px 20px;transition:transform 2.2s linear;}
+  .s5head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px;}
+  .s5head .t{font-size:24px;font-weight:700;letter-spacing:-.02em;}
+  .s5head .x{font-size:13px;color:var(--gold);font-weight:600;}
+  .agrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .acard{border-radius:15px;overflow:hidden;background:var(--card);box-shadow:0 6px 16px rgba(120,100,60,.08);
+    opacity:0;transform:scale(.92);}
+  .acard.in{animation:pop .34s cubic-bezier(.2,.8,.3,1.2) forwards;}
+  @keyframes pop{to{opacity:1;transform:scale(1);}}
+  .acard .thumb{height:96px;background:#ddd center/cover;}
+  .acard .meta{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;}
+  .acard .nm{font-size:14px;font-weight:600;}
+  .acard .ct{font-size:12px;color:var(--ink-faint);}
+
+  /* ===== native apple photos ===== */
+  .apple{background:#fff;}
+  #s6{transform:translateX(80px);}
+  #s6.show{transform:none;}
+  .phead{padding:60px 18px 6px;display:flex;align-items:baseline;justify-content:space-between;}
+  .phead .t{font-size:30px;font-weight:800;color:#111;letter-spacing:-.02em;}
+  .phead .see{font-size:15px;color:#0a84ff;font-weight:500;}
+  .psub{padding:0 18px;font-size:13px;color:#8a8a8e;margin-bottom:10px;}
+  .pscroll{position:absolute;top:118px;left:0;right:0;bottom:56px;overflow:hidden;padding:0 18px;}
+  .pinner{display:grid;grid-template-columns:1fr 1fr;gap:16px 14px;transition:transform 2.4s linear;}
+  .palb .pt{aspect-ratio:1;border-radius:14px;background:#ddd center/cover;box-shadow:0 3px 10px rgba(0,0,0,.1);}
+  .palb .pn{font-size:15px;font-weight:600;color:#111;margin-top:7px;}
+  .palb .pc{font-size:13px;color:#8a8a8e;margin-top:1px;}
+  .ptab{position:absolute;bottom:0;left:0;right:0;height:56px;background:rgba(249,249,249,.94);
+    backdrop-filter:blur(8px);border-top:1px solid #e3e3e6;display:flex;justify-content:space-around;
+    align-items:flex-start;padding-top:9px;z-index:20;}
+  .ptab .tb{font-size:10px;color:#9a9a9e;display:flex;flex-direction:column;align-items:center;gap:3px;}
+  .ptab .tb.on{color:#0a84ff;}
+  .ptab .tb .gi{font-size:16px;line-height:1;}
+
+  .tabbar{position:absolute;bottom:0;left:0;right:0;height:58px;background:rgba(250,247,239,.93);
+    backdrop-filter:blur(8px);border-top:1px solid var(--line);display:flex;justify-content:space-around;
+    align-items:flex-start;padding-top:9px;z-index:15;}
+  .tabbar .tab{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9px;color:var(--ink-faint);}
+  .tabbar .tab.active{color:var(--gold);}
+  .tabbar .tab .gi{font-size:16px;line-height:1;}
+
+  /* ---------- page scaffold ---------- */
+  .page{max-width:1280px;margin:0 auto;padding:54px 24px 100px;}
+  .pghead{text-align:center;color:#f3efe6;margin-bottom:34px;}
+  .pghead h1{font-size:44px;font-weight:800;letter-spacing:-.02em;line-height:1.1;}
+  .pghead .sub{font-size:19px;color:#c7c3ba;margin-top:14px;}
+  .hero{display:flex;justify-content:center;}
+  .board{margin-top:74px;}
+  .bhead{text-align:center;color:#f3efe6;font-size:15px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;}
+  .bhead::after{content:"";display:block;width:46px;height:3px;background:var(--gold);margin:14px auto 0;border-radius:2px;}
+  .screens{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:50px 28px;margin-top:44px;justify-items:center;align-items:start;}
+  .mp{display:flex;flex-direction:column;align-items:center;gap:18px;width:100%;max-width:300px;}
+  .mp .phone{transform:scale(.9);transform-origin:top center;margin-bottom:-60px;}
+  .cap{text-align:center;color:#eceae3;}
+  .cap .step{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;color:#0d0e11;
+    background:var(--gold);border-radius:20px;padding:4px 13px;margin-bottom:10px;}
+  .cap h3{font-size:19px;font-weight:700;letter-spacing:-.01em;}
+  .cap p{font-size:14px;color:#bdb9b0;margin-top:6px;line-height:1.45;}
+  /* static mini-phone scenes: always visible, no entry transform */
+  .mp .scene{opacity:1;transform:none;}
+</style>
+<style id="fsmode">
+  html,body{height:100%;margin:0;background:#000;overflow:hidden;}
+  body{display:block !important;}
+  .pghead,.board{display:none !important;}
+  .page{max-width:none !important;margin:0 !important;padding:0 !important;}
+  .hero{display:block !important;margin:0 !important;}
+  .hero .phone{width:100vw !important;height:100vh !important;height:100dvh !important;
+    border-radius:0 !important;padding:0 !important;box-shadow:none !important;background:#000 !important;}
+  .hero .screen{border-radius:0 !important;width:100% !important;height:100% !important;}
+  .notch{display:none !important;}
+  .replay{display:none !important;}
+</style>
+</head>
+<body>
+ <div class="page">
+  <header class="pghead">
+    <h1>One tap sorts your whole camera roll</h1>
+    <p class="sub">Watch the full flow &middot; scroll down for the screen-by-screen</p>
+  </header>
+
+  <section class="hero">
+   <div class="phone">
+    <div class="screen">
+      <div class="notch"></div>
+      <div class="status" id="statusbar">
+        <span>9:41</span>
+        <span class="right">•••&nbsp; <svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 1C5 1 2.6 2 1 3.6l7 6.4 7-6.4C13.4 2 11 1 8 1Z" fill="currentColor" opacity=".9"/></svg> <span class="batt"></span></span>
+      </div>
+
+      <!-- S1 permission (now the opening screen) -->
+      <div class="scene show" id="s1">
+        <div class="sheet">
+          <div class="ic" style="background-image:url('assets/pixsort-icon.jpeg')"></div>
+          <h3>Allow PixSort to access<br>your photos?</h3>
+          <p>PixSort sorts everything on-device.<br>Your photos never leave your phone.</p>
+          <div class="allow" id="allowBtn">Give access to my photos</div>
+          <div class="deny">Not now</div>
+        </div>
+      </div>
+
+      <!-- S2 big rainbow SORT -->
+      <div class="scene pad sortscene" id="s2">
+        <div class="brandrow"><img src="assets/pixsort-icon.jpeg" alt=""><span>PixSort</span></div>
+        <div class="ready">2,431 photos ready to sort</div>
+        <div class="sortbtn" id="sortBtn"><b>SORT</b></div>
+        <div class="tip">one tap. that's it.</div>
+      </div>
+
+      <!-- S3 brand splash -->
+      <div class="scene splash" id="s3">
+        <div class="logo" style="background-image:url('assets/pixsort-icon.jpeg')"></div>
+        <div class="wm">PixSort</div>
+        <div class="sub">sorting your library…</div>
+        <div class="dots"><i></i><i></i><i></i></div>
+      </div>
+
+      <!-- S4 fast sort -->
+      <div class="scene pad fastscene" id="s4">
+        <div class="top">
+          <div class="cat" id="sortCat">TRAVEL</div>
+          <div class="rot" id="rotThumb"></div>
+          <div class="num" id="sortNum">0</div>
+          <div class="lbl">photos sorted</div>
+        </div>
+        <div class="bar"><i id="sortBar"></i></div>
+      </div>
+
+      <!-- S5 organized + add to apple -->
+      <div class="scene" id="s5">
+        <div class="a2a" id="a2aBtn"><img src="assets/photos-logo.jpeg" alt=""> Add to Apple Photos</div>
+        <div class="s5scroll" id="s5scroll">
+          <div class="s5head"><span class="t">Collections</span><span class="x">12 albums · sorted</span></div>
+          <div class="agrid" id="albGrid"></div>
+        </div>
+        <div class="tabbar">
+          <div class="tab active"><span class="gi">▦</span>Albums</div>
+          <div class="tab"><span class="gi">⌕</span>Search</div>
+          <div class="tab"><span class="gi">✦</span>Clean Up</div>
+          <div class="tab"><span class="gi">⚙</span>Settings</div>
+        </div>
+      </div>
+
+      <!-- S6 native apple photos -->
+      <div class="scene apple" id="s6">
+        <div class="phead"><span class="t">Albums</span><span class="see">See All</span></div>
+        <div class="psub">My Albums · 12</div>
+        <div class="pscroll"><div class="pinner" id="appleGrid"></div></div>
+        <div class="ptab">
+          <div class="tb"><span class="gi">▤</span>Library</div>
+          <div class="tb"><span class="gi">❋</span>For You</div>
+          <div class="tb on"><span class="gi">▦</span>Albums</div>
+          <div class="tb"><span class="gi">⌕</span>Search</div>
+        </div>
+      </div>
+
+    </div>
+   </div>
+  </section>
+
+  <section class="board">
+    <div class="bhead">Screen by screen</div>
+    <div class="screens" id="screens"></div>
+  </section>
+ </div>
+
+<script>
+const T="assets/tiff-roll/";
+const POOL=["crop_food_r1c1.jpg","crop_food_r1c2.jpg","crop_food_r2c1.jpg","crop_food_r2c2.jpg","crop_food_r3c2.jpg",
+"crop_gym_r1c1.jpg","crop_gym_r1c2.jpg","crop_gym_r1c3.jpg","crop_gym_r2c1.jpg","crop_gym_r2c2.jpg","crop_gym_r2c3.jpg",
+"crop_gym_r3c1.jpg","crop_gym_r3c2.jpg","crop_gym_r3c3.jpg","crop_gym_r4c1.jpg","crop_ss_r1c1.jpg","crop_ss_r1c2.jpg",
+"crop_ss_r2c1.jpg","crop_sunset_r1c1.jpg","crop_sunset_r1c2.jpg","crop_sunset_r2c1.jpg","crop_travel5_r1c2.jpg",
+"crop_travel5_r1c3.jpg","crop_travel5_r2c1.jpg","crop_travel5_r2c2.jpg","crop_travel5_r4c1.jpg","crop_travel5_r4c2.jpg",
+"crop_travel_r1c2.jpg","crop_travel_r2c1.jpg","crop_travel_r4c2.jpg"].map(f=>T+f);
+
+const ALB=[
+ {n:"Travel",c:104,cv:"crop_travel5_r1c2.jpg",ic:"✈️"},
+ {n:"Food",c:88,cv:"crop_food_r1c1.jpg",ic:"🍽️"},
+ {n:"Fitness",c:96,cv:"crop_gym_r1c1.jpg",ic:"🏋️"},
+ {n:"Sunsets",c:42,cv:"crop_sunset_r1c1.jpg",ic:"🌅"},
+ {n:"Screenshots",c:84,cv:"crop_ss_r1c1.jpg",ic:"📱"},
+ {n:"Selfies",c:80,cv:"crop_gym_r3c1.jpg",ic:"🤳"},
+ {n:"Beach",c:61,cv:"crop_travel5_r2c2.jpg",ic:"🏖️"},
+ {n:"Nature",c:53,cv:"crop_travel_r1c2.jpg",ic:"🌿"},
+ {n:"City",c:47,cv:"crop_travel_r2c1.jpg",ic:"🏙️"},
+ {n:"Friends",c:73,cv:"crop_gym_r2c1.jpg",ic:"👯"},
+ {n:"Brunch",c:38,cv:"crop_food_r2c1.jpg",ic:"🥐"},
+ {n:"Events",c:29,cv:"crop_gym_r4c1.jpg",ic:"🎉"},
+];
+const CATS=["TRAVEL","FOOD","FITNESS","SUNSETS","SCREENSHOTS","SELFIES","BEACH","FRIENDS"];
+
+const $=id=>document.getElementById(id);
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+const wallTiles=n=>shuffle(POOL.concat(POOL,POOL)).slice(0,n).map(s=>`<div class="t" style="background-image:url('${s}')"></div>`).join('');
+
+// ---- markup templates (shared by animated + static) ----
+const STATUS=light=>`<div class="notch"></div><div class="status${light?' light':''}"><span>9:41</span><span class="right">•••&nbsp; <svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 1C5 1 2.6 2 1 3.6l7 6.4 7-6.4C13.4 2 11 1 8 1Z" fill="currentColor" opacity=".9"/></svg> <span class="batt"></span></span></div>`;
+const TABBAR=`<div class="tabbar"><div class="tab active"><span class="gi">▦</span>Albums</div><div class="tab"><span class="gi">⌕</span>Search</div><div class="tab"><span class="gi">✦</span>Clean Up</div><div class="tab"><span class="gi">⚙</span>Settings</div></div>`;
+const albCardsHTML=`<div class="agrid">${ALB.map(a=>`<div class="acard in"><div class="thumb" style="background-image:url('${T+a.cv}')"></div><div class="meta"><span class="nm">${a.ic} ${a.n}</span><span class="ct">${a.c}</span></div></div>`).join('')}</div>`;
+const appleCardsHTML=ALB.map(a=>`<div class="palb"><div class="pt" style="background-image:url('${T+a.cv}')"></div><div class="pn">${a.n}</div><div class="pc">${a.c}</div></div>`).join('');
+
+// ---- build the live (animated) phone ----
+$('albGrid').innerHTML=ALB.map(a=>`<div class="acard"><div class="thumb" style="background-image:url('${T+a.cv}')"></div><div class="meta"><span class="nm">${a.ic} ${a.n}</span><span class="ct">${a.c}</span></div></div>`).join('');
+const albCards=[...$('albGrid').children];
+$('appleGrid').innerHTML=appleCardsHTML;
+
+const SC=['s1','s2','s3','s4','s5','s6'];
+function show(id){SC.forEach(s=>$(s).classList.toggle('show',s===id));$('statusbar').classList.toggle('light', id==='s3');}
+
+let rotTimer, rafSort;
+function runFastSort(dur){
+  const TARGET=2431, start=performance.now();
+  const seq=shuffle(POOL); let k=0;
+  rotTimer=setInterval(()=>{$('rotThumb').style.backgroundImage=`url('${seq[k%seq.length]}')`;$('sortCat').textContent=CATS[k%CATS.length];k++;},85);
+  function step(now){
+    const p=Math.min(1,(now-start)/dur), e=1-Math.pow(1-p,3);
+    $('sortNum').textContent=Math.round(e*TARGET).toLocaleString();
+    $('sortBar').style.width=(e*100)+'%';
+    if(p<1) rafSort=requestAnimationFrame(step); else clearInterval(rotTimer);
+  }
+  rafSort=requestAnimationFrame(step);
+}
+
+let timers=[];
+const t=(fn,ms)=>timers.push(setTimeout(fn,ms));
+function play(){
+  timers.forEach(clearTimeout);timers=[];clearInterval(rotTimer);cancelAnimationFrame(rafSort);
+  show('s1');
+  $('sortBtn').classList.remove('press');$('allowBtn').classList.remove('press');$('a2aBtn').classList.remove('press');
+  $('sortNum').textContent='0';$('sortBar').style.width='0';
+  albCards.forEach(c=>c.classList.remove('in'));
+  $('s5scroll').style.transition='none';$('s5scroll').style.transform='translateY(0)';
+  $('appleGrid').style.transition='none';$('appleGrid').style.transform='translateY(0)';
+
+  t(()=>$('allowBtn').classList.add('press'),1200);
+  t(()=>show('s2'),1600);
+  t(()=>$('sortBtn').classList.add('press'),3300);
+  t(()=>show('s3'),3650);
+  t(()=>{show('s4');runFastSort(2300);},5700);
+  t(()=>{
+    show('s5');
+    albCards.forEach((c,i)=>t(()=>c.classList.add('in'),i*70));
+    t(()=>{$('s5scroll').style.transition='transform 2.2s linear';$('s5scroll').style.transform='translateY(-150px)';},900);
+  },8300);
+  t(()=>$('a2aBtn').classList.add('press'),11100);
+  t(()=>{
+    show('s6');
+    $('appleGrid').style.transition='none';$('appleGrid').style.transform='translateY(0)';
+    void $('appleGrid').offsetWidth;
+    t(()=>{$('appleGrid').style.transition='transform 2.4s linear';$('appleGrid').style.transform='translateY(-180px)';},700);
+  },11600);
+}
+document.querySelector('.hero .phone').addEventListener('click',play);
+play();
+
+// ================= STATIC SCREEN-BY-SCREEN =================
+const screenMessy=()=>`<div class="scene" style="opacity:1"><div class="wall">${wallTiles(65)}</div><div class="collbar"><div class="t">Collections</div><div class="x">2,431 photos · no albums yet</div></div><div class="collchip">😵‍💫 1,000s of photos, zero order</div></div>`;
+const screenPerm=`<div class="scene perm-dim" style="opacity:1"><div class="sheet up"><div class="ic" style="background-image:url('assets/pixsort-icon.jpeg')"></div><h3>Allow PixSort to access<br>your photos?</h3><p>PixSort sorts everything on-device.<br>Your photos never leave your phone.</p><div class="allow">Give access to my photos</div><div class="deny">Not now</div></div></div>`;
+const screenSort=`<div class="scene pad sortscene" style="opacity:1"><div class="brandrow"><img src="assets/pixsort-icon.jpeg" alt=""><span>PixSort</span></div><div class="ready">2,431 photos ready to sort</div><div class="sortbtn"><b>SORT</b></div><div class="tip">one tap. that's it.</div></div>`;
+const screenSplash=`<div class="scene splash stat" style="opacity:1"><div class="logo" style="background-image:url('assets/pixsort-icon.jpeg')"></div><div class="wm">PixSort</div><div class="sub">sorting your library…</div><div class="dots"><i></i><i></i><i></i></div></div>`;
+const screenFast=`<div class="scene pad fastscene" style="opacity:1"><div class="top"><div class="cat">FOOD</div><div class="rot" style="background-image:url('${T}crop_food_r1c1.jpg')"></div><div class="num">1,284</div><div class="lbl">photos sorted</div></div><div class="bar"><i style="width:53%"></i></div></div>`;
+const screenAlbums=`<div class="scene" style="opacity:1"><div class="a2a"><img src="assets/photos-logo.jpeg" alt=""> Add to Apple Photos</div><div class="s5scroll" style="transform:none"><div class="s5head"><span class="t">Collections</span><span class="x">12 albums · sorted</span></div>${albCardsHTML}</div>${TABBAR}</div>`;
+const screenApple=`<div class="scene apple" style="opacity:1;transform:none"><div class="phead"><span class="t">Albums</span><span class="see">See All</span></div><div class="psub">My Albums · 12</div><div class="pscroll"><div class="pinner" style="transform:none">${appleCardsHTML}</div></div><div class="ptab"><div class="tb"><span class="gi">▤</span>Library</div><div class="tb"><span class="gi">❋</span>For You</div><div class="tb on"><span class="gi">▦</span>Albums</div><div class="tb"><span class="gi">⌕</span>Search</div></div></div>`;
+
+const STEPS=[
+  {light:1, inner:screenMessy(), step:"Step 1", title:"A messy library", desc:"Thousands of photos, zero albums."},
+  {light:0, inner:screenPerm,    step:"Step 2", title:"Give access", desc:"Sorts on-device — your photos never leave your phone."},
+  {light:0, inner:screenSort,    step:"Step 3", title:"One big SORT button", desc:"That rainbow button is the whole interface."},
+  {light:1, inner:screenSplash,  step:"Step 4", title:"PixSort goes to work", desc:"Branded sort screen for a couple seconds."},
+  {light:0, inner:screenFast,    step:"Step 5", title:"Sorts in seconds", desc:"Rips through every photo into the right album."},
+  {light:0, inner:screenAlbums,  step:"Steps 6–7", title:"New albums appear", desc:"Your whole library, organized. Then tap “Add to Apple”."},
+  {light:0, inner:screenApple,   step:"Step 8", title:"In your Apple Photos", desc:"All 12 albums land in your native Photos app."},
+];
+const mp=s=>`<div class="mp"><div class="phone"><div class="screen">${STATUS(s.light)}${s.inner}</div></div><div class="cap"><span class="step">${s.step}</span><h3>${s.title}</h3><p>${s.desc}</p></div></div>`;
+$('screens').innerHTML=STEPS.map(mp).join('');
+</script>
+</body>
+</html>
