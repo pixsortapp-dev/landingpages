@@ -209,9 +209,8 @@
     color:#0d0e11;background:var(--gold);border-radius:20px;padding:3px 11px;margin-bottom:9px;}
   .cap h3{font-size:16px;font-weight:600;letter-spacing:-.01em;}
   .cap p{font-size:12.5px;color:#a7a39a;margin-top:5px;line-height:1.4;}
-  /* static mini phones: scenes always visible, no animation transform */
-  .mp .scene{position:static;opacity:1;transform:none;display:block;height:100%;}
-  .mp .screen{display:flex;flex-direction:column;}
+  /* static mini phones: scenes laid out exactly like the hero, just always visible */
+  .mp .scene{opacity:1;transform:none;}
 </style>
 </head>
 <body>
@@ -483,7 +482,7 @@ const TABBAR=`<div class="tabbar"><div class="tab active"><span class="gi">▦</
 
 const gridStatic=counts=>ALBUMS.slice(0,4).map((a,i)=>`<div class="acard in"><div class="thumb" style="background-image:url('${a.cover}')"></div><div class="meta"><span class="nm">${a.nm}</span><span class="ct">${counts[i]}</span></div></div>`).join('');
 
-const screenSort=`<div class="scene" style="position:static;opacity:1;transform:none">
+const screenSort=`<div class="scene" style="opacity:1;transform:none">
   <div class="tflight">◀ TestFlight</div>
   <div class="statcards">
     <div class="stat"><div class="k">Sorted</div><div class="big">312</div></div>
@@ -502,13 +501,13 @@ const screenSort=`<div class="scene" style="position:static;opacity:1;transform:
 
 const clusterStatic=()=>{const P=[[12,18],[78,18],[2,46],[88,46],[18,76],[74,76]];return ALBUMS.map((a,i)=>`<div class="bub in" style="left:${P[i][0]}%;top:${P[i][1]}%"><div class="img" style="background-image:url('${a.cover}')"></div><div class="nm">${a.nm}</div></div>`).join('');};
 
-const screenPush=`<div class="scene" style="position:static;opacity:1;transform:none;padding-top:74px">
+const screenPush=`<div class="scene" style="opacity:1;transform:none;padding:74px 22px 0">
   <div class="s2head"><div class="lab">Send to camera roll</div><h2>Push any album to<br>your native camera roll.</h2><p>Hand a clean folder to your editor, your group chat, or your next post in one tap.</p></div>
   <div class="cluster"><div class="photos-hub"><div class="ic"></div><div class="t">Photos</div></div>${clusterStatic()}</div>
   <div class="syncbtn">Sync to camera roll</div>
 </div>`;
 
-const screenSynced=`<div class="scene" style="position:static;opacity:1;transform:none;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:0 34px">
+const screenSynced=`<div class="scene" style="opacity:1;transform:none;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 34px">
   <div class="check" style="transform:scale(1)"><svg viewBox="0 0 50 50"><path d="M13 26l8 8 16-17" style="stroke-dashoffset:0"/></svg></div>
   <h2 style="font-size:32px;font-weight:700;margin-top:24px;letter-spacing:-.02em">Synced!</h2>
   <p style="font-size:14px;color:var(--ink-dim);text-align:center;margin-top:12px;line-height:1.45"><b style="color:var(--ink)">500 photos</b> are now in your<br>camera roll, sorted into albums.</p>
@@ -516,7 +515,7 @@ const screenSynced=`<div class="scene" style="position:static;opacity:1;transfor
 
 const photosRows=()=>ALBUMS.map(a=>{const strip=a.thumbs.map(t=>`<div class="t" style="background-image:url('${T+t}')"></div>`).join('');return `<div class="prow" style="--c:${a.c}"><div class="top"><div class="ic">${a.ic}</div><div><div class="nm">${a.nm}</div><div class="ct">${a.ct} photos</div></div></div><div class="strip">${strip}<div class="more">+${a.ct-4}</div></div></div>`;}).join('');
 
-const screenAlbums=`<div class="scene" style="position:static;opacity:1;transform:none;background:var(--cream);padding-top:60px">
+const screenAlbums=`<div class="scene" style="opacity:1;transform:none;background:var(--cream);padding:60px 18px 0">
   <div class="ph-head"><div class="ttl">Your Albums<span>12</span></div><div class="edit">Edit</div></div>
   <div class="ph-scroll" style="transform:none">${photosRows()}</div>
   ${TABBAR}
