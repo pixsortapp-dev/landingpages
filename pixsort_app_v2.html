@@ -351,35 +351,28 @@ function runFastSort(dur){
 
 let timers=[];
 const t=(fn,ms)=>timers.push(setTimeout(fn,ms));
-function play(){
-  timers.forEach(clearTimeout);timers=[];clearInterval(rotTimer);cancelAnimationFrame(rafSort);
-  show('s1');
+// ---- tap-driven: each tap advances one screen ----
+let idx=0;
+function go(id){
+  clearInterval(rotTimer);cancelAnimationFrame(rafSort);timers.forEach(clearTimeout);timers=[];
+  idx=SC.indexOf(id);
   $('sortBtn').classList.remove('press');$('allowBtn').classList.remove('press');$('a2aBtn').classList.remove('press');
-  $('sortNum').textContent='0';$('sortBar').style.width='0';
-  albCards.forEach(c=>c.classList.remove('in'));
-  $('s5scroll').style.transition='none';$('s5scroll').style.transform='translateY(0)';
-  $('appleGrid').style.transition='none';$('appleGrid').style.transform='translateY(0)';
-
-  t(()=>$('allowBtn').classList.add('press'),1200);
-  t(()=>show('s2'),1600);
-  t(()=>$('sortBtn').classList.add('press'),3300);
-  t(()=>show('s3'),3650);
-  t(()=>{show('s4');runFastSort(2300);},5700);
-  t(()=>{
-    show('s5');
-    albCards.forEach((c,i)=>t(()=>c.classList.add('in'),i*70));
-    t(()=>{$('s5scroll').style.transition='transform 2.2s linear';$('s5scroll').style.transform='translateY(-150px)';},900);
-  },8300);
-  t(()=>$('a2aBtn').classList.add('press'),11100);
-  t(()=>{
-    show('s6');
-    $('appleGrid').style.transition='none';$('appleGrid').style.transform='translateY(0)';
-    void $('appleGrid').offsetWidth;
-    t(()=>{$('appleGrid').style.transition='transform 2.4s linear';$('appleGrid').style.transform='translateY(-180px)';},700);
-  },11600);
+  show(id);
+  if(id==='s4'){ $('sortNum').textContent='0';$('sortBar').style.width='0'; runFastSort(2300); }
+  if(id==='s5'){
+    albCards.forEach(c=>c.classList.remove('in'));
+    albCards.forEach((c,i)=>t(()=>c.classList.add('in'),i*60));
+    $('s5scroll').style.transition='none';$('s5scroll').style.transform='translateY(0)';
+  }
+  if(id==='s6'){ $('appleGrid').style.transition='none';$('appleGrid').style.transform='translateY(0)'; }
 }
-document.querySelector('.hero .phone').addEventListener('click',play);
-play();
+function advance(){
+  const btnId={s1:'allowBtn',s2:'sortBtn',s5:'a2aBtn'}[SC[idx]];
+  if(btnId){const b=$(btnId);b.classList.add('press');setTimeout(()=>b.classList.remove('press'),150);}
+  go(idx<SC.length-1?SC[idx+1]:SC[0]);
+}
+document.querySelector('.hero .phone').addEventListener('click',advance);
+go('s1');
 
 // ================= STATIC SCREEN-BY-SCREEN =================
 const screenMessy=()=>`<div class="scene" style="opacity:1"><div class="wall">${wallTiles(65)}</div><div class="collbar"><div class="t">Collections</div><div class="x">2,431 photos · no albums yet</div></div><div class="collchip">😵‍💫 1,000s of photos, zero order</div></div>`;

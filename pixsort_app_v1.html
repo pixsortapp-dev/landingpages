@@ -493,39 +493,31 @@ function runCluster(){
   bubbles.forEach((b,i)=>{b.classList.remove('in');setTimeout(()=>b.classList.add('in'),120+i*110);});
 }
 
-// ---------- play once (tap to replay) ----------
+// ---------- tap-driven: each tap advances one screen ----------
 let timers=[];
 function t(fn,ms){timers.push(setTimeout(fn,ms));}
-function play(){
+const ORDER=['s1','s2','s3','s4'];
+let idx=0;
+function go(id){
   timers.forEach(clearTimeout);timers=[];
-
-  // SCENE 1 — fast sort
-  resetSort();
-  setScene('s1');
-  t(()=>animateSort(2300, ()=>{
-    t(()=>$('pushcta').classList.add('up'), 250);
-  }), 500);
-
-  // SCENE 2 — push to camera roll
-  t(()=>{ setScene('s2'); runCluster(); }, 4600);
-  t(()=>$('syncbtn').classList.add('press'), 7000);
-  t(()=>$('syncbtn').classList.remove('press'), 7250);
-
-  // SCENE 3 — synced
-  t(()=>setScene('s3'), 7400);
-
-  // SCENE 4 — photos albums (rests here)
-  t(()=>{
-    setScene('s4');
+  idx=ORDER.indexOf(id);
+  $('syncbtn').classList.remove('press');
+  setScene(id);
+  if(id==='s1'){ resetSort(); t(()=>animateSort(2300, ()=>$('pushcta').classList.add('up')), 250); }
+  if(id==='s2'){ runCluster(); }
+  if(id==='s4'){
     ph.style.transition='none';ph.style.transform='translateY(0)';
     void ph.offsetWidth;
     ph.style.transition='transform 4.5s linear';
     t(()=>{ph.style.transform='translateY(-280px)';},400);
-  }, 9300);
+  }
 }
-// tap the hero phone to replay
-document.querySelector('.hero .phone').addEventListener('click',play);
-play();
+function advance(){
+  if(ORDER[idx]==='s2'){ const b=$('syncbtn'); b.classList.add('press'); setTimeout(()=>b.classList.remove('press'),150); }
+  go(idx<ORDER.length-1?ORDER[idx+1]:ORDER[0]);
+}
+document.querySelector('.hero .phone').addEventListener('click',advance);
+go('s1');
 
 // ================= STATIC SCREEN-BY-SCREEN =================
 const STATUS=`<div class="notch"></div><div class="status"><span>9:41</span><span class="right">•••&nbsp; <svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 1C5 1 2.6 2 1 3.6l7 6.4 7-6.4C13.4 2 11 1 8 1Z" fill="#2b2926" opacity=".9"/></svg> <span class="batt"></span></span></div>`;
