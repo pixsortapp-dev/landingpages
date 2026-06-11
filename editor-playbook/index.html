@@ -88,13 +88,15 @@
     max-width:500px;margin-left:auto;margin-right:auto;
   }
   .gate-form{
-    display:flex;gap:10px;max-width:480px;margin:0 auto;
+    display:flex;flex-direction:column;gap:10px;max-width:440px;margin:0 auto;
   }
+  .gate-form input[type="text"],
   .gate-form input[type="email"]{
-    flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;
+    width:100%;background:#fff;border:1px solid var(--border);border-radius:10px;
     padding:14px 18px;font-family:inherit;font-size:15px;color:var(--text);
     outline:none;transition:border-color .15s,box-shadow .15s;
   }
+  .gate-form input[type="text"]:focus,
   .gate-form input[type="email"]:focus{
     border-color:var(--gold);box-shadow:0 0 0 3px rgba(156,123,51,0.15);
   }
@@ -102,7 +104,7 @@
     background:var(--gold);color:#fff;border:none;border-radius:10px;
     padding:14px 24px;font-family:inherit;font-size:13px;font-weight:800;
     letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;
-    transition:background .15s,transform .15s;
+    transition:background .15s,transform .15s;width:100%;margin-top:4px;
   }
   .gate-form button:hover{background:var(--gold-dk);transform:translateY(-1px)}
   .gate-foot{
@@ -243,18 +245,13 @@
     <div class="gate-form-wrap" id="gateForm">
       <div class="gate-title">Drop your email. <em>Get the playbook.</em></div>
       <div class="gate-sub">I'll also send you the occasional honest update on what's working for me with PixSort + my brand. Unsubscribe anytime.</div>
-      <!-- ───────────────────────────────────────────────────────────────
-           SendFox form
-           Replace SENDFOX_FORM_ID + SENDFOX_LIST_ID with values from
-           your SendFox dashboard (Forms → embed code → copy the
-           action URL and the form id).
-           ─────────────────────────────────────────────────────────────── -->
       <form method="post"
-            action="https://sendfox.com/form/SENDFOX_FORM_ID/SENDFOX_LIST_ID"
+            action="https://sendfox.com/form/mnndyq/1xxqoy"
             class="sendfox-form gate-form"
-            id="SENDFOX_FORM_ID"
+            id="1xxqoy"
             data-async="true"
             data-recaptcha="true">
+        <input type="text" name="first_name" required placeholder="First name" autocomplete="given-name">
         <input type="email" name="email" required placeholder="your@email.com" autocomplete="email">
         <!-- honeypot, required by SendFox -->
         <div style="position:absolute;left:-5000px" aria-hidden="true">
@@ -492,7 +489,7 @@
 </div>
 
 <!-- SendFox embed script — handles the actual form POST async -->
-<script src="https://sendfox.com/js/form.js"></script>
+<script src="https://cdn.sendfox.com/js/form.js" charset="utf-8"></script>
 
 <script>
   (function(){
