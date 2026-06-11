@@ -566,20 +566,10 @@
       wrap.style.display = 'none';
       success.classList.add('show');
       playbook.classList.add('unlocked');
-      // Smooth-scroll to the playbook so they see what they unlocked
       setTimeout(() => {
         playbook.scrollIntoView({behavior:'smooth', block:'start'});
       }, 500);
-      // Remember they've unlocked it (so a refresh keeps the content visible)
-      try { localStorage.setItem('pixsort_editor_playbook_unlocked', '1'); } catch(e){}
     }
-
-    // If they already submitted in a previous session, keep it unlocked
-    try {
-      if (localStorage.getItem('pixsort_editor_playbook_unlocked') === '1') {
-        revealPlaybook();
-      }
-    } catch(e){}
 
     form.addEventListener('submit', (e) => {
       // SendFox's form.js intercepts and POSTs the data via AJAX
