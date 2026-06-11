@@ -123,8 +123,9 @@
   }
   .gate-success-sub{font-size:14px;color:var(--text-grey)}
 
-  /* Content blocks (the playbook itself) */
-  .playbook{display:flex;flex-direction:column;gap:28px}
+  /* Content blocks (the playbook itself) — hidden until form submit */
+  .playbook{display:none;flex-direction:column;gap:28px}
+  .playbook.unlocked{display:flex}
   .section-h{
     font-family:'DM Serif Display',Georgia,serif;
     font-size:clamp(24px,2.8vw,32px);letter-spacing:-0.02em;
@@ -242,8 +243,23 @@
     <div class="gate-form-wrap" id="gateForm">
       <div class="gate-title">Drop your email. <em>Get the playbook.</em></div>
       <div class="gate-sub">I'll also send you the occasional honest update on what's working for me with PixSort + my brand. Unsubscribe anytime.</div>
-      <form class="gate-form" id="emailForm">
+      <!-- ───────────────────────────────────────────────────────────────
+           SendFox form
+           Replace SENDFOX_FORM_ID + SENDFOX_LIST_ID with values from
+           your SendFox dashboard (Forms → embed code → copy the
+           action URL and the form id).
+           ─────────────────────────────────────────────────────────────── -->
+      <form method="post"
+            action="https://sendfox.com/form/SENDFOX_FORM_ID/SENDFOX_LIST_ID"
+            class="sendfox-form gate-form"
+            id="SENDFOX_FORM_ID"
+            data-async="true"
+            data-recaptcha="true">
         <input type="email" name="email" required placeholder="your@email.com" autocomplete="email">
+        <!-- honeypot, required by SendFox -->
+        <div style="position:absolute;left:-5000px" aria-hidden="true">
+          <input type="text" name="a_password" tabindex="-1" value="" autocomplete="off">
+        </div>
         <button type="submit">Get it ↓</button>
       </form>
       <div class="gate-foot">No spam. No selling your address. Ever.</div>
@@ -251,7 +267,7 @@
     <div class="gate-success" id="gateSuccess">
       <div class="check">✓</div>
       <div class="gate-success-title">You're in.</div>
-      <div class="gate-success-sub">The full playbook is below. Bookmark this page so you can come back to it.</div>
+      <div class="gate-success-sub">Check your inbox for the playbook in a few minutes. <br>The whole thing is also unlocked below ↓</div>
     </div>
   </div>
 
@@ -475,36 +491,43 @@
 
 </div>
 
+<!-- SendFox embed script — handles the actual form POST async -->
+<script src="https://sendfox.com/js/form.js"></script>
+
 <script>
   (function(){
-    const form = document.getElementById('emailForm');
+    const form = document.querySelector('.sendfox-form');
     const wrap = document.getElementById('gateForm');
     const success = document.getElementById('gateSuccess');
+    const playbook = document.querySelector('.playbook');
     if(!form) return;
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = form.querySelector('input[name="email"]').value.trim();
-      if(!email) return;
-      // ──────────────────────────────────────────────────────────────────
-      // PLACEHOLDER ENDPOINT — swap for ConvertKit/Mailchimp/Formspree/etc.
-      // Examples:
-      //   Formspree:  await fetch('https://formspree.io/f/YOUR_ID', {method:'POST', body: JSON.stringify({email})})
-      //   ConvertKit: await fetch('https://api.convertkit.com/v3/forms/YOUR_FORM_ID/subscribe', ...)
-      // ──────────────────────────────────────────────────────────────────
-      try {
-        // Stub: log to console for now so we can confirm the wire-up
-        console.log('Email captured (no backend wired yet):', email);
-        // Show success state
-        wrap.style.display = 'none';
-        success.classList.add('show');
-        // Smooth-scroll into the playbook
-        setTimeout(() => {
-          document.querySelector('.playbook').scrollIntoView({behavior:'smooth', block:'start'});
-        }, 400);
-      } catch (err) {
-        console.error(err);
-        alert('Something went wrong. Email tiffany@firepitsurplus.com directly and I\\'ll send it over.');
+
+    function revealPlaybook(){
+      wrap.style.display = 'none';
+      success.classList.add('show');
+      playbook.classList.add('unlocked');
+      // Smooth-scroll to the playbook so they see what they unlocked
+      setTimeout(() => {
+        playbook.scrollIntoView({behavior:'smooth', block:'start'});
+      }, 500);
+      // Remember they've unlocked it (so a refresh keeps the content visible)
+      try { localStorage.setItem('pixsort_editor_playbook_unlocked', '1'); } catch(e){}
+    }
+
+    // If they already submitted in a previous session, keep it unlocked
+    try {
+      if (localStorage.getItem('pixsort_editor_playbook_unlocked') === '1') {
+        revealPlaybook();
       }
+    } catch(e){}
+
+    form.addEventListener('submit', (e) => {
+      // SendFox's form.js intercepts and POSTs the data via AJAX
+      // (because of data-async="true"). We just reveal our success
+      // state after a brief delay.
+      const emailInput = form.querySelector('input[name="email"]');
+      if (!emailInput || !emailInput.value.trim()) return;
+      setTimeout(revealPlaybook, 700);
     });
   })();
 </script>
