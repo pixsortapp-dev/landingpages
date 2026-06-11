@@ -27,7 +27,7 @@
   *{box-sizing:border-box;margin:0;padding:0;}
   html,body{height:100%;}
   body{
-    background:#1d1d20;
+    background:transparent;
     font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;
     display:flex;align-items:center;justify-content:center;
     min-height:100vh;color:var(--ink);
@@ -217,7 +217,7 @@
   }
   .board{margin-top:48px;}
   .board-cta{display:flex;justify-content:center;margin-top:54px;}
-  .bhead{text-align:center;color:#f3efe6;font-size:15px;letter-spacing:.22em;
+  .bhead{text-align:center;color:var(--ink);font-size:15px;letter-spacing:.22em;
     text-transform:uppercase;font-weight:700;}
   .bhead::after{content:"";display:block;width:46px;height:3px;background:var(--gold);
     margin:14px auto 0;border-radius:2px;}
@@ -225,11 +225,11 @@
     gap:46px 28px;margin-top:44px;justify-items:center;align-items:start;}
   .mp{display:flex;flex-direction:column;align-items:center;gap:18px;width:100%;max-width:300px;}
   .mp .phone{transform:scale(.9);transform-origin:top center;margin-bottom:-60px;}
-  .cap{text-align:center;color:#eceae3;}
+  .cap{text-align:center;color:var(--ink);}
   .cap .step{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;
     color:#0d0e11;background:var(--gold);border-radius:20px;padding:4px 13px;margin-bottom:10px;}
   .cap h3{font-size:19px;font-weight:700;letter-spacing:-.01em;}
-  .cap p{font-size:14px;color:#bdb9b0;margin-top:6px;line-height:1.45;}
+  .cap p{font-size:14px;color:var(--ink-dim);margin-top:6px;line-height:1.45;}
   /* static mini phones: scenes laid out exactly like the hero, just always visible */
   .mp .scene{opacity:1;transform:none;}
 </style>
