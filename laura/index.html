@@ -170,9 +170,29 @@
       margin: -20px 0 28px; max-width: 480px;
     }
     .hero-claim-note strong { color: var(--ink); font-weight: 700; }
-    .hero-clarity {
-      font-size: clamp(16px, 1.6vw, 19px); color: var(--grey);
-      line-height: 1.5; margin: -8px 0 22px; max-width: 520px;
+
+    /* ── Product bumper (between hero and unlock banner) ── */
+    .product-bumper {
+      background: var(--ink); color: var(--bg);
+      padding: 56px 24px; text-align: center;
+      border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
+    }
+    .product-bumper .bumper-label {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--lime); margin-bottom: 18px;
+    }
+    .product-bumper p {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(24px, 2.8vw, 38px);
+      line-height: 1.25; color: var(--bg); letter-spacing: -0.01em;
+      max-width: 920px; margin: 0 auto; text-wrap: balance;
+    }
+    .product-bumper p em {
+      font-style: italic; color: var(--bg); position: relative; display: inline-block;
+    }
+    .product-bumper p em::after {
+      content: ''; position: absolute; left: -3px; right: -3px;
+      bottom: 0.06em; height: 0.32em; background: var(--lime); z-index: -1;
     }
 
     .cta-block { display: flex; flex-direction: column; align-items: stretch; gap: 14px; width: 100%; max-width: 460px; position: relative; z-index: 1; }
@@ -534,7 +554,6 @@
       <span class="h1-line">Find every memory.</span>
       <span class="h1-line">Print the <em>best ones.</em></span>
     </h1>
-    <p class="hero-clarity">PixSort is a photo and video sorting app for your camera roll.</p>
     <p class="hero-discount-line"><span>100 photos sorted, on us.</span></p>
     <p class="hero-claim-note">Tap <strong>Download Now</strong> above or drop your number below. The 100-photo unlock only applies when you install through this page.</p>
 
@@ -562,6 +581,12 @@
       <span class="credit">Special moments deserve paper</span>
     </div>
   </div>
+</section>
+
+<!-- ── Product bumper (what PixSort is) ─────────────── -->
+<section class="product-bumper">
+  <div class="bumper-label">What is PixSort?</div>
+  <p>The iPhone app that sorts your photos and videos into <em>smart albums.</em></p>
 </section>
 
 <!-- ── Free unlock banner ──────────────────────────── -->
