@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tran Workshop · IG Story</title>
+<meta name="viewport" content="width=1080,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F5EFE0;
+    --cream-2:#EDE4CE;
+    --bg2:#EDE4CE;
+    --text:#1F1812;
+    --text-grey:#5B5145;
+    --text-grey2:#7A6F60;
+    --gold:#9C7B33;
+    --gold-dk:#6E5524;
+    --border:#D9C9A6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{
+    background:#222;
+    font-family:'Inter','Helvetica Neue',Arial,sans-serif;
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    padding:20px;
+  }
+
+  /* The story frame — exactly 1080x1920 */
+  .story{
+    position:relative;
+    width:1080px;
+    height:1920px;
+    background:var(--cream);
+    overflow:hidden;
+    box-shadow:0 30px 80px rgba(0,0,0,0.5);
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* IG safe zones (visible only in dev mode via ?safe=1) */
+  .safe-top,.safe-bot{
+    position:absolute;left:0;right:0;
+    background:rgba(255,0,0,0.06);
+    pointer-events:none;
+    display:none;
+    z-index:99;
+  }
+  .safe-top{top:0;height:250px;border-bottom:1px dashed rgba(255,0,0,0.3)}
+  .safe-bot{bottom:0;height:250px;border-top:1px dashed rgba(255,0,0,0.3)}
+  body.show-safe .safe-top,body.show-safe .safe-bot{display:block}
+
+  /* PHOTO HERO — top */
+  .hero{
+    position:relative;
+    width:100%;
+    height:920px;
+    overflow:hidden;
+  }
+  .hero img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center 65%;
+    display:block;
+  }
+  .hero-grad{
+    position:absolute;left:0;right:0;bottom:0;
+    height:280px;
+    background:linear-gradient(180deg,
+      rgba(245,239,224,0) 0%,
+      rgba(245,239,224,0.4) 40%,
+      var(--cream) 100%);
+  }
+  .hero-grad-top{
+    position:absolute;left:0;right:0;top:0;
+    height:280px;
+    background:linear-gradient(180deg,
+      rgba(245,239,224,0.95) 0%,
+      rgba(245,239,224,0.5) 40%,
+      rgba(245,239,224,0) 100%);
+  }
+
+  /* Top bar — logo + workshop pill */
+  .topbar{
+    position:absolute;
+    top:60px;left:0;right:0;
+    z-index:10;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 60px;
+  }
+  .logo-wrap{
+    display:flex;align-items:center;gap:16px;
+    color:var(--text);
+  }
+  .logo-wrap img{width:64px;height:64px;border-radius:14px;box-shadow:0 4px 18px rgba(0,0,0,0.18)}
+  .logo-wrap span{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-size:36px;
+    letter-spacing:-0.02em;
+    color:var(--text);
+  }
+  .pill{
+    background:rgba(245,239,224,0.92);
+    border:1.5px solid var(--gold);
+    border-radius:999px;
+    padding:14px 28px;
+    font-size:15px;
+    font-weight:800;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--gold-dk);
+    backdrop-filter:blur(8px);
+  }
+
+  /* CONTENT — below hero */
+  .content{
+    position:relative;
+    flex:1;
+    padding:30px 70px 90px;
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+
+  .eyebrow{
+    font-size:18px;
+    font-weight:800;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--gold-dk);
+    margin-bottom:24px;
+  }
+
+  h1.title{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-size:128px;
+    line-height:0.95;
+    letter-spacing:-0.035em;
+    color:var(--text);
+    margin-bottom:32px;
+  }
+  h1.title em{
+    color:var(--gold);
+    font-style:italic;
+  }
+
+  .sub{
+    font-size:30px;
+    line-height:1.35;
+    color:var(--text-grey);
+    max-width:880px;
+    margin-bottom:auto;
+  }
+  .sub strong{color:var(--text);font-weight:600}
+
+  /* CTA strip */
+  .cta-strip{
+    margin-top:40px;
+    background:var(--text);
+    border-radius:24px;
+    padding:34px 40px;
+    color:#F5EFE0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:24px;
+  }
+  .cta-left .cta-eye{
+    font-size:13px;
+    font-weight:800;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:rgba(245,239,224,0.65);
+    margin-bottom:10px;
+  }
+  .cta-left .cta-line{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-style:italic;
+    font-size:42px;
+    line-height:1.05;
+    letter-spacing:-0.015em;
+  }
+  .cta-left .cta-line em{color:#E8C268;font-style:italic}
+  .cta-right{
+    background:#E8C268;
+    color:var(--text);
+    font-weight:900;
+    font-size:18px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    padding:24px 32px;
+    border-radius:16px;
+    white-space:nowrap;
+  }
+
+  /* TAG row at very bottom */
+  .tag-row{
+    margin-top:22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:18px;
+    color:var(--text-grey2);
+    font-weight:600;
+  }
+  .tag-row strong{color:var(--gold-dk);font-weight:800}
+
+  @media print{
+    body{background:white;padding:0}
+    .story{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="story" id="story">
+
+  <!-- top bar -->
+  <div class="topbar">
+    <div class="logo-wrap">
+      <img src="assets/pixsort-logo.jpeg" alt="PixSort">
+      <span>PixSort</span>
+    </div>
+    <div class="pill">Tran UGC · 2026</div>
+  </div>
+
+  <!-- HERO photo -->
+  <div class="hero">
+    <img src="assets/tiff-sedona.jpeg" alt="Tiffany Parra">
+    <div class="hero-grad-top"></div>
+    <div class="hero-grad"></div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+    <div class="eyebrow">Workshop · Live walkthrough</div>
+    <h1 class="title">Hire editors.<br>Build a <em>nonstop workflow.</em></h1>
+    <p class="sub">For UGC creators ready to stop being the bottleneck in their own content. <strong>Job post + brief templates included.</strong></p>
+  </div>
+
+  <!-- safe zone debug overlays (toggle with ?safe=1) -->
+  <div class="safe-top"></div>
+  <div class="safe-bot"></div>
+</div>
+
+<script>
+  if(new URLSearchParams(location.search).get('safe')==='1'){
+    document.body.classList.add('show-safe');
+  }
+</script>
+
+</body>
+</html>
