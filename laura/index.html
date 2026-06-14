@@ -171,6 +171,30 @@
     }
     .hero-claim-note strong { color: var(--ink); font-weight: 700; }
 
+    /* ── Product bumper (between hero and unlock banner) ── */
+    .product-bumper {
+      background: var(--ink); color: var(--bg);
+      padding: 56px 24px; text-align: center;
+      border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
+    }
+    .product-bumper .bumper-label {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--lime); margin-bottom: 18px;
+    }
+    .product-bumper p {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(24px, 2.8vw, 38px);
+      line-height: 1.25; color: var(--bg); letter-spacing: -0.01em;
+      max-width: 920px; margin: 0 auto; text-wrap: balance;
+    }
+    .product-bumper p em {
+      font-style: italic; color: var(--bg); position: relative; display: inline-block;
+    }
+    .product-bumper p em::after {
+      content: ''; position: absolute; left: -3px; right: -3px;
+      bottom: 0.06em; height: 0.32em; background: var(--lime); z-index: -1;
+    }
+
     .cta-block { display: flex; flex-direction: column; align-items: stretch; gap: 14px; width: 100%; max-width: 460px; position: relative; z-index: 1; }
     .input-row {
       display: flex; width: 100%;
@@ -559,6 +583,12 @@
   </div>
 </section>
 
+<!-- ── Product bumper (what PixSort is) ─────────────── -->
+<section class="product-bumper">
+  <div class="bumper-label">What is PixSort?</div>
+  <p>The iPhone app that sorts your photos and videos into <em>smart albums.</em></p>
+</section>
+
 <!-- ── Free unlock banner ──────────────────────────── -->
 <section class="discount-banner">
   <div class="discount-inner">
@@ -610,7 +640,7 @@
   <div class="feature-row">
     <div>
       <div class="feature-kw">Send it.</div>
-      <p class="feature-caption">Push your album back into iOS Photos and send it straight to the printer, the Memorette Studio order page, or your family group chat. Two taps.</p>
+      <p class="feature-caption">Push your album back into iOS Photos → send it straight to the printer → add it to your Memorette scrapbook. Two taps and it's out the door.</p>
     </div>
     <div class="feature-phone-wrap">
       <div class="phone-tilt-r" id="phone-send"></div>
