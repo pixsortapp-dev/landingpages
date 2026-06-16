@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Editor Job Post — Template + Reference · Tiff Parra</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F5EFE0;
+    --cream-2:#EDE4CE;
+    --bg2:#EDE4CE;
+    --text:#1F1812;
+    --text-grey:#5B5145;
+    --text-grey2:#7A6F60;
+    --gold:#9C7B33;
+    --gold-dk:#6E5524;
+    --gold-soft:#E8C268;
+    --border:#D9C9A6;
+    --sage:#9CA88A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{
+    background:var(--cream);
+    color:var(--text);
+    font-family:'Inter','Helvetica Neue',Arial,sans-serif;
+    font-size:14px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  body{padding:0}
+
+  /* Letter page sizing — natural flow */
+  @page{size:letter;margin:0.5in 0.55in}
+  html,body{background:var(--cream)}
+  .page{
+    background:var(--cream);
+  }
+
+  /* Header bar */
+  .header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-bottom:18px;
+    border-bottom:1.5px solid var(--border);
+    margin-bottom:34px;
+  }
+  .header-left{display:flex;align-items:center;gap:12px}
+  .header-left .dot{
+    width:32px;height:32px;
+    background:var(--text);
+    border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--gold-soft);
+    font-family:'DM Serif Display',serif;
+    font-style:italic;
+    font-size:18px;
+  }
+  .header-left .who{
+    font-size:13px;color:var(--text);
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  .header-left .who span{color:var(--text-grey2);font-weight:500;margin-left:8px}
+  .header-right{
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--gold-dk);
+  }
+
+  /* Cover block */
+  .cover{
+    text-align:left;
+    margin-bottom:38px;
+  }
+  .cover .eyebrow{
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:0.24em;
+    text-transform:uppercase;
+    color:var(--gold-dk);
+    margin-bottom:14px;
+  }
+  .cover h1{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-size:54px;
+    line-height:0.98;
+    letter-spacing:-0.025em;
+    color:var(--text);
+    margin-bottom:18px;
+  }
+  .cover h1 em{color:var(--gold);font-style:italic}
+  .cover .lede{
+    font-size:16px;
+    color:var(--text-grey);
+    max-width:580px;
+    line-height:1.5;
+  }
+  .cover .lede strong{color:var(--text);font-weight:600}
+
+  /* Intro narrative */
+  .intro-card{
+    background:#FBF7EE;
+    border-left:3px solid var(--gold);
+    border-radius:0 10px 10px 0;
+    padding:18px 22px;
+    margin-bottom:34px;
+    font-size:14px;
+    color:var(--text);
+    line-height:1.55;
+  }
+  .intro-card strong{color:var(--gold-dk)}
+
+  /* How to use */
+  .how{margin-bottom:38px}
+  .section-eyebrow{
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:0.24em;
+    text-transform:uppercase;
+    color:var(--gold-dk);
+    margin-bottom:10px;
+  }
+  .section-title{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-size:28px;
+    line-height:1.05;
+    letter-spacing:-0.022em;
+    color:var(--text);
+    margin-bottom:14px;
+  }
+  .section-title em{color:var(--gold);font-style:italic}
+  ol.steps{
+    list-style:none;counter-reset:step;
+    display:flex;flex-direction:column;gap:10px;
+  }
+  ol.steps li{
+    counter-increment:step;
+    display:flex;gap:14px;align-items:flex-start;
+    font-size:13.5px;color:var(--text);
+    padding-bottom:8px;
+    border-bottom:1px dashed var(--border);
+  }
+  ol.steps li:last-child{border-bottom:none}
+  ol.steps li::before{
+    content:counter(step,decimal-leading-zero);
+    font-family:'DM Serif Display',serif;
+    font-style:italic;
+    color:var(--gold);
+    font-size:18px;
+    min-width:28px;
+    line-height:1.1;
+  }
+  ol.steps li strong{color:var(--gold-dk)}
+
+  /* Section header — compact inline (was full title page) */
+  .big-section{
+    margin:0 0 16px;
+  }
+  .big-section-tag{
+    display:inline-block;
+    background:var(--text);
+    color:var(--gold-soft);
+    padding:5px 12px 6px;
+    border-radius:999px;
+    font-size:9.5px;
+    font-weight:800;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    margin-bottom:8px;
+  }
+  .big-section h2{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-size:32px;
+    line-height:1;
+    letter-spacing:-0.025em;
+    margin-bottom:6px;
+  }
+  .big-section h2 em{color:var(--gold);font-style:italic}
+  .big-section .lede{
+    font-size:13px;
+    color:var(--text-grey);
+    margin-bottom:0;
+    max-width:560px;
+  }
+  .big-section .lede strong{color:var(--gold-dk)}
+
+  /* Job post body (the actual template/reference) */
+  .post{
+    background:#FBF7EE;
+    border:1.5px solid var(--border);
+    border-radius:12px;
+    padding:14px 18px;
+  }
+  .post.reference{
+    background:#fff;
+    border:1.5px solid var(--gold);
+  }
+  .post h3{
+    font-family:'Inter',sans-serif;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--gold-dk);
+    margin:10px 0 4px;
+    padding-bottom:2px;
+    border-bottom:1px solid var(--border);
+    break-after:avoid;
+  }
+  .post h3:first-child{margin-top:0}
+  .post p{
+    font-size:11.5px;
+    line-height:1.45;
+    color:var(--text);
+    margin-bottom:0;
+  }
+  .post p + p{margin-top:4px}
+  .post .post-title{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-size:16px;
+    line-height:1.18;
+    letter-spacing:-0.015em;
+    color:var(--text);
+    margin-bottom:0;
+  }
+  .post ul{
+    list-style:none;padding:0;margin:0;
+  }
+  .post ul li{
+    font-size:11.5px;
+    color:var(--text);
+    padding:1px 0 1px 18px;
+    position:relative;
+    line-height:1.4;
+  }
+  .post ul li::before{
+    content:'→';
+    position:absolute;
+    left:0;color:var(--gold);
+    font-weight:700;
+  }
+  .post .brk{
+    font-family:'JetBrains Mono',monospace;
+    background:rgba(156,123,51,0.13);
+    color:var(--gold-dk);
+    padding:1px 6px;
+    border-radius:3px;
+    font-size:12px;
+    font-weight:600;
+  }
+  .post a{
+    color:var(--gold-dk);
+    text-decoration:underline;
+    text-underline-offset:2px;
+    font-weight:600;
+    word-break:break-all;
+  }
+  .post .comp-amount{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-style:italic;
+    color:var(--gold-dk);
+    font-size:18px;
+  }
+
+  /* Where to post */
+  .platforms{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin-top:18px;
+  }
+  .platform{
+    background:#FBF7EE;
+    border:1.5px solid var(--border);
+    border-radius:12px;
+    padding:18px 18px 20px;
+  }
+  .platform.skip{
+    border-color:rgba(190,90,80,0.4);
+    background:#FFF1ED;
+    opacity:0.85;
+  }
+  .platform .badge{
+    display:inline-block;
+    font-size:9.5px;
+    font-weight:800;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    padding:4px 10px;
+    border-radius:999px;
+    margin-bottom:10px;
+  }
+  .platform.use .badge{background:var(--gold);color:#fff}
+  .platform.skip .badge{background:#C75A4A;color:#fff}
+  .platform .name{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-size:22px;
+    letter-spacing:-0.015em;
+    color:var(--text);
+    margin-bottom:6px;
+  }
+  .platform .note{
+    font-size:12.5px;
+    color:var(--text-grey);
+    line-height:1.45;
+  }
+
+  /* Filter steps */
+  .filter-list{
+    background:var(--bg2);
+    border-radius:14px;
+    padding:24px 28px;
+    margin-top:18px;
+    border:1px solid var(--border);
+  }
+  .filter-list ol{
+    list-style:none;counter-reset:fs;
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .filter-list ol li{
+    counter-increment:fs;
+    display:flex;gap:14px;align-items:flex-start;
+    font-size:13.5px;
+    color:var(--text);
+    line-height:1.5;
+  }
+  .filter-list ol li::before{
+    content:counter(fs,decimal-leading-zero);
+    font-family:'DM Serif Display',serif;
+    font-style:italic;
+    color:var(--gold);
+    font-size:18px;
+    min-width:30px;
+    line-height:1.1;
+  }
+  .filter-list ol li strong{color:var(--gold-dk)}
+  .filter-kicker{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-style:italic;
+    font-size:20px;
+    color:var(--gold-dk);
+    margin-top:18px;
+    line-height:1.35;
+    text-align:center;
+  }
+
+  /* Resources */
+  .resources{
+    display:flex;flex-direction:column;gap:10px;
+    margin-top:18px;
+  }
+  .resources a{
+    display:flex;justify-content:space-between;align-items:center;
+    background:#FBF7EE;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px 18px;
+    text-decoration:none;
+    color:var(--text);
+    font-size:13.5px;
+    font-weight:600;
+  }
+  .resources a:hover{border-color:var(--gold)}
+  .resources a .arrow{color:var(--gold);font-weight:800;font-size:16px}
+
+  /* Signoff */
+  .signoff{
+    margin-top:46px;
+    padding-top:24px;
+    border-top:1.5px solid var(--border);
+    text-align:center;
+  }
+  .signoff p{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-style:italic;
+    font-size:22px;
+    line-height:1.4;
+    color:var(--text);
+    max-width:520px;
+    margin:0 auto 20px;
+  }
+  .signoff p em{color:var(--gold);font-style:italic}
+  .signoff .sig{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-style:italic;
+    font-size:32px;
+    color:var(--gold-dk);
+    margin-bottom:4px;
+  }
+  .signoff .handles{
+    font-size:12px;
+    color:var(--text-grey2);
+    font-weight:600;
+    letter-spacing:0.06em;
+  }
+  .signoff .handles span{margin:0 8px;color:var(--gold)}
+
+  /* Print tweaks */
+  @media print{
+    body{background:white}
+    .page{margin:0;padding:0.55in 0.6in;box-shadow:none}
+    .intro-card,.platform,.resources a{
+      break-inside:avoid;
+    }
+    a{color:var(--gold-dk) !important}
+    /* Keep post h3 with its first paragraph after */
+    .post h3{break-after:avoid}
+    /* Don't leave a heading orphaned at the bottom */
+    h2{break-after:avoid}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 1 — Cover + Intro + How to use
+═════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="header">
+    <div class="header-left">
+      <div class="dot">T</div>
+      <div class="who">Tiffany Parra <span>@tiffanyparraa · pixsort.app</span></div>
+    </div>
+    <div class="header-right">Editor playbook · 2026</div>
+  </div>
+
+  <div class="cover">
+    <div class="eyebrow">Resource · For the Tran UGC community</div>
+    <h1>Editor job post.<br>The <em>template</em> + the <em>real one I use.</em></h1>
+    <p class="lede">Two parts stacked: the fill-in-the-blank <strong>TEMPLATE</strong>, then <strong>MY REFERENCE</strong> — the version I actually run, so you can see what "finished" looks like.</p>
+  </div>
+
+  <div class="intro-card">
+    I've used a version of this post on Upwork and Onlinejobs.ph for two years. Every time I post it, <strong>30–60 applicants land in the first 24 hours</strong>. The trick isn't the post — it's the filter. Skip to the back for that.
+  </div>
+
+  <div class="how">
+    <div class="section-eyebrow">How to use this</div>
+    <h2 class="section-title">Five steps, then <em>post.</em></h2>
+    <ol class="steps">
+      <li><span><strong>Open the Google Doc.</strong> Link's on the template page — just copy + paste it.</span></li>
+      <li><span><strong>Fill every <span class="brk">[BRACKET]</span></strong> with your details. Don't leave any blank.</span></li>
+      <li><span><strong>Stuck?</strong> Look at MY REFERENCE underneath — same shape, my details.</span></li>
+      <li><span><strong>Post on Upwork or Onlinejobs.ph.</strong> Boost the listing if your budget allows.</span></li>
+      <li><span><strong>Filter ruthlessly.</strong> Pay $20 each for one test edit. Hire the 1–2 who nail it.</span></li>
+    </ol>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 2 — THE TEMPLATE
+═════════════════════════════════════════════════════════════ -->
+<div class="page" style="margin-top:32px">
+  <div class="big-section">
+    <div class="big-section-tag">01 · Template</div>
+    <h2>The <em>template.</em></h2>
+    <p class="lede">Replace every <span class="brk">[BRACKET]</span> with your details, then copy + paste into your job board of choice.</p>
+  </div>
+
+  <a href="https://docs.google.com/document/d/1hW-OtGRgF2m1an-nzndDzawEXyhWrSesSJ7P8sv_Tks/edit?usp=sharing" target="_blank" rel="noopener" style="display:flex;justify-content:space-between;align-items:center;gap:18px;background:var(--text);color:#F5EFE0;padding:16px 22px;border-radius:12px;text-decoration:none;margin-bottom:18px">
+    <div style="display:flex;align-items:center;gap:14px">
+      <span style="font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-size:22px;color:var(--gold-soft);line-height:1">G</span>
+      <div>
+        <div style="font-size:10.5px;font-weight:800;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,239,224,0.6);margin-bottom:2px">Google Doc · copy + paste</div>
+        <div style="font-size:14px;font-weight:700">Open the template in Google Docs →</div>
+      </div>
+    </div>
+    <span style="font-family:'DM Serif Display',Georgia,serif;font-style:italic;color:var(--gold-soft);font-size:24px">↗</span>
+  </a>
+
+  <div class="post">
+    <h3>Title</h3>
+    <p class="post-title">Short-Form Video Editor Wanted — <span class="brk">[YOUR ROLE / HOOK]</span></p>
+
+    <h3>About the role</h3>
+    <p>We're looking for a short-form video editor to join the <span class="brk">[YOUR NAME]</span> team — a fully remote team creating content around <span class="brk">[YOUR NICHE]</span>. This is an ongoing role with consistent weekly volume.</p>
+
+    <h3>About the channel</h3>
+    <p><span class="brk">[YOUR BIO + REAL NUMBERS]</span>. Content covers <span class="brk">[YOUR TOPICS]</span>. The tone is direct, grounded, and transparent — not corporate, not over-polished. Think smart editing that enhances the story without stealing the show.</p>
+
+    <h3>What you'll do</h3>
+    <p>Edit short-form vertical videos (Reels, TikToks, Shorts — 15–90 seconds) from raw footage + a detailed brief. Punchy cuts, scroll-stopping hooks, on-screen text with great pacing, b-roll layering, sound design. Match the brand's visual style across every clip. Hit fast turnaround on a steady weekly volume.</p>
+
+    <h3>What the briefs look like</h3>
+    <p>Our briefs are detailed and shot-by-shot — covering hook, transcript, text overlay specs, b-roll direction, sound effects, brand colors, and asset links. Real example brief: <a href="https://docs.google.com/document/d/1bTNe8deJhkHTuop20RVT8XqMatC7At2SughFR2_fuWk/edit">linked here</a>.</p>
+
+    <h3>Must-haves</h3>
+    <ul>
+      <li>Experience editing short-form vertical content (Reels, TikTok, Shorts)</li>
+      <li>Able to execute from a detailed brief independently</li>
+      <li>Strong sense of hooks + pacing</li>
+      <li>Reliable + communicative</li>
+      <li>Portfolio with vertical edits</li>
+    </ul>
+
+    <h3>Compensation</h3>
+    <p><span class="comp-amount">$<span class="brk">[RATE LOW]</span>–$<span class="brk">[RATE HIGH]</span> per short-form video</span>, based on experience. Long-form compensated separately if it comes up. Fully remote. Ongoing role with consistent weekly volume.</p>
+
+    <h3>How to apply</h3>
+    <p>Send:</p>
+    <ul>
+      <li>2–3 examples of short-form vertical videos you've edited (Reels / TikToks / Shorts preferred)</li>
+      <li>A brief note on your editing style</li>
+      <li>Your current turnaround time for a single short</li>
+      <li>Your preferred editing software (CapCut, Premiere, DaVinci, etc.)</li>
+    </ul>
+    <p style="margin-top:10px">We'll set up a short paid test edit for top candidates.</p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 3 — MY REFERENCE
+═════════════════════════════════════════════════════════════ -->
+<div class="page" style="margin-top:32px">
+  <div class="big-section">
+    <div class="big-section-tag">02 · My reference</div>
+    <h2>What <em>mine</em> looks like.</h2>
+    <p class="lede">Same skeleton, my details filled in. Steal the structure, swap the specifics.</p>
+  </div>
+
+  <div class="post reference">
+    <h3>Title</h3>
+    <p class="post-title">Short-Form Video Editor Wanted — Female Founder Building PixSort in Public, Hiring for Ongoing UGC Work</p>
+
+    <h3>About the role</h3>
+    <p>We're looking for a short-form video editor to join the Tiffany Parra team — a fully remote team creating content around UGC, consumer apps, and the daily reality of building PixSort in public. This is an ongoing role with consistent weekly volume.</p>
+
+    <h3>About the channel</h3>
+    <p>Tiffany Parra · @tiffanyparraa on IG · ~9K followers, 2 years of build-in-public content. Before PixSort, I scaled Fire Pit Surplus to $800K in 6 months as a self-taught operator. Now I'm shipping PixSort (an iOS camera-roll-sorting app) in public and posting the journey daily. Content covers building PixSort, UGC playbooks, founder life, and the systems behind running content + product at the same time. The tone is direct, grounded, and transparent — not corporate, not over-polished. Think smart editing that enhances the story without stealing the show.</p>
+
+    <h3>What you'll do</h3>
+    <p>Edit short-form vertical videos (Reels, TikToks, Shorts — 15–90 seconds) from raw footage + a detailed brief. Punchy cuts, scroll-stopping hooks, on-screen text with great pacing, b-roll layering, sound design. Match the brand's visual style across every clip. Hit fast turnaround on a steady weekly volume.</p>
+
+    <h3>What the briefs look like</h3>
+    <p>Our briefs are detailed and shot-by-shot — covering hook, transcript, text overlay specs, b-roll direction, sound effects, brand colors, and asset links. Real example brief: <a href="https://docs.google.com/document/d/1bTNe8deJhkHTuop20RVT8XqMatC7At2SughFR2_fuWk/edit">linked here</a>.</p>
+
+    <h3>Must-haves</h3>
+    <ul>
+      <li>Experience editing short-form vertical content (Reels, TikTok, Shorts)</li>
+      <li>Able to execute from a detailed brief independently</li>
+      <li>Strong sense of hooks + pacing for UGC and founder content</li>
+      <li>Reliable + communicative on Slack</li>
+      <li>Portfolio with vertical edits</li>
+    </ul>
+    <p style="margin-top:8px;font-size:13px;color:var(--text-grey)"><em>Bonus: experience with consumer app or DTC brand content.</em></p>
+
+    <h3>Compensation</h3>
+    <p><span class="comp-amount">$15–$20 per short-form video</span>, based on experience. Long-form compensated separately if it comes up. Fully remote. Ongoing role with consistent weekly volume (~10–20 shorts per month).</p>
+
+    <h3>How to apply</h3>
+    <p>Send:</p>
+    <ul>
+      <li>2–3 examples of short-form vertical videos you've edited (Reels / TikToks / Shorts preferred)</li>
+      <li>A brief note on your editing style</li>
+      <li>Your current turnaround time for a single short</li>
+      <li>Your preferred editing software (CapCut, Premiere, DaVinci)</li>
+    </ul>
+    <p style="margin-top:10px">We'll set up a short paid test edit ($20, one video) for top candidates.</p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 4 — Where to post + How to filter + Resources
+═════════════════════════════════════════════════════════════ -->
+<div class="page" style="margin-top:32px">
+  <div style="margin-top:0">
+    <div class="section-eyebrow">Where to post</div>
+    <h2 class="section-title">Two platforms in, <em>one out.</em></h2>
+
+    <div class="platforms">
+      <div class="platform use">
+        <div class="badge">Use ✓</div>
+        <div class="name">Upwork</div>
+        <div class="note">Fast applicants, better portfolios. Boost the listing for 24 hrs to push to the top.</div>
+      </div>
+      <div class="platform use">
+        <div class="badge">Use ✓</div>
+        <div class="name">Onlinejobs.ph</div>
+        <div class="note">Better for long-term hires at lower rates ($5–10 / video). Slower flow, but you find people who stay 1–2 years.</div>
+      </div>
+      <div class="platform skip">
+        <div class="badge">Skip ✗</div>
+        <div class="name">Fiverr</div>
+        <div class="note">Skip for ongoing roles. Fine for one-off projects only — you won't find the right long-haul fit.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:34px">
+    <div class="section-eyebrow">How to filter</div>
+    <h2 class="section-title">The <em>paid test edit</em> is the whole game.</h2>
+
+    <div class="filter-list">
+      <ol>
+        <li><span><strong>Skim portfolios first.</strong> Skip anyone whose vertical reel work doesn't match your aesthetic.</span></li>
+        <li><span><strong>Read their cover note.</strong> Generic AI copy-paste → pass. Someone who references YOUR content specifically → flag.</span></li>
+        <li><span><strong>Shortlist 5–10 people max.</strong> Don't over-screen on paper. The work tells you who's real.</span></li>
+        <li><span><strong>Pay each $20 for ONE test video</strong> from a real brief. Same brief for everyone — apples to apples.</span></li>
+        <li><span><strong>Hire the 1–2 who nail the test on the first try.</strong> If they need 3 rounds of edits, they're not it.</span></li>
+      </ol>
+      <p class="filter-kicker">The paid test edit is the single most important filter. <em>Don't skip it.</em></p>
+    </div>
+  </div>
+
+  <div style="margin-top:34px">
+    <div class="section-eyebrow">More resources</div>
+    <h2 class="section-title">Everything <em>else</em> in the playbook.</h2>
+
+    <div class="resources">
+      <a href="https://docs.google.com/document/d/1bTNe8deJhkHTuop20RVT8XqMatC7At2SughFR2_fuWk/edit">
+        <span>→ Brief template (the one referenced above)</span>
+        <span class="arrow">↗</span>
+      </a>
+      <a href="https://pixsort.app/editor-playbook">
+        <span>→ Full editor playbook (job post + standards + handoff)</span>
+        <span class="arrow">↗</span>
+      </a>
+      <a href="https://pixsort.app">
+        <span>→ PixSort · community offer $70/yr (vs $100)</span>
+        <span class="arrow">↗</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="signoff">
+    <p>Steal it, post it, hire someone good. <em>I'd love to hear how it goes — DM me.</em></p>
+    <div class="sig">— Tiff</div>
+    <div class="handles">@tiffanyparraa <span>·</span> pixsort.app <span>·</span> tiffany@firepitsurplus.com</div>
+  </div>
+</div>
+
+</body>
+</html>
