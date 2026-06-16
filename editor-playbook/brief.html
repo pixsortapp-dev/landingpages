@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Editor Brief Template · Tiff Parra</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F5EFE0;
+    --cream-2:#EDE4CE;
+    --text:#1F1812;
+    --text-grey:#5B5145;
+    --text-grey2:#7A6F60;
+    --gold:#9C7B33;
+    --gold-dk:#6E5524;
+    --gold-soft:#E8C268;
+    --border:#D9C9A6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{
+    background:var(--cream);
+    color:var(--text);
+    font-family:'Inter','Helvetica Neue',Arial,sans-serif;
+    font-size:15px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width:780px;
+    margin:0 auto;
+    padding:48px 32px 80px;
+  }
+
+  /* Header */
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-bottom:18px;
+    border-bottom:1.5px solid var(--border);
+    margin-bottom:36px;
+  }
+  .topbar-left{display:flex;align-items:center;gap:12px}
+  .topbar-left .dot{
+    width:34px;height:34px;
+    background:var(--text);
+    border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--gold-soft);
+    font-family:'DM Serif Display',serif;
+    font-style:italic;
+    font-size:20px;
+  }
+  .topbar-left .who{
+    font-size:14px;color:var(--text);font-weight:700;letter-spacing:-0.01em;
+  }
+  .topbar-left .who span{color:var(--text-grey2);font-weight:500;margin-left:8px}
+  .topbar-right{
+    font-size:10.5px;
+    font-weight:800;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--gold-dk);
+  }
+
+  /* Copy-paste banner */
+  .copy-banner{
+    background:#FBF7EE;
+    border:1.5px solid var(--gold);
+    border-radius:14px;
+    padding:18px 22px;
+    margin-bottom:32px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:18px;
+    font-size:14px;
+  }
+  .copy-banner .left{color:var(--text);line-height:1.5}
+  .copy-banner .left strong{color:var(--gold-dk)}
+  .copy-banner .right{
+    background:var(--text);
+    color:var(--gold-soft);
+    padding:11px 18px;
+    border-radius:10px;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    border:none;
+    cursor:pointer;
+    font-family:inherit;
+    white-space:nowrap;
+  }
+  .copy-banner .right:hover{background:#000}
+  .copy-banner .right.copied{background:var(--gold)}
+
+  /* THE TEMPLATE — semantic markup that copies cleanly into Google Docs */
+  .template{
+    background:#fff;
+    border:1.5px solid var(--border);
+    border-radius:18px;
+    padding:42px 44px;
+  }
+
+  .template h1{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-size:38px;
+    line-height:1.05;
+    letter-spacing:-0.025em;
+    color:var(--text);
+    margin-bottom:6px;
+    font-weight:400;
+  }
+  .template > p.subtitle{
+    font-size:15.5px;
+    color:var(--text-grey);
+    margin-bottom:30px;
+    line-height:1.5;
+  }
+  .template h2{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-size:22px;
+    font-weight:400;
+    letter-spacing:-0.015em;
+    color:var(--gold-dk);
+    margin:28px 0 12px;
+    padding-bottom:6px;
+    border-bottom:1px solid var(--border);
+  }
+  .template h2:first-of-type{margin-top:8px}
+  .template p{
+    font-size:14.5px;
+    line-height:1.6;
+    color:var(--text);
+    margin-bottom:10px;
+  }
+  .template ul{
+    list-style:none;
+    margin:0 0 12px;
+    padding:0;
+  }
+  .template ul li{
+    font-size:14.5px;
+    color:var(--text);
+    line-height:1.55;
+    padding:3px 0;
+  }
+  .template ul li strong{color:var(--gold-dk);font-weight:700}
+  .template ol{
+    margin:0 0 12px 22px;
+    padding:0;
+  }
+  .template ol li{
+    font-size:14.5px;
+    color:var(--text);
+    line-height:1.6;
+    padding:3px 0;
+  }
+  .template blockquote{
+    background:#FBF7EE;
+    border-left:3px solid var(--gold);
+    padding:14px 18px;
+    border-radius:0 8px 8px 0;
+    margin:12px 0;
+    font-style:italic;
+    color:var(--text);
+    font-size:14.5px;
+  }
+  .template em{font-style:italic;color:var(--text-grey)}
+  .template strong{font-weight:700}
+  .template code{
+    font-family:'JetBrains Mono',monospace;
+    background:rgba(156,123,51,0.13);
+    color:var(--gold-dk);
+    padding:2px 7px;
+    border-radius:4px;
+    font-size:13px;
+    font-weight:600;
+  }
+
+  /* Signoff */
+  .signoff{
+    margin-top:42px;
+    padding-top:22px;
+    border-top:1.5px solid var(--border);
+    text-align:center;
+    font-size:13px;
+    color:var(--text-grey2);
+  }
+  .signoff .sig{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-style:italic;
+    color:var(--gold-dk);
+    font-size:22px;
+    display:block;
+    margin-bottom:4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="dot">T</div>
+      <div class="who">Tiffany Parra <span>@tiffanyparraa · pixsort.app</span></div>
+    </div>
+    <div class="topbar-right">Editor playbook · Brief</div>
+  </div>
+
+  <div class="copy-banner">
+    <div class="left">Select <strong>everything inside the white card</strong> below → copy → paste into a fresh Google Doc. Headings, lists, and brackets all carry over.</div>
+    <button class="right" id="copyBtn" type="button">Copy template</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       THE TEMPLATE — select all inside this card to copy
+       Semantic h1/h2/p/ul/blockquote so Google Docs paste preserves structure
+  ═════════════════════════════════════════════════════════════ -->
+  <article class="template" id="templateBody">
+
+    <h1>EDITOR BRIEF — [Project code]</h1>
+    <p class="subtitle"><strong>[Working title]</strong> · [Length, e.g. 45–55 sec] · [Style, e.g. no VO]</p>
+
+    <h2>Source clip</h2>
+    <ul>
+      <li><strong>Folder:</strong> [where the raw lives, e.g. iCloud Photos from Tiffany 10]</li>
+      <li><strong>File:</strong> [filename, e.g. IMG_5480.MOV]</li>
+      <li><strong>Link:</strong> [iCloud / Drive / Frame.io URL]</li>
+      <li><strong>In frame:</strong> [who's in the shot]</li>
+      <li><strong>Note:</strong> [anything weird, e.g. non-linear edit, extra B-roll from same day]</li>
+    </ul>
+
+    <h2>Hook (0:00–0:05)</h2>
+    <p>Pull this line from the <strong>[start / end / middle]</strong> of the clip:</p>
+    <blockquote>"[The exact opening line — copy/paste from the transcript]"</blockquote>
+    <p>Hard cut in. No intro, no fade. Let it land — then cut to Beat 1.</p>
+
+    <h2>Editing notes</h2>
+    <ul>
+      <li><strong>Music:</strong> [none under dialogue / soft under B-roll / etc.]</li>
+      <li><strong>Captions:</strong> white text, black outline, bottom third. Always on.</li>
+      <li><strong>Highlight words:</strong> ["X", "Y", "Z"] — bold these in the captions</li>
+      <li><strong>Never:</strong> [overlay during a close-up / music over the hook / etc.]</li>
+      <li><strong>Tone:</strong> [authentic / cinematic / fast-cut / etc.]</li>
+    </ul>
+
+    <h2>Export</h2>
+    <ul>
+      <li><strong>Aspect:</strong> 9:16 (1080×1920)</li>
+      <li><strong>Filename:</strong> <code>[project-code]-[descriptor]-v1.mp4</code> &nbsp;<em>e.g. V_155-neil-street-interview-v1.mp4</em></li>
+    </ul>
+
+    <h2>Raw transcript (optional)</h2>
+    <p><em>AI-generated, errors throughout. Use your ears for all cuts.</em></p>
+    <p>[paste raw transcript here]</p>
+
+    <h2>How to use this template</h2>
+    <ol>
+      <li>Duplicate this doc → rename with the project code</li>
+      <li>Fill every bracket. If a section doesn't apply, <strong>delete it</strong> — don't leave blanks</li>
+      <li>Drop the link in the editor's assignments channel</li>
+      <li>They send v1 within 24 hrs of receipt</li>
+    </ol>
+
+  </article>
+
+  <div class="signoff">
+    <span class="sig">— Tiff</span>
+    @tiffanyparraa · pixsort.app
+  </div>
+
+</div>
+
+<script>
+  // Click-to-copy: select everything inside #templateBody and copy as rich HTML
+  const btn = document.getElementById('copyBtn');
+  const body = document.getElementById('templateBody');
+  btn.addEventListener('click', async () => {
+    try{
+      const html = body.innerHTML;
+      const text = body.innerText;
+      if(navigator.clipboard && window.ClipboardItem){
+        await navigator.clipboard.write([new ClipboardItem({
+          'text/html': new Blob([html], {type:'text/html'}),
+          'text/plain': new Blob([text], {type:'text/plain'})
+        })]);
+      } else {
+        // Fallback: select + execCommand
+        const r = document.createRange();
+        r.selectNodeContents(body);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(r);
+        document.execCommand('copy');
+        sel.removeAllRanges();
+      }
+      btn.textContent = '✓ Copied';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy template';
+        btn.classList.remove('copied');
+      }, 2000);
+    } catch(e){
+      btn.textContent = 'Select + copy manually';
+      console.error(e);
+    }
+  });
+</script>
+
+</body>
+</html>
