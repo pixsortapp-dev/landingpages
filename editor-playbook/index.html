@@ -21,6 +21,7 @@
     --text-grey2:#6E624F;
     --gold:#9C7B33;
     --gold-dk:#6E5524;
+    --gold-soft:#E8C268;
     --pink:#D98F8F;
     --sage:#8FA37D;
     --peach:#D9886A;
@@ -78,14 +79,51 @@
     border:2px solid var(--gold);border-radius:18px;
     padding:32px 32px 28px;margin-bottom:48px;
     box-shadow:0 24px 48px rgba(156,123,51,0.18);
+    position:relative;
+  }
+  .gate-flag{
+    display:inline-block;
+    background:var(--text);
+    color:var(--gold-soft);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    padding:7px 14px;
+    border-radius:999px;
+    margin-bottom:14px;
   }
   .gate-title{
     font-family:'DM Serif Display',Georgia,serif;
-    font-size:22px;letter-spacing:-0.01em;margin-bottom:8px;color:var(--text);text-align:center;
+    font-size:34px;line-height:1.05;letter-spacing:-0.022em;margin-bottom:8px;color:var(--text);
   }
+  .gate-title em{color:var(--gold);font-style:italic}
   .gate-sub{
-    font-size:14px;color:var(--text-grey);text-align:center;margin-bottom:20px;
-    max-width:500px;margin-left:auto;margin-right:auto;
+    font-size:15px;color:var(--text-grey);margin-bottom:22px;
+    max-width:560px;line-height:1.5;
+  }
+  .gate-unlock-list{
+    background:rgba(255,255,255,0.6);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:16px 20px;
+    margin-bottom:22px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .unlock-item{
+    font-size:14px;
+    color:var(--text);
+    line-height:1.45;
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+  }
+  .unlock-item .ulock{
+    color:var(--gold);
+    font-weight:800;
+    flex-shrink:0;
   }
   .gate-form{
     display:flex;flex-direction:column;gap:10px;max-width:440px;margin:0 auto;
@@ -243,8 +281,20 @@
   <!-- Email gate -->
   <div class="gate" id="gate">
     <div class="gate-form-wrap" id="gateForm">
-      <div class="gate-title">Drop your email. <em>Get the playbook.</em></div>
-      <div class="gate-sub">I'll also send you the occasional honest update on what's working for me with PixSort + my brand. Unsubscribe anytime.</div>
+      <div class="gate-flag">Drop your email · unlock everything below in 1 click</div>
+      <div class="gate-title">All <em>7 resources.</em><br>Unlocked instantly.</div>
+      <div class="gate-sub">No "check your email" wait. The full playbook + every template loads right here, the second you hit submit.</div>
+
+      <div class="gate-unlock-list">
+        <div class="unlock-item"><span class="ulock">→</span> The hand-off vs keep framework</div>
+        <div class="unlock-item"><span class="ulock">→</span> My actual job post (copy-paste ready)</div>
+        <div class="unlock-item"><span class="ulock">→</span> The editor brief template + text overlays table</div>
+        <div class="unlock-item"><span class="ulock">→</span> My non-negotiable standards (the editor agreement)</div>
+        <div class="unlock-item"><span class="ulock">→</span> The Slack channel structure + handoff system</div>
+        <div class="unlock-item"><span class="ulock">→</span> Pay structure + paid trial playbook</div>
+        <div class="unlock-item"><span class="ulock">→</span> Where to find editors (4 real sources)</div>
+      </div>
+
       <form method="post"
             action="https://sendfox.com/form/mnndyq/1xxqoy"
             class="sendfox-form gate-form"
@@ -257,14 +307,14 @@
         <div style="position:absolute;left:-5000px" aria-hidden="true">
           <input type="text" name="a_password" tabindex="-1" value="" autocomplete="off">
         </div>
-        <button type="submit">Get it ↓</button>
+        <button type="submit">Unlock all 7 resources →</button>
       </form>
-      <div class="gate-foot">No spam. No selling your address. Ever.</div>
+      <div class="gate-foot">Instant access · No spam · Unsubscribe anytime</div>
     </div>
     <div class="gate-success" id="gateSuccess">
       <div class="check">✓</div>
-      <div class="gate-success-title">You're in.</div>
-      <div class="gate-success-sub">Check your inbox for the playbook in a few minutes. <br>The whole thing is also unlocked below ↓</div>
+      <div class="gate-success-title">Unlocked. <em>All yours.</em></div>
+      <div class="gate-success-sub">Everything's open below ↓ &nbsp;Plus I sent a copy to your inbox.</div>
     </div>
   </div>
 
@@ -484,15 +534,76 @@
       </div>
     </div>
 
+    <!-- Brief template (inline, with text overlays table) -->
+    <div>
+      <h2 class="section-h">The <em>brief.</em> Every video starts with one.</h2>
+      <p class="section-sub">If it's not in the brief, the editor's guessing. Same skeleton every time. Below is the simplified version — copy + paste straight into Google Docs.</p>
+
+      <div class="job-post" style="font-family:'Inter',sans-serif;font-size:14px">
+
+        <div style="padding:16px 20px;margin:-24px -28px 18px;background:var(--text);color:#F5EFE0;border-radius:14px 14px 0 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+          <div>
+            <div style="font-size:10.5px;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,239,224,0.65);margin-bottom:3px">Editor brief — template</div>
+            <div style="font-family:'DM Serif Display',Georgia,serif;font-size:18px;line-height:1.2">[Project code] · <em style="color:var(--gold-soft)">[length]</em> · [style]</div>
+          </div>
+          <a href="brief.html" target="_blank" rel="noopener" style="background:var(--gold-soft);color:var(--text);font-size:11px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;padding:10px 16px;border-radius:8px;text-decoration:none;white-space:nowrap">Open + copy →</a>
+        </div>
+
+        <h3 style="margin-top:0">Source clip</h3>
+        <p style="margin:0;font-size:13.5px"><strong>Folder:</strong> [where the raw lives] · <strong>File:</strong> [filename] · <strong>Link:</strong> [iCloud / Drive / Frame.io] · <strong>In frame:</strong> [who's in the shot] · <strong>Note:</strong> [anything weird]</p>
+
+        <h3>Hook (0:00–0:05)</h3>
+        <p style="margin-bottom:8px;font-size:13.5px">Pull this line from the <strong>[start / end / middle]</strong> of the clip:</p>
+        <div style="background:#FBF7EE;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 16px;font-style:italic;font-size:13.5px;margin-bottom:8px">"[The exact opening line — copy/paste from the transcript]"</div>
+        <p style="margin:0;font-size:13.5px">Hard cut in. No intro, no fade. Let it land — then cut to Beat 1.</p>
+
+        <h3>Text overlays</h3>
+        <table style="width:100%;border-collapse:collapse;font-size:13px;background:#FBF7EE;border-radius:8px;overflow:hidden;margin:0 0 10px">
+          <thead>
+            <tr style="background:var(--text);color:var(--gold-soft)">
+              <th style="text-align:left;padding:9px 12px;font-size:10.5px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase">Beat</th>
+              <th style="text-align:left;padding:9px 12px;font-size:10.5px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase">Timecode</th>
+              <th style="text-align:left;padding:9px 12px;font-size:10.5px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase">Overlay text</th>
+              <th style="text-align:left;padding:9px 12px;font-size:10.5px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase">Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:8px 12px;border-top:1px solid var(--border);font-weight:700;color:var(--gold-dk)">Hook</td><td style="padding:8px 12px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-grey)">0:00</td><td style="padding:8px 12px;border-top:1px solid var(--border);font-style:italic">"[curiosity line]"</td><td style="padding:8px 12px;border-top:1px solid var(--border)">Stop the scroll</td></tr>
+            <tr><td style="padding:8px 12px;border-top:1px solid var(--border);font-weight:700;color:var(--gold-dk)">Beat 1</td><td style="padding:8px 12px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-grey)">~0:05</td><td style="padding:8px 12px;border-top:1px solid var(--border);font-style:italic">"[intro line]"</td><td style="padding:8px 12px;border-top:1px solid var(--border)">Establish who / what</td></tr>
+            <tr><td style="padding:8px 12px;border-top:1px solid var(--border);font-weight:700;color:var(--gold-dk)">Beat 2</td><td style="padding:8px 12px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-grey)">~0:15</td><td style="padding:8px 12px;border-top:1px solid var(--border);font-style:italic">"[insight line]"</td><td style="padding:8px 12px;border-top:1px solid var(--border)">Name the insight before they do</td></tr>
+            <tr><td style="padding:8px 12px;border-top:1px solid var(--border);font-weight:700;color:var(--gold-dk)">Beat 3</td><td style="padding:8px 12px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-grey)">~0:32</td><td style="padding:8px 12px;border-top:1px solid var(--border);font-style:italic">"[payoff setup]"</td><td style="padding:8px 12px;border-top:1px solid var(--border)">Set up what's about to happen</td></tr>
+          </tbody>
+        </table>
+        <p style="margin:0;font-size:12.5px;color:var(--text-grey)"><strong style="color:var(--gold-dk)">Style:</strong> Top-center, small font, clean. Fade in at beat start, hold ~3 sec. <strong style="color:var(--gold-dk)">Never overlay during a close-up.</strong></p>
+
+        <h3>Editing notes</h3>
+        <p style="margin:0;font-size:13.5px"><strong>Music:</strong> [none under dialogue / soft under B-roll] · <strong>Captions:</strong> white text, black outline, bottom third · <strong>Highlight words:</strong> ["X", "Y", "Z"] — bold in captions · <strong>Never:</strong> [overlay during a close-up / music over the hook] · <strong>Tone:</strong> [authentic / cinematic / fast-cut]</p>
+
+        <h3>Export</h3>
+        <p style="margin:0;font-size:13.5px"><strong>Aspect:</strong> 9:16 (1080×1920) · <strong>Filename:</strong> <code style="font-family:'JetBrains Mono',monospace;background:rgba(156,123,51,0.13);color:var(--gold-dk);padding:2px 6px;border-radius:3px;font-size:12px">[project-code]-[descriptor]-v1.mp4</code></p>
+
+      </div>
+    </div>
+
     <!-- Resources -->
     <div>
       <h2 class="section-h"><em>Steal</em> these templates.</h2>
       <p class="section-sub">Templates, docs, and the tools I actually use. All free, all yours.</p>
       <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
-        <a href="https://docs.google.com/document/d/1CImHC4ehCWd3rQKa02cx9rs9fP8SSDqLerAZJc6iuzE/edit?usp=sharing" target="_blank" rel="noopener" class="resource-card" style="padding:18px 22px">
-          <div class="resource-tag">Template · Google Doc ↗</div>
-          <div class="resource-name" style="margin-bottom:4px">Detailed brief example</div>
-          <div style="font-size:12px;color:var(--text-grey);line-height:1.45">Real shot-by-shot brief I send my editors. Make a copy, edit the placeholders, you're done.</div>
+        <a href="brief.html" target="_blank" rel="noopener" class="resource-card" style="padding:18px 22px">
+          <div class="resource-tag">Template · Copy + paste ↗</div>
+          <div class="resource-name" style="margin-bottom:4px">Editor brief template</div>
+          <div style="font-size:12px;color:var(--text-grey);line-height:1.45">The simplified brief above, with a one-click copy button. Paste straight into Google Docs.</div>
+        </a>
+        <a href="job-post.pdf" target="_blank" rel="noopener" class="resource-card" style="padding:18px 22px">
+          <div class="resource-tag">Resource · PDF ↗</div>
+          <div class="resource-name" style="margin-bottom:4px">Job post — template + my reference</div>
+          <div style="font-size:12px;color:var(--text-grey);line-height:1.45">5-page branded PDF with the job post template, my filled-in reference, and the filtering playbook.</div>
+        </a>
+        <a href="https://docs.google.com/document/d/1bTNe8deJhkHTuop20RVT8XqMatC7At2SughFR2_fuWk/edit?usp=sharing" target="_blank" rel="noopener" class="resource-card" style="padding:18px 22px">
+          <div class="resource-tag">Real example · Google Doc ↗</div>
+          <div class="resource-name" style="margin-bottom:4px">V_155 brief — Neil street interview</div>
+          <div style="font-size:12px;color:var(--text-grey);line-height:1.45">An actual brief I sent. See what a finished, shot-by-shot version looks like end to end.</div>
         </a>
         <a href="https://fps-ecom.github.io/editor-team-doc/" target="_blank" rel="noopener" class="resource-card" style="padding:18px 22px">
           <div class="resource-tag">Reference doc ↗</div>
