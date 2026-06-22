@@ -222,29 +222,79 @@
   .tab .gi{font-size:16px;line-height:1;}
 
   /* ---------- page scaffold ---------- */
-  body{display:block;}
-  .page{max-width:1280px;margin:0 auto;padding:54px 24px 100px;}
-  .pghead{text-align:center;color:#f3efe6;margin-bottom:34px;}
-  .pghead h1{font-size:44px;font-weight:800;letter-spacing:-.02em;line-height:1.1;}
-  .pghead .sub{font-size:19px;color:#c7c3ba;margin-top:14px;}
-  .hero{display:flex;justify-content:center;align-items:center;gap:48px;flex-wrap:wrap;}
-  .dl-btn{flex:0 0 auto;display:inline-flex;align-items:center;gap:10px;
-    background:linear-gradient(180deg,#c9a961,#ab8a45);color:#0d0e11;
-    font-size:19px;font-weight:700;letter-spacing:.01em;text-decoration:none;
-    padding:18px 34px;border-radius:34px;box-shadow:0 14px 30px rgba(150,120,60,.4);
-    transition:transform .15s ease, box-shadow .15s ease;white-space:nowrap;}
-  .dl-btn:hover{transform:translateY(-2px);box-shadow:0 18px 38px rgba(180,150,80,.55);}
-  .dl-btn .ai{width:18px;height:18px;margin-top:-2px;}
-  @media(max-width:900px){
-    .hero{gap:22px;}
-    .dl-btn{order:3;font-size:16px;padding:14px 26px;}
-  }
-  .board{margin-top:74px;}
-  .board-cta{display:flex;justify-content:center;margin-top:54px;}
-  .bhead{text-align:center;color:#f3efe6;font-size:15px;letter-spacing:.22em;
+  body{display:block;background:#151517;}
+  /* keep the phone mock looking native iOS */
+  .phone, .phone *{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;}
+
+  .nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;
+    padding:15px 30px;background:rgba(21,21,23,.72);backdrop-filter:blur(16px);
+    border-bottom:1px solid rgba(255,255,255,.07);}
+  .brand{display:flex;align-items:center;gap:11px;color:#f3efe6;font-weight:700;font-size:19px;letter-spacing:-.01em;}
+  .brand img{width:30px;height:30px;border-radius:8px;}
+
+  .page{max-width:1120px;margin:0 auto;padding:0 28px 96px;}
+
+  /* hero */
+  .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding:72px 0 80px;}
+  .hero-copy{max-width:540px;}
+  .eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--gold);background:rgba(191,160,92,.12);border:1px solid rgba(191,160,92,.32);
+    padding:6px 13px;border-radius:30px;margin-bottom:22px;}
+  .hero h1{font-size:52px;line-height:1.04;font-weight:800;letter-spacing:-.03em;color:#faf7f0;}
+  .hero .sub{font-size:18px;line-height:1.55;color:#a9a59c;margin-top:20px;}
+  .cta-row{display:flex;align-items:center;gap:18px;margin-top:32px;flex-wrap:wrap;}
+  .trust{font-size:13px;color:#8d877a;line-height:1.4;}
+  .trust b{color:#d8c391;font-weight:600;}
+  .hero-phone{display:flex;justify-content:center;position:relative;}
+  .hero-phone::before{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(191,160,92,.20),transparent 62%);
+    filter:blur(24px);z-index:0;}
+  .hero-phone .phone{position:relative;z-index:1;}
+
+  /* app store badge */
+  .appstore{display:inline-flex;align-items:center;gap:11px;background:#000;color:#fff;
+    border:1px solid #3a3a3e;border-radius:14px;padding:10px 20px;text-decoration:none;
+    transition:transform .15s ease, border-color .15s ease;}
+  .appstore:hover{transform:translateY(-2px);border-color:#6a6a6e;}
+  .appstore .ai{width:26px;height:26px;}
+  .appstore span{display:flex;flex-direction:column;line-height:1.08;text-align:left;}
+  .appstore small{font-size:11px;font-weight:500;opacity:.85;letter-spacing:.02em;}
+  .appstore b{font-size:19px;font-weight:600;letter-spacing:-.01em;}
+
+  /* features */
+  .features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:6px 0 22px;}
+  .feat{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:26px 24px;}
+  .feat .fi{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    font-size:22px;background:rgba(191,160,92,.14);margin-bottom:16px;}
+  .feat h3{font-size:18px;font-weight:700;color:#f3efe6;letter-spacing:-.01em;}
+  .feat p{font-size:14.5px;line-height:1.5;color:#9a958c;margin-top:8px;}
+
+  .board{margin-top:90px;}
+  .board-cta{display:flex;justify-content:center;margin-top:52px;}
+  .bhead{text-align:center;color:#f3efe6;font-size:14px;letter-spacing:.22em;
     text-transform:uppercase;font-weight:700;}
   .bhead::after{content:"";display:block;width:46px;height:3px;background:var(--gold);
     margin:14px auto 0;border-radius:2px;}
+
+  /* footer */
+  .foot{border-top:1px solid rgba(255,255,255,.07);margin-top:10px;padding:28px 30px;
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    color:#7d786e;font-size:13px;max-width:1120px;margin-left:auto;margin-right:auto;}
+  .foot .brand{font-size:16px;}
+  .foot nav a{color:#a9a59c;text-decoration:none;margin-left:20px;}
+  .foot nav a:hover{color:#f3efe6;}
+
+  @media(max-width:900px){
+    .hero{grid-template-columns:1fr;text-align:center;gap:28px;padding:44px 0 56px;}
+    .hero-copy{max-width:none;}
+    .hero h1{font-size:38px;}
+    .cta-row{justify-content:center;}
+    .hero-phone{order:2;}
+    .features{grid-template-columns:1fr;}
+    .nav{padding:13px 18px;}
+    .foot{flex-direction:column;text-align:center;}
+    .foot nav a{margin:0 10px;}
+  }
   .screens{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
     gap:46px 28px;margin-top:44px;justify-items:center;align-items:start;}
   .mp{display:flex;flex-direction:column;align-items:center;gap:18px;width:100%;max-width:300px;}
@@ -259,14 +309,23 @@
 </style>
 </head>
 <body>
+ <nav class="nav">
+   <div class="brand"><img src="assets/pixsort-icon.jpeg" alt="PixSort" />PixSort</div>
+   <a class="appstore" href="https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464" target="_blank" rel="noopener"><svg class="ai" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.04c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.28-1.27 3.13-2.53.99-1.45 1.4-2.85 1.42-2.92-.03-.01-2.73-1.05-2.76-4.16zM14.6 4.59c.72-.87 1.2-2.08 1.07-3.29-1.03.04-2.28.69-3.02 1.56-.66.77-1.24 2-1.09 3.18 1.15.09 2.32-.58 3.04-1.45z"/></svg><span><small>Download on the</small><b>App Store</b></span></a>
+ </nav>
  <div class="page">
-  <header class="pghead">
-    <h1>Sort your whole camera roll in seconds</h1>
-    <p class="sub">Watch it sort &middot; scroll down for the screen-by-screen</p>
-  </header>
   <section class="hero">
-  <a class="dl-btn" href="https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464" target="_blank" rel="noopener"><svg class="ai" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.04c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.28-1.27 3.13-2.53.99-1.45 1.4-2.85 1.42-2.92-.03-.01-2.73-1.05-2.76-4.16zM14.6 4.59c.72-.87 1.2-2.08 1.07-3.29-1.03.04-2.28.69-3.02 1.56-.66.77-1.24 2-1.09 3.18 1.15.09 2.32-.58 3.04-1.45z"/></svg> Download Now</a>
-  <div class="phone">
+   <div class="hero-copy">
+     <span class="eyebrow">AI Camera-Roll Organizer</span>
+     <h1>Sort your whole camera roll in seconds</h1>
+     <p class="sub">PixSort auto-sorts every photo into smart albums right on your phone. Find anything in seconds, clear the clutter, and push clean albums straight to your camera roll.</p>
+     <div class="cta-row">
+       <a class="appstore" href="https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464" target="_blank" rel="noopener"><svg class="ai" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.04c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.28-1.27 3.13-2.53.99-1.45 1.4-2.85 1.42-2.92-.03-.01-2.73-1.05-2.76-4.16zM14.6 4.59c.72-.87 1.2-2.08 1.07-3.29-1.03.04-2.28.69-3.02 1.56-.66.77-1.24 2-1.09 3.18 1.15.09 2.32-.58 3.04-1.45z"/></svg><span><small>Download on the</small><b>App Store</b></span></a>
+       <span class="trust"><b>★★★★★</b><br>Free on the App Store</span>
+     </div>
+   </div>
+   <div class="hero-phone">
+   <div class="phone">
     <div class="screen">
       <div class="notch"></div>
       <div class="status">
@@ -276,7 +335,6 @@
 
       <!-- ============ SCENE 1 ============ -->
       <div class="scene" id="s1">
-        <div class="tflight">◀ TestFlight</div>
         <div class="statcards">
           <div class="stat">
             <div class="k">Sorted</div>
@@ -357,17 +415,28 @@
 
     </div>
   </div>
-  <a class="dl-btn" href="https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464" target="_blank" rel="noopener"><svg class="ai" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.04c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.28-1.27 3.13-2.53.99-1.45 1.4-2.85 1.42-2.92-.03-.01-2.73-1.05-2.76-4.16zM14.6 4.59c.72-.87 1.2-2.08 1.07-3.29-1.03.04-2.28.69-3.02 1.56-.66.77-1.24 2-1.09 3.18 1.15.09 2.32-.58 3.04-1.45z"/></svg> Download Now</a>
+   </div>
+  </section>
+
+  <section class="features">
+    <div class="feat"><div class="fi">⚡</div><h3>Sorts in seconds</h3><p>One tap organizes thousands of photos into smart albums automatically.</p></div>
+    <div class="feat"><div class="fi">🔒</div><h3>Private, on-device</h3><p>Everything runs on your phone. Your photos never leave it.</p></div>
+    <div class="feat"><div class="fi">📲</div><h3>Back to your camera roll</h3><p>Push any clean album straight to Apple Photos, ready to share.</p></div>
   </section>
 
   <section class="board">
-    <div class="bhead">Screen by screen</div>
+    <div class="bhead">How it works</div>
     <div class="screens" id="screens"></div>
     <div class="board-cta">
-      <a class="dl-btn" href="https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464" target="_blank" rel="noopener"><svg class="ai" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.04c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.28-1.27 3.13-2.53.99-1.45 1.4-2.85 1.42-2.92-.03-.01-2.73-1.05-2.76-4.16zM14.6 4.59c.72-.87 1.2-2.08 1.07-3.29-1.03.04-2.28.69-3.02 1.56-.66.77-1.24 2-1.09 3.18 1.15.09 2.32-.58 3.04-1.45z"/></svg> Download Now</a>
+      <a class="appstore" href="https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464" target="_blank" rel="noopener"><svg class="ai" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.04c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.28-1.27 3.13-2.53.99-1.45 1.4-2.85 1.42-2.92-.03-.01-2.73-1.05-2.76-4.16zM14.6 4.59c.72-.87 1.2-2.08 1.07-3.29-1.03.04-2.28.69-3.02 1.56-.66.77-1.24 2-1.09 3.18 1.15.09 2.32-.58 3.04-1.45z"/></svg><span><small>Download on the</small><b>App Store</b></span></a>
     </div>
   </section>
  </div>
+ <footer class="foot">
+   <div class="brand"><img src="assets/pixsort-icon.jpeg" alt="PixSort" />PixSort</div>
+   <nav><a href="https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464" target="_blank" rel="noopener">Download</a><a href="/landing.html">About</a></nav>
+   <div>© 2026 PixSort</div>
+ </footer>
 
 <script>
 const T = "assets/tiff-roll/";
@@ -553,7 +622,6 @@ const TABBAR=`<div class="tabbar"><div class="tab active"><span class="gi">▦</
 const gridStatic=counts=>ALBUMS.slice(0,4).map((a,i)=>`<div class="acard in"><div class="thumb" style="background-image:url('${a.cover}')"></div><div class="meta"><span class="nm">${a.nm}</span><span class="ct">${counts[i]}</span></div></div>`).join('');
 
 const screenSort=`<div class="scene" style="opacity:1;transform:none">
-  <div class="tflight">◀ TestFlight</div>
   <div class="statcards">
     <div class="stat"><div class="k">Sorted</div><div class="big">312</div></div>
     <div class="stat"><div class="k">Progress</div><div class="progrow">
