@@ -458,6 +458,7 @@
     })(window, document, "clarity", "script", "wlslgim6u9");
   </script>
   <!-- End Microsoft Clarity -->
+  <script defer src="../assets/affiliate-tracking.js"></script>
 </head>
 <body>
 
@@ -944,6 +945,20 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzc6k607rRZ2PlRKjGO7
 const APP_STORE_URL = 'https://app.appsflyer.com/id6760485464?pid=adley&c=adley-2026-06&af_channel=influencer&af_adset=adley-landing&af_ad=adley-dashboard-link&af_siteid=adley&af_sub1=adley&af_sub2=adley-2026-06&af_sub3=pixsort-app-adley&deep_link_value=collab&deep_link_sub1=adley&deep_link_sub2=adley-2026-06&deep_link_sub3=pixsort-app-adley&af_dp=sortscout%3A%2F%2Fcollab%2Fadley%3Futm_source%3Dadley%26utm_medium%3Dinfluencer%26utm_campaign%3Dadley-2026-06%26click_id%3Dpixsort-app-adley&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Fadley%2F&af_click_lookback=30d';
 const APP_STORE_DIRECT_URL = 'https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464';
 
+function redirectToAppStore(url) {
+  if (window.pixsortAffiliateRedirect) {
+    window.pixsortAffiliateRedirect(url);
+    return;
+  }
+  window.location.href = url;
+}
+
+function appsFlyerAppStoreUrl() {
+  const url = new URL(APP_STORE_URL);
+  url.searchParams.set('af_web_dp', APP_STORE_DIRECT_URL);
+  return url.toString();
+}
+
 function getSubmitMeta() {
   const params = new URLSearchParams(window.location.search);
   return {
@@ -1022,9 +1037,9 @@ function handleSubmit(prefix) {
   }
   savePhone(digits, platform);
   if (platform === 'ios') {
-    window.location.href = APP_STORE_URL;
+    redirectToAppStore(APP_STORE_URL);
   } else if (platform === 'desktop') {
-    window.location.href = APP_STORE_DIRECT_URL;
+    redirectToAppStore(appsFlyerAppStoreUrl());
   } else {
     if (row)     row.style.display = 'none';
     if (success) success.style.display = 'block';
@@ -1051,7 +1066,7 @@ document.querySelectorAll('input[type="tel"]').forEach(el => {
   const el = document.querySelector(sel);
   if (el) {
     el.style.cursor = 'pointer';
-    el.addEventListener('click', () => { window.location.href = APP_STORE_URL; });
+    el.addEventListener('click', () => { redirectToAppStore(APP_STORE_URL); });
   }
 });
 
