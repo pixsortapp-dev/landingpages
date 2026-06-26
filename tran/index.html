@@ -558,6 +558,7 @@
     })(window, document, "clarity", "script", "wlslgim6u9");
   </script>
   <!-- End Microsoft Clarity -->
+  <script defer src="../assets/affiliate-tracking.js"></script>
 </head>
 <body>
 
@@ -1005,6 +1006,14 @@ mountPhone('phone-send',   <Phone dw={FEAT_DW} active="home"><Screen5/></Phone>)
 <!-- ── Interactions ──────────────────────────────────────── -->
 <script>
 const APP_STORE_URL = 'https://app.appsflyer.com/id6760485464?pid=tran&c=tran-2026-06&af_channel=influencer&af_adset=tran-landing&af_ad=tran-dashboard-link&af_siteid=tran&af_sub1=tran&af_sub2=tran-2026-06&af_sub3=pixsort-app-tran&deep_link_value=collab&deep_link_sub1=tran&deep_link_sub2=tran-2026-06&deep_link_sub3=pixsort-app-tran&af_dp=sortscout%3A%2F%2Fcollab%2Ftran%3Futm_source%3Dtran%26utm_medium%3Dinfluencer%26utm_campaign%3Dtran-2026-06%26click_id%3Dpixsort-app-tran&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Ftran%2F&af_click_lookback=30d';
+
+function redirectToAppStore(url) {
+  if (window.pixsortAffiliateRedirect) {
+    window.pixsortAffiliateRedirect(url);
+    return;
+  }
+  window.location.href = url;
+}
 
 // Auto-resize walkthrough iframe to its content height
 (function() {

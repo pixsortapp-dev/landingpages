@@ -495,6 +495,7 @@
     })(window, document, "clarity", "script", "wlslgim6u9");
   </script>
   <!-- End Microsoft Clarity -->
+  <script defer src="../assets/affiliate-tracking.js"></script>
 </head>
 <body>
 
@@ -976,12 +977,20 @@ mountPhone('phone-send',   <Phone dw={FEAT_DW} active="home"><Screen5/></Phone>)
 <script>
 const APP_STORE_URL = 'https://app.appsflyer.com/id6760485464?pid=adley&c=adley-2026-06&af_channel=influencer&af_adset=adley-landing&af_ad=adley-dashboard-link&af_siteid=adley&af_sub1=adley&af_sub2=adley-2026-06&af_sub3=pixsort-app-adley&deep_link_value=collab&deep_link_sub1=adley&deep_link_sub2=adley-2026-06&deep_link_sub3=pixsort-app-adley&af_dp=sortscout%3A%2F%2Fcollab%2Fadley%3Futm_source%3Dadley%26utm_medium%3Dinfluencer%26utm_campaign%3Dadley-2026-06%26click_id%3Dpixsort-app-adley&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Fadley%2F&af_click_lookback=30d';
 
+function redirectToAppStore(url) {
+  if (window.pixsortAffiliateRedirect) {
+    window.pixsortAffiliateRedirect(url);
+    return;
+  }
+  window.location.href = url;
+}
+
 // Tap any phone mockup → App Store
 ['#phone-search', '#phone-sort', '#phone-send'].forEach(sel => {
   const el = document.querySelector(sel);
   if (el) {
     el.style.cursor = 'pointer';
-    el.addEventListener('click', () => { window.location.href = APP_STORE_URL; });
+    el.addEventListener('click', () => { redirectToAppStore(APP_STORE_URL); });
   }
 });
 
