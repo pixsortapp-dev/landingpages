@@ -3,23 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Adley × PixSort: 100 Photos Sorted Free</title>
-  <meta name="description" content="Adley Kinsman's audience gets the first 100 photos in their camera roll sorted free on PixSort. Install through this page to claim. Stop losing hours to a messy camera roll.">
+  <title>Jake × PixSort: 100 Photos Sorted Free for Coaches</title>
+  <meta name="description" content="Jake Peterz's audience gets the first 100 photos in their camera roll sorted free on PixSort. Install through this page to claim. Stop sorting clips and start posting more.">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="PixSort">
-  <meta property="og:title" content="Adley × PixSort: 100 photos sorted free">
-  <meta property="og:description" content="Install PixSort through Adley's link and your first 100 photos sort automatically. Adley's audience only.">
+  <meta property="og:title" content="Jake × PixSort: 100 photos sorted free">
+  <meta property="og:description" content="Install PixSort through Jake's link and your first 100 photos sort automatically. Jake's audience only.">
   <meta property="og:image" content="https://pixsort.app/assets/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:url" content="https://pixsort.app/adley">
+  <meta property="og:url" content="https://pixsort.app/jake-peters">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Adley × PixSort: 100 photos sorted free">
-  <meta name="twitter:description" content="Install PixSort through Adley's link and your first 100 photos sort automatically. Adley's audience only.">
+  <meta name="twitter:title" content="Jake × PixSort: 100 photos sorted free">
+  <meta name="twitter:description" content="Install PixSort through Jake's link and your first 100 photos sort automatically. Jake's audience only.">
   <meta name="twitter:image" content="https://pixsort.app/assets/og-image.png">
 
   <!-- Favicon -->
@@ -32,8 +32,12 @@
       --bg:        #FFFFFF;
       --bg2:       #FAFAF8;
       --bg3:       #F4F4F0;
-      --lime:      #E5FF76;
-      --limedark:  #D2EE55;
+      /* Jake palette: yellow + blue + red on white/black */
+      --lime:      #FFD60A;   /* primary highlighter (yellow) */
+      --limedark:  #E5C000;   /* yellow hover */
+      --blue:      #0066FF;   /* secondary accent (App Store pill, links) */
+      --bluedark:  #0050CC;
+      --red:       #FF3B30;   /* pop accent (discount price, hot CTAs) */
       --ink:       #0F0F0F;
       --ink2:      #1A1A1A;
       --grey:      #555555;
@@ -107,12 +111,13 @@
     }
     .appstore-pill {
       display: inline-flex; align-items: center; gap: 8px;
-      background: var(--ink); color: var(--bg); font-size: 12px; font-weight: 700;
+      background: var(--blue); color: var(--bg); font-size: 12px; font-weight: 700;
       letter-spacing: 0.04em; text-transform: uppercase;
       padding: 9px 16px; border-radius: 999px; text-decoration: none;
       margin-bottom: 18px; transition: transform .15s, background .15s;
+      border: 1.5px solid var(--ink);
     }
-    .appstore-pill:hover { background: var(--ink2); transform: translateY(-1px); }
+    .appstore-pill:hover { background: var(--bluedark); transform: translateY(-1px); }
     .appstore-pill .apple-glyph { display: inline-block; width: 14px; height: 14px; }
     .collab-mark {
       display: flex; align-items: center; gap: 14px;
@@ -161,6 +166,11 @@
       bottom: 0.05em; height: 0.45em;
       background: var(--lime); z-index: -1;
     }
+    .hero-claim-note {
+      font-size: 13px; color: var(--grey); line-height: 1.5;
+      margin: -20px 0 28px; max-width: 480px;
+    }
+    .hero-claim-note strong { color: var(--ink); font-weight: 700; }
 
     .cta-block { display: flex; flex-direction: column; align-items: stretch; gap: 14px; width: 100%; max-width: 460px; position: relative; z-index: 1; }
     .input-row {
@@ -318,6 +328,41 @@
       filter: drop-shadow(0 30px 60px rgba(0,0,0,0.15)) drop-shadow(0 0 40px rgba(229,255,118,0.4));
     }
 
+    /* ── Jake video section ─────────────────────────────── */
+    .jake-video { background: var(--bg); padding: 100px 40px; border-top: 1px solid var(--border); }
+    .jake-video-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: auto 1fr; gap: 64px; align-items: center; }
+    .jake-video-player {
+      width: 320px; aspect-ratio: 9/16;
+      border: 1.5px solid var(--ink); border-radius: 20px;
+      overflow: hidden; box-shadow: 8px 8px 0 var(--ink);
+      background: var(--ink);
+    }
+    .jake-video-player video { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .jake-video-text { max-width: 480px; }
+    .jake-video-label { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); margin-bottom: 20px; }
+    .jake-video-text h3 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(28px, 3.4vw, 44px);
+      font-weight: 400; letter-spacing: -0.02em; line-height: 1.1;
+      color: var(--ink); margin-bottom: 18px;
+    }
+    .jake-video-text h3 em { font-style: italic; color: var(--ink); position: relative; display: inline-block; }
+    .jake-video-text h3 em::after {
+      content: ''; position: absolute; left: -2px; right: -2px;
+      bottom: 0.06em; height: 0.30em; background: var(--lime); z-index: -1;
+    }
+    .jake-video-quote {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 18px; font-style: italic; color: var(--ink);
+      line-height: 1.5; margin-bottom: 14px;
+    }
+    .jake-video-attr { font-size: 13px; font-weight: 700; color: var(--ink); }
+    @media (max-width: 760px) {
+      .jake-video-inner { grid-template-columns: 1fr; text-align: center; gap: 32px; }
+      .jake-video-player { margin: 0 auto; width: 100%; max-width: 320px; }
+      .jake-video-text { margin: 0 auto; }
+    }
+
     /* ── Social proof ─────────────────────────────────── */
     .social { background: var(--bg2); padding: 100px 40px; border-top: 1px solid var(--border); }
     .social-inner { max-width: 1100px; margin: 0 auto; }
@@ -467,27 +512,27 @@
     <img src="../assets/pixsort-logo.jpeg" alt="PixSort">
     <span>PixSort</span>
   </a>
-  <a class="nav-cta" href="https://app.appsflyer.com/id6760485464?pid=adley&c=adley-2026-06&af_channel=influencer&af_adset=adley-landing&af_ad=adley-dashboard-link&af_siteid=adley&af_sub1=adley&af_sub2=adley-2026-06&af_sub3=pixsort-app-adley&deep_link_value=collab&deep_link_sub1=adley&deep_link_sub2=adley-2026-06&deep_link_sub3=pixsort-app-adley&af_dp=sortscout%3A%2F%2Fcollab%2Fadley%3Futm_source%3Dadley%26utm_medium%3Dinfluencer%26utm_campaign%3Dadley-2026-06%26click_id%3Dpixsort-app-adley&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Fadley%2F&af_click_lookback=30d">Download Now</a>
+  <a class="nav-cta" href="https://app.appsflyer.com/id6760485464?pid=jake-peters&c=jake-peters-2026-05&af_channel=influencer&af_adset=jake-peters-landing&af_ad=jake-peters-dashboard-link&af_siteid=jake-peters&af_sub1=jake-peters&af_sub2=jake-peters-2026-05&af_sub3=pixsort-app-jake-peters&deep_link_value=collab&deep_link_sub1=jake-peters&deep_link_sub2=jake-peters-2026-05&deep_link_sub3=pixsort-app-jake-peters&af_dp=sortscout%3A%2F%2Fcollab%2Fjake-peters%3Futm_source%3Djake-peters%26utm_medium%3Dinfluencer%26utm_campaign%3Djake-peters-2026-05%26click_id%3Dpixsort-app-jake-peters&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Fjake-peters%2F&af_click_lookback=30d">Download Now</a>
 </nav>
 
 <!-- ── Hero ─────────────────────────────────────────── -->
 <section class="hero" id="top">
   <div class="hero-text">
-    <a class="appstore-pill" href="https://app.appsflyer.com/id6760485464?pid=adley&c=adley-2026-06&af_channel=influencer&af_adset=adley-landing&af_ad=adley-dashboard-link&af_siteid=adley&af_sub1=adley&af_sub2=adley-2026-06&af_sub3=pixsort-app-adley&deep_link_value=collab&deep_link_sub1=adley&deep_link_sub2=adley-2026-06&deep_link_sub3=pixsort-app-adley&af_dp=sortscout%3A%2F%2Fcollab%2Fadley%3Futm_source%3Dadley%26utm_medium%3Dinfluencer%26utm_campaign%3Dadley-2026-06%26click_id%3Dpixsort-app-adley&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Fadley%2F&af_click_lookback=30d">
+    <a class="appstore-pill" href="https://app.appsflyer.com/id6760485464?pid=jake-peters&c=jake-peters-2026-05&af_channel=influencer&af_adset=jake-peters-landing&af_ad=jake-peters-dashboard-link&af_siteid=jake-peters&af_sub1=jake-peters&af_sub2=jake-peters-2026-05&af_sub3=pixsort-app-jake-peters&deep_link_value=collab&deep_link_sub1=jake-peters&deep_link_sub2=jake-peters-2026-05&deep_link_sub3=pixsort-app-jake-peters&af_dp=sortscout%3A%2F%2Fcollab%2Fjake-peters%3Futm_source%3Djake-peters%26utm_medium%3Dinfluencer%26utm_campaign%3Djake-peters-2026-05%26click_id%3Dpixsort-app-jake-peters&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Fjake-peters%2F&af_click_lookback=30d">
       <svg class="apple-glyph" viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
       Available on the App Store
     </a>
     <div class="collab-mark">
-      <span>Adley</span>
+      <span>Jake</span>
       <span class="collab-x">×</span>
       <span>PixSort</span>
     </div>
     <h1>
       <span class="h1-line">Stop sorting clips.</span>
-      <span class="h1-line">Start <em>scaling content.</em></span>
+      <span class="h1-line">Start <em>posting more.</em></span>
     </h1>
-    <p class="hero-sub">PixSort organizes every photo and video on your iPhone into smart albums, so your editor can grab what they need. No more "send me the clip from Tuesday" texts.</p>
     <p class="hero-discount-line"><span>100 photos sorted, on us.</span></p>
+    <p class="hero-claim-note">Tap <strong>Download Now</strong> above or drop your number below. The 100-photo unlock only applies when you install through this page.</p>
 
     <div class="cta-block" id="hero-cta">
       <div class="input-row" id="hero-input-row">
@@ -507,25 +552,25 @@
   </div>
 
   <div class="hero-photo-wrap">
-    <img class="hero-photo" src="../assets/adley.jpg" alt="Adley Kinsman">
+    <img class="hero-photo" src="../assets/jake.jpg" alt="Jake Peterz">
     <div class="hero-photo-caption">
-      Adley Kinsman · <span style="color:var(--grey);font-weight:600;">Founder, Viralish</span><br>
-      <span class="credit">76 Billion+ views earned for brands &amp; creators</span>
+      Jake Peterz · <span style="color:var(--grey);font-weight:600;">Founder, Done4u</span><br>
+      <span class="credit">Instagram growth systems for coaches</span>
     </div>
   </div>
 </section>
 
-<!-- ── Discount banner ─────────────────────────────── -->
+<!-- ── Free unlock banner ──────────────────────────── -->
 <section class="discount-banner">
   <div class="discount-inner">
     <div class="discount-text">
-      <div class="discount-eyebrow">✦ Adley's audience exclusive</div>
+      <div class="discount-eyebrow">✦ Jake's audience exclusive</div>
       <h2>Your first 100 photos. <em class="discount-price">Sorted on us.</em></h2>
       <p>Install PixSort through this page and the first 100 photos in your camera roll get sorted into smart albums automatically. Tap <strong>Download Now</strong> above, or scan the QR with your iPhone.</p>
     </div>
     <div class="discount-qr">
       <div class="discount-qr-card">
-        <img src="../assets/adley-qr.png" alt="Scan with your iPhone to install PixSort">
+        <img src="../assets/jake-qr.png" alt="Scan with your iPhone to install PixSort">
       </div>
       <div class="discount-qr-label">Scan with your iPhone</div>
     </div>
@@ -575,17 +620,17 @@
 
 </div>
 
-<!-- ── Adley spotlight ──────────────────────────────── -->
-<section class="social">
-  <div class="social-inner">
-    <div class="social-label">Why Adley uses PixSort</div>
-    <div class="quotes-grid" style="grid-template-columns: 1fr;">
-      <div class="quote-card" style="max-width: 720px; margin: 0 auto; text-align: center;">
-        <p class="quote-text" style="font-size: clamp(20px, 2vw, 26px);">
-          "If you're producing content for your business and not organizing your camera roll, you're losing hours every week to chaos. PixSort is the tool I wish existed five years ago."
-        </p>
-        <div class="quote-attr">Adley Kinsman · Founder, Viralish · 76B+ views earned</div>
-      </div>
+<!-- ── Jake video spotlight ──────────────────────────────── -->
+<section class="jake-video">
+  <div class="jake-video-inner">
+    <div class="jake-video-player">
+      <video src="../assets/jake-using-app.mp4" poster="../assets/jake-using-app-poster.jpg" autoplay muted loop playsinline preload="auto"></video>
+    </div>
+    <div class="jake-video-text">
+      <div class="jake-video-label">Watch Jake try it</div>
+      <h3>The app I've been <em>waiting for.</em></h3>
+      <p class="jake-video-quote">"I've been looking for something like this for years. Anyone trying to scale their content knows how brutal it is to manage your own camera roll. PixSort actually solves it."</p>
+      <p class="jake-video-attr">Jake Peterz · Founder, Done4u</p>
     </div>
   </div>
 </section>
@@ -599,7 +644,7 @@
       <span>How do I get 100 photos sorted free?</span>
       <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
     </div>
-    <div class="faq-a">Two routes from this page: tap <strong>Download Now</strong> at the top, or enter your phone number below. Both carry Adley's link into the App Store, and the 100-photo free unlock activates automatically the first time you open the app.</div>
+    <div class="faq-a">Two routes from this page: tap <strong>Download Now</strong> at the top, or enter your phone number below. Both carry Jake's link into the App Store, and the 100-photo free unlock activates automatically when you open the app.</div>
   </div>
 
   <div class="faq-item">
@@ -607,7 +652,7 @@
       <span>What if I install PixSort directly from the App Store?</span>
       <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
     </div>
-    <div class="faq-a">You'll get the standard free tier. The 100-photo bonus is tied to coming through Adley's link, which is why this page is the only place to claim it.</div>
+    <div class="faq-a">You'll get the standard free tier. The 100-photo bonus is tied to coming through Jake's link, which is why this page is the only place to claim it.</div>
   </div>
 
   <div class="faq-item">
@@ -639,14 +684,14 @@
       <span>I'm on Android. Can I use this?</span>
       <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
     </div>
-    <div class="faq-a">PixSort is iOS-only right now. Drop your number and we'll text you the moment the Android version launches, with Adley's 100-photo unlock applied.</div>
+    <div class="faq-a">PixSort is iOS-only right now. Drop your number and we'll text you the moment the Android version launches, with Jake's 100-photo unlock applied.</div>
   </div>
 </section>
 
 <!-- ── Final CTA ──────────────────────────────────────── -->
 <section class="final-cta">
   <h2>Get PixSort.<br><em>On us.</em></h2>
-  <p>100 photos sorted free, exclusive to Adley's audience.</p>
+  <p>100 photos sorted free, exclusive to Jake's audience.</p>
   <div class="cta-block">
     <div class="input-row" id="final-input-row">
       <input type="tel" id="final-phone" placeholder="Your phone number" inputmode="tel" autocomplete="tel" maxlength="14">
@@ -941,7 +986,7 @@ mountPhone('phone-send',   <Phone dw={FEAT_DW} active="home"><Screen5/></Phone>)
 <!-- ── Interactions ──────────────────────────────────────── -->
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzc6k607rRZ2PlRKjGO7kjpuzGXLFiDiO7TjnXLmjBhkyZHhGELauQokFzLb2QNTq459A/exec';
-const APP_STORE_URL = 'https://app.appsflyer.com/id6760485464?pid=adley&c=adley-2026-06&af_channel=influencer&af_adset=adley-landing&af_ad=adley-dashboard-link&af_siteid=adley&af_sub1=adley&af_sub2=adley-2026-06&af_sub3=pixsort-app-adley&deep_link_value=collab&deep_link_sub1=adley&deep_link_sub2=adley-2026-06&deep_link_sub3=pixsort-app-adley&af_dp=sortscout%3A%2F%2Fcollab%2Fadley%3Futm_source%3Dadley%26utm_medium%3Dinfluencer%26utm_campaign%3Dadley-2026-06%26click_id%3Dpixsort-app-adley&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Fadley%2F&af_click_lookback=30d';
+const APP_STORE_URL = 'https://app.appsflyer.com/id6760485464?pid=jake-peters&c=jake-peters-2026-05&af_channel=influencer&af_adset=jake-peters-landing&af_ad=jake-peters-dashboard-link&af_siteid=jake-peters&af_sub1=jake-peters&af_sub2=jake-peters-2026-05&af_sub3=pixsort-app-jake-peters&deep_link_value=collab&deep_link_sub1=jake-peters&deep_link_sub2=jake-peters-2026-05&deep_link_sub3=pixsort-app-jake-peters&af_dp=sortscout%3A%2F%2Fcollab%2Fjake-peters%3Futm_source%3Djake-peters%26utm_medium%3Dinfluencer%26utm_campaign%3Djake-peters-2026-05%26click_id%3Dpixsort-app-jake-peters&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Fjake-peters%2F&af_click_lookback=30d';
 const APP_STORE_DIRECT_URL = 'https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464';
 
 function appsFlyerAppStoreUrl() {
@@ -968,7 +1013,7 @@ function savePhone(phone, platform) {
     mode: 'no-cors',
     keepalive: true,
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ phone, source: 'adley', platform, ...getSubmitMeta() })
+    body: JSON.stringify({ phone, source: 'jake-peters', platform, ...getSubmitMeta() })
   }).catch(() => {});
 }
 
@@ -1110,7 +1155,7 @@ function toggleFaq(el) {
 <div class="modal-overlay" id="waitlist-modal" style="display:none;" onclick="if(event.target===this)hideWaitlistModal()">
   <div class="modal-card">
     <button class="modal-close" onclick="hideWaitlistModal()" aria-label="Close">&times;</button>
-    <h3 class="modal-title">Claim your 100 photos free</h3>
+    <h3 class="modal-title">Claim your 100 free</h3>
     <p class="modal-subtitle" id="modal-subtitle">Drop your number to lock in your 100-photo unlock.</p>
     <div class="input-row" id="modal-input-row">
       <input type="tel" id="modal-phone" placeholder="Your phone number" inputmode="tel" autocomplete="tel">

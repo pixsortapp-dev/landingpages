@@ -4,6 +4,7 @@
   "private": true,
   "description": "PixSort landing site",
   "scripts": {
+    "check:affiliate-pages": "node scripts/check-affiliate-pages.js",
     "serve": "npx --yes serve -l 5173 ."
   },
   "devDependencies": {
