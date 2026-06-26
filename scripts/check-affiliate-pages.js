@@ -29,17 +29,26 @@ const affiliatePages = walk('.')
   .map((page) => ({ ...page, urls: appsFlyerUrls(page.html) }))
   .filter((page) => page.urls.length > 0);
 const trackingAsset = fs.readFileSync(path.join('assets', 'affiliate-tracking.js'), 'utf8');
+const APP_STORE_FALLBACK_URL = 'https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464';
 
 assert(affiliatePages.length > 0, 'No affiliate landing pages with AppsFlyer CTAs found.');
 assert(trackingAsset.includes('pixsort_partner_link_clicked'), 'Affiliate tracking asset must capture partner link opens');
 assert(trackingAsset.includes('pixsort_partner_app_store_clicked'), 'Affiliate tracking asset must capture App Store CTA clicks');
 
 for (const page of affiliatePages) {
+  const isAutomaticLandingPage = page.html.includes('data-pixsort-auto-landing="true"')
+    && page.html.includes('pixsort-auto-affiliate-landing:v1');
   const pids = new Set(page.urls.map((url) => url.searchParams.get('pid')));
   assert(pids.size === 1, `${page.file}: multiple AppsFlyer pids found`);
   const [pid] = [...pids];
   assert(pid, `${page.file}: missing pid`);
-  assert(page.html.includes('../assets/affiliate-tracking.js'), `${page.file}: missing affiliate tracking script`);
+  if (isAutomaticLandingPage) {
+    assert(page.html.includes('pixsort_partner_link_clicked'), `${page.file}: automatic page must capture partner link opens`);
+    assert(page.html.includes('pixsort_partner_app_store_clicked'), `${page.file}: automatic page must capture App Store CTA clicks`);
+    assert(page.html.includes('automatic_affiliate_landing_page'), `${page.file}: automatic page tracking must label its source surface`);
+  } else {
+    assert(page.html.includes('../assets/affiliate-tracking.js'), `${page.file}: missing affiliate tracking script`);
+  }
   assert(!page.html.includes('window.location.href = APP_STORE_DIRECT_URL'), `${page.file}: desktop branch bypasses AppsFlyer attribution`);
   assert(!page.html.includes('window.location.href = APP_STORE_URL'), `${page.file}: programmatic App Store redirects must go through redirectToAppStore`);
   assert(!page.html.includes('window.location.href = appsFlyerAppStoreUrl()'), `${page.file}: desktop AppsFlyer redirects must go through redirectToAppStore`);
@@ -49,7 +58,7 @@ for (const page of affiliatePages) {
     assert(page.html.includes('redirectToAppStore(appsFlyerAppStoreUrl());'), `${page.file}: desktop branch should preserve AppsFlyer params and track redirect clicks`);
   }
 
-  const expectedWebFallback = `https://pixsort.app/${pid}/`;
+  const expectedWebFallback = isAutomaticLandingPage ? APP_STORE_FALLBACK_URL : `https://pixsort.app/${pid}/`;
   for (const url of page.urls) {
     const campaign = url.searchParams.get('c');
     const clickId = url.searchParams.get('af_sub3');
@@ -62,7 +71,7 @@ for (const page of affiliatePages) {
     assert(url.searchParams.get('deep_link_sub2') === campaign, `${page.file}: wrong deep_link_sub2`);
     assert(url.searchParams.get('deep_link_sub3') === clickId, `${page.file}: wrong deep_link_sub3`);
     assert(url.searchParams.get('af_web_dp') === expectedWebFallback, `${page.file}: wrong af_web_dp`);
-    assert(url.searchParams.get('af_ios_url') === 'https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464', `${page.file}: wrong af_ios_url`);
+    assert(url.searchParams.get('af_ios_url') === APP_STORE_FALLBACK_URL, `${page.file}: wrong af_ios_url`);
   }
 }
 
