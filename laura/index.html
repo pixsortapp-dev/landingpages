@@ -3,23 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Adley × PixSort: 100 Photos Sorted Free</title>
-  <meta name="description" content="Adley Kinsman's audience gets the first 100 photos in their camera roll sorted free on PixSort. Install through this page to claim. Stop losing hours to a messy camera roll.">
+  <title>Laura × PixSort: 100 Photos Sorted Free for Memory-Keepers</title>
+  <meta name="description" content="Laura at The Memorette Studio: her audience gets the first 100 photos in their camera roll sorted free on PixSort. Find every memory, print the best ones.">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="PixSort">
-  <meta property="og:title" content="Adley × PixSort: 100 photos sorted free">
-  <meta property="og:description" content="Install PixSort through Adley's link and your first 100 photos sort automatically. Adley's audience only.">
+  <meta property="og:title" content="Laura × PixSort: 100 photos sorted free">
+  <meta property="og:description" content="Install PixSort through Laura's link and your first 100 photos sort automatically. The Memorette Studio audience only.">
   <meta property="og:image" content="https://pixsort.app/assets/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:url" content="https://pixsort.app/adley">
+  <meta property="og:url" content="https://pixsort.app/laura">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Adley × PixSort: 100 photos sorted free">
-  <meta name="twitter:description" content="Install PixSort through Adley's link and your first 100 photos sort automatically. Adley's audience only.">
+  <meta name="twitter:title" content="Laura × PixSort: 100 photos sorted free">
+  <meta name="twitter:description" content="Install PixSort through Laura's link and your first 100 photos sort automatically. The Memorette Studio audience only.">
   <meta name="twitter:image" content="https://pixsort.app/assets/og-image.png">
 
   <!-- Favicon -->
@@ -30,15 +30,19 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg:        #FFFFFF;
-      --bg2:       #FAFAF8;
-      --bg3:       #F4F4F0;
-      --lime:      #E5FF76;
-      --limedark:  #D2EE55;
+      --bg2:       #FFF5F8;        /* warm pink-tinted off-white */
+      --bg3:       #FDEEF3;
+      /* Laura palette: hot pink + white + black (Memorette playful-feminine) */
+      --lime:      #FFB7D5;        /* soft pink primary highlighter */
+      --limedark:  #F99BC1;
+      --blue:      #0F0F0F;        /* unused on this page */
+      --bluedark:  #333333;
+      --red:       #E91E63;        /* hot pink pop accent */
       --ink:       #0F0F0F;
       --ink2:      #1A1A1A;
       --grey:      #555555;
       --grey2:     #888888;
-      --border:    #E5E5E5;
+      --border:    #F5D9E3;        /* warm pink border */
       --gold:      #0F0F0F;
       --golddark:  #333333;
       --white:     #0F0F0F;
@@ -160,6 +164,35 @@
       content: ''; position: absolute; left: -3px; right: -3px;
       bottom: 0.05em; height: 0.45em;
       background: var(--lime); z-index: -1;
+    }
+    .hero-claim-note {
+      font-size: 13px; color: var(--grey); line-height: 1.5;
+      margin: -20px 0 28px; max-width: 480px;
+    }
+    .hero-claim-note strong { color: var(--ink); font-weight: 700; }
+
+    /* ── Product bumper (between hero and unlock banner) ── */
+    .product-bumper {
+      background: var(--ink); color: var(--bg);
+      padding: 56px 24px; text-align: center;
+      border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
+    }
+    .product-bumper .bumper-label {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--lime); margin-bottom: 18px;
+    }
+    .product-bumper p {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(24px, 2.8vw, 38px);
+      line-height: 1.25; color: var(--bg); letter-spacing: -0.01em;
+      max-width: 920px; margin: 0 auto; text-wrap: balance;
+    }
+    .product-bumper p em {
+      font-style: italic; color: var(--bg); position: relative; display: inline-block;
+    }
+    .product-bumper p em::after {
+      content: ''; position: absolute; left: -3px; right: -3px;
+      bottom: 0.06em; height: 0.32em; background: var(--lime); z-index: -1;
     }
 
     .cta-block { display: flex; flex-direction: column; align-items: stretch; gap: 14px; width: 100%; max-width: 460px; position: relative; z-index: 1; }
@@ -318,6 +351,41 @@
       filter: drop-shadow(0 30px 60px rgba(0,0,0,0.15)) drop-shadow(0 0 40px rgba(229,255,118,0.4));
     }
 
+    /* ── Laura video section ─────────────────────────────── */
+    .laura-video { background: var(--bg); padding: 100px 40px; border-top: 1px solid var(--border); }
+    .laura-video-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: auto 1fr; gap: 64px; align-items: center; }
+    .laura-video-player {
+      width: 320px; aspect-ratio: 9/16;
+      border: 1.5px solid var(--ink); border-radius: 20px;
+      overflow: hidden; box-shadow: 8px 8px 0 var(--ink);
+      background: var(--ink);
+    }
+    .laura-video-player video { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .laura-video-text { max-width: 480px; }
+    .laura-video-label { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); margin-bottom: 20px; }
+    .laura-video-text h3 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(28px, 3.4vw, 44px);
+      font-weight: 400; letter-spacing: -0.02em; line-height: 1.1;
+      color: var(--ink); margin-bottom: 18px;
+    }
+    .laura-video-text h3 em { font-style: italic; color: var(--ink); position: relative; display: inline-block; }
+    .laura-video-text h3 em::after {
+      content: ''; position: absolute; left: -2px; right: -2px;
+      bottom: 0.06em; height: 0.30em; background: var(--lime); z-index: -1;
+    }
+    .laura-video-quote {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 18px; font-style: italic; color: var(--ink);
+      line-height: 1.5; margin-bottom: 14px;
+    }
+    .laura-video-attr { font-size: 13px; font-weight: 700; color: var(--ink); }
+    @media (max-width: 760px) {
+      .laura-video-inner { grid-template-columns: 1fr; text-align: center; gap: 32px; }
+      .laura-video-player { margin: 0 auto; width: 100%; max-width: 320px; }
+      .laura-video-text { margin: 0 auto; }
+    }
+
     /* ── Social proof ─────────────────────────────────── */
     .social { background: var(--bg2); padding: 100px 40px; border-top: 1px solid var(--border); }
     .social-inner { max-width: 1100px; margin: 0 auto; }
@@ -467,27 +535,27 @@
     <img src="../assets/pixsort-logo.jpeg" alt="PixSort">
     <span>PixSort</span>
   </a>
-  <a class="nav-cta" href="https://app.appsflyer.com/id6760485464?pid=adley&c=adley-2026-06&af_channel=influencer&af_adset=adley-landing&af_ad=adley-dashboard-link&af_siteid=adley&af_sub1=adley&af_sub2=adley-2026-06&af_sub3=pixsort-app-adley&deep_link_value=collab&deep_link_sub1=adley&deep_link_sub2=adley-2026-06&deep_link_sub3=pixsort-app-adley&af_dp=sortscout%3A%2F%2Fcollab%2Fadley%3Futm_source%3Dadley%26utm_medium%3Dinfluencer%26utm_campaign%3Dadley-2026-06%26click_id%3Dpixsort-app-adley&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Fadley%2F&af_click_lookback=30d">Download Now</a>
+  <a class="nav-cta" href="https://app.appsflyer.com/id6760485464?pid=laura&c=laura-2026-05&af_channel=influencer&af_adset=laura-landing&af_ad=laura-dashboard-link&af_siteid=laura&af_sub1=laura&af_sub2=laura-2026-05&af_sub3=pixsort-app-laura&deep_link_value=collab&deep_link_sub1=laura&deep_link_sub2=laura-2026-05&deep_link_sub3=pixsort-app-laura&af_dp=sortscout%3A%2F%2Fcollab%2Flaura%3Futm_source%3Dlaura%26utm_medium%3Dinfluencer%26utm_campaign%3Dlaura-2026-05%26click_id%3Dpixsort-app-laura&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Flaura%2F&af_click_lookback=30d">Download Now</a>
 </nav>
 
 <!-- ── Hero ─────────────────────────────────────────── -->
 <section class="hero" id="top">
   <div class="hero-text">
-    <a class="appstore-pill" href="https://app.appsflyer.com/id6760485464?pid=adley&c=adley-2026-06&af_channel=influencer&af_adset=adley-landing&af_ad=adley-dashboard-link&af_siteid=adley&af_sub1=adley&af_sub2=adley-2026-06&af_sub3=pixsort-app-adley&deep_link_value=collab&deep_link_sub1=adley&deep_link_sub2=adley-2026-06&deep_link_sub3=pixsort-app-adley&af_dp=sortscout%3A%2F%2Fcollab%2Fadley%3Futm_source%3Dadley%26utm_medium%3Dinfluencer%26utm_campaign%3Dadley-2026-06%26click_id%3Dpixsort-app-adley&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Fadley%2F&af_click_lookback=30d">
+    <a class="appstore-pill" href="https://app.appsflyer.com/id6760485464?pid=laura&c=laura-2026-05&af_channel=influencer&af_adset=laura-landing&af_ad=laura-dashboard-link&af_siteid=laura&af_sub1=laura&af_sub2=laura-2026-05&af_sub3=pixsort-app-laura&deep_link_value=collab&deep_link_sub1=laura&deep_link_sub2=laura-2026-05&deep_link_sub3=pixsort-app-laura&af_dp=sortscout%3A%2F%2Fcollab%2Flaura%3Futm_source%3Dlaura%26utm_medium%3Dinfluencer%26utm_campaign%3Dlaura-2026-05%26click_id%3Dpixsort-app-laura&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Flaura%2F&af_click_lookback=30d">
       <svg class="apple-glyph" viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
       Available on the App Store
     </a>
     <div class="collab-mark">
-      <span>Adley</span>
+      <span>Laura</span>
       <span class="collab-x">×</span>
       <span>PixSort</span>
     </div>
     <h1>
-      <span class="h1-line">Stop sorting clips.</span>
-      <span class="h1-line">Start <em>scaling content.</em></span>
+      <span class="h1-line">Find every memory.</span>
+      <span class="h1-line">Print the <em>best ones.</em></span>
     </h1>
-    <p class="hero-sub">PixSort organizes every photo and video on your iPhone into smart albums, so your editor can grab what they need. No more "send me the clip from Tuesday" texts.</p>
     <p class="hero-discount-line"><span>100 photos sorted, on us.</span></p>
+    <p class="hero-claim-note">Tap <strong>Download Now</strong> above or drop your number below. The 100-photo unlock only applies when you install through this page.</p>
 
     <div class="cta-block" id="hero-cta">
       <div class="input-row" id="hero-input-row">
@@ -507,25 +575,31 @@
   </div>
 
   <div class="hero-photo-wrap">
-    <img class="hero-photo" src="../assets/adley.jpg" alt="Adley Kinsman">
+    <img class="hero-photo" src="../assets/laura.jpg" alt="Laura">
     <div class="hero-photo-caption">
-      Adley Kinsman · <span style="color:var(--grey);font-weight:600;">Founder, Viralish</span><br>
-      <span class="credit">76 Billion+ views earned for brands &amp; creators</span>
+      Laura · <span style="color:var(--grey);font-weight:600;">Founder, The Memorette Studio</span><br>
+      <span class="credit">Special moments deserve paper</span>
     </div>
   </div>
 </section>
 
-<!-- ── Discount banner ─────────────────────────────── -->
+<!-- ── Product bumper (what PixSort is) ─────────────── -->
+<section class="product-bumper">
+  <div class="bumper-label">What is PixSort?</div>
+  <p>The iPhone app that sorts your photos and videos into <em>smart albums.</em></p>
+</section>
+
+<!-- ── Free unlock banner ──────────────────────────── -->
 <section class="discount-banner">
   <div class="discount-inner">
     <div class="discount-text">
-      <div class="discount-eyebrow">✦ Adley's audience exclusive</div>
+      <div class="discount-eyebrow">✦ Laura's audience exclusive</div>
       <h2>Your first 100 photos. <em class="discount-price">Sorted on us.</em></h2>
       <p>Install PixSort through this page and the first 100 photos in your camera roll get sorted into smart albums automatically. Tap <strong>Download Now</strong> above, or scan the QR with your iPhone.</p>
     </div>
     <div class="discount-qr">
       <div class="discount-qr-card">
-        <img src="../assets/adley-qr.png" alt="Scan with your iPhone to install PixSort">
+        <img src="../assets/laura-qr.png" alt="Scan with your iPhone to install PixSort">
       </div>
       <div class="discount-qr-label">Scan with your iPhone</div>
     </div>
@@ -534,7 +608,7 @@
 
 <!-- ── Statement ─────────────────────────────────────── -->
 <div class="statement">
-  <p>Your camera roll is a<br><em>business asset.</em></p>
+  <p>Special moments<br>deserve <em>paper.</em></p>
 </div>
 
 <!-- ── Feature rows ──────────────────────────────────── -->
@@ -544,7 +618,7 @@
   <div class="feature-row">
     <div>
       <div class="feature-kw">Find it.</div>
-      <p class="feature-caption">Tell your editor "the keynote clips from Q3" and they actually find them. No scrolling 5,000 photos to guess.</p>
+      <p class="feature-caption">Search "Italy trip" or "Mason's birthday" and every photo from that moment shows up instantly. The ones worth printing, right there.</p>
     </div>
     <div class="feature-phone-wrap">
       <div class="phone-tilt-r" id="phone-search"></div>
@@ -558,7 +632,7 @@
     </div>
     <div>
       <div class="feature-kw">Sort it.</div>
-      <p class="feature-caption">AI builds the albums in the background. You name the categories (Events, Speaking, Product, Family) and PixSort fills them automatically.</p>
+      <p class="feature-caption">AI builds the albums for you. Vacations, Birthdays, Holidays, Family. Name the categories and PixSort fills them with the photos worth keeping.</p>
     </div>
   </div>
 
@@ -566,7 +640,7 @@
   <div class="feature-row">
     <div>
       <div class="feature-kw">Send it.</div>
-      <p class="feature-caption">Push any album back into iOS Photos and share it with your editor, social manager, or agency in two taps. No AirDrop marathons.</p>
+      <p class="feature-caption">Push your album back into iOS Photos → send it straight to the printer → add it to your Memorette scrapbook. Two taps and it's out the door.</p>
     </div>
     <div class="feature-phone-wrap">
       <div class="phone-tilt-r" id="phone-send"></div>
@@ -575,16 +649,16 @@
 
 </div>
 
-<!-- ── Adley spotlight ──────────────────────────────── -->
+<!-- ── Laura spotlight ──────────────────────────────── -->
 <section class="social">
   <div class="social-inner">
-    <div class="social-label">Why Adley uses PixSort</div>
+    <div class="social-label">Why Laura uses PixSort</div>
     <div class="quotes-grid" style="grid-template-columns: 1fr;">
       <div class="quote-card" style="max-width: 720px; margin: 0 auto; text-align: center;">
         <p class="quote-text" style="font-size: clamp(20px, 2vw, 26px);">
-          "If you're producing content for your business and not organizing your camera roll, you're losing hours every week to chaos. PixSort is the tool I wish existed five years ago."
+          "I tell my customers all the time: special moments deserve paper. But you can't print what you can't find. PixSort is the missing first step."
         </p>
-        <div class="quote-attr">Adley Kinsman · Founder, Viralish · 76B+ views earned</div>
+        <div class="quote-attr">Laura · Founder, The Memorette Studio</div>
       </div>
     </div>
   </div>
@@ -599,7 +673,7 @@
       <span>How do I get 100 photos sorted free?</span>
       <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
     </div>
-    <div class="faq-a">Two routes from this page: tap <strong>Download Now</strong> at the top, or enter your phone number below. Both carry Adley's link into the App Store, and the 100-photo free unlock activates automatically the first time you open the app.</div>
+    <div class="faq-a">Two routes from this page: tap <strong>Download Now</strong> at the top, or enter your phone number below. Both carry Laura's link into the App Store, and the 100-photo free unlock activates automatically when you open the app.</div>
   </div>
 
   <div class="faq-item">
@@ -607,7 +681,7 @@
       <span>What if I install PixSort directly from the App Store?</span>
       <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
     </div>
-    <div class="faq-a">You'll get the standard free tier. The 100-photo bonus is tied to coming through Adley's link, which is why this page is the only place to claim it.</div>
+    <div class="faq-a">You'll get the standard free tier. The 100-photo bonus is tied to coming through Laura's link, which is why this page is the only place to claim it.</div>
   </div>
 
   <div class="faq-item">
@@ -639,14 +713,14 @@
       <span>I'm on Android. Can I use this?</span>
       <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
     </div>
-    <div class="faq-a">PixSort is iOS-only right now. Drop your number and we'll text you the moment the Android version launches, with Adley's 100-photo unlock applied.</div>
+    <div class="faq-a">PixSort is iOS-only right now. Drop your number and we'll text you the moment the Android version launches, with Laura's 100-photo unlock applied.</div>
   </div>
 </section>
 
 <!-- ── Final CTA ──────────────────────────────────────── -->
 <section class="final-cta">
   <h2>Get PixSort.<br><em>On us.</em></h2>
-  <p>100 photos sorted free, exclusive to Adley's audience.</p>
+  <p>100 photos sorted free, exclusive to Laura's audience.</p>
   <div class="cta-block">
     <div class="input-row" id="final-input-row">
       <input type="tel" id="final-phone" placeholder="Your phone number" inputmode="tel" autocomplete="tel" maxlength="14">
@@ -806,25 +880,25 @@ const Screen1 = () => (
       <span style={{fontSize:20,fontWeight:800,color:C.t1}}>Your Albums</span>
       <span style={{fontSize:15,fontWeight:600,color:C.gold}}>Edit</span>
     </div>
-    <AlbumRow icon="📱" name="Screenshots" count={35} imgA="../assets/crop_ss_r1c1.jpg" imgB="../assets/crop_ss_r1c2.jpg" extra="../assets/crop_ss_r2c1.jpg"/>
-    <AlbumRow icon="🍔" name="Food" count={30} imgA="../assets/crop_food_r1c1.jpg" imgB="../assets/crop_food_r1c2.jpg" extra="../assets/crop_food_r2c1.jpg"/>
-    <AlbumRow icon="✈️" name="Travel" count={124} imgA="../assets/crop_travel_r1c2.jpg" imgB="../assets/crop_travel_r2c1.jpg" extra="../assets/crop_travel_r4c2.jpg"/>
+    <AlbumRow icon="🎂" name="Birthdays" count={86} imgA="../assets/family-bday-1.jpg" imgB="../assets/family-bday-2.jpg" extra="../assets/family-bday-3.jpg"/>
+    <AlbumRow icon="🏖️" name="Beach Trips" count={142} imgA="../assets/family-beach-1.jpg" imgB="../assets/family-beach-2.jpg" extra="../assets/family-beach-3.jpg"/>
+    <AlbumRow icon="🎄" name="Holidays" count={248} imgA="../assets/archive-holiday-1.jpg" imgB="../assets/archive-holiday-2.jpg" extra="../assets/archive-holiday-3.jpg"/>
     <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
   </div>
 );
 
 const Screen2 = () => {
   const gymThumbs = [
-    {src:'../assets/crop_gym_r1c1.jpg',v:true},{src:'../assets/crop_gym_r1c2.jpg',v:false},{src:'../assets/crop_gym_r1c3.jpg',v:false},
-    {src:'../assets/crop_gym_r2c1.jpg',v:true},{src:'../assets/crop_gym_r2c2.jpg',v:false},{src:'../assets/crop_gym_r2c3.jpg',v:false},
-    {src:'../assets/crop_gym_r3c1.jpg',v:false},{src:'../assets/crop_gym_r3c2.jpg',v:true},{src:'../assets/crop_gym_r3c3.jpg',v:false},
+    {src:'../assets/family-bday-1.jpg',v:false},{src:'../assets/family-bday-2.jpg',v:false},{src:'../assets/family-bday-3.jpg',v:false},
+    {src:'../assets/family-bday-4.jpg',v:false},{src:'../assets/family-bday-5.jpg',v:false},{src:'../assets/family-bday-6.jpg',v:false},
+    {src:'../assets/archive-gather-1.jpg',v:false},{src:'../assets/archive-gather-2.jpg',v:false},{src:'../assets/archive-gather-3.jpg',v:false},
   ];
   return (
     <div style={{padding:'8px 20px 16px',fontFamily:F}}>
       <div style={{fontSize:30,fontWeight:800,color:C.t1,marginBottom:15,letterSpacing:'-0.02em'}}>Search</div>
       <div style={{display:'flex',alignItems:'center',gap:10,background:C.card,borderRadius:16,padding:'13px 18px',marginBottom:18,boxShadow:`0 0 0 2.5px ${C.gold},0 2px 8px rgba(196,160,96,0.2)`}}>
         <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke={C.gold} strokeWidth="2.2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
-        <span style={{fontSize:16,color:C.t1,flex:1,fontWeight:500}}>gym</span>
+        <span style={{fontSize:16,color:C.t1,flex:1,fontWeight:500}}>birthday</span>
         <div style={{background:C.t3,borderRadius:999,width:20,height:20,display:'flex',alignItems:'center',justifyContent:'center'}}>
           <svg width="10" height="10" viewBox="0 0 10 10" stroke="white" strokeWidth="2"><line x1="2" y1="2" x2="8" y2="8"/><line x1="8" y1="2" x2="2" y2="8"/></svg>
         </div>
@@ -842,7 +916,7 @@ const Screen2 = () => {
         ))}
       </div>
       <div style={{display:'flex',gap:8,marginTop:18,flexWrap:'wrap'}}>
-        {['gym','workout','fitness'].map((k,i)=>(
+        {['birthday','party','cake'].map((k,i)=>(
           <div key={k} style={{background:i===0?C.gold:C.card,color:i===0?'#fff':C.t2,borderRadius:999,padding:'6px 14px',fontSize:13,fontWeight:700}}>{k}</div>
         ))}
       </div>
@@ -855,7 +929,7 @@ const Screen4 = () => (
     <div style={{fontSize:30,fontWeight:800,color:C.t1,marginBottom:15,letterSpacing:'-0.02em'}}>Search</div>
     <div style={{display:'flex',alignItems:'center',gap:10,background:C.card,borderRadius:16,padding:'13px 18px',marginBottom:18,boxShadow:`0 0 0 2.5px ${C.gold}`}}>
       <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke={C.gold} strokeWidth="2.2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
-      <span style={{fontSize:17,color:C.t1,fontWeight:500,flex:1}}>beach sunset</span>
+      <span style={{fontSize:17,color:C.t1,fontWeight:500,flex:1}}>graduation</span>
       <div style={{background:C.t3,borderRadius:999,width:21,height:21,display:'flex',alignItems:'center',justifyContent:'center'}}>
         <svg width="10" height="10" viewBox="0 0 10 10" stroke="white" strokeWidth="2"><line x1="2" y1="2" x2="8" y2="8"/><line x1="8" y1="2" x2="2" y2="8"/></svg>
       </div>
@@ -865,7 +939,7 @@ const Screen4 = () => (
       <span style={{fontSize:13,fontWeight:600,color:C.gold}}>Sort ↓</span>
     </div>
     <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:4}}>
-      {['../assets/crop_sunset_r1c1.jpg','../assets/crop_sunset_r1c2.jpg','../assets/crop_sunset_r2c1.jpg'].map((src,i)=>(
+      {['../assets/archive-grad-1.jpg','../assets/archive-grad-2.jpg','../assets/archive-grad-3.jpg'].map((src,i)=>(
         <div key={i} style={{aspectRatio:'1',borderRadius:8,position:'relative',overflow:'hidden'}}>
           <img src={src} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
           <div style={{position:'absolute',top:6,right:6,width:18,height:18,background:C.gold,borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center'}}>
@@ -884,9 +958,9 @@ const Screen4 = () => (
 
 const Screen5 = () => {
   const pixTiles = [
-    '../assets/crop_travel5_r1c2.jpg','../assets/crop_travel5_r1c3.jpg','../assets/crop_travel5_r2c1.jpg',
-    '../assets/crop_travel5_r2c2.jpg','../assets/crop_travel5_r4c1.jpg','../assets/crop_travel5_r4c2.jpg',
-    '../assets/crop_travel5_r1c2.jpg','../assets/crop_travel5_r2c1.jpg','../assets/crop_travel5_r4c1.jpg',
+    '../assets/family-bday-1.jpg','../assets/family-bday-2.jpg','../assets/family-bday-3.jpg',
+    '../assets/family-bday-4.jpg','../assets/family-bday-5.jpg','../assets/family-bday-6.jpg',
+    '../assets/archive-gather-1.jpg','../assets/archive-gather-2.jpg','../assets/archive-gather-3.jpg',
   ];
   return (
     <div style={{padding:'12px 16px 8px',fontFamily:F,height:'100%',display:'flex',flexDirection:'column',gap:12}}>
@@ -894,8 +968,8 @@ const Screen5 = () => {
         <div style={{padding:'12px 14px 10px',display:'flex',alignItems:'center',gap:10,borderBottom:`1px solid ${C.border}`}}>
           <img src="../assets/pixsort-logo.jpeg" alt="" style={{width:26,height:26,borderRadius:7}}/>
           <div style={{flex:1}}>
-            <div style={{fontSize:14,fontWeight:800,color:C.t1}}>Travel</div>
-            <div style={{fontSize:11,color:C.t2}}>60 photos · sorted</div>
+            <div style={{fontSize:14,fontWeight:800,color:C.t1}}>Mason's Birthday</div>
+            <div style={{fontSize:11,color:C.t2}}>52 photos · sorted</div>
           </div>
           <div style={{background:'rgba(196,160,96,0.15)',borderRadius:8,padding:'3px 8px'}}>
             <span style={{fontSize:10,fontWeight:800,color:C.gold}}>✦ Ready</span>
@@ -914,12 +988,12 @@ const Screen5 = () => {
       </div>
       <div style={{background:'#FFFFFF',borderRadius:18,padding:'12px',display:'flex',alignItems:'center',gap:10,boxShadow:'0 2px 12px rgba(0,0,0,0.08)'}}>
         <div style={{width:48,height:48,borderRadius:12,overflow:'hidden',display:'grid',gridTemplateColumns:'1fr 1fr',gap:1}}>
-          <img src="../assets/crop_travel5_r1c2.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
-          <img src="../assets/crop_travel5_r2c1.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
+          <img src="../assets/family-bday-1.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
+          <img src="../assets/family-bday-3.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
         </div>
         <div style={{flex:1}}>
           <div style={{fontSize:13,fontWeight:700,color:'#1C1C1E'}}>Added to Photos</div>
-          <div style={{fontSize:11,color:'#8A8A8E',marginTop:2}}>60 items · Travel</div>
+          <div style={{fontSize:11,color:'#8A8A8E',marginTop:2}}>52 items · Mason's Birthday</div>
         </div>
         <div style={{width:28,height:28,background:'#F0F0F0',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center'}}>
           <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="#34C759" strokeWidth="3"><polyline points="20 6 9 17 4 12"/></svg>
@@ -941,7 +1015,7 @@ mountPhone('phone-send',   <Phone dw={FEAT_DW} active="home"><Screen5/></Phone>)
 <!-- ── Interactions ──────────────────────────────────────── -->
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzc6k607rRZ2PlRKjGO7kjpuzGXLFiDiO7TjnXLmjBhkyZHhGELauQokFzLb2QNTq459A/exec';
-const APP_STORE_URL = 'https://app.appsflyer.com/id6760485464?pid=adley&c=adley-2026-06&af_channel=influencer&af_adset=adley-landing&af_ad=adley-dashboard-link&af_siteid=adley&af_sub1=adley&af_sub2=adley-2026-06&af_sub3=pixsort-app-adley&deep_link_value=collab&deep_link_sub1=adley&deep_link_sub2=adley-2026-06&deep_link_sub3=pixsort-app-adley&af_dp=sortscout%3A%2F%2Fcollab%2Fadley%3Futm_source%3Dadley%26utm_medium%3Dinfluencer%26utm_campaign%3Dadley-2026-06%26click_id%3Dpixsort-app-adley&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Fadley%2F&af_click_lookback=30d';
+const APP_STORE_URL = 'https://app.appsflyer.com/id6760485464?pid=laura&c=laura-2026-05&af_channel=influencer&af_adset=laura-landing&af_ad=laura-dashboard-link&af_siteid=laura&af_sub1=laura&af_sub2=laura-2026-05&af_sub3=pixsort-app-laura&deep_link_value=collab&deep_link_sub1=laura&deep_link_sub2=laura-2026-05&deep_link_sub3=pixsort-app-laura&af_dp=sortscout%3A%2F%2Fcollab%2Flaura%3Futm_source%3Dlaura%26utm_medium%3Dinfluencer%26utm_campaign%3Dlaura-2026-05%26click_id%3Dpixsort-app-laura&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Flaura%2F&af_click_lookback=30d';
 const APP_STORE_DIRECT_URL = 'https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464';
 
 function getSubmitMeta() {
@@ -962,7 +1036,7 @@ function savePhone(phone, platform) {
     mode: 'no-cors',
     keepalive: true,
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ phone, source: 'adley', platform, ...getSubmitMeta() })
+    body: JSON.stringify({ phone, source: 'laura', platform, ...getSubmitMeta() })
   }).catch(() => {});
 }
 
@@ -1104,7 +1178,7 @@ function toggleFaq(el) {
 <div class="modal-overlay" id="waitlist-modal" style="display:none;" onclick="if(event.target===this)hideWaitlistModal()">
   <div class="modal-card">
     <button class="modal-close" onclick="hideWaitlistModal()" aria-label="Close">&times;</button>
-    <h3 class="modal-title">Claim your 100 photos free</h3>
+    <h3 class="modal-title">Claim your 100 free</h3>
     <p class="modal-subtitle" id="modal-subtitle">Drop your number to lock in your 100-photo unlock.</p>
     <div class="input-row" id="modal-input-row">
       <input type="tel" id="modal-phone" placeholder="Your phone number" inputmode="tel" autocomplete="tel">

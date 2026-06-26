@@ -3,23 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Adley × PixSort: 100 Photos Sorted Free</title>
-  <meta name="description" content="Adley Kinsman's audience gets the first 100 photos in their camera roll sorted free on PixSort. Install through this page to claim. Stop losing hours to a messy camera roll.">
+  <title>Tran × PixSort: 100 Photos Sorted Free for UGC Creators</title>
+  <meta name="description" content="Tran's audience gets the first 100 photos in their camera roll sorted free on PixSort. The workflow tool every UGC creator needs to find clips fast and ship more ads.">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="PixSort">
-  <meta property="og:title" content="Adley × PixSort: 100 photos sorted free">
-  <meta property="og:description" content="Install PixSort through Adley's link and your first 100 photos sort automatically. Adley's audience only.">
+  <meta property="og:title" content="Tran × PixSort: 100 photos sorted free">
+  <meta property="og:description" content="Install PixSort through Tran's link and your first 100 photos sort automatically. The camera roll workflow for UGC creators.">
   <meta property="og:image" content="https://pixsort.app/assets/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:url" content="https://pixsort.app/adley">
+  <meta property="og:url" content="https://pixsort.app/tran">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Adley × PixSort: 100 photos sorted free">
-  <meta name="twitter:description" content="Install PixSort through Adley's link and your first 100 photos sort automatically. Adley's audience only.">
+  <meta name="twitter:title" content="Tran × PixSort: 100 photos sorted free">
+  <meta name="twitter:description" content="Install PixSort through Tran's link and your first 100 photos sort automatically. The camera roll workflow for UGC creators.">
   <meta name="twitter:image" content="https://pixsort.app/assets/og-image.png">
 
   <!-- Favicon -->
@@ -32,8 +32,8 @@
       --bg:        #FFFFFF;
       --bg2:       #FAFAF8;
       --bg3:       #F4F4F0;
-      --lime:      #E5FF76;
-      --limedark:  #D2EE55;
+      --lime:      #FFE89A;
+      --limedark:  #F5D866;
       --ink:       #0F0F0F;
       --ink2:      #1A1A1A;
       --grey:      #555555;
@@ -163,6 +163,43 @@
     }
 
     .cta-block { display: flex; flex-direction: column; align-items: stretch; gap: 14px; width: 100%; max-width: 460px; position: relative; z-index: 1; }
+    .cta-download {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      background: var(--ink); color: var(--bg);
+      font-family: inherit; font-size: 17px; font-weight: 800;
+      letter-spacing: -0.01em;
+      padding: 18px 28px; border-radius: 999px;
+      text-decoration: none; border: 1.5px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      transition: transform .15s, box-shadow .2s;
+      width: 100%;
+    }
+    .cta-download:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--lime); }
+    .cta-download svg { width: 18px; height: 18px; }
+
+    /* ── Product bumper (between hero and offer) ──────── */
+    .product-bumper {
+      background: var(--ink); color: var(--bg);
+      padding: 56px 24px; text-align: center;
+      border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
+    }
+    .product-bumper .bumper-label {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--lime); margin-bottom: 18px;
+    }
+    .product-bumper p {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(24px, 2.8vw, 38px);
+      line-height: 1.25; color: var(--bg); letter-spacing: -0.01em;
+      max-width: 920px; margin: 0 auto; text-wrap: balance;
+    }
+    .product-bumper p em {
+      font-style: italic; color: var(--bg); position: relative; display: inline-block;
+    }
+    .product-bumper p em::after {
+      content: ''; position: absolute; left: -3px; right: -3px;
+      bottom: 0.06em; height: 0.32em; background: var(--lime); z-index: -1;
+    }
     .input-row {
       display: flex; width: 100%;
       background: var(--bg2); border: 1.5px solid var(--ink);
@@ -210,23 +247,23 @@
     .discount-banner {
       background: var(--lime);
       border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
-      padding: 64px 40px;
+      padding: 110px 40px;
     }
     .discount-inner {
-      max-width: 1100px; margin: 0 auto;
+      max-width: 1200px; margin: 0 auto;
       display: grid; grid-template-columns: 1.4fr auto;
-      gap: 64px; align-items: center;
+      gap: 96px; align-items: center;
     }
     .discount-text { text-align: left; }
     .discount-eyebrow {
-      font-size: 11px; font-weight: 800; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--ink); margin-bottom: 18px;
+      font-size: 12px; font-weight: 800; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--ink); margin-bottom: 22px;
     }
     .discount-banner h2 {
       font-family: 'DM Serif Display', Georgia, serif;
-      font-size: clamp(36px, 5vw, 60px);
+      font-size: clamp(40px, 5.6vw, 72px);
       font-weight: 400; letter-spacing: -0.03em; line-height: 1.05;
-      color: var(--ink); margin-bottom: 14px; text-wrap: balance;
+      color: var(--ink); margin-bottom: 20px; text-wrap: balance;
     }
     .discount-banner h2 em.discount-price {
       font-style: italic; color: var(--ink);
@@ -238,21 +275,21 @@
       background: var(--bg); z-index: -1;
     }
     .discount-banner p {
-      font-size: 16px; color: var(--ink); opacity: 0.8; max-width: 540px;
-      margin: 0; line-height: 1.5;
+      font-size: 18px; color: var(--ink); opacity: 0.82; max-width: 560px;
+      margin: 0; line-height: 1.55;
     }
     .discount-qr { text-align: center; }
     .discount-qr-card {
       background: var(--bg); border: 1.5px solid var(--ink);
-      border-radius: 16px; padding: 14px;
-      box-shadow: 6px 6px 0 var(--ink);
+      border-radius: 20px; padding: 18px;
+      box-shadow: 8px 8px 0 var(--ink);
       display: inline-block;
     }
     .discount-qr-card img {
-      display: block; width: 200px; height: 200px;
+      display: block; width: 240px; height: 240px;
     }
     .discount-qr-label {
-      margin-top: 14px; font-size: 12px; font-weight: 800;
+      margin-top: 18px; font-size: 13px; font-weight: 800;
       letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink);
     }
     @media (max-width: 760px) {
@@ -282,7 +319,70 @@
       background: var(--lime); z-index: -1;
     }
 
-    /* ── Feature rows ─────────────────────────────────── */
+    /* ── Live walkthrough iframe wrapper ──────────────── */
+    .walkthrough-embed-wrap {
+      max-width: 1280px; margin: 0 auto; padding: 40px 0 80px;
+    }
+    .walkthrough-embed-wrap iframe {
+      width: 100%; border: 0; display: block;
+      min-height: 1400px; background: transparent;
+    }
+    @media (max-width: 760px) {
+      .walkthrough-embed-wrap { padding: 24px 0 56px; }
+      .walkthrough-embed-wrap iframe { min-height: 1900px; }
+    }
+
+    /* ── Walkthrough video (legacy, no longer used) ───── */
+    .walkthrough {
+      padding: 80px 40px 120px; max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr auto; gap: 64px; align-items: center;
+    }
+    .walkthrough-text { max-width: 480px; }
+    .walkthrough-eyebrow {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--ink); margin-bottom: 20px;
+    }
+    .walkthrough h2 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(32px, 4.2vw, 52px);
+      font-weight: 400; letter-spacing: -0.02em; line-height: 1.05;
+      color: var(--ink); margin-bottom: 22px;
+    }
+    .walkthrough h2 em {
+      font-style: italic; color: var(--ink); position: relative; display: inline-block;
+    }
+    .walkthrough h2 em::after {
+      content: ''; position: absolute; left: -2px; right: -2px;
+      bottom: 0.06em; height: 0.32em; background: var(--lime); z-index: -1;
+    }
+    .walkthrough-text p {
+      font-size: 17px; line-height: 1.55; color: var(--grey); max-width: 460px;
+    }
+    .walkthrough-video {
+      width: 320px; aspect-ratio: 332/720;
+      border: 1.5px solid var(--ink); border-radius: 28px;
+      overflow: hidden; box-shadow: 10px 10px 0 var(--ink);
+      background: var(--ink); position: relative; cursor: pointer;
+    }
+    .walkthrough-video video { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .video-mute-toggle {
+      position: absolute; bottom: 14px; right: 14px;
+      background: rgba(0,0,0,0.72); color: #fff;
+      border: 1px solid rgba(255,255,255,0.4); border-radius: 999px;
+      padding: 7px 13px; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 6px;
+      cursor: pointer; backdrop-filter: blur(8px); transition: opacity .2s;
+    }
+    .video-mute-toggle svg { width: 12px; height: 12px; }
+    .walkthrough-video.is-unmuted .video-mute-toggle { opacity: 0; pointer-events: none; }
+    @media (max-width: 760px) {
+      .walkthrough { grid-template-columns: 1fr; gap: 40px; text-align: center; padding: 64px 24px 80px; }
+      .walkthrough-text { margin: 0 auto; }
+      .walkthrough-video { margin: 0 auto; }
+    }
+
+    /* ── Feature rows (kept for legacy, currently unused) ───── */
     .features { padding: 0 40px 120px; max-width: 1200px; margin: 0 auto; }
     .feature-row {
       display: grid; grid-template-columns: 1fr 1fr;
@@ -467,65 +567,66 @@
     <img src="../assets/pixsort-logo.jpeg" alt="PixSort">
     <span>PixSort</span>
   </a>
-  <a class="nav-cta" href="https://app.appsflyer.com/id6760485464?pid=adley&c=adley-2026-06&af_channel=influencer&af_adset=adley-landing&af_ad=adley-dashboard-link&af_siteid=adley&af_sub1=adley&af_sub2=adley-2026-06&af_sub3=pixsort-app-adley&deep_link_value=collab&deep_link_sub1=adley&deep_link_sub2=adley-2026-06&deep_link_sub3=pixsort-app-adley&af_dp=sortscout%3A%2F%2Fcollab%2Fadley%3Futm_source%3Dadley%26utm_medium%3Dinfluencer%26utm_campaign%3Dadley-2026-06%26click_id%3Dpixsort-app-adley&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Fadley%2F&af_click_lookback=30d">Download Now</a>
+  <a class="nav-cta" href="https://app.appsflyer.com/id6760485464?pid=tran&c=tran-2026-06&af_channel=influencer&af_adset=tran-landing&af_ad=tran-dashboard-link&af_siteid=tran&af_sub1=tran&af_sub2=tran-2026-06&af_sub3=pixsort-app-tran&deep_link_value=collab&deep_link_sub1=tran&deep_link_sub2=tran-2026-06&deep_link_sub3=pixsort-app-tran&af_dp=sortscout%3A%2F%2Fcollab%2Ftran%3Futm_source%3Dtran%26utm_medium%3Dinfluencer%26utm_campaign%3Dtran-2026-06%26click_id%3Dpixsort-app-tran&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Ftran%2F&af_click_lookback=30d">Download Now</a>
 </nav>
 
 <!-- ── Hero ─────────────────────────────────────────── -->
 <section class="hero" id="top">
   <div class="hero-text">
-    <a class="appstore-pill" href="https://app.appsflyer.com/id6760485464?pid=adley&c=adley-2026-06&af_channel=influencer&af_adset=adley-landing&af_ad=adley-dashboard-link&af_siteid=adley&af_sub1=adley&af_sub2=adley-2026-06&af_sub3=pixsort-app-adley&deep_link_value=collab&deep_link_sub1=adley&deep_link_sub2=adley-2026-06&deep_link_sub3=pixsort-app-adley&af_dp=sortscout%3A%2F%2Fcollab%2Fadley%3Futm_source%3Dadley%26utm_medium%3Dinfluencer%26utm_campaign%3Dadley-2026-06%26click_id%3Dpixsort-app-adley&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Fadley%2F&af_click_lookback=30d">
+    <a class="appstore-pill" href="https://app.appsflyer.com/id6760485464?pid=tran&c=tran-2026-06&af_channel=influencer&af_adset=tran-landing&af_ad=tran-dashboard-link&af_siteid=tran&af_sub1=tran&af_sub2=tran-2026-06&af_sub3=pixsort-app-tran&deep_link_value=collab&deep_link_sub1=tran&deep_link_sub2=tran-2026-06&deep_link_sub3=pixsort-app-tran&af_dp=sortscout%3A%2F%2Fcollab%2Ftran%3Futm_source%3Dtran%26utm_medium%3Dinfluencer%26utm_campaign%3Dtran-2026-06%26click_id%3Dpixsort-app-tran&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Ftran%2F&af_click_lookback=30d">
       <svg class="apple-glyph" viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
       Available on the App Store
     </a>
     <div class="collab-mark">
-      <span>Adley</span>
+      <span>Tran</span>
       <span class="collab-x">×</span>
       <span>PixSort</span>
     </div>
     <h1>
-      <span class="h1-line">Stop sorting clips.</span>
-      <span class="h1-line">Start <em>scaling content.</em></span>
+      <span class="h1-line">Your camera roll.</span>
+      <span class="h1-line">Finally <em>a workflow.</em></span>
     </h1>
-    <p class="hero-sub">PixSort organizes every photo and video on your iPhone into smart albums, so your editor can grab what they need. No more "send me the clip from Tuesday" texts.</p>
     <p class="hero-discount-line"><span>100 photos sorted, on us.</span></p>
 
     <div class="cta-block" id="hero-cta">
-      <div class="input-row" id="hero-input-row">
-        <input type="tel" id="hero-phone" placeholder="Your phone number" inputmode="tel" autocomplete="tel" maxlength="14">
-        <button onclick="handleSubmit('hero')">Get 100 Free</button>
-      </div>
-      <div class="success-msg" id="hero-success">
-        You're in. Your 100-photo unlock is locked to your number.
-      </div>
+      <a class="cta-download" href="https://app.appsflyer.com/id6760485464?pid=tran&c=tran-2026-06&af_channel=influencer&af_adset=tran-landing&af_ad=tran-dashboard-link&af_siteid=tran&af_sub1=tran&af_sub2=tran-2026-06&af_sub3=pixsort-app-tran&deep_link_value=collab&deep_link_sub1=tran&deep_link_sub2=tran-2026-06&deep_link_sub3=pixsort-app-tran&af_dp=sortscout%3A%2F%2Fcollab%2Ftran%3Futm_source%3Dtran%26utm_medium%3Dinfluencer%26utm_campaign%3Dtran-2026-06%26click_id%3Dpixsort-app-tran&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Ftran%2F&af_click_lookback=30d">
+        <svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+        Download Now
+      </a>
       <div class="microcopy">
         <span>iOS</span>
         <span>100 photos free</span>
-        <span>No spam</span>
+        <span>Tran's link</span>
       </div>
-      <p class="sms-disclosure">By submitting, you agree to receive occasional SMS updates from PixSort. Reply STOP to opt out anytime. Msg &amp; data rates may apply.</p>
     </div>
   </div>
 
   <div class="hero-photo-wrap">
-    <img class="hero-photo" src="../assets/adley.jpg" alt="Adley Kinsman">
+    <img class="hero-photo" src="../assets/tran.jpg" alt="Tran">
     <div class="hero-photo-caption">
-      Adley Kinsman · <span style="color:var(--grey);font-weight:600;">Founder, Viralish</span><br>
-      <span class="credit">76 Billion+ views earned for brands &amp; creators</span>
+      Tran · <span style="color:var(--grey);font-weight:600;">Founder, UGC Foundations</span><br>
+      <span class="credit">Forbes 30 Under 30 · 500+ brands · 1000+ ads created</span>
     </div>
   </div>
+</section>
+
+<!-- ── Product bumper (what PixSort is) ─────────────── -->
+<section class="product-bumper">
+  <div class="bumper-label">What is PixSort?</div>
+  <p>The iPhone app that auto-sorts your camera roll into <em>smart albums.</em></p>
 </section>
 
 <!-- ── Discount banner ─────────────────────────────── -->
 <section class="discount-banner">
   <div class="discount-inner">
     <div class="discount-text">
-      <div class="discount-eyebrow">✦ Adley's audience exclusive</div>
+      <div class="discount-eyebrow">✦ Tran's audience exclusive</div>
       <h2>Your first 100 photos. <em class="discount-price">Sorted on us.</em></h2>
       <p>Install PixSort through this page and the first 100 photos in your camera roll get sorted into smart albums automatically. Tap <strong>Download Now</strong> above, or scan the QR with your iPhone.</p>
     </div>
     <div class="discount-qr">
       <div class="discount-qr-card">
-        <img src="../assets/adley-qr.png" alt="Scan with your iPhone to install PixSort">
+        <img src="../assets/tran-qr.png" alt="Scan with your iPhone to install PixSort">
       </div>
       <div class="discount-qr-label">Scan with your iPhone</div>
     </div>
@@ -534,57 +635,24 @@
 
 <!-- ── Statement ─────────────────────────────────────── -->
 <div class="statement">
-  <p>Your camera roll is a<br><em>business asset.</em></p>
+  <p>Sort your camera roll<br><em>in seconds.</em></p>
 </div>
 
-<!-- ── Feature rows ──────────────────────────────────── -->
-<div class="features">
+<!-- ── Live walkthrough (animated phone + screen by screen) ── -->
+<section class="walkthrough-embed-wrap">
+  <iframe id="walkthrough-frame" src="/walkthrough-embed.html" title="PixSort walkthrough" loading="lazy" scrolling="no"></iframe>
+</section>
 
-  <!-- Find it -->
-  <div class="feature-row">
-    <div>
-      <div class="feature-kw">Find it.</div>
-      <p class="feature-caption">Tell your editor "the keynote clips from Q3" and they actually find them. No scrolling 5,000 photos to guess.</p>
-    </div>
-    <div class="feature-phone-wrap">
-      <div class="phone-tilt-r" id="phone-search"></div>
-    </div>
-  </div>
-
-  <!-- Sort it -->
-  <div class="feature-row">
-    <div class="feature-phone-wrap" style="order:-1">
-      <div class="phone-tilt-l" id="phone-sort"></div>
-    </div>
-    <div>
-      <div class="feature-kw">Sort it.</div>
-      <p class="feature-caption">AI builds the albums in the background. You name the categories (Events, Speaking, Product, Family) and PixSort fills them automatically.</p>
-    </div>
-  </div>
-
-  <!-- Send it -->
-  <div class="feature-row">
-    <div>
-      <div class="feature-kw">Send it.</div>
-      <p class="feature-caption">Push any album back into iOS Photos and share it with your editor, social manager, or agency in two taps. No AirDrop marathons.</p>
-    </div>
-    <div class="feature-phone-wrap">
-      <div class="phone-tilt-r" id="phone-send"></div>
-    </div>
-  </div>
-
-</div>
-
-<!-- ── Adley spotlight ──────────────────────────────── -->
+<!-- ── Tran spotlight ──────────────────────────────── -->
 <section class="social">
   <div class="social-inner">
-    <div class="social-label">Why Adley uses PixSort</div>
+    <div class="social-label">Why Tran uses PixSort</div>
     <div class="quotes-grid" style="grid-template-columns: 1fr;">
       <div class="quote-card" style="max-width: 720px; margin: 0 auto; text-align: center;">
         <p class="quote-text" style="font-size: clamp(20px, 2vw, 26px);">
-          "If you're producing content for your business and not organizing your camera roll, you're losing hours every week to chaos. PixSort is the tool I wish existed five years ago."
+          "I shoot for 500+ brands. The hours I used to lose hunting for the right clip add up fast. PixSort is the workflow tool every UGC creator needs."
         </p>
-        <div class="quote-attr">Adley Kinsman · Founder, Viralish · 76B+ views earned</div>
+        <div class="quote-attr">Tran · Founder, UGC Foundations · 500+ brands · 1000+ ads</div>
       </div>
     </div>
   </div>
@@ -599,7 +667,7 @@
       <span>How do I get 100 photos sorted free?</span>
       <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
     </div>
-    <div class="faq-a">Two routes from this page: tap <strong>Download Now</strong> at the top, or enter your phone number below. Both carry Adley's link into the App Store, and the 100-photo free unlock activates automatically the first time you open the app.</div>
+    <div class="faq-a">Tap <strong>Download Now</strong> anywhere on this page (or scan the QR with your iPhone). Every button carries Tran's link into the App Store, and the 100-photo free unlock activates automatically the first time you open the app.</div>
   </div>
 
   <div class="faq-item">
@@ -607,7 +675,7 @@
       <span>What if I install PixSort directly from the App Store?</span>
       <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
     </div>
-    <div class="faq-a">You'll get the standard free tier. The 100-photo bonus is tied to coming through Adley's link, which is why this page is the only place to claim it.</div>
+    <div class="faq-a">You'll get the standard free tier. The 100-photo bonus is tied to coming through Tran's link, which is why this page is the only place to claim it.</div>
   </div>
 
   <div class="faq-item">
@@ -615,7 +683,7 @@
       <span>What is PixSort?</span>
       <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
     </div>
-    <div class="faq-a">PixSort is an iPhone app that uses AI to auto-organize your camera roll into smart albums by subject, event, person, or any custom category you create. Then it pushes those albums into native iOS Photos so you can hand them to your editor in seconds.</div>
+    <div class="faq-a">PixSort is an iPhone app that uses AI to auto-organize your camera roll into smart albums by subject, event, person, or any custom category you create. Then it pushes those albums into native iOS Photos so you can hand them to your editor or the brand in seconds.</div>
   </div>
 
   <div class="faq-item">
@@ -623,7 +691,7 @@
       <span>Does it work on videos too?</span>
       <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
     </div>
-    <div class="faq-a">Yes. PixSort organizes both photos and videos. It's built specifically for people who shoot a lot of business content and need their team to find specific clips fast.</div>
+    <div class="faq-a">Yes. PixSort organizes both photos and videos. Built for creators who shoot a lot of UGC, B-roll, and product footage and need to find the right clip fast.</div>
   </div>
 
   <div class="faq-item">
@@ -639,28 +707,24 @@
       <span>I'm on Android. Can I use this?</span>
       <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
     </div>
-    <div class="faq-a">PixSort is iOS-only right now. Drop your number and we'll text you the moment the Android version launches, with Adley's 100-photo unlock applied.</div>
+    <div class="faq-a">PixSort is iOS-only right now. The Android version is in the works. Check back here when you're ready to install on an iPhone.</div>
   </div>
 </section>
 
 <!-- ── Final CTA ──────────────────────────────────────── -->
 <section class="final-cta">
   <h2>Get PixSort.<br><em>On us.</em></h2>
-  <p>100 photos sorted free, exclusive to Adley's audience.</p>
-  <div class="cta-block">
-    <div class="input-row" id="final-input-row">
-      <input type="tel" id="final-phone" placeholder="Your phone number" inputmode="tel" autocomplete="tel" maxlength="14">
-      <button onclick="handleSubmit('final')">Get 100 Free</button>
-    </div>
-    <div class="success-msg" id="final-success">
-      You're in. Your 100-photo unlock is locked to your number.
-    </div>
+  <p>100 photos sorted free, exclusive to Tran's audience.</p>
+  <div class="cta-block" style="margin: 0 auto;">
+    <a class="cta-download" href="https://app.appsflyer.com/id6760485464?pid=tran&c=tran-2026-06&af_channel=influencer&af_adset=tran-landing&af_ad=tran-dashboard-link&af_siteid=tran&af_sub1=tran&af_sub2=tran-2026-06&af_sub3=pixsort-app-tran&deep_link_value=collab&deep_link_sub1=tran&deep_link_sub2=tran-2026-06&deep_link_sub3=pixsort-app-tran&af_dp=sortscout%3A%2F%2Fcollab%2Ftran%3Futm_source%3Dtran%26utm_medium%3Dinfluencer%26utm_campaign%3Dtran-2026-06%26click_id%3Dpixsort-app-tran&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Ftran%2F&af_click_lookback=30d">
+      <svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+      Download Now
+    </a>
     <div class="microcopy">
       <span>iOS</span>
       <span>100 photos free</span>
-      <span>No spam</span>
+      <span>Tran's link</span>
     </div>
-    <p class="sms-disclosure">By submitting, you agree to receive occasional SMS updates from PixSort. Reply STOP to opt out anytime. Msg &amp; data rates may apply.</p>
   </div>
 </section>
 
@@ -940,120 +1004,18 @@ mountPhone('phone-send',   <Phone dw={FEAT_DW} active="home"><Screen5/></Phone>)
 
 <!-- ── Interactions ──────────────────────────────────────── -->
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzc6k607rRZ2PlRKjGO7kjpuzGXLFiDiO7TjnXLmjBhkyZHhGELauQokFzLb2QNTq459A/exec';
-const APP_STORE_URL = 'https://app.appsflyer.com/id6760485464?pid=adley&c=adley-2026-06&af_channel=influencer&af_adset=adley-landing&af_ad=adley-dashboard-link&af_siteid=adley&af_sub1=adley&af_sub2=adley-2026-06&af_sub3=pixsort-app-adley&deep_link_value=collab&deep_link_sub1=adley&deep_link_sub2=adley-2026-06&deep_link_sub3=pixsort-app-adley&af_dp=sortscout%3A%2F%2Fcollab%2Fadley%3Futm_source%3Dadley%26utm_medium%3Dinfluencer%26utm_campaign%3Dadley-2026-06%26click_id%3Dpixsort-app-adley&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Fadley%2F&af_click_lookback=30d';
-const APP_STORE_DIRECT_URL = 'https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464';
+const APP_STORE_URL = 'https://app.appsflyer.com/id6760485464?pid=tran&c=tran-2026-06&af_channel=influencer&af_adset=tran-landing&af_ad=tran-dashboard-link&af_siteid=tran&af_sub1=tran&af_sub2=tran-2026-06&af_sub3=pixsort-app-tran&deep_link_value=collab&deep_link_sub1=tran&deep_link_sub2=tran-2026-06&deep_link_sub3=pixsort-app-tran&af_dp=sortscout%3A%2F%2Fcollab%2Ftran%3Futm_source%3Dtran%26utm_medium%3Dinfluencer%26utm_campaign%3Dtran-2026-06%26click_id%3Dpixsort-app-tran&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Ftran%2F&af_click_lookback=30d';
 
-function getSubmitMeta() {
-  const params = new URLSearchParams(window.location.search);
-  return {
-    userAgent: navigator.userAgent,
-    page: window.location.pathname,
-    referrer: document.referrer,
-    utm_source: params.get('utm_source') || '',
-    utm_campaign: params.get('utm_campaign') || '',
-    utm_medium: params.get('utm_medium') || ''
-  };
-}
-
-function savePhone(phone, platform) {
-  fetch(SCRIPT_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    keepalive: true,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ phone, source: 'adley', platform, ...getSubmitMeta() })
-  }).catch(() => {});
-}
-
-function detectPlatform() {
-  const ua = navigator.userAgent;
-  if (/android/i.test(ua)) return 'android';
-  if (/iphone|ipad|ipod/i.test(ua)) return 'ios';
-  return 'desktop';
-}
-
-function formatPhoneInput(el) {
-  const digits = el.value.replace(/\D/g, '').slice(0, 10);
-  let f = '';
-  if (digits.length > 0) f = '(' + digits.slice(0, 3);
-  if (digits.length >= 4) f += ') ' + digits.slice(3, 6);
-  if (digits.length >= 7) f += '-' + digits.slice(6, 10);
-  el.value = f;
-}
-
-function showPhoneError(prefix, msg) {
-  const row = document.getElementById(prefix + '-input-row');
-  if (!row) return;
-  const parent = row.parentElement;
-  let err = parent.querySelector('.phone-error');
-  if (!err) {
-    err = document.createElement('div');
-    err.className = 'phone-error';
-    parent.insertBefore(err, row.nextSibling);
-  }
-  err.textContent = msg;
-  err.style.display = 'block';
-  setTimeout(() => { err.style.display = 'none'; }, 4000);
-}
-
-function handleSubmit(prefix) {
-  const input   = document.getElementById(prefix + '-phone');
-  const row     = document.getElementById(prefix + '-input-row');
-  const success = document.getElementById(prefix + '-success');
-  const btn     = row ? row.querySelector('button') : null;
-  const val     = (input ? input.value : '').trim();
-  if (!val) {
-    if (input) { input.style.boxShadow = '0 0 0 2px #D4704A inset'; input.focus(); }
-    setTimeout(() => { if(input) input.style.boxShadow = ''; }, 1500);
-    return;
-  }
-  const digits = val.replace(/\D/g, '');
-  if (digits.length !== 10) {
-    if (input) { input.style.boxShadow = '0 0 0 2px #D14848 inset'; input.focus(); }
-    showPhoneError(prefix, 'Please enter a valid 10-digit phone number.');
-    setTimeout(() => { if (input) input.style.boxShadow = ''; }, 1500);
-    return;
-  }
-  const platform = detectPlatform();
-  if (btn) {
-    btn.textContent = platform === 'android' ? 'Saving…' : 'Opening App Store…';
-    btn.disabled = true;
-  }
-  savePhone(digits, platform);
-  if (platform === 'ios') {
-    window.location.href = APP_STORE_URL;
-  } else if (platform === 'desktop') {
-    window.location.href = APP_STORE_DIRECT_URL;
-  } else {
-    if (row)     row.style.display = 'none';
-    if (success) success.style.display = 'block';
-  }
-}
-
-document.addEventListener('input', e => {
-  if (e.target.matches && e.target.matches('input[type="tel"]')) {
-    formatPhoneInput(e.target);
-    e.target.style.boxShadow = '';
-    const err = e.target.closest('.cta-block, .modal-card')?.querySelector('.phone-error');
-    if (err) err.style.display = 'none';
-  }
-});
-
-document.querySelectorAll('input[type="tel"]').forEach(el => {
-  el.addEventListener('keydown', e => {
-    if (e.key === 'Enter') handleSubmit(el.id.replace('-phone', ''));
+// Auto-resize walkthrough iframe to its content height
+(function() {
+  const frame = document.getElementById('walkthrough-frame');
+  if (!frame) return;
+  window.addEventListener('message', (e) => {
+    if (!e.data || e.data.type !== 'walkthrough-height') return;
+    const h = Number(e.data.h);
+    if (h > 0) frame.style.height = h + 'px';
   });
-});
-
-// Make every phone mockup tappable → App Store
-['#hero-phone-wrap', '#phone-search', '#phone-sort', '#phone-send', '#phone-post'].forEach(sel => {
-  const el = document.querySelector(sel);
-  if (el) {
-    el.style.cursor = 'pointer';
-    el.addEventListener('click', () => { window.location.href = APP_STORE_URL; });
-  }
-});
+})();
 
 function toggleFaq(el) {
   const item = el.closest('.faq-item');
@@ -1061,90 +1023,6 @@ function toggleFaq(el) {
   document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
   if (!wasOpen) item.classList.add('open');
 }
-</script>
-
-<!-- ── Android/Desktop Waitlist Modal ───────────────────── -->
-<style>
-  .modal-overlay {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.85);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 1000; padding: 20px;
-  }
-  .modal-card {
-    background: #FFFFFF; border: 1px solid #E5E5E5;
-    border-radius: 16px; padding: 36px 28px 28px;
-    max-width: 440px; width: 100%; position: relative;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
-  }
-  .modal-close {
-    position: absolute; top: 8px; right: 14px;
-    background: none; border: none; color: #888;
-    font-size: 28px; cursor: pointer; line-height: 1; padding: 4px 8px;
-  }
-  .modal-close:hover { color: #1A1A1A; }
-  .modal-title {
-    font-size: 24px; font-weight: 700; color: #1A1A1A;
-    margin: 0 0 10px;
-  }
-  .modal-subtitle {
-    color: #555; margin: 0 0 20px; line-height: 1.45; font-size: 15px;
-  }
-  #modal-input-row { background-color: rgb(240,237,237); }
-  #modal-success {
-    color: #1A6B3D; background: rgba(40, 167, 69, 0.1);
-    border: 1px solid rgba(40, 167, 69, 0.3);
-  }
-  .phone-error {
-    color: #D14848; margin-top: 10px; font-size: 14px;
-    text-align: center; font-weight: 500;
-  }
-</style>
-
-<div class="modal-overlay" id="waitlist-modal" style="display:none;" onclick="if(event.target===this)hideWaitlistModal()">
-  <div class="modal-card">
-    <button class="modal-close" onclick="hideWaitlistModal()" aria-label="Close">&times;</button>
-    <h3 class="modal-title">Claim your 100 photos free</h3>
-    <p class="modal-subtitle" id="modal-subtitle">Drop your number to lock in your 100-photo unlock.</p>
-    <div class="input-row" id="modal-input-row">
-      <input type="tel" id="modal-phone" placeholder="Your phone number" inputmode="tel" autocomplete="tel">
-      <button onclick="handleSubmit('modal')">Notify Me</button>
-    </div>
-    <div class="success-msg" id="modal-success" style="display:none;">
-      You're in. Your 100-photo unlock is locked to your number.
-    </div>
-    <p class="sms-disclosure">By submitting, you agree to receive occasional SMS updates from PixSort. Reply STOP to opt out. Msg &amp; data rates may apply.</p>
-  </div>
-</div>
-
-<script>
-document.querySelectorAll('.nav-cta, .appstore-pill').forEach(link => {
-  link.addEventListener('click', e => {
-    const platform = detectPlatform();
-    if (platform === 'ios') return;
-    e.preventDefault();
-    showWaitlistModal(platform);
-  });
-});
-function showWaitlistModal(platform) {
-  const sub = document.getElementById('modal-subtitle');
-  if (sub) {
-    sub.textContent = platform === 'android'
-      ? "Drop your number to lock in your 100-photo unlock. We'll let you know when PixSort lands on Android."
-      : "Drop your number to lock in your 100-photo unlock. Install on your iPhone to redeem.";
-  }
-  document.getElementById('waitlist-modal').style.display = 'flex';
-  setTimeout(() => document.getElementById('modal-phone')?.focus(), 50);
-}
-function hideWaitlistModal() {
-  document.getElementById('waitlist-modal').style.display = 'none';
-}
-document.getElementById('modal-phone')?.addEventListener('keydown', e => {
-  if (e.key === 'Enter') handleSubmit('modal');
-});
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') hideWaitlistModal();
-});
 </script>
 
 </body>

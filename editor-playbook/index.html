@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Editor Playbook · Hire editors. Build a nonstop workflow. — Tiffany Parra</title>
+<link rel="icon" type="image/jpeg" href="../assets/pixsort-logo.jpeg">
+<link rel="apple-touch-icon" href="../assets/pixsort-logo.jpeg">
+<meta property="og:title" content="The Editor Playbook · Hire editors. Build a nonstop workflow.">
+<meta property="og:description" content="The job post template, standards, pay structure, and handoff workflow I use to ship content nonstop with a team of 3 editors.">
+<meta property="og:image" content="../assets/pixsort-logo.jpeg">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#F2EAD3;
+    --bg2:#EBE0C5;
+    --bg3:#E3D5B5;
+    --text:#1F1812;
+    --text-grey:#4D4234;
+    --text-grey2:#6E624F;
+    --gold:#9C7B33;
+    --gold-dk:#6E5524;
+    --gold-soft:#E8C268;
+    --pink:#D98F8F;
+    --sage:#8FA37D;
+    --peach:#D9886A;
+    --border:#D9CFB5;
+  }
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    font-family:'DM Sans','Helvetica Neue',Arial,sans-serif;
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.55;
+    min-height:100vh;
+  }
+  em{font-style:italic;color:var(--gold)}
+  a{color:var(--gold-dk);text-decoration:underline}
+  a:hover{color:var(--gold)}
+
+  .wrap{max-width:880px;margin:0 auto;padding:32px 28px 64px}
+
+  /* Header */
+  header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding-bottom:18px;border-bottom:1px solid var(--border);margin-bottom:36px;
+  }
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{width:32px;height:32px;border-radius:8px}
+  .brand-name{font-weight:800;font-size:16px;letter-spacing:-0.01em}
+  .doc-tag{
+    border:1px solid var(--gold);color:var(--gold);
+    font-size:10.5px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;
+    border-radius:999px;padding:6px 14px;background:rgba(255,255,255,0.4);
+  }
+
+  /* Hero */
+  .hero{margin-bottom:36px;text-align:center}
+  .eyebrow{
+    color:var(--gold);font-size:11px;font-weight:800;letter-spacing:0.22em;
+    text-transform:uppercase;margin-bottom:14px;
+  }
+  h1{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-size:clamp(38px,5vw,60px);line-height:1.02;letter-spacing:-0.025em;
+    margin-bottom:18px;color:var(--text);
+  }
+  h1 em{font-style:italic;color:var(--gold)}
+  .lede{
+    font-size:17px;line-height:1.55;color:var(--text-grey);
+    max-width:600px;margin:0 auto;font-weight:500;
+  }
+
+  /* Gate form */
+  .gate{
+    background:linear-gradient(180deg,rgba(156,123,51,0.10) 0%,var(--bg2) 100%);
+    border:2px solid var(--gold);border-radius:18px;
+    padding:32px 32px 28px;margin-bottom:48px;
+    box-shadow:0 24px 48px rgba(156,123,51,0.18);
+    position:relative;
+  }
+  .gate-flag{
+    display:inline-block;
+    background:var(--text);
+    color:var(--gold-soft);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    padding:7px 14px;
+    border-radius:999px;
+    margin-bottom:14px;
+  }
+  .gate-title{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-size:34px;line-height:1.05;letter-spacing:-0.022em;margin-bottom:8px;color:var(--text);
+  }
+  .gate-title em{color:var(--gold);font-style:italic}
+  .gate-sub{
+    font-size:15px;color:var(--text-grey);margin-bottom:22px;
+    max-width:560px;line-height:1.5;
+  }
+  .gate-unlock-list{
+    background:rgba(255,255,255,0.6);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:16px 20px;
+    margin-bottom:22px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .unlock-item{
+    font-size:14px;
+    color:var(--text);
+    line-height:1.45;
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+  }
+  .unlock-item .ulock{
+    color:var(--gold);
+    font-weight:800;
+    flex-shrink:0;
+  }
+  .gate-form{
+    display:flex;flex-direction:column;gap:10px;max-width:440px;margin:0 auto;
+  }
+  .gate-form input[type="text"],
+  .gate-form input[type="email"]{
+    width:100%;background:#fff;border:1px solid var(--border);border-radius:10px;
+    padding:14px 18px;font-family:inherit;font-size:15px;color:var(--text);
+    outline:none;transition:border-color .15s,box-shadow .15s;
+  }
+  .gate-form input[type="text"]:focus,
+  .gate-form input[type="email"]:focus{
+    border-color:var(--gold);box-shadow:0 0 0 3px rgba(156,123,51,0.15);
+  }
+  .gate-form button{
+    background:var(--gold);color:#fff;border:none;border-radius:10px;
+    padding:14px 24px;font-family:inherit;font-size:13px;font-weight:800;
+    letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;
+    transition:background .15s,transform .15s;width:100%;margin-top:4px;
+  }
+  .gate-form button:hover{background:var(--gold-dk);transform:translateY(-1px)}
+  .gate-foot{
+    text-align:center;font-size:11.5px;color:var(--text-grey2);margin-top:12px;
+  }
+  .gate-success{
+    display:none;text-align:center;padding:8px 0;
+  }
+  .gate-success.show{display:block}
+  .gate-success .check{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:48px;height:48px;border-radius:50%;background:var(--sage);color:#fff;
+    font-size:24px;margin-bottom:10px;
+  }
+  .gate-success-title{
+    font-family:'DM Serif Display',Georgia,serif;font-size:22px;
+    margin-bottom:6px;color:var(--text);
+  }
+  .gate-success-sub{font-size:14px;color:var(--text-grey)}
+
+  /* Content blocks (the playbook itself) — hidden until form submit */
+  .playbook{display:none;flex-direction:column;gap:28px}
+  .playbook.unlocked{display:flex}
+  .section-h{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-size:clamp(24px,2.8vw,32px);letter-spacing:-0.02em;
+    margin-bottom:14px;color:var(--text);
+  }
+  .section-h em{font-style:italic;color:var(--gold)}
+  .section-sub{font-size:14.5px;color:var(--text-grey);margin-bottom:18px;line-height:1.55}
+
+  .card{
+    background:var(--bg2);border:1px solid var(--border);border-radius:14px;
+    padding:24px 26px;
+  }
+  .card ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:9px}
+  .card li{
+    position:relative;padding-left:22px;font-size:14.5px;color:var(--text);line-height:1.5;
+  }
+  .card li::before{
+    content:'→';position:absolute;left:0;color:var(--gold);font-weight:700;
+  }
+  .card strong{color:var(--gold-dk)}
+  .card em{color:var(--gold);font-style:italic}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+  .source-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .source-card{
+    background:var(--bg2);border:1px solid var(--border);border-radius:12px;
+    padding:14px 18px;display:block;text-decoration:none;color:inherit;
+  }
+  .source-card.highlight{border-color:var(--gold);background:linear-gradient(135deg,rgba(156,123,51,0.10) 0%,var(--bg2) 100%)}
+  .source-card.highlight-sage{border-color:var(--sage);background:linear-gradient(135deg,rgba(143,163,125,0.10) 0%,var(--bg2) 100%)}
+  .source-tag{font-size:10px;color:var(--gold);font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:4px}
+  .source-card.highlight-sage .source-tag{color:var(--sage)}
+  .source-name{font-family:'DM Serif Display',Georgia,serif;font-size:17px;color:var(--text);margin-bottom:4px}
+  .source-note{font-size:12.5px;color:var(--text-grey);line-height:1.4}
+
+  .pay-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+  .pay-card{
+    background:var(--bg2);border:1px solid var(--border);border-radius:12px;
+    padding:18px 16px;text-align:center;
+  }
+  .pay-card.featured{border:2px solid var(--sage);background:linear-gradient(180deg,rgba(143,163,125,0.10) 0%,var(--bg2) 100%)}
+  .pay-tag{font-size:10px;color:var(--gold);font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:8px}
+  .pay-card.featured .pay-tag{color:var(--sage)}
+  .pay-amount{font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-size:30px;color:var(--gold);line-height:1}
+  .pay-card.featured .pay-amount{color:var(--sage)}
+  .pay-meta{font-size:11px;color:var(--text-grey2);font-weight:600;margin-top:4px}
+  .pay-note{font-size:12px;color:var(--text-grey);line-height:1.4;margin-top:8px}
+
+  .job-post{
+    background:#fff;border:1px solid var(--border);border-radius:14px;
+    padding:24px 28px;font-family:Georgia,serif;font-size:13.5px;color:#1F1812;line-height:1.55;
+  }
+  .job-post h3{font-family:'DM Sans',sans-serif;font-size:15.5px;margin:14px 0 6px;color:var(--gold-dk)}
+  .job-post p{margin-bottom:10px}
+  .job-post strong{font-weight:700}
+
+  .resource-row{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:10px;
+  }
+  .resource-card{
+    background:var(--bg2);border:1px solid var(--border);border-radius:12px;
+    padding:14px 18px;text-decoration:none;color:inherit;display:block;
+  }
+  .resource-tag{font-size:10px;color:var(--gold);font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:4px}
+  .resource-name{font-size:13.5px;color:var(--text);font-weight:600}
+
+  /* Footer */
+  footer{
+    margin-top:48px;padding-top:24px;border-top:1px solid var(--border);
+    text-align:center;
+  }
+  .footer-thanks{
+    font-family:'DM Serif Display',Georgia,serif;font-style:italic;
+    font-size:18px;color:var(--text);margin-bottom:14px;
+  }
+  .footer-contacts{
+    display:flex;justify-content:center;gap:24px;flex-wrap:wrap;
+    font-size:12px;font-weight:600;color:var(--gold-dk);
+  }
+  .footer-meta{
+    margin-top:18px;font-size:10.5px;color:var(--text-grey2);
+    font-weight:700;letter-spacing:0.18em;text-transform:uppercase;
+  }
+
+  @media (max-width:680px){
+    .wrap{padding:24px 18px 48px}
+    .two-col,.source-grid,.resource-row{grid-template-columns:1fr}
+    .pay-grid{grid-template-columns:1fr}
+    .gate-form{flex-direction:column}
+    .gate-form button{width:100%}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand">
+      <img src="../assets/pixsort-logo.jpeg" alt="PixSort">
+      <span class="brand-name">PixSort · Tiff's Playbook</span>
+    </div>
+    <span class="doc-tag">Editor Playbook · v1</span>
+  </header>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="eyebrow">The Editor Playbook</div>
+    <h1>Hire editors. Build a <em>nonstop workflow.</em></h1>
+    <p class="lede">The job post template, standards, pay structure, and handoff workflow I use to ship content nonstop with a team of 3 editors. No fluff, just what I actually do.</p>
+  </div>
+
+  <!-- Email gate -->
+  <div class="gate" id="gate">
+    <div class="gate-form-wrap" id="gateForm">
+      <div class="gate-flag">Drop your email · unlock everything below in 1 click</div>
+      <div class="gate-title">All <em>7 resources.</em><br>Unlocked instantly.</div>
+      <div class="gate-sub">No "check your email" wait. The full playbook + every template loads right here, the second you hit submit.</div>
+
+      <div class="gate-unlock-list">
+        <div class="unlock-item"><span class="ulock">→</span> The hand-off vs keep framework</div>
+        <div class="unlock-item"><span class="ulock">→</span> My actual job post (copy-paste ready)</div>
+        <div class="unlock-item"><span class="ulock">→</span> The editor brief template + text overlays table</div>
+        <div class="unlock-item"><span class="ulock">→</span> My non-negotiable standards (the editor agreement)</div>
+        <div class="unlock-item"><span class="ulock">→</span> The Slack channel structure + handoff system</div>
+        <div class="unlock-item"><span class="ulock">→</span> Pay structure + paid trial playbook</div>
+        <div class="unlock-item"><span class="ulock">→</span> Where to find editors (4 real sources)</div>
+      </div>
+
+      <form method="post"
+            action="https://sendfox.com/form/mnndyq/1xxqoy"
+            class="sendfox-form gate-form"
+            id="1xxqoy"
+            data-async="true"
+            data-recaptcha="true">
+        <input type="text" name="first_name" required placeholder="First name" autocomplete="given-name">
+        <input type="email" name="email" required placeholder="your@email.com" autocomplete="email">
+        <!-- honeypot, required by SendFox -->
+        <div style="position:absolute;left:-5000px" aria-hidden="true">
+          <input type="text" name="a_password" tabindex="-1" value="" autocomplete="off">
+        </div>
+        <button type="submit">Unlock all 7 resources →</button>
+      </form>
+      <div class="gate-foot">Instant access · No spam · Unsubscribe anytime</div>
+    </div>
+    <div class="gate-success" id="gateSuccess">
+      <div class="check">✓</div>
+      <div class="gate-success-title">Unlocked. <em>All yours.</em></div>
+      <div class="gate-success-sub">Everything's open below ↓ &nbsp;Plus I sent a copy to your inbox.</div>
+    </div>
+  </div>
+
+  <!-- Playbook content -->
+  <div class="playbook">
+
+    <!-- Hand off vs keep -->
+    <div>
+      <h2 class="section-h">Hand off vs <em>keep.</em></h2>
+      <p class="section-sub">You don't hand over everything. You hand over the parts the editor can do faster than you.</p>
+      <div class="two-col">
+        <div class="card" style="border-color:var(--sage);border-width:2px">
+          <div style="font-size:10.5px;color:var(--sage);font-weight:800;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:10px">Hand off</div>
+          <ul>
+            <li>Cuts, pacing, transitions</li>
+            <li>Color grade (D-Log → Rec709 + LUTs)</li>
+            <li>Captions, motion graphics, callouts</li>
+            <li>B-roll selection + placement</li>
+            <li>Sound design + music</li>
+            <li>File delivery (export specs, naming)</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color:var(--pink);border-width:2px">
+          <div style="font-size:10.5px;color:var(--pink);font-weight:800;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:10px">Keep</div>
+          <ul>
+            <li>Hooks. <em>Always.</em></li>
+            <li>Voice + POV</li>
+            <li>Strategy + ideation</li>
+            <li>Taste (final approval)</li>
+            <li>Brand voice + style</li>
+            <li>Account management</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Where to find -->
+    <div>
+      <h2 class="section-h">Where to <em>find them.</em></h2>
+      <p class="section-sub">Four places I actually use. Referrals + the IG DM trick are the highest-signal plays.</p>
+      <div class="source-grid">
+        <a href="https://www.onlinejobs.ph/jobseekers/jobsearch" target="_blank" rel="noopener" class="source-card">
+          <div class="source-tag">01 · Job board ↗</div>
+          <div class="source-name">Onlinejobs.ph</div>
+          <div class="source-note">Philippine talent. Great for retainers + ongoing work.</div>
+        </a>
+        <a href="https://www.upwork.com/" target="_blank" rel="noopener" class="source-card">
+          <div class="source-tag">02 · Freelance ↗</div>
+          <div class="source-name">Upwork</div>
+          <div class="source-note">Wider net. Useful for per-video deals. Vet hard.</div>
+        </a>
+        <div class="source-card highlight-sage">
+          <div class="source-tag">03 · Best signal</div>
+          <div class="source-name">Referrals</div>
+          <div class="source-note">Ask creators in your space who their editor is. Best editors get referred, not job-hunted.</div>
+        </div>
+        <a href="https://www.instagram.com/p/DY6ht94sLKe/" target="_blank" rel="noopener" class="source-card highlight">
+          <div class="source-tag">04 · Secret weapon ↗</div>
+          <div class="source-name">DM the IG commenters</div>
+          <div class="source-note">Comment under editor-influencer reels. People commenting are upskilling editors looking for work.</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Pay -->
+    <div>
+      <h2 class="section-h">What to <em>pay them.</em></h2>
+      <p class="section-sub">References + complexity drive the number. My baselines:</p>
+      <div class="pay-grid">
+        <div class="pay-card">
+          <div class="pay-tag">Short-form</div>
+          <div class="pay-amount">$15-20</div>
+          <div class="pay-meta">per video</div>
+          <div class="pay-note">Reels, Shorts, TikTok cuts.</div>
+        </div>
+        <div class="pay-card">
+          <div class="pay-tag">Long-form</div>
+          <div class="pay-amount">~$120</div>
+          <div class="pay-meta">per video · 8-10 min</div>
+          <div class="pay-note">YouTube. Scales with complexity.</div>
+        </div>
+        <div class="pay-card featured">
+          <div class="pay-tag">My favorite</div>
+          <div class="pay-amount">$500</div>
+          <div class="pay-meta">prepaid lump</div>
+          <div class="pay-note">Drawn down at per-video rate.</div>
+        </div>
+      </div>
+      <p style="font-family:'DM Serif Display',serif;font-style:italic;font-size:14.5px;color:var(--text);text-align:center;margin-top:10px"><em>The clearer your brief, the cheaper your edits.</em></p>
+    </div>
+
+    <!-- Job post template -->
+    <div>
+      <h2 class="section-h">My actual <em>job post.</em></h2>
+      <p class="section-sub">Copy it, swap in your details, post on Upwork or Onlinejobs.ph.</p>
+      <div class="job-post" id="jobPostBody">
+        <h3 style="margin-top:0">Title</h3>
+        <p>Short-Form Video Editor Wanted — Female Founder Building in Public Needs Your Skills</p>
+
+        <h3>About the Role</h3>
+        <p>We're looking for a short-form video editor to join the [YOUR NAME] team — a fully remote team creating content around [YOUR NICHE]. This is an ongoing role with consistent weekly volume.</p>
+
+        <h3>About the Channel</h3>
+        <p>[YOUR BIO + REAL NUMBERS]. Content covers [YOUR TOPICS]. The tone is direct, grounded, and transparent — not corporate, not over-polished. Think smart editing that enhances the story without stealing the show.</p>
+
+        <h3>What You'll Do</h3>
+        <p>Edit short-form vertical videos (Reels, TikToks, Shorts — 15-90 seconds) from raw footage + a detailed brief. Punchy cuts, scroll-stopping hooks, on-screen text with great pacing, b-roll layering, sound design. Match the brand's visual style across every clip. Hit fast turnaround on a steady weekly volume.</p>
+
+        <h3>What the Briefs Look Like</h3>
+        <p>Our briefs are detailed and shot-by-shot — covering hook, transcript, text overlay specs, b-roll direction, sound effects, brand colors, and asset links. <a href="https://docs.google.com/document/d/1CImHC4ehCWd3rQKa02cx9rs9fP8SSDqLerAZJc6iuzE/edit?usp=sharing" target="_blank">Real example brief here.</a></p>
+
+        <h3>Must-Haves</h3>
+        <p>Experience editing short-form vertical content (Reels, TikTok, Shorts). Able to execute from a detailed brief independently. Strong sense of hooks + pacing. Reliable + communicative. Portfolio with vertical edits.</p>
+
+        <h3>Compensation</h3>
+        <p><strong>$15-$20 per short-form video, based on experience.</strong> Long-form compensated separately if it comes up. Fully remote. Ongoing role with consistent weekly volume.</p>
+
+        <h3>How to Apply</h3>
+        <p>Send: 2-3 examples of short-form vertical videos you've edited (Reels/TikToks/Shorts preferred), a brief note on your editing style, your current turnaround time for a single short, and your preferred editing software (CapCut, Premiere, DaVinci, etc.). We'll set up a short paid test edit for top candidates.</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+        <button type="button" onclick="copyJobPost()" style="background:var(--gold);color:#fff;border:none;border-radius:10px;padding:12px 22px;font-family:inherit;font-size:12.5px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;display:inline-flex;align-items:center;gap:8px">
+          <span id="copyBtnLabel">Copy the post</span>
+        </button>
+        <a href="https://www.upwork.com/" target="_blank" rel="noopener" style="background:var(--bg2);color:var(--gold-dk);border:1px solid var(--border);border-radius:10px;padding:12px 22px;font-family:inherit;font-size:12.5px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:8px">Post on Upwork ↗</a>
+      </div>
+    </div>
+
+    <!-- The trial -->
+    <div>
+      <h2 class="section-h">The paid <em>trial.</em></h2>
+      <p class="section-sub">Pay for the trial. Free trials get free quality.</p>
+      <div class="card">
+        <p style="font-size:14.5px;color:var(--text);margin-bottom:14px"><strong>Long-form:</strong> 1-minute intro edit from your raw footage + brief.</p>
+        <p style="font-size:14.5px;color:var(--text);margin-bottom:18px"><strong>Short-form:</strong> Full short-form video, end to end.</p>
+        <div style="font-size:11px;color:var(--gold-dk);font-weight:800;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:10px">What you're testing</div>
+        <ul>
+          <li><strong>Taste</strong> — do you like what they shipped?</li>
+          <li><strong>Deadline</strong> — did they honor it?</li>
+          <li><strong>Questions</strong> — did they ask to understand?</li>
+          <li><strong>Closeness</strong> — how near were they to your ideal?</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Standards -->
+    <div>
+      <h2 class="section-h">My <em>non-negotiable</em> standards.</h2>
+      <p class="section-sub">Every editor on my team signs these before they start. Print the agreement, have them sign.</p>
+      <div class="card">
+        <ul>
+          <li><strong>5-hour</strong> max reply time during working hours</li>
+          <li><strong>24-hour</strong> first cut from brief</li>
+          <li><strong>24-hour</strong> turnaround on revisions</li>
+          <li><strong>12-hour</strong> blocker flag if anything's missing</li>
+          <li>Exact <strong>filename + folder</strong> conventions</li>
+          <li><strong>Color grade applied</strong> (D-Log → Rec709 + LUTs)</li>
+          <li><strong>Captions burned in</strong>, manually corrected</li>
+          <li><strong>Hook untouched</strong>, B-roll audio muted</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Communication -->
+    <div>
+      <h2 class="section-h">How we <em>communicate.</em></h2>
+      <p class="section-sub">Slack is the hub. Async by default. Real-time when it matters.</p>
+      <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:20px;align-items:start">
+        <div class="card">
+          <ul>
+            <li><strong>One assignments channel per editor.</strong> Briefs land where they belong. No DM hunting for what's the latest spec.</li>
+            <li><strong>One inbox channel per editor.</strong> Questions, blockers, work-in-progress live there. Async-friendly.</li>
+            <li><strong>#ready-to-post is the finish line.</strong> Finished cuts posted publicly. Wins are seen, standards stay visible.</li>
+            <li><strong>5-hour reply standard</strong> during working hours. Async doesn't mean silent.</li>
+          </ul>
+        </div>
+        <div style="background:#1A1D21;border-radius:12px;padding:14px 12px;box-shadow:0 20px 40px rgba(31,24,18,0.22);font-family:'Inter','Helvetica Neue',Arial,sans-serif">
+          <div style="display:flex;align-items:center;gap:6px;padding-bottom:10px;border-bottom:1px solid #2C2F35;margin-bottom:8px">
+            <div style="width:18px;height:18px;background:#4A154B;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:10px">T</div>
+            <div style="color:#fff;font-weight:700;font-size:11px">Tiff's content team</div>
+          </div>
+          <div style="font-size:9px;color:#ABABAD;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px;padding-left:3px">Channels</div>
+          <div style="display:flex;flex-direction:column;gap:2px;font-size:11.5px;color:#D1D2D3">
+            <div style="padding:2px 6px;border-radius:3px"># all-content-hustlers</div>
+            <div style="padding:2px 6px;border-radius:3px"># announcements</div>
+            <div style="padding:2px 6px;border-radius:3px;display:flex;align-items:center;gap:5px"><span style="color:#919191;font-size:9.5px">🔒</span>assignments-anand</div>
+            <div style="padding:2px 6px;border-radius:3px;background:rgba(156,123,51,0.20);color:#fff;display:flex;align-items:center;gap:5px"><span style="color:#fff;font-size:9.5px">🔒</span>assignments-eclips-hunny</div>
+            <div style="padding:2px 6px;border-radius:3px;display:flex;align-items:center;gap:5px"><span style="color:#919191;font-size:9.5px">🔒</span>assignments-rochelle</div>
+            <div style="padding:2px 6px;border-radius:3px;display:flex;align-items:center;gap:5px"><span style="color:#919191;font-size:9.5px">🔒</span>inbox-anand</div>
+            <div style="padding:2px 6px;border-radius:3px;display:flex;align-items:center;gap:5px"><span style="color:#919191;font-size:9.5px">🔒</span>inbox-eclips-hunny</div>
+            <div style="padding:2px 6px;border-radius:3px;display:flex;align-items:center;gap:5px"><span style="color:#919191;font-size:9.5px">🔒</span>inbox-rochelle</div>
+            <div style="padding:2px 6px;border-radius:3px;display:flex;align-items:center;gap:5px"><span style="color:#919191;font-size:9.5px">🔒</span>ready-to-post</div>
+            <div style="padding:2px 6px;border-radius:3px"># social</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Handoff -->
+    <div>
+      <h2 class="section-h">The <em>handoff system.</em></h2>
+      <p class="section-sub">It's not Drive. It's albums. Way faster than uploading raw footage every time.</p>
+      <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:center">
+        <div class="card">
+          <ul>
+            <li>Create B-roll <strong>albums</strong> on your iPhone with PixSort.</li>
+            <li>For a new video, drop the relevant clips into one album.</li>
+            <li>Share the <strong>album link</strong> with your editor.</li>
+            <li>Editor pulls B-roll + returns the cut via <strong>Drive or Dropbox.</strong></li>
+          </ul>
+        </div>
+        <div style="display:flex;justify-content:center">
+          <div style="background:#1F1812;border-radius:24px;padding:5px;box-shadow:0 22px 44px rgba(31,24,18,0.22),0 0 0 1px var(--border-soft);max-width:200px">
+            <img src="../assets/pixsort-albums-after.png" alt="PixSort organized B-Roll Fashion, Fitness, Food albums in iOS Photos" style="width:100%;display:block;border-radius:20px">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Brief template (inline, with text overlays table) -->
+    <div>
+      <h2 class="section-h">The <em>brief.</em> Every video starts with one.</h2>
+      <p class="section-sub">If it's not in the brief, the editor's guessing. Same skeleton every time. Below is the simplified version — copy + paste straight into Google Docs.</p>
+
+      <div class="job-post" style="font-family:'Inter',sans-serif;font-size:14px">
+
+        <div style="padding:16px 20px;margin:-24px -28px 18px;background:var(--text);color:#F5EFE0;border-radius:14px 14px 0 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+          <div>
+            <div style="font-size:10.5px;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,239,224,0.65);margin-bottom:3px">Editor brief — template</div>
+            <div style="font-family:'DM Serif Display',Georgia,serif;font-size:18px;line-height:1.2">[Project code] · <em style="color:var(--gold-soft)">[length]</em> · [style]</div>
+          </div>
+          <a href="brief.html" target="_blank" rel="noopener" style="background:var(--gold-soft);color:var(--text);font-size:11px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;padding:10px 16px;border-radius:8px;text-decoration:none;white-space:nowrap">Open + copy →</a>
+        </div>
+
+        <h3 style="margin-top:0">Source clip</h3>
+        <p style="margin:0;font-size:13.5px"><strong>Folder:</strong> [where the raw lives] · <strong>File:</strong> [filename] · <strong>Link:</strong> [iCloud / Drive / Frame.io] · <strong>In frame:</strong> [who's in the shot] · <strong>Note:</strong> [anything weird]</p>
+
+        <h3>Hook (0:00–0:05)</h3>
+        <p style="margin-bottom:8px;font-size:13.5px">Pull this line from the <strong>[start / end / middle]</strong> of the clip:</p>
+        <div style="background:#FBF7EE;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 16px;font-style:italic;font-size:13.5px;margin-bottom:8px">"[The exact opening line — copy/paste from the transcript]"</div>
+        <p style="margin:0;font-size:13.5px">Hard cut in. No intro, no fade. Let it land — then cut to Beat 1.</p>
+
+        <h3>Text overlays</h3>
+        <table style="width:100%;border-collapse:collapse;font-size:13px;background:#FBF7EE;border-radius:8px;overflow:hidden;margin:0 0 10px">
+          <thead>
+            <tr style="background:var(--text);color:var(--gold-soft)">
+              <th style="text-align:left;padding:9px 12px;font-size:10.5px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase">Beat</th>
+              <th style="text-align:left;padding:9px 12px;font-size:10.5px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase">Timecode</th>
+              <th style="text-align:left;padding:9px 12px;font-size:10.5px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase">Overlay text</th>
+              <th style="text-align:left;padding:9px 12px;font-size:10.5px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase">Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:8px 12px;border-top:1px solid var(--border);font-weight:700;color:var(--gold-dk)">Hook</td><td style="padding:8px 12px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-grey)">0:00</td><td style="padding:8px 12px;border-top:1px solid var(--border);font-style:italic">"[curiosity line]"</td><td style="padding:8px 12px;border-top:1px solid var(--border)">Stop the scroll</td></tr>
+            <tr><td style="padding:8px 12px;border-top:1px solid var(--border);font-weight:700;color:var(--gold-dk)">Beat 1</td><td style="padding:8px 12px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-grey)">~0:05</td><td style="padding:8px 12px;border-top:1px solid var(--border);font-style:italic">"[intro line]"</td><td style="padding:8px 12px;border-top:1px solid var(--border)">Establish who / what</td></tr>
+            <tr><td style="padding:8px 12px;border-top:1px solid var(--border);font-weight:700;color:var(--gold-dk)">Beat 2</td><td style="padding:8px 12px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-grey)">~0:15</td><td style="padding:8px 12px;border-top:1px solid var(--border);font-style:italic">"[insight line]"</td><td style="padding:8px 12px;border-top:1px solid var(--border)">Name the insight before they do</td></tr>
+            <tr><td style="padding:8px 12px;border-top:1px solid var(--border);font-weight:700;color:var(--gold-dk)">Beat 3</td><td style="padding:8px 12px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-grey)">~0:32</td><td style="padding:8px 12px;border-top:1px solid var(--border);font-style:italic">"[payoff setup]"</td><td style="padding:8px 12px;border-top:1px solid var(--border)">Set up what's about to happen</td></tr>
+          </tbody>
+        </table>
+        <p style="margin:0;font-size:12.5px;color:var(--text-grey)"><strong style="color:var(--gold-dk)">Style:</strong> Top-center, small font, clean. Fade in at beat start, hold ~3 sec. <strong style="color:var(--gold-dk)">Never overlay during a close-up.</strong></p>
+
+        <h3>Editing notes</h3>
+        <p style="margin:0;font-size:13.5px"><strong>Music:</strong> [none under dialogue / soft under B-roll] · <strong>Captions:</strong> white text, black outline, bottom third · <strong>Highlight words:</strong> ["X", "Y", "Z"] — bold in captions · <strong>Never:</strong> [overlay during a close-up / music over the hook] · <strong>Tone:</strong> [authentic / cinematic / fast-cut]</p>
+
+        <h3>Export</h3>
+        <p style="margin:0;font-size:13.5px"><strong>Aspect:</strong> 9:16 (1080×1920) · <strong>Filename:</strong> <code style="font-family:'JetBrains Mono',monospace;background:rgba(156,123,51,0.13);color:var(--gold-dk);padding:2px 6px;border-radius:3px;font-size:12px">[project-code]-[descriptor]-v1.mp4</code></p>
+
+      </div>
+    </div>
+
+    <!-- Resources -->
+    <div>
+      <h2 class="section-h"><em>Steal</em> these templates.</h2>
+      <p class="section-sub">Templates, docs, and the tools I actually use. All free, all yours.</p>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
+        <a href="brief.html" target="_blank" rel="noopener" class="resource-card" style="padding:18px 22px">
+          <div class="resource-tag">Template · Copy + paste ↗</div>
+          <div class="resource-name" style="margin-bottom:4px">Editor brief template</div>
+          <div style="font-size:12px;color:var(--text-grey);line-height:1.45">The simplified brief above, with a one-click copy button. Paste straight into Google Docs.</div>
+        </a>
+        <a href="job-post.pdf" target="_blank" rel="noopener" class="resource-card" style="padding:18px 22px">
+          <div class="resource-tag">Resource · PDF ↗</div>
+          <div class="resource-name" style="margin-bottom:4px">Job post — template + my reference</div>
+          <div style="font-size:12px;color:var(--text-grey);line-height:1.45">5-page branded PDF with the job post template, my filled-in reference, and the filtering playbook.</div>
+        </a>
+        <a href="https://docs.google.com/document/d/1bTNe8deJhkHTuop20RVT8XqMatC7At2SughFR2_fuWk/edit?usp=sharing" target="_blank" rel="noopener" class="resource-card" style="padding:18px 22px">
+          <div class="resource-tag">Real example · Google Doc ↗</div>
+          <div class="resource-name" style="margin-bottom:4px">V_155 brief — Neil street interview</div>
+          <div style="font-size:12px;color:var(--text-grey);line-height:1.45">An actual brief I sent. See what a finished, shot-by-shot version looks like end to end.</div>
+        </a>
+        <a href="https://fps-ecom.github.io/editor-team-doc/" target="_blank" rel="noopener" class="resource-card" style="padding:18px 22px">
+          <div class="resource-tag">Reference doc ↗</div>
+          <div class="resource-name" style="margin-bottom:4px">Editor team master doc</div>
+          <div style="font-size:12px;color:var(--text-grey);line-height:1.45">Every standard, file spec, naming convention, and process my team works to. Living doc.</div>
+        </a>
+        <a href="https://pixsort.app" target="_blank" rel="noopener" class="resource-card" style="padding:18px 22px;border:2px solid var(--gold);background:linear-gradient(135deg,rgba(156,123,51,0.10) 0%,var(--bg2) 100%)">
+          <div class="resource-tag" style="color:var(--gold-dk)">Tool ↗</div>
+          <div class="resource-name" style="margin-bottom:4px">PixSort — auto-sort your camera roll</div>
+          <div style="font-size:12px;color:var(--text);line-height:1.45">Free to download · <strong>$70/yr for anyone reading this</strong> (vs $100). The handoff system above runs on it.</div>
+        </a>
+        <a href="https://www.instagram.com/tiffanyparraa" target="_blank" rel="noopener" class="resource-card" style="padding:18px 22px">
+          <div class="resource-tag">Follow + DM ↗</div>
+          <div class="resource-name" style="margin-bottom:4px">@tiffanyparraa on Instagram</div>
+          <div style="font-size:12px;color:var(--text-grey);line-height:1.45">Drop me a DM if you hire someone using this. I love hearing about it.</div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-thanks">Built this for creators who want their <em>time back.</em></div>
+    <div class="footer-contacts">
+      <span>IG · @tiffanyparraa</span>
+      <span>WhatsApp · +1 805 397 8582</span>
+      <span>tiffany@firepitsurplus.com</span>
+    </div>
+    <div class="footer-meta">PixSort · Tiff's Editor Playbook · 2026</div>
+  </footer>
+
+</div>
+
+<script>
+  // Copy the job post text to clipboard so they can paste straight into Upwork
+  function copyJobPost(){
+    const src = document.getElementById('jobPostBody');
+    if(!src) return;
+    // Build a clean plain-text version with section headings
+    let txt = '';
+    src.querySelectorAll('h3, p').forEach(el => {
+      if (el.tagName === 'H3') txt += '\n' + el.textContent.toUpperCase() + '\n';
+      else txt += el.textContent + '\n';
+    });
+    txt = txt.trim();
+    navigator.clipboard.writeText(txt).then(() => {
+      const lbl = document.getElementById('copyBtnLabel');
+      if (lbl){
+        const orig = lbl.textContent;
+        lbl.textContent = 'Copied ✓';
+        setTimeout(() => { lbl.textContent = orig; }, 2000);
+      }
+    }).catch(() => {
+      alert('Copy failed. Select the post manually and copy it.');
+    });
+  }
+</script>
+
+<!-- SendFox embed script — handles the actual form POST async -->
+<script src="https://cdn.sendfox.com/js/form.js" charset="utf-8"></script>
+
+<script>
+  (function(){
+    const form = document.querySelector('.sendfox-form');
+    const wrap = document.getElementById('gateForm');
+    const success = document.getElementById('gateSuccess');
+    const playbook = document.querySelector('.playbook');
+    if(!form) return;
+
+    function revealPlaybook(){
+      wrap.style.display = 'none';
+      success.classList.add('show');
+      playbook.classList.add('unlocked');
+      setTimeout(() => {
+        playbook.scrollIntoView({behavior:'smooth', block:'start'});
+      }, 500);
+    }
+
+    form.addEventListener('submit', (e) => {
+      // SendFox's form.js intercepts and POSTs the data via AJAX
+      // (because of data-async="true"). We just reveal our success
+      // state after a brief delay.
+      const emailInput = form.querySelector('input[name="email"]');
+      if (!emailInput || !emailInput.value.trim()) return;
+      setTimeout(revealPlaybook, 700);
+    });
+  })();
+</script>
+
+</body>
+</html>

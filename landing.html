@@ -3,52 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Adley × PixSort: 100 Photos Sorted Free</title>
-  <meta name="description" content="Adley Kinsman's audience gets the first 100 photos in their camera roll sorted free on PixSort. Install through this page to claim. Stop losing hours to a messy camera roll.">
+  <title>PixSort — AI Camera Roll Organizer for iPhone</title>
+  <meta name="description" content="Auto-organize your iPhone camera roll into smart albums with AI. Find any photo in seconds, clear screenshots, ditch duplicates. Free on the App Store.">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="PixSort">
-  <meta property="og:title" content="Adley × PixSort: 100 photos sorted free">
-  <meta property="og:description" content="Install PixSort through Adley's link and your first 100 photos sort automatically. Adley's audience only.">
+  <meta property="og:title" content="PixSort — AI Camera Roll Organizer for iPhone">
+  <meta property="og:description" content="Auto-organize your iPhone camera roll into smart albums with AI. Find any photo in seconds, clear screenshots, ditch duplicates. Free on the App Store.">
   <meta property="og:image" content="https://pixsort.app/assets/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:url" content="https://pixsort.app/adley">
+  <meta property="og:url" content="https://pixsort.app/">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Adley × PixSort: 100 photos sorted free">
-  <meta name="twitter:description" content="Install PixSort through Adley's link and your first 100 photos sort automatically. Adley's audience only.">
+  <meta name="twitter:title" content="PixSort — AI Camera Roll Organizer for iPhone">
+  <meta name="twitter:description" content="Auto-organize your iPhone camera roll into smart albums with AI. Find any photo in seconds, clear screenshots, ditch duplicates. Free on the App Store.">
   <meta name="twitter:image" content="https://pixsort.app/assets/og-image.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/jpeg" href="../assets/pixsort-icon.jpeg">
-  <link rel="apple-touch-icon" href="../assets/pixsort-icon.jpeg">
+  <link rel="icon" type="image/jpeg" href="assets/pixsort-icon.jpeg">
+  <link rel="apple-touch-icon" href="assets/pixsort-icon.jpeg">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400;1,9..40,700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg:        #FFFFFF;
-      --bg2:       #FAFAF8;
-      --bg3:       #F4F4F0;
-      --lime:      #E5FF76;
-      --limedark:  #D2EE55;
-      --ink:       #0F0F0F;
-      --ink2:      #1A1A1A;
-      --grey:      #555555;
-      --grey2:     #888888;
-      --border:    #E5E5E5;
-      --gold:      #0F0F0F;
-      --golddark:  #333333;
-      --white:     #0F0F0F;
-      --app-bg:    #F0EBE0;
+      --bg:       #0F0F0F;
+      --bg2:      #1A1A1A;
+      --bg3:      #141414;
+      --gold:     #C4A060;
+      --golddark: #A8864A;
+      --white:    #FFFFFF;
+      --grey:     #999999;
+      --grey2:    #555555;
+      --border:   #2A2A2A;
+      --app-bg:   #F0EBE0;
     }
     html { scroll-behavior: smooth; }
     body {
       background: var(--bg);
       font-family: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      color: var(--ink);
+      color: var(--white);
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
@@ -58,339 +54,220 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 40px; height: 64px;
-      background: rgba(255,255,255,0.92); backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(0,0,0,0.06);
+      background: rgba(15,15,15,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
       transition: background .3s;
     }
     .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
     .nav-logo img { width: 28px; height: 28px; border-radius: 7px; }
-    .nav-logo span { font-size: 16px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+    .nav-logo span { font-size: 16px; font-weight: 800; color: var(--white); letter-spacing: -0.02em; }
     .nav-cta {
-      background: var(--lime); color: var(--ink); border: 1.5px solid var(--ink);
+      background: var(--gold); color: #0F0F0F; border: none;
       font-family: inherit; font-size: 13px; font-weight: 800;
       padding: 10px 22px; border-radius: 999px; cursor: pointer;
       transition: background .15s, transform .1s; text-decoration: none;
       letter-spacing: -0.01em;
     }
-    .nav-cta:hover { background: var(--limedark); transform: translateY(-1px); }
+    .nav-cta:hover { background: var(--golddark); transform: translateY(-1px); }
 
-    /* ── Hero (2-column collab layout) ────────────────── */
+    /* ── Hero ────────────────────────────────────────── */
     .hero {
       min-height: 100svh;
-      display: grid; grid-template-columns: 1.05fr 1fr; gap: 64px;
-      align-items: center; max-width: 1240px; margin: 0 auto;
-      padding: 120px 40px 80px; position: relative;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; text-align: center;
+      padding: 100px 24px 80px 2px;
+      position: relative; overflow: hidden;
     }
     .hero::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse 60% 50% at 25% 30%, rgba(229,255,118,0.35) 0%, transparent 70%);
-      pointer-events: none; z-index: 0;
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(196,160,96,0.07) 0%, transparent 70%);
+      pointer-events: none;
     }
-    .hero-text { position: relative; z-index: 1; }
-    .hero-photo-wrap { position: relative; z-index: 1; }
-    .hero-photo {
-      width: 100%; max-width: 460px; aspect-ratio: 3/4;
-      object-fit: cover; border-radius: 24px;
-      border: 1.5px solid var(--ink);
-      box-shadow: 10px 10px 0 var(--ink);
-      display: block; margin: 0 auto;
-    }
-    .hero-photo-caption {
-      margin-top: 18px; text-align: center;
-      font-size: 13px; font-weight: 700; color: var(--ink);
-    }
-    .hero-photo-caption .credit {
-      display: inline-block; margin-top: 6px;
-      background: var(--lime); padding: 4px 10px;
-      border-radius: 4px; border: 1px solid var(--ink);
-      font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase;
-    }
-    .appstore-pill {
+    .hero-eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
-      background: var(--ink); color: var(--bg); font-size: 12px; font-weight: 700;
-      letter-spacing: 0.04em; text-transform: uppercase;
-      padding: 9px 16px; border-radius: 999px; text-decoration: none;
-      margin-bottom: 18px; transition: transform .15s, background .15s;
-    }
-    .appstore-pill:hover { background: var(--ink2); transform: translateY(-1px); }
-    .appstore-pill .apple-glyph { display: inline-block; width: 14px; height: 14px; }
-    .collab-mark {
-      display: flex; align-items: center; gap: 14px;
-      font-size: 13px; font-weight: 800; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--ink); margin-bottom: 22px;
-    }
-    .collab-mark .collab-x {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 22px; height: 22px; background: var(--lime);
-      border: 1.5px solid var(--ink); border-radius: 50%;
-      font-size: 11px; font-weight: 900;
+      border: 1px solid rgba(196,160,96,0.3);
+      color: var(--gold); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      border-radius: 999px; padding: 6px 16px; margin-bottom: 36px;
     }
     .hero h1 {
       font-family: 'DM Serif Display', Georgia, serif;
-      font-size: clamp(36px, 5.4vw, 68px);
-      font-weight: 400; line-height: 1.05; letter-spacing: -0.03em;
-      color: var(--ink); margin-bottom: 22px;
+      font-size: clamp(52px, 9vw, 120px);
+      font-weight: 400; line-height: 1.0; letter-spacing: -0.03em;
+      color: var(--white); max-width: 900px; margin-bottom: 24px;
+      text-wrap: balance;
     }
-    .hero h1 .h1-line {
-      display: block; white-space: nowrap;
-    }
-    @media (max-width: 480px) {
-      .hero h1 .h1-line { white-space: normal; }
-    }
-    .hero h1 em {
-      font-style: italic; color: var(--ink); position: relative; display: inline-block;
-    }
-    .hero h1 em::after {
-      content: ''; position: absolute; left: -2px; right: -2px;
-      bottom: 0.05em; height: 0.30em;
-      background: var(--lime); z-index: -1;
-    }
+    .hero h1 em { font-style: italic; color: var(--gold); }
     .hero-sub {
-      font-size: clamp(16px, 1.5vw, 19px); color: var(--grey);
-      line-height: 1.55; margin-bottom: 18px; text-wrap: pretty; max-width: 540px;
+      font-size: clamp(16px, 2vw, 20px); color: var(--grey);
+      line-height: 1.6; max-width: 480px; margin-bottom: 48px;
+      text-wrap: pretty;
     }
-    .hero-discount-line {
-      font-size: clamp(15px, 1.4vw, 17px); font-weight: 800;
-      color: var(--ink); margin-bottom: 32px;
-    }
-    .hero-discount-line span {
-      position: relative; display: inline-block;
-    }
-    .hero-discount-line span::after {
-      content: ''; position: absolute; left: -3px; right: -3px;
-      bottom: 0.05em; height: 0.45em;
-      background: var(--lime); z-index: -1;
-    }
-
-    .cta-block { display: flex; flex-direction: column; align-items: stretch; gap: 14px; width: 100%; max-width: 460px; position: relative; z-index: 1; }
+    .cta-block { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; max-width: 420px; }
     .input-row {
       display: flex; width: 100%;
-      background: var(--bg2); border: 1.5px solid var(--ink);
+      background: #1A1A1A; border: 1.5px solid var(--border);
       border-radius: 999px; overflow: hidden;
-      box-shadow: 4px 4px 0 var(--ink);
-      transition: box-shadow .2s, transform .15s;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+      transition: border-color .2s, box-shadow .2s;
     }
     .input-row:focus-within {
-      transform: translate(-2px, -2px);
-      box-shadow: 6px 6px 0 var(--ink);
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(196,160,96,0.15);
     }
     .input-row input {
       flex: 1; border: none; outline: none; background: transparent;
-      font-family: inherit; font-size: 16px; color: var(--ink);
+      font-family: inherit; font-size: 16px; color: #1A1A1A;
       padding: 14px 20px;
     }
-    .input-row input::placeholder { color: var(--grey2); }
+    .input-row input::placeholder { color: #888888; }
     .input-row button {
-      background: var(--lime); color: var(--ink); border: none; cursor: pointer;
+      background: var(--gold); color: #0F0F0F; border: none; cursor: pointer;
       font-family: inherit; font-size: 13px; font-weight: 800;
-      padding: 0 22px; white-space: nowrap;
+      padding: 0 20px; white-space: nowrap;
       border-radius: 999px; margin: 4px;
       transition: background .15s;
     }
-    .input-row button:hover { background: var(--limedark); }
+    .input-row button:hover { background: var(--golddark); }
     .microcopy {
       font-size: 12px; color: var(--grey2);
-      display: flex; gap: 0; align-items: center; justify-content: center;
+      display: flex; gap: 0; align-items: center;
     }
     .microcopy span { display: flex; align-items: center; gap: 8px; }
     .microcopy span + span::before { content: '·'; margin: 0 10px; color: var(--grey2); }
-    .sms-disclosure {
-      font-size: 11px; color: var(--grey2); line-height: 1.45;
-      margin-top: 4px; max-width: 460px; text-align: center;
-    }
     .success-msg {
       display: none;
-      background: rgba(229,255,118,0.4); border: 1.5px solid var(--ink);
-      color: var(--ink); font-size: 15px; font-weight: 700;
+      background: rgba(139,155,94,0.1); border: 1px solid rgba(139,155,94,0.3);
+      color: #A8C070; font-size: 15px; font-weight: 600;
       border-radius: 16px; padding: 16px 24px; width: 100%;
       text-align: center; line-height: 1.5;
     }
-
-    /* ── Discount banner ─────────────────────────────── */
-    .discount-banner {
-      background: var(--lime);
-      border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
-      padding: 64px 40px;
+    .hero-phone {
+      margin-top: 72px; position: relative;
+      transform: perspective(1000px) rotateX(4deg) rotateY(-3deg);
+      filter: drop-shadow(0 60px 120px rgba(0,0,0,0.8)) drop-shadow(0 0 60px rgba(196,160,96,0.08));
+      transition: transform .4s ease;
     }
-    .discount-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: grid; grid-template-columns: 1.4fr auto;
-      gap: 64px; align-items: center;
-    }
-    .discount-text { text-align: left; }
-    .discount-eyebrow {
-      font-size: 11px; font-weight: 800; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--ink); margin-bottom: 18px;
-    }
-    .discount-banner h2 {
-      font-family: 'DM Serif Display', Georgia, serif;
-      font-size: clamp(36px, 5vw, 60px);
-      font-weight: 400; letter-spacing: -0.03em; line-height: 1.05;
-      color: var(--ink); margin-bottom: 14px; text-wrap: balance;
-    }
-    .discount-banner h2 em.discount-price {
-      font-style: italic; color: var(--ink);
-      position: relative; display: inline-block;
-    }
-    .discount-banner h2 em.discount-price::after {
-      content: ''; position: absolute; left: -3px; right: -3px;
-      bottom: 0.06em; height: 0.32em;
-      background: var(--bg); z-index: -1;
-    }
-    .discount-banner p {
-      font-size: 16px; color: var(--ink); opacity: 0.8; max-width: 540px;
-      margin: 0; line-height: 1.5;
-    }
-    .discount-qr { text-align: center; }
-    .discount-qr-card {
-      background: var(--bg); border: 1.5px solid var(--ink);
-      border-radius: 16px; padding: 14px;
-      box-shadow: 6px 6px 0 var(--ink);
-      display: inline-block;
-    }
-    .discount-qr-card img {
-      display: block; width: 200px; height: 200px;
-    }
-    .discount-qr-label {
-      margin-top: 14px; font-size: 12px; font-weight: 800;
-      letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink);
-    }
-    @media (max-width: 760px) {
-      .discount-inner { grid-template-columns: 1fr; gap: 32px; text-align: center; }
-      .discount-text { text-align: center; }
-      .discount-banner p { margin: 0 auto; }
-      .discount-qr { display: none; }
-    }
+    .hero-phone:hover { transform: perspective(1000px) rotateX(2deg) rotateY(0deg); }
 
     /* ── Statement ───────────────────────────────────── */
     .statement {
-      padding: 100px 24px; text-align: center; border-top: 1px solid var(--border);
+      padding: 120px 24px;
+      text-align: center; border-top: 1px solid var(--border);
     }
     .statement p {
       font-family: 'DM Serif Display', Georgia, serif;
-      font-size: clamp(40px, 6vw, 84px);
+      font-size: clamp(40px, 7vw, 96px);
       font-weight: 400; letter-spacing: -0.03em; line-height: 1.1;
-      color: var(--ink); max-width: 900px; margin: 0 auto;
+      color: var(--white); max-width: 900px; margin: 0 auto;
       text-wrap: balance;
     }
-    .statement p em {
-      font-style: italic; color: var(--ink); position: relative; display: inline-block;
-    }
-    .statement p em::after {
-      content: ''; position: absolute; left: -2px; right: -2px;
-      bottom: 0.06em; height: 0.30em;
-      background: var(--lime); z-index: -1;
-    }
+    .statement p em { font-style: italic; color: var(--gold); }
 
     /* ── Feature rows ─────────────────────────────────── */
     .features { padding: 0 40px 120px; max-width: 1200px; margin: 0 auto; }
     .feature-row {
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 80px; align-items: center;
-      padding: 100px 0;
+      padding: 120px 0;
       border-top: 1px solid var(--border);
     }
     .feature-row:first-child { border-top: none; }
     .feature-kw {
       font-family: 'DM Serif Display', Georgia, serif;
-      font-size: clamp(48px, 7vw, 88px);
+      font-size: clamp(56px, 8vw, 100px);
       font-weight: 400; font-style: italic;
-      color: var(--ink); letter-spacing: -0.04em;
-      line-height: 1; margin-bottom: 24px;
-      position: relative; display: inline-block;
-    }
-    .feature-kw::after {
-      content: ''; position: absolute; left: -4px; right: -4px;
-      bottom: 0.08em; height: 0.30em;
-      background: var(--lime); z-index: -1;
+      color: var(--gold); letter-spacing: -0.04em;
+      line-height: 1; margin-bottom: 28px;
     }
     .feature-caption {
-      font-size: clamp(16px, 1.6vw, 19px); color: var(--grey);
-      line-height: 1.65; max-width: 420px; text-wrap: pretty;
+      font-size: clamp(16px, 1.8vw, 20px); color: var(--grey);
+      line-height: 1.65; max-width: 400px;
+      text-wrap: pretty;
     }
-    .feature-phone-wrap { display: flex; justify-content: center; align-items: center; }
+    .feature-phone-wrap {
+      display: flex; justify-content: center; align-items: center;
+    }
     .feature-phone-wrap .phone-tilt-l {
       transform: perspective(800px) rotateY(8deg) rotateX(2deg);
-      filter: drop-shadow(0 30px 60px rgba(0,0,0,0.15)) drop-shadow(0 0 40px rgba(229,255,118,0.4));
+      filter: drop-shadow(0 40px 80px rgba(0,0,0,0.7)) drop-shadow(0 0 40px rgba(196,160,96,0.06));
     }
     .feature-phone-wrap .phone-tilt-r {
       transform: perspective(800px) rotateY(-8deg) rotateX(2deg);
-      filter: drop-shadow(0 30px 60px rgba(0,0,0,0.15)) drop-shadow(0 0 40px rgba(229,255,118,0.4));
+      filter: drop-shadow(0 40px 80px rgba(0,0,0,0.7)) drop-shadow(0 0 40px rgba(196,160,96,0.06));
     }
 
     /* ── Social proof ─────────────────────────────────── */
-    .social { background: var(--bg2); padding: 100px 40px; border-top: 1px solid var(--border); }
+    .social { background: var(--bg2); padding: 120px 40px; }
     .social-inner { max-width: 1100px; margin: 0 auto; }
     .social-label {
       font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--ink); margin-bottom: 56px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 64px;
       text-align: center;
     }
-    .quotes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .quotes-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
     .quote-card {
-      background: var(--bg); border: 1.5px solid var(--ink);
-      border-radius: 20px; padding: 32px 26px;
-      display: flex; flex-direction: column; gap: 24px;
-      box-shadow: 4px 4px 0 var(--ink);
+      background: #111; padding: 48px 36px;
+      display: flex; flex-direction: column; gap: 32px;
     }
     .quote-text {
       font-family: 'DM Serif Display', Georgia, serif;
-      font-size: clamp(18px, 1.7vw, 21px);
-      font-style: italic; color: var(--ink);
-      line-height: 1.5; flex: 1;
+      font-size: clamp(18px, 1.8vw, 22px);
+      font-style: italic; color: var(--white);
+      line-height: 1.6; flex: 1;
     }
-    .quote-attr { font-size: 13px; font-weight: 700; color: var(--ink); letter-spacing: 0.02em; }
+    .quote-attr { display: flex; align-items: center; gap: 12px; }
+    .quote-attr img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; flex-shrink: 0; opacity: 0.92; }
+    .quote-attr span { font-size: 13px; font-weight: 700; color: var(--gold); letter-spacing: 0.02em; }
 
     /* ── FAQ ──────────────────────────────────────────── */
-    .faq { padding: 100px 40px; max-width: 800px; margin: 0 auto; }
+    .faq { padding: 120px 40px; max-width: 800px; margin: 0 auto; }
     .faq-label {
       font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--ink); margin-bottom: 40px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 48px;
     }
     .faq-item { border-top: 1px solid var(--border); }
     .faq-item:last-child { border-bottom: 1px solid var(--border); }
     .faq-q {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 22px 0; cursor: pointer; gap: 16px;
-      font-size: 17px; font-weight: 700; color: var(--ink);
+      padding: 24px 0; cursor: pointer; gap: 16px;
+      font-size: 18px; font-weight: 600; color: var(--white);
+      transition: color .15s;
       list-style: none; user-select: none;
     }
+    .faq-q:hover { color: var(--gold); }
     .faq-icon {
       width: 28px; height: 28px; border-radius: 50%;
-      border: 1.5px solid var(--ink);
+      border: 1.5px solid var(--border);
       display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; transition: background .2s, transform .3s;
+      flex-shrink: 0; transition: border-color .2s, transform .3s;
     }
     .faq-icon svg { transition: transform .3s; }
-    .faq-item.open .faq-icon { background: var(--lime); }
+    .faq-item.open .faq-icon { border-color: var(--gold); }
     .faq-item.open .faq-icon svg { transform: rotate(45deg); }
     .faq-a {
-      font-size: 15px; color: var(--grey); line-height: 1.7;
+      font-size: 16px; color: var(--grey); line-height: 1.7;
       max-height: 0; overflow: hidden;
       transition: max-height .35s ease, padding .35s ease;
     }
-    .faq-item.open .faq-a { max-height: 280px; padding-bottom: 22px; }
+    .faq-item.open .faq-a { max-height: 200px; padding-bottom: 24px; }
 
     /* ── Final CTA ────────────────────────────────────── */
     .final-cta {
       background: var(--bg3); border-top: 1px solid var(--border);
-      padding: 120px 24px; text-align: center;
+      padding: 140px 24px; text-align: center;
     }
     .final-cta h2 {
       font-family: 'DM Serif Display', Georgia, serif;
-      font-size: clamp(40px, 6vw, 84px);
+      font-size: clamp(48px, 7vw, 100px);
       font-weight: 400; letter-spacing: -0.03em; line-height: 1;
-      color: var(--ink); margin-bottom: 18px; text-wrap: balance;
+      color: var(--white); margin-bottom: 20px; text-wrap: balance;
     }
-    .final-cta h2 em {
-      font-style: italic; color: var(--ink); position: relative; display: inline-block;
-    }
-    .final-cta h2 em::after {
-      content: ''; position: absolute; left: -2px; right: -2px;
-      bottom: 0.05em; height: 0.28em;
-      background: var(--lime); z-index: -1;
-    }
-    .final-cta p { font-size: 17px; color: var(--grey); margin-bottom: 40px; }
+    .final-cta p { font-size: 18px; color: var(--grey); margin-bottom: 48px; }
     .final-cta .cta-block { margin: 0 auto; }
 
     /* ── Footer ───────────────────────────────────────── */
@@ -400,29 +277,21 @@
       display: flex; align-items: center; justify-content: space-between;
     }
     .footer-logo { display: flex; align-items: center; gap: 10px; }
-    .footer-logo img { width: 22px; height: 22px; border-radius: 6px; opacity: 0.7; }
-    .footer-logo span { font-size: 14px; font-weight: 800; color: var(--grey2); }
+    .footer-logo img { width: 22px; height: 22px; border-radius: 6px; opacity: 0.5; }
+    .footer-logo span { font-size: 14px; font-weight: 800; color: rgba(255,255,255,0.4); }
     footer p { font-size: 13px; color: var(--grey2); }
 
     /* ── Responsive ───────────────────────────────────── */
     @media (max-width: 900px) {
       nav { padding: 0 20px; }
-      .hero { grid-template-columns: 1fr; gap: 40px; padding: 100px 24px 60px; text-align: center; }
-      .hero-text .collab-mark, .hero-text .microcopy { justify-content: center; }
-      .cta-block { margin: 0 auto; }
-      .hero-photo { max-width: 320px; }
       .features { padding: 0 20px 80px; }
-      .feature-row { grid-template-columns: 1fr; gap: 40px; padding: 70px 0; text-align: center; }
+      .feature-row { grid-template-columns: 1fr; gap: 40px; padding: 80px 0; }
       .feature-phone-wrap .phone-tilt-l,
-      .feature-phone-wrap .phone-tilt-r {
-        transform: none; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.15));
-      }
-      .feature-kw { display: inline-block; }
-      .feature-caption { margin: 0 auto; }
-      .quotes-grid { grid-template-columns: 1fr; gap: 12px; }
-      .social, .faq, .final-cta { padding-left: 20px; padding-right: 20px; }
-      .social, .faq { padding-top: 80px; padding-bottom: 80px; }
-      .final-cta { padding-top: 90px; padding-bottom: 90px; }
+      .feature-phone-wrap .phone-tilt-r { transform: none; filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7)); }
+      .quotes-grid { grid-template-columns: 1fr; gap: 2px; }
+      .social { padding: 80px 20px; }
+      .faq { padding: 80px 20px; }
+      .final-cta { padding: 100px 20px; }
       footer { flex-direction: column; gap: 12px; text-align: center; }
     }
     @media (max-width: 500px) {
@@ -461,219 +330,149 @@
 </head>
 <body>
 
-<!-- ── Nav ──────────────────────────────────────────── -->
 <nav>
   <a class="nav-logo" href="https://pixsort.app/">
-    <img src="../assets/pixsort-logo.jpeg" alt="PixSort">
+    <img src="assets/pixsort-logo.jpeg" alt="PixSort">
     <span>PixSort</span>
   </a>
-  <a class="nav-cta" href="https://app.appsflyer.com/id6760485464?pid=adley&c=adley-2026-06&af_channel=influencer&af_adset=adley-landing&af_ad=adley-dashboard-link&af_siteid=adley&af_sub1=adley&af_sub2=adley-2026-06&af_sub3=pixsort-app-adley&deep_link_value=collab&deep_link_sub1=adley&deep_link_sub2=adley-2026-06&deep_link_sub3=pixsort-app-adley&af_dp=sortscout%3A%2F%2Fcollab%2Fadley%3Futm_source%3Dadley%26utm_medium%3Dinfluencer%26utm_campaign%3Dadley-2026-06%26click_id%3Dpixsort-app-adley&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Fadley%2F&af_click_lookback=30d">Download Now</a>
+  <a class="nav-cta" href="https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464">Download Now</a>
 </nav>
 
-<!-- ── Hero ─────────────────────────────────────────── -->
 <section class="hero" id="top">
-  <div class="hero-text">
-    <a class="appstore-pill" href="https://app.appsflyer.com/id6760485464?pid=adley&c=adley-2026-06&af_channel=influencer&af_adset=adley-landing&af_ad=adley-dashboard-link&af_siteid=adley&af_sub1=adley&af_sub2=adley-2026-06&af_sub3=pixsort-app-adley&deep_link_value=collab&deep_link_sub1=adley&deep_link_sub2=adley-2026-06&deep_link_sub3=pixsort-app-adley&af_dp=sortscout%3A%2F%2Fcollab%2Fadley%3Futm_source%3Dadley%26utm_medium%3Dinfluencer%26utm_campaign%3Dadley-2026-06%26click_id%3Dpixsort-app-adley&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Fadley%2F&af_click_lookback=30d">
-      <svg class="apple-glyph" viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
-      Available on the App Store
-    </a>
-    <div class="collab-mark">
-      <span>Adley</span>
-      <span class="collab-x">×</span>
-      <span>PixSort</span>
+  <div class="hero-eyebrow">✦ AI-Powered Camera Organization</div>
+  <h1>Your camera roll.<br><em>Finally organized.</em></h1>
+  <p class="hero-sub">Built for creators who shoot everything and can never find anything.</p>
+  <div class="cta-block" id="hero-cta">
+    <div class="input-row" id="hero-input-row" style="background-color: rgb(240,237,237)">
+      <input type="tel" id="hero-phone" placeholder="Your phone number" inputmode="tel" autocomplete="tel" maxlength="14">
+      <button onclick="handleSubmit('hero')">Download Now — It's Free</button>
     </div>
-    <h1>
-      <span class="h1-line">Stop sorting clips.</span>
-      <span class="h1-line">Start <em>scaling content.</em></span>
-    </h1>
-    <p class="hero-sub">PixSort organizes every photo and video on your iPhone into smart albums, so your editor can grab what they need. No more "send me the clip from Tuesday" texts.</p>
-    <p class="hero-discount-line"><span>100 photos sorted, on us.</span></p>
-
-    <div class="cta-block" id="hero-cta">
-      <div class="input-row" id="hero-input-row">
-        <input type="tel" id="hero-phone" placeholder="Your phone number" inputmode="tel" autocomplete="tel" maxlength="14">
-        <button onclick="handleSubmit('hero')">Get 100 Free</button>
-      </div>
-      <div class="success-msg" id="hero-success">
-        You're in. Your 100-photo unlock is locked to your number.
-      </div>
-      <div class="microcopy">
-        <span>iOS</span>
-        <span>100 photos free</span>
-        <span>No spam</span>
-      </div>
-      <p class="sms-disclosure">By submitting, you agree to receive occasional SMS updates from PixSort. Reply STOP to opt out anytime. Msg &amp; data rates may apply.</p>
+    <div class="success-msg" id="hero-success">
+      You're in. We'll text you the moment PixSort is ready to download.
+    </div>
+    <div class="microcopy">
+      <span>iOS only</span>
+      <span>Free to download</span>
+      <span>No spam</span>
     </div>
   </div>
-
-  <div class="hero-photo-wrap">
-    <img class="hero-photo" src="../assets/adley.jpg" alt="Adley Kinsman">
-    <div class="hero-photo-caption">
-      Adley Kinsman · <span style="color:var(--grey);font-weight:600;">Founder, Viralish</span><br>
-      <span class="credit">76 Billion+ views earned for brands &amp; creators</span>
-    </div>
-  </div>
+  <div class="hero-phone" id="hero-phone-wrap"></div>
 </section>
 
-<!-- ── Discount banner ─────────────────────────────── -->
-<section class="discount-banner">
-  <div class="discount-inner">
-    <div class="discount-text">
-      <div class="discount-eyebrow">✦ Adley's audience exclusive</div>
-      <h2>Your first 100 photos. <em class="discount-price">Sorted on us.</em></h2>
-      <p>Install PixSort through this page and the first 100 photos in your camera roll get sorted into smart albums automatically. Tap <strong>Download Now</strong> above, or scan the QR with your iPhone.</p>
-    </div>
-    <div class="discount-qr">
-      <div class="discount-qr-card">
-        <img src="../assets/adley-qr.png" alt="Scan with your iPhone to install PixSort">
-      </div>
-      <div class="discount-qr-label">Scan with your iPhone</div>
-    </div>
-  </div>
-</section>
-
-<!-- ── Statement ─────────────────────────────────────── -->
 <div class="statement">
-  <p>Your camera roll is a<br><em>business asset.</em></p>
+  <p>Stop scrolling<br>through <em>your clips.</em></p>
 </div>
 
-<!-- ── Feature rows ──────────────────────────────────── -->
 <div class="features">
-
-  <!-- Find it -->
   <div class="feature-row">
     <div>
       <div class="feature-kw">Find it.</div>
-      <p class="feature-caption">Tell your editor "the keynote clips from Q3" and they actually find them. No scrolling 5,000 photos to guess.</p>
+      <p class="feature-caption">Search your entire camera roll by keyword. Gym. Bali. Sunset. PixSort finds it instantly.</p>
     </div>
     <div class="feature-phone-wrap">
       <div class="phone-tilt-r" id="phone-search"></div>
     </div>
   </div>
-
-  <!-- Sort it -->
   <div class="feature-row">
     <div class="feature-phone-wrap" style="order:-1">
       <div class="phone-tilt-l" id="phone-sort"></div>
     </div>
     <div>
       <div class="feature-kw">Sort it.</div>
-      <p class="feature-caption">AI builds the albums in the background. You name the categories (Events, Speaking, Product, Family) and PixSort fills them automatically.</p>
+      <p class="feature-caption">AI builds your albums automatically. You decide the categories — PixSort fills them.</p>
     </div>
   </div>
-
-  <!-- Send it -->
   <div class="feature-row">
     <div>
       <div class="feature-kw">Send it.</div>
-      <p class="feature-caption">Push any album back into iOS Photos and share it with your editor, social manager, or agency in two taps. No AirDrop marathons.</p>
+      <p class="feature-caption">Push any album straight to your camera roll. Ready for CapCut, InShot, or your editor.</p>
     </div>
     <div class="feature-phone-wrap">
       <div class="phone-tilt-r" id="phone-send"></div>
     </div>
   </div>
-
 </div>
 
-<!-- ── Adley spotlight ──────────────────────────────── -->
 <section class="social">
   <div class="social-inner">
-    <div class="social-label">Why Adley uses PixSort</div>
-    <div class="quotes-grid" style="grid-template-columns: 1fr;">
-      <div class="quote-card" style="max-width: 720px; margin: 0 auto; text-align: center;">
-        <p class="quote-text" style="font-size: clamp(20px, 2vw, 26px);">
-          "If you're producing content for your business and not organizing your camera roll, you're losing hours every week to chaos. PixSort is the tool I wish existed five years ago."
-        </p>
-        <div class="quote-attr">Adley Kinsman · Founder, Viralish · 76B+ views earned</div>
+    <div class="social-label">What creators say</div>
+    <div class="quotes-grid">
+      <div class="quote-card">
+        <p class="quote-text">"PixSort is really valuable for UGC creators who want to focus on their workflow."</p>
+        <div class="quote-attr"><img src="assets/Tran.jpg" alt="Tran"><span>— Tran, 69K followers leading UGC coaching creator</span></div>
+      </div>
+      <div class="quote-card">
+        <p class="quote-text">"Content that used to take an hour, two hours, three hours — now you're making it in 15 minutes."</p>
+        <div class="quote-attr"><img src="assets/Jaylin.jpg" alt="Jaylin"><span>— Jaylin, 42K Instagram</span></div>
+      </div>
+      <div class="quote-card">
+        <p class="quote-text">"When I hire another editor again, I would use this specifically to have them go through my B-roll."</p>
+        <div class="quote-attr"><img src="assets/Antoine.jpg" alt="Antoine"><span>— Antoine, $100K+ in brand deals</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── FAQ ────────────────────────────────────────────── -->
 <section class="faq">
   <div class="faq-label">Common questions</div>
-
-  <div class="faq-item">
-    <div class="faq-q" onclick="toggleFaq(this)">
-      <span>How do I get 100 photos sorted free?</span>
-      <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
-    </div>
-    <div class="faq-a">Two routes from this page: tap <strong>Download Now</strong> at the top, or enter your phone number below. Both carry Adley's link into the App Store, and the 100-photo free unlock activates automatically the first time you open the app.</div>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-q" onclick="toggleFaq(this)">
-      <span>What if I install PixSort directly from the App Store?</span>
-      <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
-    </div>
-    <div class="faq-a">You'll get the standard free tier. The 100-photo bonus is tied to coming through Adley's link, which is why this page is the only place to claim it.</div>
-  </div>
-
   <div class="faq-item">
     <div class="faq-q" onclick="toggleFaq(this)">
       <span>What is PixSort?</span>
       <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
     </div>
-    <div class="faq-a">PixSort is an iPhone app that uses AI to auto-organize your camera roll into smart albums by subject, event, person, or any custom category you create. Then it pushes those albums into native iOS Photos so you can hand them to your editor in seconds.</div>
+    <div class="faq-a">PixSort is an iPhone app that uses AI to automatically organize your camera roll into smart albums — by subject, date, location, and more. No manual sorting required.</div>
   </div>
-
   <div class="faq-item">
     <div class="faq-q" onclick="toggleFaq(this)">
       <span>Does it work on videos too?</span>
       <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
     </div>
-    <div class="faq-a">Yes. PixSort organizes both photos and videos. It's built specifically for people who shoot a lot of business content and need their team to find specific clips fast.</div>
+    <div class="faq-a">Yes. PixSort organizes both photos and videos. It's built specifically for creators who shoot a lot of B-roll and need to find specific clips fast.</div>
   </div>
-
   <div class="faq-item">
     <div class="faq-q" onclick="toggleFaq(this)">
       <span>Will it delete my photos?</span>
       <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
     </div>
-    <div class="faq-a">Never. PixSort only organizes. It never deletes anything without your explicit approval. The Clean Up feature shows you duplicates and screenshots, and you decide what goes.</div>
+    <div class="faq-a">Never. PixSort only organizes — it never deletes anything without your explicit approval. The Clean Up feature shows you what to delete, and you decide.</div>
   </div>
-
   <div class="faq-item">
     <div class="faq-q" onclick="toggleFaq(this)">
-      <span>I'm on Android. Can I use this?</span>
+      <span>When is it available to download?</span>
       <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
     </div>
-    <div class="faq-a">PixSort is iOS-only right now. Drop your number and we'll text you the moment the Android version launches, with Adley's 100-photo unlock applied.</div>
+    <div class="faq-a">PixSort is live on the App Store. Enter your phone number above and we'll send you straight to the install page.</div>
   </div>
 </section>
 
-<!-- ── Final CTA ──────────────────────────────────────── -->
 <section class="final-cta">
-  <h2>Get PixSort.<br><em>On us.</em></h2>
-  <p>100 photos sorted free, exclusive to Adley's audience.</p>
+  <h2>Available now<br>on the App Store.</h2>
+  <p>Enter your number — we'll send you straight to install.</p>
   <div class="cta-block">
     <div class="input-row" id="final-input-row">
       <input type="tel" id="final-phone" placeholder="Your phone number" inputmode="tel" autocomplete="tel" maxlength="14">
-      <button onclick="handleSubmit('final')">Get 100 Free</button>
+      <button onclick="handleSubmit('final')">Download Now — It's Free</button>
     </div>
     <div class="success-msg" id="final-success">
-      You're in. Your 100-photo unlock is locked to your number.
+      You're in. We'll text you the moment PixSort is ready to download.
     </div>
     <div class="microcopy">
-      <span>iOS</span>
-      <span>100 photos free</span>
+      <span>iOS only</span>
+      <span>Free to download</span>
       <span>No spam</span>
     </div>
-    <p class="sms-disclosure">By submitting, you agree to receive occasional SMS updates from PixSort. Reply STOP to opt out anytime. Msg &amp; data rates may apply.</p>
   </div>
 </section>
 
-<!-- ── Footer ─────────────────────────────────────────── -->
 <footer>
   <div class="footer-logo">
-    <img src="../assets/pixsort-logo.jpeg" alt="PixSort">
+    <img src="assets/pixsort-logo.jpeg" alt="PixSort">
     <span>PixSort</span>
   </div>
   <p>© 2026 PixSort</p>
 </footer>
 
-<!-- ── React phone mockups ───────────────────────────── -->
+<script src="https://tally.so/widgets/embed.js" async></script>
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
@@ -686,11 +485,9 @@ const C = {
   iconBg:'#E8C87A', pill:'#E4DDD1',
 };
 const F = "'DM Sans','Helvetica Neue',Helvetica,Arial,sans-serif";
-
 const PW = 390; const PH = 844;
 const HERO_DW = 280;
-const FEAT_DW = 260; const FEAT_DH = Math.round(FEAT_DW * PH / PW);
-const FEAT_SC = FEAT_DW / PW;
+const FEAT_DW = 260;
 
 const StatusBar = () => (
   <div style={{height:52,display:'flex',alignItems:'flex-end',justifyContent:'space-between',padding:'0 28px 10px',fontFamily:F}}>
@@ -738,12 +535,7 @@ const Phone = ({ children, active='home', dw=FEAT_DW }) => {
   const dh = Math.round(dw * PH / PW);
   const sc = dw / PW;
   return (
-    <div style={{
-      width:dw+16, height:dh+16, borderRadius:Math.round(56*sc)+8, padding:8,
-      background:'linear-gradient(155deg,#2A2A2A 0%,#141414 100%)',
-      boxShadow:'0 40px 100px rgba(0,0,0,0.9),0 0 0 1px rgba(255,255,255,0.07),inset 0 1px 0 rgba(255,255,255,0.05)',
-      position:'relative', flexShrink:0,
-    }}>
+    <div style={{width:dw+16,height:dh+16,borderRadius:Math.round(56*sc)+8,padding:8,background:'linear-gradient(155deg,#2A2A2A 0%,#141414 100%)',boxShadow:'0 40px 100px rgba(0,0,0,0.9),0 0 0 1px rgba(255,255,255,0.07),inset 0 1px 0 rgba(255,255,255,0.05)',position:'relative',flexShrink:0}}>
       <div style={{position:'absolute',left:-3.5,top:'19%',width:3.5,height:'5%',background:'#333',borderRadius:'2px 0 0 2px'}}/>
       <div style={{position:'absolute',left:-3.5,top:'27%',width:3.5,height:'8.5%',background:'#333',borderRadius:'2px 0 0 2px'}}/>
       <div style={{position:'absolute',left:-3.5,top:'38%',width:3.5,height:'8.5%',background:'#333',borderRadius:'2px 0 0 2px'}}/>
@@ -806,18 +598,18 @@ const Screen1 = () => (
       <span style={{fontSize:20,fontWeight:800,color:C.t1}}>Your Albums</span>
       <span style={{fontSize:15,fontWeight:600,color:C.gold}}>Edit</span>
     </div>
-    <AlbumRow icon="📱" name="Screenshots" count={35} imgA="../assets/crop_ss_r1c1.jpg" imgB="../assets/crop_ss_r1c2.jpg" extra="../assets/crop_ss_r2c1.jpg"/>
-    <AlbumRow icon="🍔" name="Food" count={30} imgA="../assets/crop_food_r1c1.jpg" imgB="../assets/crop_food_r1c2.jpg" extra="../assets/crop_food_r2c1.jpg"/>
-    <AlbumRow icon="✈️" name="Travel" count={124} imgA="../assets/crop_travel_r1c2.jpg" imgB="../assets/crop_travel_r2c1.jpg" extra="../assets/crop_travel_r4c2.jpg"/>
+    <AlbumRow icon="📱" name="Screenshots" count={35} imgA="assets/crop_ss_r1c1.jpg" imgB="assets/crop_ss_r1c2.jpg" extra="assets/crop_ss_r2c1.jpg"/>
+    <AlbumRow icon="🍔" name="Food" count={30} imgA="assets/crop_food_r1c1.jpg" imgB="assets/crop_food_r1c2.jpg" extra="assets/crop_food_r2c1.jpg"/>
+    <AlbumRow icon="✈️" name="Travel" count={124} imgA="assets/crop_travel_r1c2.jpg" imgB="assets/crop_travel_r2c1.jpg" extra="assets/crop_travel_r4c2.jpg"/>
     <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
   </div>
 );
 
 const Screen2 = () => {
   const gymThumbs = [
-    {src:'../assets/crop_gym_r1c1.jpg',v:true},{src:'../assets/crop_gym_r1c2.jpg',v:false},{src:'../assets/crop_gym_r1c3.jpg',v:false},
-    {src:'../assets/crop_gym_r2c1.jpg',v:true},{src:'../assets/crop_gym_r2c2.jpg',v:false},{src:'../assets/crop_gym_r2c3.jpg',v:false},
-    {src:'../assets/crop_gym_r3c1.jpg',v:false},{src:'../assets/crop_gym_r3c2.jpg',v:true},{src:'../assets/crop_gym_r3c3.jpg',v:false},
+    {src:'assets/crop_gym_r1c1.jpg',v:true},{src:'assets/crop_gym_r1c2.jpg',v:false},{src:'assets/crop_gym_r1c3.jpg',v:false},
+    {src:'assets/crop_gym_r2c1.jpg',v:true},{src:'assets/crop_gym_r2c2.jpg',v:false},{src:'assets/crop_gym_r2c3.jpg',v:false},
+    {src:'assets/crop_gym_r3c1.jpg',v:false},{src:'assets/crop_gym_r3c2.jpg',v:true},{src:'assets/crop_gym_r3c3.jpg',v:false},
   ];
   return (
     <div style={{padding:'8px 20px 16px',fontFamily:F}}>
@@ -865,7 +657,7 @@ const Screen4 = () => (
       <span style={{fontSize:13,fontWeight:600,color:C.gold}}>Sort ↓</span>
     </div>
     <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:4}}>
-      {['../assets/crop_sunset_r1c1.jpg','../assets/crop_sunset_r1c2.jpg','../assets/crop_sunset_r2c1.jpg'].map((src,i)=>(
+      {['assets/crop_sunset_r1c1.jpg','assets/crop_sunset_r1c2.jpg','assets/crop_sunset_r2c1.jpg'].map((src,i)=>(
         <div key={i} style={{aspectRatio:'1',borderRadius:8,position:'relative',overflow:'hidden'}}>
           <img src={src} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
           <div style={{position:'absolute',top:6,right:6,width:18,height:18,background:C.gold,borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center'}}>
@@ -884,15 +676,15 @@ const Screen4 = () => (
 
 const Screen5 = () => {
   const pixTiles = [
-    '../assets/crop_travel5_r1c2.jpg','../assets/crop_travel5_r1c3.jpg','../assets/crop_travel5_r2c1.jpg',
-    '../assets/crop_travel5_r2c2.jpg','../assets/crop_travel5_r4c1.jpg','../assets/crop_travel5_r4c2.jpg',
-    '../assets/crop_travel5_r1c2.jpg','../assets/crop_travel5_r2c1.jpg','../assets/crop_travel5_r4c1.jpg',
+    'assets/crop_travel5_r1c2.jpg','assets/crop_travel5_r1c3.jpg','assets/crop_travel5_r2c1.jpg',
+    'assets/crop_travel5_r2c2.jpg','assets/crop_travel5_r4c1.jpg','assets/crop_travel5_r4c2.jpg',
+    'assets/crop_travel5_r1c2.jpg','assets/crop_travel5_r2c1.jpg','assets/crop_travel5_r4c1.jpg',
   ];
   return (
     <div style={{padding:'12px 16px 8px',fontFamily:F,height:'100%',display:'flex',flexDirection:'column',gap:12}}>
       <div style={{background:C.card,borderRadius:20,overflow:'hidden',boxShadow:'0 2px 12px rgba(45,42,34,0.1)'}}>
         <div style={{padding:'12px 14px 10px',display:'flex',alignItems:'center',gap:10,borderBottom:`1px solid ${C.border}`}}>
-          <img src="../assets/pixsort-logo.jpeg" alt="" style={{width:26,height:26,borderRadius:7}}/>
+          <img src="assets/pixsort-logo.jpeg" alt="" style={{width:26,height:26,borderRadius:7}}/>
           <div style={{flex:1}}>
             <div style={{fontSize:14,fontWeight:800,color:C.t1}}>Travel</div>
             <div style={{fontSize:11,color:C.t2}}>60 photos · sorted</div>
@@ -914,8 +706,8 @@ const Screen5 = () => {
       </div>
       <div style={{background:'#FFFFFF',borderRadius:18,padding:'12px',display:'flex',alignItems:'center',gap:10,boxShadow:'0 2px 12px rgba(0,0,0,0.08)'}}>
         <div style={{width:48,height:48,borderRadius:12,overflow:'hidden',display:'grid',gridTemplateColumns:'1fr 1fr',gap:1}}>
-          <img src="../assets/crop_travel5_r1c2.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
-          <img src="../assets/crop_travel5_r2c1.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
+          <img src="assets/crop_travel5_r1c2.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
+          <img src="assets/crop_travel5_r2c1.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
         </div>
         <div style={{flex:1}}>
           <div style={{fontSize:13,fontWeight:700,color:'#1C1C1E'}}>Added to Photos</div>
@@ -929,20 +721,15 @@ const Screen5 = () => {
   );
 };
 
-const mountPhone = (id, component) => {
-  const el = document.getElementById(id);
-  if (el) ReactDOM.createRoot(el).render(component);
-};
-mountPhone('phone-search', <Phone dw={FEAT_DW} active="search"><Screen2/></Phone>);
-mountPhone('phone-sort',   <Phone dw={FEAT_DW} active="search"><Screen4/></Phone>);
-mountPhone('phone-send',   <Phone dw={FEAT_DW} active="home"><Screen5/></Phone>);
+ReactDOM.createRoot(document.getElementById('hero-phone-wrap')).render(<Phone dw={HERO_DW} active="home"><Screen1/></Phone>);
+ReactDOM.createRoot(document.getElementById('phone-search')).render(<Phone dw={FEAT_DW} active="search"><Screen2/></Phone>);
+ReactDOM.createRoot(document.getElementById('phone-sort')).render(<Phone dw={FEAT_DW} active="search"><Screen4/></Phone>);
+ReactDOM.createRoot(document.getElementById('phone-send')).render(<Phone dw={FEAT_DW} active="home"><Screen5/></Phone>);
 </script>
 
-<!-- ── Interactions ──────────────────────────────────────── -->
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzc6k607rRZ2PlRKjGO7kjpuzGXLFiDiO7TjnXLmjBhkyZHhGELauQokFzLb2QNTq459A/exec';
-const APP_STORE_URL = 'https://app.appsflyer.com/id6760485464?pid=adley&c=adley-2026-06&af_channel=influencer&af_adset=adley-landing&af_ad=adley-dashboard-link&af_siteid=adley&af_sub1=adley&af_sub2=adley-2026-06&af_sub3=pixsort-app-adley&deep_link_value=collab&deep_link_sub1=adley&deep_link_sub2=adley-2026-06&deep_link_sub3=pixsort-app-adley&af_dp=sortscout%3A%2F%2Fcollab%2Fadley%3Futm_source%3Dadley%26utm_medium%3Dinfluencer%26utm_campaign%3Dadley-2026-06%26click_id%3Dpixsort-app-adley&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fpixsort.app%2Fadley%2F&af_click_lookback=30d';
-const APP_STORE_DIRECT_URL = 'https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464';
+const APP_STORE_URL = 'https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464';
 
 function getSubmitMeta() {
   const params = new URLSearchParams(window.location.search);
@@ -962,7 +749,7 @@ function savePhone(phone, platform) {
     mode: 'no-cors',
     keepalive: true,
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ phone, source: 'adley', platform, ...getSubmitMeta() })
+    body: JSON.stringify({ phone, platform, ...getSubmitMeta() })
   }).catch(() => {});
 }
 
@@ -1003,11 +790,13 @@ function handleSubmit(prefix) {
   const success = document.getElementById(prefix + '-success');
   const btn     = row ? row.querySelector('button') : null;
   const val     = (input ? input.value : '').trim();
+
   if (!val) {
     if (input) { input.style.boxShadow = '0 0 0 2px #D4704A inset'; input.focus(); }
-    setTimeout(() => { if(input) input.style.boxShadow = ''; }, 1500);
+    setTimeout(() => { if (input) input.style.boxShadow = ''; }, 1500);
     return;
   }
+
   const digits = val.replace(/\D/g, '');
   if (digits.length !== 10) {
     if (input) { input.style.boxShadow = '0 0 0 2px #D14848 inset'; input.focus(); }
@@ -1015,16 +804,16 @@ function handleSubmit(prefix) {
     setTimeout(() => { if (input) input.style.boxShadow = ''; }, 1500);
     return;
   }
+
   const platform = detectPlatform();
   if (btn) {
-    btn.textContent = platform === 'android' ? 'Saving…' : 'Opening App Store…';
+    btn.textContent = platform === 'ios' ? 'Opening App Store…' : 'Saving…';
     btn.disabled = true;
   }
   savePhone(digits, platform);
+
   if (platform === 'ios') {
     window.location.href = APP_STORE_URL;
-  } else if (platform === 'desktop') {
-    window.location.href = APP_STORE_DIRECT_URL;
   } else {
     if (row)     row.style.display = 'none';
     if (success) success.style.display = 'block';
@@ -1062,7 +851,6 @@ function toggleFaq(el) {
   if (!wasOpen) item.classList.add('open');
 }
 </script>
-
 <!-- ── Android/Desktop Waitlist Modal ───────────────────── -->
 <style>
   .modal-overlay {
@@ -1104,21 +892,21 @@ function toggleFaq(el) {
 <div class="modal-overlay" id="waitlist-modal" style="display:none;" onclick="if(event.target===this)hideWaitlistModal()">
   <div class="modal-card">
     <button class="modal-close" onclick="hideWaitlistModal()" aria-label="Close">&times;</button>
-    <h3 class="modal-title">Claim your 100 photos free</h3>
-    <p class="modal-subtitle" id="modal-subtitle">Drop your number to lock in your 100-photo unlock.</p>
+    <h3 class="modal-title">Sign up for the wait list</h3>
+    <p class="modal-subtitle" id="modal-subtitle">We'll text you as soon as we're live on the Play Store.</p>
     <div class="input-row" id="modal-input-row">
       <input type="tel" id="modal-phone" placeholder="Your phone number" inputmode="tel" autocomplete="tel">
       <button onclick="handleSubmit('modal')">Notify Me</button>
     </div>
     <div class="success-msg" id="modal-success" style="display:none;">
-      You're in. Your 100-photo unlock is locked to your number.
+      You're in. We'll text you the moment PixSort is ready for you.
     </div>
-    <p class="sms-disclosure">By submitting, you agree to receive occasional SMS updates from PixSort. Reply STOP to opt out. Msg &amp; data rates may apply.</p>
   </div>
 </div>
 
 <script>
-document.querySelectorAll('.nav-cta, .appstore-pill').forEach(link => {
+// Smart header CTA: iOS goes straight to App Store; Android/desktop opens the waitlist modal
+document.querySelectorAll('.nav-cta').forEach(link => {
   link.addEventListener('click', e => {
     const platform = detectPlatform();
     if (platform === 'ios') return;
@@ -1130,8 +918,8 @@ function showWaitlistModal(platform) {
   const sub = document.getElementById('modal-subtitle');
   if (sub) {
     sub.textContent = platform === 'android'
-      ? "Drop your number to lock in your 100-photo unlock. We'll let you know when PixSort lands on Android."
-      : "Drop your number to lock in your 100-photo unlock. Install on your iPhone to redeem.";
+      ? "We'll text you as soon as we're live on the Play Store."
+      : "Drop your number — we'll text you the App Store link to install on your iPhone.";
   }
   document.getElementById('waitlist-modal').style.display = 'flex';
   setTimeout(() => document.getElementById('modal-phone')?.focus(), 50);
