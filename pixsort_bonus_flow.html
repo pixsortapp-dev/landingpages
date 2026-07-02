@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pixsort — 100-sort bonus flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700;800;900&family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F5EFE0;
+    --bg2:#EDE4CE;
+    --text:#1F1812;
+    --text-grey:#5B5145;
+    --text-grey2:#7A6F60;
+    --gold:#9C7B33;
+    --gold-dk:#6E5524;
+    --gold-soft:#E8C268;
+    --sage:#B8C4A5;
+    --sage-dk:#8FA37D;
+    --pink:#F4C4B0;
+    --border:#D9C9A6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{
+    background:#EFE7D1;
+    color:var(--text);
+    font-family:'DM Sans','Inter','Helvetica Neue',Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+
+  .wrap{
+    max-width:1780px;
+    margin:0 auto;
+    padding:60px 48px 80px;
+  }
+
+  header{margin-bottom:48px;text-align:center}
+  header .eyebrow{
+    display:inline-block;
+    background:var(--text);
+    color:var(--gold-soft);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    padding:7px 14px;
+    border-radius:999px;
+    margin-bottom:14px;
+  }
+  header h1{
+    font-family:'DM Sans',sans-serif;
+    font-weight:800;
+    font-size:56px;
+    line-height:1;
+    letter-spacing:-0.035em;
+    color:var(--text);
+    margin-bottom:14px;
+  }
+  header h1 em{color:var(--gold);font-style:normal}
+  header .lede{
+    font-size:17px;
+    color:var(--text-grey);
+    max-width:640px;
+    margin:0 auto;
+    line-height:1.5;
+  }
+
+  /* Trigger context row */
+  .trigger{
+    display:flex;justify-content:center;align-items:center;gap:12px;
+    margin:32px 0 44px;
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    color:var(--text-grey);
+    font-weight:600;
+  }
+  .trigger .pill{
+    background:#fff;
+    border:1.5px dashed var(--gold);
+    color:var(--gold-dk);
+    padding:8px 14px;
+    border-radius:999px;
+    font-weight:700;
+    letter-spacing:0.06em;
+  }
+  .trigger strong{color:var(--gold-dk);font-weight:800}
+
+  /* 3-column phone flow */
+  .flow{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:32px;
+    align-items:start;
+  }
+
+  /* Phone frame */
+  .phone{
+    position:relative;
+    background:#000;
+    border-radius:56px;
+    padding:14px;
+    box-shadow:0 40px 80px rgba(31,24,18,0.22);
+  }
+  .screen{
+    position:relative;
+    background:var(--cream);
+    border-radius:44px;
+    aspect-ratio:9/19.5;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    padding:56px 28px 28px;
+  }
+
+  /* iOS status bar mock */
+  .status{
+    position:absolute;top:20px;left:0;right:0;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:0 30px;
+    font-size:14px;font-weight:700;color:var(--text);
+    font-family:'Inter',sans-serif;
+  }
+  .status .signal{display:flex;gap:5px;align-items:center;font-size:11px}
+  .status .signal .bat{
+    background:var(--text);color:#fff;padding:1px 5px;border-radius:3px;
+    font-size:9px;font-weight:800;
+  }
+
+  /* Screen chrome (top back / skip / progress dots) */
+  .chrome{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:26px;
+  }
+  .chrome .back{font-size:22px;color:var(--text);font-weight:600}
+  .chrome .dots{
+    display:flex;gap:5px;
+  }
+  .chrome .dots span{
+    width:20px;height:5px;border-radius:3px;background:rgba(31,24,18,0.14);
+  }
+  .chrome .dots span.active{background:var(--gold);width:32px}
+  .chrome .skip{font-size:14px;color:var(--text-grey2);font-weight:500}
+
+  /* Card labels above phone */
+  .step-tag{
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    margin-bottom:16px;
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:0.24em;
+    text-transform:uppercase;
+    color:var(--gold-dk);
+  }
+  .step-tag .num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:26px;height:26px;
+    background:var(--text);color:var(--gold-soft);
+    border-radius:50%;font-size:11px;letter-spacing:0;
+  }
+
+  /* Content styles inside phone */
+  .content{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* ═══ SCREEN 1 — MILESTONE CELEBRATION ═══ */
+  .milestone-hero{
+    text-align:center;
+    margin:34px 0 30px;
+    position:relative;
+  }
+  .confetti{
+    position:absolute;inset:0;pointer-events:none;
+  }
+  .confetti::before,.confetti::after{
+    content:'';position:absolute;
+    width:8px;height:8px;border-radius:2px;
+  }
+  .confetti::before{
+    background:var(--gold);
+    top:12px;left:22%;
+    transform:rotate(35deg);
+  }
+  .confetti::after{
+    background:var(--sage-dk);
+    top:30px;right:24%;
+    transform:rotate(-20deg);
+  }
+  .badge-100{
+    display:inline-flex;
+    align-items:center;justify-content:center;
+    width:180px;height:180px;
+    border-radius:50%;
+    background:radial-gradient(circle at 30% 30%,var(--gold-soft) 0%,var(--gold) 70%);
+    box-shadow:0 20px 40px rgba(156,123,51,0.30), inset 0 -8px 16px rgba(110,85,36,0.35);
+    font-family:'DM Sans',sans-serif;
+    font-weight:900;
+    color:#fff;
+    font-size:56px;
+    letter-spacing:-0.03em;
+    position:relative;
+  }
+  .badge-100::after{
+    content:'✓';
+    position:absolute;
+    bottom:-6px;right:-6px;
+    width:52px;height:52px;
+    background:var(--sage-dk);
+    color:#fff;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:26px;font-weight:800;
+    box-shadow:0 6px 14px rgba(31,24,18,0.18);
+  }
+  .stars{
+    position:absolute;
+    font-size:24px;color:var(--gold);
+  }
+  .stars.s1{top:20px;left:12%}
+  .stars.s2{bottom:20px;right:8%;font-size:16px}
+
+  .eye-gold{
+    display:inline-block;
+    background:var(--text);color:var(--gold-soft);
+    font-size:10px;font-weight:800;
+    letter-spacing:0.28em;text-transform:uppercase;
+    padding:6px 12px;border-radius:999px;
+    font-family:'Inter',sans-serif;
+    margin-bottom:14px;
+  }
+  h2.big{
+    font-family:'DM Sans',sans-serif;
+    font-weight:800;
+    font-size:36px;line-height:1.05;
+    letter-spacing:-0.03em;
+    color:var(--text);
+    margin-bottom:12px;
+  }
+  h2.big em{color:var(--gold);font-style:normal}
+  .sub{
+    font-size:15px;line-height:1.5;
+    color:var(--text-grey);
+    max-width:340px;
+    margin:0 auto;
+  }
+
+  /* Stat bar */
+  .stat-row{
+    display:flex;justify-content:space-around;gap:8px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:16px 12px;
+    margin-top:24px;
+  }
+  .stat{text-align:center}
+  .stat .n{
+    font-family:'DM Sans',sans-serif;
+    font-weight:800;font-size:22px;
+    color:var(--text);letter-spacing:-0.02em;line-height:1;
+  }
+  .stat .l{
+    font-size:10px;color:var(--text-grey2);font-weight:700;
+    letter-spacing:0.14em;text-transform:uppercase;margin-top:4px;
+    font-family:'Inter',sans-serif;
+  }
+
+  /* Buttons */
+  .btn-primary{
+    background:var(--gold);color:#fff;
+    padding:18px 20px;border-radius:16px;
+    font-family:'DM Sans',sans-serif;
+    font-weight:700;font-size:17px;
+    text-align:center;
+    letter-spacing:-0.01em;
+    border:none;cursor:pointer;
+    box-shadow:0 8px 20px rgba(156,123,51,0.28);
+  }
+  .btn-ghost{
+    background:transparent;color:var(--text-grey);
+    padding:14px 20px;
+    text-align:center;
+    font-family:'DM Sans',sans-serif;
+    font-weight:600;font-size:15px;
+    border:none;cursor:pointer;
+  }
+  .actions{
+    margin-top:auto;
+    display:flex;flex-direction:column;gap:6px;
+  }
+  .center{text-align:center}
+
+  /* ═══ SCREEN 2 — OFFER (photo stack + 250 badge) ═══ */
+  .photo-stack{
+    position:relative;
+    width:230px;height:230px;
+    margin:20px auto 30px;
+  }
+  .photo-stack .pic{
+    position:absolute;
+    width:180px;height:180px;
+    border-radius:22px;
+    background-size:cover;background-position:center;
+    box-shadow:0 12px 28px rgba(31,24,18,0.18);
+    border:4px solid var(--cream);
+  }
+  .photo-stack .pic-a{
+    top:0;left:0;
+    background:linear-gradient(135deg,#B8956F,#7A5C3D);
+    transform:rotate(-10deg);
+  }
+  .photo-stack .pic-b{
+    top:8px;left:24px;z-index:2;
+    background:linear-gradient(135deg,#E8B4A0,#C88060);
+  }
+  .photo-stack .pic-c{
+    top:2px;right:-6px;z-index:1;
+    background:linear-gradient(135deg,#D4B896,#8B7A5B);
+    transform:rotate(8deg);
+  }
+  .share-badge{
+    position:absolute;
+    bottom:22px;left:22px;z-index:5;
+    width:48px;height:48px;border-radius:50%;
+    background:var(--sage);
+    display:flex;align-items:center;justify-content:center;
+    font-size:22px;
+    box-shadow:0 6px 14px rgba(0,0,0,0.15);
+  }
+  .plus-badge{
+    position:absolute;
+    bottom:28px;right:-4px;z-index:6;
+    background:var(--text);color:#fff;
+    padding:8px 18px;border-radius:999px;
+    font-family:'DM Sans',sans-serif;
+    font-weight:800;font-size:20px;
+    box-shadow:0 8px 18px rgba(31,24,18,0.25);
+  }
+
+  /* ═══ SCREEN 3 — SUCCESS ═══ */
+  .success-ring{
+    width:180px;height:180px;
+    margin:36px auto 26px;
+    border-radius:50%;
+    background:radial-gradient(circle at 30% 30%,#D4E5C4 0%,var(--sage) 70%);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 20px 40px rgba(143,163,125,0.35), inset 0 -8px 16px rgba(80,110,60,0.25);
+    color:#fff;font-size:88px;font-weight:900;
+  }
+  .balance-card{
+    background:#fff;
+    border:2px solid var(--gold);
+    border-radius:18px;
+    padding:18px 22px;
+    margin-top:24px;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .balance-card .l{
+    font-size:11px;color:var(--gold-dk);font-weight:800;
+    letter-spacing:0.18em;text-transform:uppercase;
+    font-family:'Inter',sans-serif;
+    margin-bottom:2px;
+  }
+  .balance-card .old{
+    font-size:14px;color:var(--text-grey2);
+    text-decoration:line-through;
+  }
+  .balance-card .new{
+    font-family:'DM Sans',sans-serif;
+    font-size:36px;font-weight:900;color:var(--gold);
+    letter-spacing:-0.03em;line-height:1;
+  }
+
+  /* Copy blocks below the flow */
+  .copy-block{
+    margin-top:56px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:32px 36px;
+  }
+  .copy-block h3{
+    font-family:'DM Sans',sans-serif;
+    font-weight:800;font-size:22px;
+    color:var(--text);
+    margin-bottom:6px;
+    letter-spacing:-0.02em;
+  }
+  .copy-block .why{
+    font-size:14px;color:var(--text-grey);line-height:1.5;
+    max-width:640px;
+    margin-bottom:22px;
+  }
+  .copy-grid{
+    display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;
+  }
+  .copy-item{
+    background:var(--cream);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:18px 20px;
+  }
+  .copy-item .num{
+    font-family:'Inter',sans-serif;
+    font-size:10px;font-weight:800;
+    letter-spacing:0.2em;text-transform:uppercase;
+    color:var(--gold-dk);margin-bottom:8px;
+  }
+  .copy-item ul{
+    list-style:none;padding:0;font-size:13px;line-height:1.55;color:var(--text);
+  }
+  .copy-item ul li{padding:4px 0;border-bottom:1px dashed var(--border)}
+  .copy-item ul li:last-child{border-bottom:none}
+  .copy-item ul strong{color:var(--gold-dk);font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Pixsort · onboarding flow</div>
+    <h1>Free upgrade at <em>the 100-sort win.</em></h1>
+    <p class="lede">Instead of a cold ask, the bonus appears right after the user hits their first big milestone. 3 screens: celebrate → offer → confirm. Same +250 sorts payoff, framed as a reward they earned.</p>
+  </header>
+
+  <div class="trigger">
+    <span class="pill">Trigger</span>
+    <span>User just tapped <strong>Sort</strong> on their <strong>100th photo</strong>. Any screen fires.</span>
+  </div>
+
+  <div class="flow">
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SCREEN 1 — MILESTONE
+    ═════════════════════════════════════════════════════════════ -->
+    <div>
+      <div class="step-tag"><span class="num">1</span> Milestone</div>
+      <div class="phone">
+        <div class="screen">
+          <div class="status">
+            <span>3:46</span>
+            <span class="signal">📶 <span class="bat">100</span></span>
+          </div>
+
+          <div class="chrome">
+            <div class="back"></div>
+            <div class="dots"><span></span><span></span><span></span><span class="active"></span><span></span></div>
+            <div class="skip"></div>
+          </div>
+
+          <div class="content">
+            <div class="milestone-hero">
+              <div class="confetti"></div>
+              <span class="stars s1">✦</span>
+              <span class="stars s2">✦</span>
+              <div class="badge-100">100</div>
+            </div>
+
+            <div class="center">
+              <div class="eye-gold">Milestone</div>
+              <h2 class="big">100 sorts down.<br><em>You've been busy.</em></h2>
+              <p class="sub">That's ~30 minutes of manual scrolling saved. Ready for a reward?</p>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat"><div class="n">100</div><div class="l">Sorted</div></div>
+              <div class="stat"><div class="n">~30m</div><div class="l">Saved</div></div>
+              <div class="stat"><div class="n">150</div><div class="l">Free left</div></div>
+            </div>
+
+            <div class="actions">
+              <button class="btn-primary">See what you unlocked →</button>
+              <button class="btn-ghost">Not now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SCREEN 2 — OFFER (bonus reveal)
+    ═════════════════════════════════════════════════════════════ -->
+    <div>
+      <div class="step-tag"><span class="num">2</span> Offer</div>
+      <div class="phone">
+        <div class="screen">
+          <div class="status">
+            <span>3:46</span>
+            <span class="signal">📶 <span class="bat">100</span></span>
+          </div>
+
+          <div class="chrome">
+            <div class="back">‹</div>
+            <div class="dots"><span></span><span></span><span></span><span></span><span class="active"></span></div>
+            <div class="skip">Skip</div>
+          </div>
+
+          <div class="content">
+            <div class="photo-stack">
+              <div class="pic pic-a"></div>
+              <div class="pic pic-c"></div>
+              <div class="pic pic-b"></div>
+              <div class="share-badge">↗</div>
+              <div class="plus-badge">+250</div>
+            </div>
+
+            <div class="center">
+              <div class="eye-gold">Free upgrade</div>
+              <h2 class="big">Claim your <em>free upgrade.</em></h2>
+              <p class="sub"><strong>250 more sorts.</strong> On the house. Just share Pixsort with one friend.</p>
+            </div>
+
+            <div class="actions">
+              <button class="btn-primary">Yes → share Pixsort</button>
+              <button class="btn-ghost">Maybe later</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SCREEN 3 — SUCCESS
+    ═════════════════════════════════════════════════════════════ -->
+    <div>
+      <div class="step-tag"><span class="num">3</span> Unlocked</div>
+      <div class="phone">
+        <div class="screen">
+          <div class="status">
+            <span>3:47</span>
+            <span class="signal">📶 <span class="bat">100</span></span>
+          </div>
+
+          <div class="chrome">
+            <div class="back"></div>
+            <div class="dots"><span></span><span></span><span></span><span></span><span class="active"></span></div>
+            <div class="skip"></div>
+          </div>
+
+          <div class="content">
+            <div class="success-ring">✓</div>
+
+            <div class="center">
+              <div class="eye-gold" style="background:var(--sage-dk);color:#fff">Unlocked</div>
+              <h2 class="big">Boom. <em>+250 unlocked.</em></h2>
+              <p class="sub">You've got <strong>400 free sorts</strong> to burn through. Send friend #2 anytime to unlock more.</p>
+            </div>
+
+            <div class="balance-card">
+              <div>
+                <div class="l">Free sorts</div>
+                <div class="old">150</div>
+              </div>
+              <div style="font-size:20px;color:var(--gold)">→</div>
+              <div style="text-align:right">
+                <div class="l">Now</div>
+                <div class="new">400</div>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="btn-primary">Keep sorting →</button>
+              <button class="btn-ghost">Share again for +250</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       COPY BREAKDOWN (for dev/design team)
+  ═════════════════════════════════════════════════════════════ -->
+  <div class="copy-block">
+    <h3>The copy, screen by screen</h3>
+    <p class="why">Every line is designed to feel earned, not asked-for. The user hit 100 sorts before we ever mention "share."</p>
+    <div class="copy-grid">
+
+      <div class="copy-item">
+        <div class="num">01 · Milestone</div>
+        <ul>
+          <li><strong>Eyebrow:</strong> Milestone</li>
+          <li><strong>H1:</strong> 100 sorts down. You've been busy.</li>
+          <li><strong>Sub:</strong> That's ~30 minutes of manual scrolling saved. Ready for a reward?</li>
+          <li><strong>Primary:</strong> See what you unlocked →</li>
+          <li><strong>Secondary:</strong> Not now</li>
+        </ul>
+      </div>
+
+      <div class="copy-item">
+        <div class="num">02 · Offer</div>
+        <ul>
+          <li><strong>Eyebrow:</strong> Free upgrade</li>
+          <li><strong>H1:</strong> Claim your free upgrade.</li>
+          <li><strong>Sub:</strong> 250 more sorts. On the house. Just share Pixsort with one friend.</li>
+          <li><strong>Primary:</strong> Yes → share Pixsort</li>
+          <li><strong>Secondary:</strong> Maybe later</li>
+        </ul>
+      </div>
+
+      <div class="copy-item">
+        <div class="num">03 · Unlocked</div>
+        <ul>
+          <li><strong>Eyebrow:</strong> Unlocked</li>
+          <li><strong>H1:</strong> Boom. +250 unlocked.</li>
+          <li><strong>Sub:</strong> You've got 400 free sorts to burn through. Send friend #2 anytime to unlock more.</li>
+          <li><strong>Primary:</strong> Keep sorting →</li>
+          <li><strong>Secondary:</strong> Share again for +250</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
