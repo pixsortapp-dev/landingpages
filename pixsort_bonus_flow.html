@@ -171,57 +171,190 @@
   /* ═══ SCREEN 1 — MILESTONE CELEBRATION ═══ */
   .milestone-hero{
     text-align:center;
-    margin:34px 0 30px;
+    margin:24px 0 24px;
     position:relative;
+    padding-top:12px;
   }
+
+  /* Big confetti — colored particles scattered */
   .confetti{
-    position:absolute;inset:0;pointer-events:none;
+    position:absolute;inset:-20px -12px -20px;pointer-events:none;overflow:visible;
   }
-  .confetti::before,.confetti::after{
-    content:'';position:absolute;
-    width:8px;height:8px;border-radius:2px;
+  .confetti i{
+    position:absolute;
+    width:10px;height:14px;
+    border-radius:2px;
+    transform-origin:center;
   }
-  .confetti::before{
-    background:var(--gold);
-    top:12px;left:22%;
-    transform:rotate(35deg);
+  .confetti i:nth-child(1){background:var(--gold);top:8%;left:8%;transform:rotate(28deg)}
+  .confetti i:nth-child(2){background:var(--sage-dk);top:15%;right:12%;transform:rotate(-40deg);width:8px;height:8px;border-radius:50%}
+  .confetti i:nth-child(3){background:var(--pink);top:30%;left:4%;transform:rotate(15deg);width:6px;height:16px}
+  .confetti i:nth-child(4){background:var(--gold-soft);top:5%;right:28%;transform:rotate(60deg);width:12px;height:6px;border-radius:6px}
+  .confetti i:nth-child(5){background:var(--sage);top:35%;right:6%;transform:rotate(-15deg);width:8px;height:12px}
+  .confetti i:nth-child(6){background:var(--gold);top:50%;left:10%;transform:rotate(45deg);width:8px;height:8px;border-radius:50%}
+  .confetti i:nth-child(7){background:var(--pink);top:60%;right:18%;transform:rotate(-30deg);width:10px;height:10px;border-radius:2px}
+  .confetti i:nth-child(8){background:var(--sage-dk);top:2%;left:38%;transform:rotate(25deg);width:6px;height:14px}
+  .confetti i:nth-child(9){background:var(--gold-soft);top:70%;left:6%;transform:rotate(-50deg);width:12px;height:6px;border-radius:6px}
+  .confetti i:nth-child(10){background:var(--gold);top:75%;right:8%;transform:rotate(20deg);width:8px;height:8px;border-radius:50%}
+  .confetti i:nth-child(11){background:var(--pink);top:82%;left:36%;transform:rotate(-25deg);width:10px;height:6px;border-radius:3px}
+  .confetti i:nth-child(12){background:var(--sage-dk);top:88%;right:38%;transform:rotate(40deg);width:6px;height:10px}
+  .confetti i:nth-child(13){background:var(--gold);top:22%;left:44%;transform:rotate(35deg);width:8px;height:8px;border-radius:2px;opacity:0.55}
+  .confetti i:nth-child(14){background:var(--sage);top:44%;right:32%;transform:rotate(-10deg);width:10px;height:10px;border-radius:50%;opacity:0.6}
+  .confetti .spark{
+    position:absolute;font-size:18px;
+    color:var(--gold-dk);
+    background:transparent;
+    width:auto;height:auto;
   }
-  .confetti::after{
-    background:var(--sage-dk);
-    top:30px;right:24%;
-    transform:rotate(-20deg);
+
+  /* Level-up flag */
+  .level-up-flag{
+    display:inline-flex;
+    align-items:center;gap:8px;
+    background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dk) 100%);
+    color:#fff;
+    font-family:'DM Sans',sans-serif;
+    font-weight:800;
+    font-size:11px;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    padding:8px 16px 8px 12px;
+    border-radius:999px;
+    margin-bottom:16px;
+    box-shadow:0 6px 16px rgba(156,123,51,0.35);
   }
+  .level-up-flag::before{
+    content:'⚡';
+    font-size:14px;
+    letter-spacing:0;
+  }
+
   .badge-100{
     display:inline-flex;
     align-items:center;justify-content:center;
-    width:180px;height:180px;
+    width:170px;height:170px;
     border-radius:50%;
     background:radial-gradient(circle at 30% 30%,var(--gold-soft) 0%,var(--gold) 70%);
-    box-shadow:0 20px 40px rgba(156,123,51,0.30), inset 0 -8px 16px rgba(110,85,36,0.35);
+    box-shadow:0 20px 40px rgba(156,123,51,0.30), inset 0 -8px 16px rgba(110,85,36,0.35), 0 0 0 8px rgba(156,123,51,0.14);
     font-family:'DM Sans',sans-serif;
     font-weight:900;
     color:#fff;
-    font-size:56px;
+    font-size:52px;
     letter-spacing:-0.03em;
     position:relative;
   }
   .badge-100::after{
-    content:'✓';
+    content:'★';
     position:absolute;
     bottom:-6px;right:-6px;
     width:52px;height:52px;
     background:var(--sage-dk);
     color:#fff;border-radius:50%;
     display:flex;align-items:center;justify-content:center;
-    font-size:26px;font-weight:800;
+    font-size:24px;font-weight:800;
     box-shadow:0 6px 14px rgba(31,24,18,0.18);
   }
-  .stars{
-    position:absolute;
-    font-size:24px;color:var(--gold);
+  .badge-title{
+    display:block;
+    font-family:'DM Sans',sans-serif;
+    font-weight:800;
+    font-size:14px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--gold-dk);
+    margin-top:16px;
   }
-  .stars.s1{top:20px;left:12%}
-  .stars.s2{bottom:20px;right:8%;font-size:16px}
+
+  /* Level progress bar */
+  .lvl-bar{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:14px 16px;
+    margin-top:20px;
+    text-align:left;
+  }
+  .lvl-bar-top{
+    display:flex;justify-content:space-between;
+    font-family:'Inter',sans-serif;
+    font-size:10px;font-weight:800;
+    letter-spacing:0.16em;text-transform:uppercase;
+    color:var(--text-grey2);
+    margin-bottom:8px;
+  }
+  .lvl-bar-top strong{color:var(--gold-dk)}
+  .lvl-track{
+    height:10px;background:var(--bg2);border-radius:6px;overflow:hidden;position:relative;
+  }
+  .lvl-fill{
+    position:absolute;top:0;left:0;bottom:0;
+    background:linear-gradient(90deg,var(--gold-soft),var(--gold));
+    border-radius:6px;
+  }
+  .lvl-bar-bot{
+    font-family:'Inter',sans-serif;
+    font-size:11px;color:var(--text-grey);
+    margin-top:8px;display:flex;justify-content:space-between;
+  }
+  .lvl-bar-bot strong{color:var(--gold-dk);font-weight:800}
+
+  /* Ladder — share tiers */
+  .ladder{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:14px 16px;
+    margin-top:12px;
+  }
+  .ladder-title{
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:'Inter',sans-serif;
+    font-size:10px;font-weight:800;
+    letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--text-grey2);
+    margin-bottom:10px;
+  }
+  .ladder-title strong{color:var(--gold-dk)}
+  .ladder-row{
+    display:grid;
+    grid-template-columns:24px 1fr auto;
+    align-items:center;
+    gap:10px;
+    padding:8px 0;
+    border-top:1px dashed var(--border);
+    font-family:'DM Sans',sans-serif;
+  }
+  .ladder-row:first-of-type{border-top:none;padding-top:0}
+  .ladder-row .lock{
+    width:22px;height:22px;
+    border-radius:50%;
+    background:var(--bg2);
+    color:var(--text-grey2);
+    display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:800;
+  }
+  .ladder-row .desc{
+    font-size:13px;color:var(--text);line-height:1.3;
+  }
+  .ladder-row .desc small{
+    display:block;color:var(--text-grey2);font-size:10.5px;
+    font-family:'Inter',sans-serif;font-weight:600;
+    letter-spacing:0.06em;text-transform:uppercase;
+    margin-bottom:2px;
+  }
+  .ladder-row .reward{
+    font-family:'DM Sans',sans-serif;
+    font-weight:800;color:var(--gold-dk);font-size:14px;
+    white-space:nowrap;
+  }
+  .ladder-row.active{
+    background:linear-gradient(90deg,rgba(156,123,51,0.10),transparent);
+    margin:0 -8px;padding:8px 8px;border-radius:8px;border-top-color:transparent;
+  }
+  .ladder-row.active .lock{background:var(--gold);color:#fff}
+  .ladder-row.active .reward{color:var(--gold)}
+  .ladder-row.done .lock{background:var(--sage-dk);color:#fff}
+  .ladder-row.done{opacity:0.7}
 
   .eye-gold{
     display:inline-block;
@@ -424,8 +557,8 @@
 
   <header>
     <div class="eyebrow">Pixsort · onboarding flow</div>
-    <h1>Free upgrade at <em>the 100-sort win.</em></h1>
-    <p class="lede">Instead of a cold ask, the bonus appears right after the user hits their first big milestone. 3 screens: celebrate → offer → confirm. Same +250 sorts payoff, framed as a reward they earned.</p>
+    <h1>Level up at the <em>100-sort win.</em></h1>
+    <p class="lede">Gamified milestone unlock instead of a cold share ask. Confetti fires when they hit 100, they get a badge title ("Sort Pro"), and the share offer shows a tiered ladder — 1 friend gets them the first reward, 3 gets +1,000, 10 gets lifetime Pro.</p>
   </header>
 
   <div class="trigger">
@@ -439,7 +572,7 @@
          SCREEN 1 — MILESTONE
     ═════════════════════════════════════════════════════════════ -->
     <div>
-      <div class="step-tag"><span class="num">1</span> Milestone</div>
+      <div class="step-tag"><span class="num">1</span> Level up</div>
       <div class="phone">
         <div class="screen">
           <div class="status">
@@ -455,27 +588,29 @@
 
           <div class="content">
             <div class="milestone-hero">
-              <div class="confetti"></div>
-              <span class="stars s1">✦</span>
-              <span class="stars s2">✦</span>
+              <div class="confetti">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
+              <div class="level-up-flag">Level up</div>
               <div class="badge-100">100</div>
+              <div class="badge-title">Sort Rookie → Sort Pro</div>
             </div>
 
             <div class="center">
-              <div class="eye-gold">Milestone</div>
-              <h2 class="big">100 sorts down.<br><em>You've been busy.</em></h2>
-              <p class="sub">That's ~30 minutes of manual scrolling saved. Ready for a reward?</p>
+              <h2 class="big">Nice one. <em>You leveled up.</em></h2>
+              <p class="sub">100 sorts down and ~30 min saved. You just unlocked <strong>Sort Pro</strong>.</p>
             </div>
 
-            <div class="stat-row">
-              <div class="stat"><div class="n">100</div><div class="l">Sorted</div></div>
-              <div class="stat"><div class="n">~30m</div><div class="l">Saved</div></div>
-              <div class="stat"><div class="n">150</div><div class="l">Free left</div></div>
+            <div class="lvl-bar">
+              <div class="lvl-bar-top"><span>Level 2 · <strong>Sort Pro</strong></span><span>100 / 500</span></div>
+              <div class="lvl-track"><div class="lvl-fill" style="width:20%"></div></div>
+              <div class="lvl-bar-bot"><span>Next: <strong>Sort Master</strong></span><span>400 sorts to go</span></div>
             </div>
 
             <div class="actions">
-              <button class="btn-primary">See what you unlocked →</button>
-              <button class="btn-ghost">Not now</button>
+              <button class="btn-primary">See your reward →</button>
+              <button class="btn-ghost">Later</button>
             </div>
           </div>
         </div>
@@ -486,7 +621,7 @@
          SCREEN 2 — OFFER (bonus reveal)
     ═════════════════════════════════════════════════════════════ -->
     <div>
-      <div class="step-tag"><span class="num">2</span> Offer</div>
+      <div class="step-tag"><span class="num">2</span> Share ladder</div>
       <div class="phone">
         <div class="screen">
           <div class="status">
@@ -501,22 +636,42 @@
           </div>
 
           <div class="content">
-            <div class="photo-stack">
-              <div class="pic pic-a"></div>
-              <div class="pic pic-c"></div>
-              <div class="pic pic-b"></div>
-              <div class="share-badge">↗</div>
-              <div class="plus-badge">+250</div>
+            <div class="photo-stack" style="width:200px;height:200px;margin:8px auto 22px">
+              <div class="pic pic-a" style="width:160px;height:160px"></div>
+              <div class="pic pic-c" style="width:160px;height:160px"></div>
+              <div class="pic pic-b" style="width:160px;height:160px"></div>
+              <div class="share-badge" style="bottom:12px;left:12px">↗</div>
+              <div class="plus-badge" style="bottom:20px;right:-2px">+250</div>
             </div>
 
             <div class="center">
-              <div class="eye-gold">Free upgrade</div>
-              <h2 class="big">Claim your <em>free upgrade.</em></h2>
-              <p class="sub"><strong>250 more sorts.</strong> On the house. Just share Pixsort with one friend.</p>
+              <div class="eye-gold">Your reward</div>
+              <h2 class="big">Share to <em>keep leveling.</em></h2>
+              <p class="sub">Every friend you send Pixsort to unlocks more free sorts.</p>
+            </div>
+
+            <div class="ladder">
+              <div class="ladder-title"><span>Share ladder</span><strong>0 / 3 friends</strong></div>
+
+              <div class="ladder-row active">
+                <div class="lock">1</div>
+                <div class="desc"><small>Send to 1 friend</small><strong>+250 free sorts</strong></div>
+                <div class="reward">+250</div>
+              </div>
+              <div class="ladder-row">
+                <div class="lock">2</div>
+                <div class="desc"><small>Send to 3 friends</small>+1,000 sorts + album packs</div>
+                <div class="reward">+1,000</div>
+              </div>
+              <div class="ladder-row">
+                <div class="lock">3</div>
+                <div class="desc"><small>Send to 10 friends</small>Pixsort Pro · <em>lifetime</em></div>
+                <div class="reward">🏆</div>
+              </div>
             </div>
 
             <div class="actions">
-              <button class="btn-primary">Yes → share Pixsort</button>
+              <button class="btn-primary">Share Pixsort →</button>
               <button class="btn-ghost">Maybe later</button>
             </div>
           </div>
@@ -543,12 +698,17 @@
           </div>
 
           <div class="content">
-            <div class="success-ring">✓</div>
+            <div class="milestone-hero" style="margin:14px 0 18px">
+              <div class="confetti">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
+              <div class="success-ring" style="width:150px;height:150px;font-size:70px;margin:0 auto">✓</div>
+            </div>
 
             <div class="center">
-              <div class="eye-gold" style="background:var(--sage-dk);color:#fff">Unlocked</div>
               <h2 class="big">Boom. <em>+250 unlocked.</em></h2>
-              <p class="sub">You've got <strong>400 free sorts</strong> to burn through. Send friend #2 anytime to unlock more.</p>
+              <p class="sub">You've got <strong>400 free sorts</strong> to burn through.</p>
             </div>
 
             <div class="balance-card">
@@ -563,9 +723,17 @@
               </div>
             </div>
 
+            <div class="ladder" style="margin-top:12px">
+              <div class="ladder-title"><span>Share ladder</span><strong>1 / 3 friends</strong></div>
+              <div class="lvl-track" style="margin-bottom:10px"><div class="lvl-fill" style="width:33%"></div></div>
+              <div style="font-size:12.5px;color:var(--text);line-height:1.4;font-family:'DM Sans',sans-serif">
+                <strong style="color:var(--gold-dk)">2 more friends</strong> → +1,000 sorts + album packs
+              </div>
+            </div>
+
             <div class="actions">
-              <button class="btn-primary">Keep sorting →</button>
-              <button class="btn-ghost">Share again for +250</button>
+              <button class="btn-primary">Share again → +1,000 →</button>
+              <button class="btn-ghost">Keep sorting</button>
             </div>
           </div>
         </div>
@@ -583,35 +751,39 @@
     <div class="copy-grid">
 
       <div class="copy-item">
-        <div class="num">01 · Milestone</div>
+        <div class="num">01 · Level up</div>
         <ul>
-          <li><strong>Eyebrow:</strong> Milestone</li>
-          <li><strong>H1:</strong> 100 sorts down. You've been busy.</li>
-          <li><strong>Sub:</strong> That's ~30 minutes of manual scrolling saved. Ready for a reward?</li>
-          <li><strong>Primary:</strong> See what you unlocked →</li>
-          <li><strong>Secondary:</strong> Not now</li>
+          <li><strong>Flag:</strong> ⚡ LEVEL UP</li>
+          <li><strong>Badge title:</strong> Sort Rookie → Sort Pro</li>
+          <li><strong>H1:</strong> Nice one. You leveled up.</li>
+          <li><strong>Sub:</strong> 100 sorts down and ~30 min saved. You just unlocked Sort Pro.</li>
+          <li><strong>Progress:</strong> Level 2 · 100 / 500 → Sort Master</li>
+          <li><strong>Primary:</strong> See your reward →</li>
         </ul>
       </div>
 
       <div class="copy-item">
-        <div class="num">02 · Offer</div>
+        <div class="num">02 · Share ladder</div>
         <ul>
-          <li><strong>Eyebrow:</strong> Free upgrade</li>
-          <li><strong>H1:</strong> Claim your free upgrade.</li>
-          <li><strong>Sub:</strong> 250 more sorts. On the house. Just share Pixsort with one friend.</li>
-          <li><strong>Primary:</strong> Yes → share Pixsort</li>
-          <li><strong>Secondary:</strong> Maybe later</li>
+          <li><strong>Eyebrow:</strong> Your reward</li>
+          <li><strong>H1:</strong> Share to keep leveling.</li>
+          <li><strong>Sub:</strong> Every friend you send Pixsort to unlocks more free sorts.</li>
+          <li><strong>Tier 1:</strong> 1 friend → +250 sorts</li>
+          <li><strong>Tier 2:</strong> 3 friends → +1,000 sorts + album packs</li>
+          <li><strong>Tier 3:</strong> 10 friends → Pixsort Pro, lifetime 🏆</li>
+          <li><strong>Primary:</strong> Share Pixsort →</li>
         </ul>
       </div>
 
       <div class="copy-item">
-        <div class="num">03 · Unlocked</div>
+        <div class="num">03 · Unlocked + ladder</div>
         <ul>
-          <li><strong>Eyebrow:</strong> Unlocked</li>
           <li><strong>H1:</strong> Boom. +250 unlocked.</li>
-          <li><strong>Sub:</strong> You've got 400 free sorts to burn through. Send friend #2 anytime to unlock more.</li>
-          <li><strong>Primary:</strong> Keep sorting →</li>
-          <li><strong>Secondary:</strong> Share again for +250</li>
+          <li><strong>Sub:</strong> You've got 400 free sorts to burn through.</li>
+          <li><strong>Balance:</strong> 150 → 400</li>
+          <li><strong>Progress:</strong> 1 / 3 friends · 2 more → +1,000 sorts</li>
+          <li><strong>Primary:</strong> Share again → +1,000 →</li>
+          <li><strong>Secondary:</strong> Keep sorting</li>
         </ul>
       </div>
 
