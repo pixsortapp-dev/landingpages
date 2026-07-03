@@ -661,11 +661,16 @@ const screenAlbums=`<div class="scene" style="opacity:1;transform:none;backgroun
 
 const mp=(step,title,desc,inner)=>`<div class="mp"><div class="phone"><div class="screen">${STATUS}${inner}</div></div><div class="cap"><span class="step">${step}</span><h3>${title}</h3><p>${desc}</p></div></div>`;
 
+// image-based screen — real iPhone screenshot fills the whole phone screen (no fake status bar)
+const mpImg=(step,title,desc,imgSrc,alt)=>`<div class="mp"><div class="phone"><div class="screen" style="background:#000">
+  <img src="${imgSrc}" alt="${alt}" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+</div></div><div class="cap"><span class="step">${step}</span><h3>${title}</h3><p>${desc}</p></div></div>`;
+
 document.getElementById('screens').innerHTML=[
-  mp('Step 1','Sorts your library, fast','Every photo flies into the right album on its own.',screenSort),
-  mp('Step 2','Push to your camera roll','Send any album to your native Photos in one tap.',screenPush),
-  mp('Step 3','Synced','500 photos land in your camera roll, sorted into albums.',screenSynced),
-  mp('Step 4','Find them in Photos','Clean albums, ready to share or hand to an editor.',screenAlbums),
+  mp('Step 1','Sorts your library','Every photo flies into the right album on its own.',screenSort),
+  mp('Step 2','Shows your albums','Your camera roll, finally organized into clean smart albums.',screenAlbums),
+  mp('Step 3','Push to your camera roll','Send any album to your native Photos in one tap.',screenPush),
+  mpImg('Step 4','Now in your iPhone','Your albums land in the real iOS Photos app, ready to share.','assets/albums-ios.png','iPhone Photos app showing PixSort albums'),
 ].join('');
 </script>
 </body>
