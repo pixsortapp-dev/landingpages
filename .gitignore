@@ -1,7 +1,8 @@
 .DS_Store
 *.m4a
 *_temp.html
-.claude/
+.claude/*
+!.claude/skills/
 node_modules/
 screenshots/
 tools/
