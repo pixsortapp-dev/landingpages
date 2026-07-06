@@ -62,26 +62,54 @@ let brief;
 try { brief = JSON.parse(raw); }
 catch (e) { fail(1, `Input is not valid JSON: ${e.message}`); }
 
-// ─── Validate ───────────────────────────────────────────────────────────────
-const required = ['handle', 'displayName', 'role', 'creditLine', 'photo', 'brandColor', 'appsflyerUrl', 'quote'];
-const missing = required.filter(k => !brief[k]);
-if (missing.length) fail(1, `Missing required fields: ${missing.join(', ')}`);
+// ─── Validate + fill placeholders ───────────────────────────────────────────
+// Only `handle` is strictly required (needed for URL slug + filenames).
+// Everything else falls back to a clearly-labeled placeholder + warning log,
+// so a partial signup still produces a reviewable page.
+
+if (!brief.handle) fail(1, 'Missing required field: handle (URL slug — a-z, 0-9, hyphens).');
 
 const HANDLE = String(brief.handle).toLowerCase().trim();
 if (!/^[a-z0-9-]+$/.test(HANDLE)) {
   fail(1, `Bad handle "${HANDLE}" — must be lowercase kebab-case (a-z, 0-9, hyphens).`);
 }
 
-const {
-  displayName, role, creditLine, photo, brandColor, appsflyerUrl, quote,
-} = brief;
-const brandColorDark = brief.brandColorDark || shade(brandColor, -12);
-
-if (!/^#[0-9A-Fa-f]{3,8}$/.test(brandColor)) {
-  fail(1, `brandColor "${brandColor}" is not a valid hex color.`);
+const placeholders = [];
+function ph(field, label) {
+  placeholders.push(field);
+  return `[${label || field} placeholder]`;
 }
-if (!/^https:\/\/app\.appsflyer\.com\//.test(appsflyerUrl)) {
+
+const displayName  = brief.displayName  || ph('displayName',  'Creator Name');
+const role         = brief.role         || ph('role',         'Role / Subtitle');
+const creditLine   = brief.creditLine   || ph('creditLine',   'Credit line — one-liner about the creator');
+const quote        = brief.quote        || ph('quote',        'Testimonial quote — replace before shipping');
+const photo        = brief.photo        || '';   // handled at write time, warning printed
+
+// brandColor: default to Meg's #C1FF72 if missing or malformed
+let brandColor = brief.brandColor;
+if (!brandColor || !/^#[0-9A-Fa-f]{3,8}$/.test(brandColor)) {
+  if (brandColor) console.error(`[pixsort-creator-page] warning: brandColor "${brandColor}" is not a valid hex; falling back to Meg's #C1FF72`);
+  else            placeholders.push('brandColor');
+  brandColor = '#C1FF72';
+}
+const brandColorDark = brief.brandColorDark && /^#[0-9A-Fa-f]{3,8}$/.test(brief.brandColorDark)
+  ? brief.brandColorDark
+  : shade(brandColor, -12);
+
+// appsflyerUrl: without a real one, the QR + buttons are broken. Fall back to
+// a plain App Store link so the page still renders, and flag it loudly.
+let appsflyerUrl = brief.appsflyerUrl;
+if (!appsflyerUrl) {
+  placeholders.push('appsflyerUrl');
+  appsflyerUrl = 'https://apps.apple.com/us/app/pixsort-ai-photo-organizer/id6760485464';
+  console.error('[pixsort-creator-page] warning: appsflyerUrl missing — using plain App Store URL. QR + attribution will NOT work until Spencer generates a real AppsFlyer link.');
+} else if (!/^https:\/\/app\.appsflyer\.com\//.test(appsflyerUrl)) {
   fail(1, `appsflyerUrl must start with https://app.appsflyer.com/ — got "${appsflyerUrl}"`);
+}
+
+if (placeholders.length) {
+  console.error(`[pixsort-creator-page] placeholder fields (fill before shipping): ${placeholders.join(', ')}`);
 }
 
 // ─── Output paths ───────────────────────────────────────────────────────────
@@ -196,6 +224,7 @@ if (dryRun) {
     outPhoto: path.relative(REPO_ROOT, outPhoto),
     outQr: path.relative(REPO_ROOT, outQr),
     liveUrl: `https://pixsort.app/${HANDLE}/`,
+    placeholders,
     dryRun: true,
   }));
   process.exit(0);
@@ -244,6 +273,7 @@ try {
       outPhoto: path.relative(REPO_ROOT, outPhoto),
       outQr: path.relative(REPO_ROOT, outQr),
       liveUrl: `https://pixsort.app/${HANDLE}/`,
+      placeholders,
     }));
   });
 } catch (e) {

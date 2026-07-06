@@ -14,7 +14,7 @@ Meg's page is the frozen canonical template. Every other creator page is Meg's p
 - Output: `<handle>/index.html` + `assets/<handle>.jpg` + `assets/<handle>-qr.png` on disk, ready to commit
 - Live at `pixsort.app/<handle>/` once pushed
 
-## Input schema (only 7 required)
+## Input schema (only `handle` strictly required)
 
 ```json
 {
@@ -28,6 +28,8 @@ Meg's page is the frozen canonical template. Every other creator page is Meg's p
   "quote": "PixSort made every clip findable overnight. Love it."
 }
 ```
+
+**Only `handle` is required** — it's the URL slug and drives every output filename. Every other field is optional and falls back to a labeled placeholder if missing (see "When something's missing" below). This lets a partial signup still produce a reviewable page.
 
 Optional: `brandColorDark` (auto-derived 12% darker from `brandColor` if omitted).
 
@@ -117,10 +119,28 @@ Live in ~60s at `https://pixsort.app/<handle>/`.
 
 ## When something's missing at signup
 
-- **Photo:** ask for a save-to path or reject the generation
-- **AppsFlyer URL:** flag to Spencer (he generates one per partner). Never invent a URL — the QR + attribution will be wrong.
-- **Quote:** if genuinely blank, either skip generation (best) or fill placeholder and mark for follow-up
-- **Brand color:** default to Meg's `#C1FF72` and note in commit message that color needs partner confirmation
+Only `handle` is strictly required (needed for URL slug + output filenames). Every other field falls back to a clearly-labeled placeholder + a warning log line + an entry in the `placeholders` array of the stdout JSON. That way an incomplete signup still produces a reviewable page — a human (or a downstream automation gate) can look at it, spot every unfilled field, and complete the brief before deploy.
+
+Fallbacks:
+
+| Field | If missing |
+|-------|-----------|
+| `handle` | Hard error (exit 1) — needed for filenames + URL |
+| `displayName` | Renders as `[Creator Name placeholder]` |
+| `role` | Renders as `[Role / Subtitle placeholder]` |
+| `creditLine` | Renders as `[Credit line — one-liner about the creator placeholder]` |
+| `quote` | Renders as `[Testimonial quote — replace before shipping placeholder]` |
+| `photo` | Skips the copy; hero image will 404 until you drop `assets/<handle>.jpg` in place. Warning logged. |
+| `brandColor` | Defaults to Meg's `#C1FF72`; adds `brandColor` to the placeholders list so the dev knows to confirm. Malformed hex triggers same fallback. |
+| `appsflyerUrl` | Falls back to the plain App Store URL. QR + AppsFlyer attribution WILL NOT WORK until Spencer generates a real link. Very loud warning. |
+
+The stdout JSON always includes a `placeholders` array listing every field that was placeholder-substituted, so the caller can gate deploy on it:
+
+```json
+{ "handle": "sarah", "outHtml": "sarah/index.html", ..., "placeholders": ["quote", "appsflyerUrl"] }
+```
+
+**Dev's pipeline pattern:** only ship a page to production when `placeholders.length === 0`. Anything else goes to a review queue.
 
 ## Per-partner reference
 
