@@ -2,49 +2,49 @@
 /**
  * pixsort-creator-page — headless generator
  *
- * Reads a creator brief (JSON), forks tran/index.html, does mechanical swaps,
- * generates the AppsFlyer QR, and writes:
+ * Freezes meg/index.html as the canonical template. Only 7 fields vary
+ * per creator; everything else is baked in. Writes:
  *   <handle>/index.html
- *   assets/<handle>.jpg  (if photo path provided)
+ *   assets/<handle>.jpg  (from provided photo path)
  *   assets/<handle>-qr.png
  *
  * Usage:
  *   node generate.js --input creator.json
- *   node generate.js < creator.json               # or pipe on stdin
- *   node generate.js --input creator.json --template adley-v2/index.html
- *   node generate.js --input creator.json --dry-run       # skip writes
+ *   node generate.js < creator.json              # or pipe on stdin
+ *   node generate.js --input creator.json --dry-run
  *
  * Exit codes:
- *   0  success (writes complete)
+ *   0  success
  *   1  validation failure (missing required field, bad handle, etc.)
  *   2  template or asset read error
  *   3  QR generation error
  *   4  file write error
  *
- * Does NOT commit or push. Caller wires in review / approval / deploy.
- *
- * Repo-relative paths throughout — run from the repo root
- * (pixsortapp-dev/landingpages).
+ * Does NOT commit or push — caller wires in review + deploy.
+ * Repo-relative paths throughout — run from the repo root.
  */
 
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
+// ─── Constants ──────────────────────────────────────────────────────────────
+const TEMPLATE_HANDLE = 'meg';
+const TEMPLATE_PATH   = 'meg/index.html';
+
 // ─── CLI ────────────────────────────────────────────────────────────────────
 const argv = process.argv.slice(2);
-function arg(name, def) {
-  const i = argv.indexOf(name);
-  return i >= 0 && i + 1 < argv.length ? argv[i + 1] : def;
-}
-const inputPath = arg('--input');
-const templatePath = arg('--template', 'tran/index.html');
-const dryRun = argv.includes('--dry-run');
-
-// ─── Repo root check ────────────────────────────────────────────────────────
+const inputPath = argOf('--input');
+const dryRun    = argv.includes('--dry-run');
 const REPO_ROOT = process.cwd();
-if (!fs.existsSync(path.join(REPO_ROOT, templatePath))) {
-  fail(2, `Template not found at ${templatePath} — run from the repo root.`);
+
+function argOf(name) {
+  const i = argv.indexOf(name);
+  return i >= 0 && i + 1 < argv.length ? argv[i + 1] : undefined;
+}
+
+if (!fs.existsSync(path.join(REPO_ROOT, TEMPLATE_PATH))) {
+  fail(2, `Template not found at ${TEMPLATE_PATH} — run from the repo root.`);
 }
 
 // ─── Read input ─────────────────────────────────────────────────────────────
@@ -63,133 +63,144 @@ try { brief = JSON.parse(raw); }
 catch (e) { fail(1, `Input is not valid JSON: ${e.message}`); }
 
 // ─── Validate ───────────────────────────────────────────────────────────────
-const required = ['handle', 'displayName', 'credit', 'photo', 'brandColor', 'appsflyerUrl'];
+const required = ['handle', 'displayName', 'role', 'creditLine', 'photo', 'brandColor', 'appsflyerUrl', 'quote'];
 const missing = required.filter(k => !brief[k]);
 if (missing.length) fail(1, `Missing required fields: ${missing.join(', ')}`);
 
-const HANDLE = brief.handle.toLowerCase().trim();
+const HANDLE = String(brief.handle).toLowerCase().trim();
 if (!/^[a-z0-9-]+$/.test(HANDLE)) {
   fail(1, `Bad handle "${HANDLE}" — must be lowercase kebab-case (a-z, 0-9, hyphens).`);
 }
 
 const {
-  displayName, credit, photo, brandColor, appsflyerUrl, quote
+  displayName, role, creditLine, photo, brandColor, appsflyerUrl, quote,
 } = brief;
-
 const brandColorDark = brief.brandColorDark || shade(brandColor, -12);
 
-const headline = brief.headline || {
-  line1: 'Your camera roll,',
-  line2Prefix: '',
-  line2Em: 'auto-organized',
-  line2Suffix: ' for you.',
-};
-
-const subCopy = brief.subCopy || '100 photos sorted, on us.';
+if (!/^#[0-9A-Fa-f]{3,8}$/.test(brandColor)) {
+  fail(1, `brandColor "${brandColor}" is not a valid hex color.`);
+}
+if (!/^https:\/\/app\.appsflyer\.com\//.test(appsflyerUrl)) {
+  fail(1, `appsflyerUrl must start with https://app.appsflyer.com/ — got "${appsflyerUrl}"`);
+}
 
 // ─── Output paths ───────────────────────────────────────────────────────────
-const outDir = path.join(REPO_ROOT, HANDLE);
-const outHtml = path.join(outDir, 'index.html');
+const outDir   = path.join(REPO_ROOT, HANDLE);
+const outHtml  = path.join(outDir,    'index.html');
 const outPhoto = path.join(REPO_ROOT, 'assets', `${HANDLE}.jpg`);
-const outQr = path.join(REPO_ROOT, 'assets', `${HANDLE}-qr.png`);
+const outQr    = path.join(REPO_ROOT, 'assets', `${HANDLE}-qr.png`);
 
-console.error(`[pixsort-creator-page] handle=${HANDLE} → ${outHtml}`);
+console.error(`[pixsort-creator-page] handle=${HANDLE} template=${TEMPLATE_PATH}`);
 
-// ─── Read + transform template ──────────────────────────────────────────────
+// ─── Read template ──────────────────────────────────────────────────────────
 let html;
-try { html = fs.readFileSync(path.join(REPO_ROOT, templatePath), 'utf8'); }
-catch (e) { fail(2, `Cannot read template ${templatePath}: ${e.message}`); }
+try { html = fs.readFileSync(path.join(REPO_ROOT, TEMPLATE_PATH), 'utf8'); }
+catch (e) { fail(2, `Cannot read template: ${e.message}`); }
 
-// Infer the template's own handle from the path so we can swap it.
-// e.g. 'tran/index.html' → 'tran'
-const templateHandle = path.dirname(templatePath).split('/').pop();
+// ─── Transform ──────────────────────────────────────────────────────────────
 
-// Global asset + slug swaps
+// 1. Asset paths — assets/meg.jpg → assets/<handle>.jpg, same for QR
 html = html
-  .replaceAll(`assets/${templateHandle}.jpg`, `assets/${HANDLE}.jpg`)
-  .replaceAll(`assets/${templateHandle}-qr.png`, `assets/${HANDLE}-qr.png`)
-  .replaceAll(`source: '${templateHandle}'`, `source: '${HANDLE}'`)
-  .replaceAll(`pixsort.app/${templateHandle}`, `pixsort.app/${HANDLE}`);
+  .replaceAll(`assets/${TEMPLATE_HANDLE}.jpg`,     `assets/${HANDLE}.jpg`)
+  .replaceAll(`assets/${TEMPLATE_HANDLE}-qr.png`,  `assets/${HANDLE}-qr.png`);
 
-// AppsFlyer URLs — replace EVERY absolute AppsFlyer link in the file
+// 2. AppsFlyer URLs — replace every absolute AppsFlyer link in the file
 html = html.replace(
   /https:\/\/app\.appsflyer\.com\/id6760485464\?[^"'\s<>]+/g,
   appsflyerUrl
 );
 
-// CSS palette swap in :root
-html = swapCssVar(html, '--lime', brandColor);
+// 3. CSS palette
+html = swapCssVar(html, '--lime',     brandColor);
 html = swapCssVar(html, '--limedark', brandColorDark);
 
-// Headline (h1 lines) — swap the two `.h1-line` spans inside the first <h1>
-html = html.replace(
-  /(<h1[^>]*>\s*)<span class="h1-line">[^<]*<\/span>\s*<span class="h1-line">[^]*?<\/span>(\s*<\/h1>)/,
-  (_m, open, close) =>
-    `${open}<span class="h1-line">${escapeHtml(headline.line1)}</span>\n` +
-    `      <span class="h1-line">${escapeHtml(headline.line2Prefix || '')}<em>${escapeHtml(headline.line2Em)}</em>${escapeHtml(headline.line2Suffix || '')}</span>${close}`
-);
-
-// Sub-copy under headline
-html = html.replace(
-  /(<p class="hero-discount-line">\s*<span>)[^<]*(<\/span>)/,
-  `$1${escapeHtml(subCopy)}$2`
-);
-
-// Meta tags — <title>, og:title, og:url, twitter:title
+// 4. Meta tags — title, og:title, twitter:title, og:url, meta description
+const metaTitle = `${displayName} × PixSort: 100 Photos Sorted Free`;
+const metaDesc  = `Get 100 photos sorted free with ${displayName}'s Pixsort link.`;
 html = html
-  .replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(displayName)} × PixSort · 100 Photos Sorted Free</title>`)
-  .replace(/(og:title" content=")[^"]*/,        `$1${escapeAttr(displayName)} × PixSort · 100 Photos Sorted Free`)
-  .replace(/(og:url" content=")[^"]*/,          `$1https://pixsort.app/${HANDLE}/`)
-  .replace(/(twitter:title" content=")[^"]*/,   `$1${escapeAttr(displayName)} × PixSort · 100 Photos Sorted Free`)
-  .replace(/(og:description" content=")[^"]*/,  `$1Get 100 photos sorted free with ${escapeAttr(displayName)}'s Pixsort link.`)
-  .replace(/(twitter:description" content=")[^"]*/, `$1Get 100 photos sorted free with ${escapeAttr(displayName)}'s Pixsort link.`);
+  .replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(metaTitle)}</title>`)
+  .replace(/(name="description" content=")[^"]*/,   `$1${escapeAttr(metaDesc)}`)
+  .replace(/(og:title" content=")[^"]*/,            `$1${escapeAttr(metaTitle)}`)
+  .replace(/(og:description" content=")[^"]*/,      `$1${escapeAttr(metaDesc)}`)
+  .replace(/(og:url" content=")[^"]*/,              `$1https://pixsort.app/${HANDLE}/`)
+  .replace(/(twitter:title" content=")[^"]*/,       `$1${escapeAttr(metaTitle)}`)
+  .replace(/(twitter:description" content=")[^"]*/, `$1${escapeAttr(metaDesc)}`);
 
-// Collab mark — the "Partner × PixSort" first span
+// 5. Collab mark — <span>Meg</span> before <span class="collab-x">×</span>
 html = html.replace(
-  /(<div class="collab-mark">\s*<span>)[^<]+(<\/span>)/,
+  /(<div class="collab-mark">\s*<span>)[^<]+(<\/span>\s*<span class="collab-x">)/,
   `$1${escapeHtml(displayName)}$2`
 );
 
-// Hero photo caption + credit
+// 6. Hero photo caption — reconstruct the whole block
+//    Template shape (Meg):
+//      <div class="hero-photo-caption">
+//        Meg · <span style="color:var(--grey);font-weight:600;">Founder, MegTheCreator community</span><br>
+//        <span class="credit">UGC coach · creator community leader · mom</span>
+//      </div>
 html = html.replace(
-  /(<div class="hero-photo-caption">\s*<span>)[^<]+(<\/span>[^<]*<span class="credit">)[^<]+(<\/span>)/,
-  `$1${escapeHtml(displayName)}$2${escapeHtml(credit)}$3`
+  /(<div class="hero-photo-caption">)[^]*?(<\/div>)/,
+  `$1
+      ${escapeHtml(displayName)} · <span style="color:var(--grey);font-weight:600;">${escapeHtml(role)}</span><br>
+      <span class="credit">${escapeHtml(creditLine)}</span>
+    $2`
 );
 
-// Testimonial quote (if provided) — else leave template default
-if (quote) {
-  html = html.replace(
-    /(<div class="quote-card"[^>]*>\s*<p[^>]*>)[^]*?(<\/p>)/,
-    `$1"${escapeHtml(quote)}"$2`
-  );
+// 7. Hero photo alt text
+html = html.replace(
+  /(class="hero-photo" src="\.\.\/assets\/[a-z0-9-]+\.jpg" alt=")[^"]+(")/,
+  `$1${escapeAttr(displayName)}$2`
+);
+
+// 8. QR image alt
+html = html.replace(
+  /(<img src="\.\.\/assets\/[a-z0-9-]+-qr\.png" alt=")[^"]+(")/,
+  `$1Scan with your iPhone to install PixSort with ${escapeAttr(displayName)}'s link$2`
+);
+
+// 9. Section label — "Why Meg uses PixSort"
+html = html.replace(
+  /(<div class="social-label">Why )[^<]+( uses PixSort<\/div>)/,
+  `$1${escapeHtml(displayName)}$2`
+);
+
+// 10. Testimonial quote text
+html = html.replace(
+  /(<p class="quote-text"[^>]*>\s*)"[^]*?"(\s*<\/p>)/,
+  `$1"${escapeHtml(quote)}"$2`
+);
+
+// 11. Quote attribution — "Meg · Founder, MegTheCreator · UGC coach + community leader"
+const quoteAttr = `${displayName} · ${role} · ${creditLine}`;
+html = html.replace(
+  /(<div class="quote-attr">)[^<]+(<\/div>)/,
+  `$1${escapeHtml(quoteAttr)}$2`
+);
+
+// 12. "X's link" replacements — microcopy (both instances) + FAQ answers
+//     Template has these literal strings; swap the possessive form.
+html = html.replaceAll(`${TEMPLATE_HANDLE_DISPLAY()}'s link`, `${displayName}'s link`);
+
+function TEMPLATE_HANDLE_DISPLAY() {
+  // Meg's page uses "Meg" (short form) in "Meg's link", "Why Meg uses PixSort" etc.
+  // If future template creators want a different short form, override here.
+  return 'Meg';
 }
-
-// FAQ answer for "How do I get the discount?" — uses partner name
-html = html.replace(
-  /(Your 100-photo unlock is locked to your number by )[A-Za-z ]+('s link)/,
-  `$1${escapeHtml(displayName)}$2`
-);
-
-// Modal title + subtitle — uses partner name
-html = html.replace(
-  /(Get 100 photos sorted free with )[A-Za-z ]+('s link)/g,
-  `$1${escapeHtml(displayName)}$2`
-);
-
-// Microcopy under form: "iOS · 100 photos free · <partner>'s link"
-html = html.replace(
-  /(<div class="microcopy">[^<]*<span>iOS<\/span>[^<]*<span>100 photos free<\/span>[^<]*<span>)[^<]+(<\/span>)/g,
-  `$1${escapeHtml(displayName)}'s link$2`
-);
 
 // ─── Write files ────────────────────────────────────────────────────────────
 if (dryRun) {
   console.error('[pixsort-creator-page] --dry-run: skipping writes');
-  console.log(JSON.stringify({ handle: HANDLE, outHtml, outPhoto, outQr, dryRun: true }));
+  console.log(JSON.stringify({
+    handle: HANDLE,
+    outHtml: path.relative(REPO_ROOT, outHtml),
+    outPhoto: path.relative(REPO_ROOT, outPhoto),
+    outQr: path.relative(REPO_ROOT, outQr),
+    liveUrl: `https://pixsort.app/${HANDLE}/`,
+    dryRun: true,
+  }));
   process.exit(0);
 }
 
-// Ensure dirs
 try {
   fs.mkdirSync(outDir, { recursive: true });
   fs.mkdirSync(path.join(REPO_ROOT, 'assets'), { recursive: true });
@@ -197,16 +208,14 @@ try {
   fail(4, `Cannot create output dir: ${e.message}`);
 }
 
-// Write HTML
 try { fs.writeFileSync(outHtml, html); }
 catch (e) { fail(4, `Cannot write ${outHtml}: ${e.message}`); }
 
-// Copy / convert photo
+// Photo — copy or convert
 if (photo && fs.existsSync(photo)) {
   const ext = path.extname(photo).toLowerCase();
   try {
     if (ext === '.webp' || ext === '.png') {
-      // Convert via macOS sips (portable enough for this pipeline)
       execSync(`sips -s format jpeg "${photo}" --out "${outPhoto}"`, { stdio: 'ignore' });
     } else {
       fs.copyFileSync(photo, outPhoto);
@@ -215,10 +224,10 @@ if (photo && fs.existsSync(photo)) {
     fail(4, `Cannot process photo ${photo}: ${e.message}`);
   }
 } else {
-  console.error(`[pixsort-creator-page] warning: photo not found at ${photo} — page will 404 on hero image until you drop it in ${outPhoto}`);
+  console.error(`[pixsort-creator-page] warning: photo missing at ${photo} — hero image will 404 until you drop it in ${outPhoto}`);
 }
 
-// Generate QR
+// QR
 try {
   const qrPkg = require(path.join(REPO_ROOT, 'tools/html-to-png/node_modules/qrcode'));
   qrPkg.toFile(outQr, appsflyerUrl, {
@@ -229,7 +238,6 @@ try {
       console.error(`[pixsort-creator-page] QR write failed: ${err.message}`);
       process.exit(3);
     }
-    // Print structured result on stdout for the calling pipeline
     console.log(JSON.stringify({
       handle: HANDLE,
       outHtml: path.relative(REPO_ROOT, outHtml),
@@ -239,7 +247,7 @@ try {
     }));
   });
 } catch (e) {
-  fail(3, `Cannot load qrcode package — is tools/html-to-png/node_modules/qrcode installed? (${e.message})`);
+  fail(3, `Cannot load qrcode package (is tools/html-to-png/node_modules/qrcode installed?): ${e.message}`);
 }
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
@@ -249,15 +257,13 @@ function fail(code, msg) {
 }
 
 function swapCssVar(html, name, value) {
-  const re = new RegExp(`(${name.replace(/[-]/g, '\\-')}\\s*:\\s*)#[0-9A-Fa-f]{3,8}`, 'g');
+  const re = new RegExp(`(${name.replace(/-/g, '\\-')}\\s*:\\s*)#[0-9A-Fa-f]{3,8}`, 'g');
   return html.replace(re, `$1${value}`);
 }
 
 function shade(hex, pct) {
   const h = hex.replace('#', '');
-  const n = h.length === 3
-    ? h.split('').map(c => c + c).join('')
-    : h;
+  const n = h.length === 3 ? h.split('').map(c => c + c).join('') : h;
   const num = parseInt(n, 16);
   const r = Math.max(0, Math.min(255, ((num >> 16) & 0xff) + Math.round(255 * pct / 100)));
   const g = Math.max(0, Math.min(255, ((num >> 8)  & 0xff) + Math.round(255 * pct / 100)));
