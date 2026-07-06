@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>sara ganster x Pixsort</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="refresh" content="1;url=https://app.appsflyer.com/id6760485464?pid=sara-ganster&amp;c=sara-ganster-2026-07&amp;af_channel=influencer&amp;af_adset=sara-ganster-landing&amp;af_ad=sara-ganster-public-link&amp;af_siteid=sara-ganster&amp;af_sub1=sara-ganster&amp;af_sub2=sara-ganster-2026-07&amp;af_sub3=pixsort-app-sara-ganster&amp;deep_link_value=collab&amp;deep_link_sub1=sara-ganster&amp;deep_link_sub2=sara-ganster-2026-07&amp;deep_link_sub3=pixsort-app-sara-ganster&amp;af_dp=sortscout%3A%2F%2Fcollab%2Fsara-ganster%3Futm_source%3Dsara-ganster%26utm_medium%3Dinfluencer%26utm_campaign%3Dsara-ganster-2026-07%26click_id%3Dpixsort-app-sara-ganster&amp;af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&amp;af_web_dp=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&amp;af_click_lookback=30d">
+  <link rel="canonical" href="https://pixsort.app/sara-ganster">
+  <style>
+    :root { color-scheme: light; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f7f7f5; color: #111113; }
+    body { min-height: 100vh; margin: 0; display: grid; place-items: center; background: #f7f7f5; color: #111113; }
+    main { width: min(420px, calc(100% - 40px)); border: 1px solid #ded8cd; border-radius: 12px; background: #fff; padding: 24px; box-shadow: 0 14px 34px rgba(24, 24, 27, 0.08); }
+    h1 { margin: 0; font-size: 22px; line-height: 1.15; letter-spacing: 0; }
+    p { margin: 12px 0 0; color: #5c5750; font-size: 14px; line-height: 1.5; }
+    a { color: #111113; font-weight: 800; }
+  </style>
+</head>
+<body data-pixsort-auto-direct="true">
+  <!-- pixsort-auto-affiliate:v2 -->
+  <!-- pixsort-auto-affiliate-commission:0.2 -->
+  <!-- pixsort-auto-affiliate-direct:v1 -->
+  <!-- pixsort-auto-affiliate-version:7cd2d0a233904ab0 -->
+  <main>
+    <h1>Opening Pixsort</h1>
+    <p>If the App Store does not open, <a href="https://app.appsflyer.com/id6760485464?pid=sara-ganster&amp;c=sara-ganster-2026-07&amp;af_channel=influencer&amp;af_adset=sara-ganster-landing&amp;af_ad=sara-ganster-public-link&amp;af_siteid=sara-ganster&amp;af_sub1=sara-ganster&amp;af_sub2=sara-ganster-2026-07&amp;af_sub3=pixsort-app-sara-ganster&amp;deep_link_value=collab&amp;deep_link_sub1=sara-ganster&amp;deep_link_sub2=sara-ganster-2026-07&amp;deep_link_sub3=pixsort-app-sara-ganster&amp;af_dp=sortscout%3A%2F%2Fcollab%2Fsara-ganster%3Futm_source%3Dsara-ganster%26utm_medium%3Dinfluencer%26utm_campaign%3Dsara-ganster-2026-07%26click_id%3Dpixsort-app-sara-ganster&amp;af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&amp;af_web_dp=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&amp;af_click_lookback=30d">continue to Pixsort</a>.</p>
+  </main>
+  <script>
+    (function () {
+      var POSTHOG_HOST = 'https://us.i.posthog.com';
+      var POSTHOG_API_KEY = 'phc_bjXi1mYTYZTzuTmaCq7BUTEbdGJOGegDvklVMx5IuTP';
+      var CLIENT_ID_KEY = 'pixsort_affiliate_client_id_v1';
+      var attribution = {
+        partnerId: 'sara-ganster',
+        campaignId: 'sara-ganster-2026-07',
+        clickId: 'pixsort-app-sara-ganster'
+      };
+      function uuid() {
+        if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+          return window.crypto.randomUUID();
+        }
+        return String(Date.now()) + '-' + Math.random().toString(16).slice(2);
+      }
+      function clientId() {
+        try {
+          var existing = window.localStorage.getItem(CLIENT_ID_KEY);
+          if (existing) return existing;
+          var next = uuid();
+          window.localStorage.setItem(CLIENT_ID_KEY, next);
+          return next;
+        } catch (error) {
+          return uuid();
+        }
+      }
+      function capture(event, extra) {
+        var payload = {
+          api_key: POSTHOG_API_KEY,
+          event: event,
+          distinct_id: 'affiliate-page-' + attribution.partnerId + '-' + clientId(),
+          properties: Object.assign({
+            partner_id: attribution.partnerId,
+            campaign_id: attribution.campaignId,
+            click_id: attribution.clickId,
+            source_path: window.location.pathname,
+            source_host: window.location.hostname,
+            referrer: document.referrer || null,
+            user_agent: navigator.userAgent || null
+          }, extra || {})
+        };
+        var body = JSON.stringify(payload);
+        if (navigator.sendBeacon) {
+          var sent = navigator.sendBeacon(POSTHOG_HOST + '/capture/', new Blob([body], { type: 'application/json' }));
+          if (sent) return;
+        }
+        fetch(POSTHOG_HOST + '/capture/', {
+          method: 'POST',
+          mode: 'cors',
+          keepalive: true,
+          headers: { 'Content-Type': 'application/json' },
+          body: body
+        }).catch(function () {});
+      }
+      capture('pixsort_partner_link_clicked', { source_surface: 'automatic_affiliate_direct_redirect' });
+      
+      capture('pixsort_partner_app_store_clicked', {
+        source_surface: 'automatic_affiliate_direct_redirect',
+        target_href: 'https://app.appsflyer.com/id6760485464?pid=sara-ganster&c=sara-ganster-2026-07&af_channel=influencer&af_adset=sara-ganster-landing&af_ad=sara-ganster-public-link&af_siteid=sara-ganster&af_sub1=sara-ganster&af_sub2=sara-ganster-2026-07&af_sub3=pixsort-app-sara-ganster&deep_link_value=collab&deep_link_sub1=sara-ganster&deep_link_sub2=sara-ganster-2026-07&deep_link_sub3=pixsort-app-sara-ganster&af_dp=sortscout%3A%2F%2Fcollab%2Fsara-ganster%3Futm_source%3Dsara-ganster%26utm_medium%3Dinfluencer%26utm_campaign%3Dsara-ganster-2026-07%26click_id%3Dpixsort-app-sara-ganster&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_click_lookback=30d',
+        redirect_mode: 'automatic'
+      });
+      window.setTimeout(function () {
+        window.location.replace('https://app.appsflyer.com/id6760485464?pid=sara-ganster&c=sara-ganster-2026-07&af_channel=influencer&af_adset=sara-ganster-landing&af_ad=sara-ganster-public-link&af_siteid=sara-ganster&af_sub1=sara-ganster&af_sub2=sara-ganster-2026-07&af_sub3=pixsort-app-sara-ganster&deep_link_value=collab&deep_link_sub1=sara-ganster&deep_link_sub2=sara-ganster-2026-07&deep_link_sub3=pixsort-app-sara-ganster&af_dp=sortscout%3A%2F%2Fcollab%2Fsara-ganster%3Futm_source%3Dsara-ganster%26utm_medium%3Dinfluencer%26utm_campaign%3Dsara-ganster-2026-07%26click_id%3Dpixsort-app-sara-ganster&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_click_lookback=30d');
+      }, 120);
+      
+      document.addEventListener('click', function (event) {
+        var link = event.target && event.target.closest
+          ? event.target.closest('a[href^="https://app.appsflyer.com/id6760485464"]')
+          : null;
+        if (!link) return;
+        capture('pixsort_partner_app_store_clicked', {
+          source_surface: 'automatic_affiliate_landing_page',
+          target_href: link.href,
+          redirect_mode: 'anchor'
+        });
+      }, true);
+    })();
+  </script>
+</body>
+</html>
