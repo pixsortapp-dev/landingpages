@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "partnerId": "e2e-delete-test",
+  "campaignId": "e2e-delete-test-2026-07",
+  "clickId": "pixsort-app-e2e-delete-test",
+  "rowId": "34bbe31c-5de4-4dcd-9623-54526323b338",
+  "creatorName": "E2E Delete Test",
+  "destination": "direct_app_store",
+  "publicUrl": "https://pixsort-dashboard.vercel.app/r/e2e-delete-test?campaign_id=e2e-delete-test-2026-07&click_id=pixsort-app-e2e-delete-test&sig=7524ca8c7d538aa237af58d433df7190598b92bce52c3a863ac7d876a1d2d718",
+  "commissionRate": 0.2,
+  "reservedAt": "2026-07-10T22:48:33.583Z"
+}
