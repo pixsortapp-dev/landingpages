@@ -3,6 +3,9 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - '_pixsort-affiliate-rate-limits/**'
+      - '_pixsort-affiliate-slug-reservations/**'
   workflow_dispatch:
 
 permissions:
@@ -22,6 +25,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # A later push can cancel this run. Always deploy the newest complete
+          # branch state, even when GitHub delivers adjacent push events out of order.
+          ref: main
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
