@@ -29,8 +29,11 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 // ─── Constants ──────────────────────────────────────────────────────────────
-const TEMPLATE_HANDLE = 'meg';
-const TEMPLATE_PATH   = 'meg/index.html';
+// Template lives INSIDE the skill dir so it can evolve without touching any
+// live partner page. The generator always forks from here — no partner page
+// is ever hand-edited.
+const TEMPLATE_HANDLE = 'meg';   // string tokens inside the template that get slug-swapped
+const TEMPLATE_PATH   = '.claude/skills/pixsort-creator-page/template.html';
 
 // ─── CLI ────────────────────────────────────────────────────────────────────
 const argv = process.argv.slice(2);
@@ -138,9 +141,13 @@ html = html.replace(
   appsflyerUrl
 );
 
-// 3. CSS palette
+// 3. CSS palette + auto-derived text color for lime surfaces
+//    --lime-fg picks black or white based on brand-color luminance so any
+//    palette (bright yellow → dark forest green) stays readable.
+const limeFg = readableFgFor(brandColor);
 html = swapCssVar(html, '--lime',     brandColor);
 html = swapCssVar(html, '--limedark', brandColorDark);
+html = swapCssVar(html, '--lime-fg',  limeFg);
 
 // 4. Meta tags — title, og:title, twitter:title, og:url, meta description
 const metaTitle = `${displayName} × PixSort: 100 Photos Sorted Free`;
@@ -299,6 +306,24 @@ function shade(hex, pct) {
   const g = Math.max(0, Math.min(255, ((num >> 8)  & 0xff) + Math.round(255 * pct / 100)));
   const b = Math.max(0, Math.min(255, ( num        & 0xff) + Math.round(255 * pct / 100)));
   return '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('').toUpperCase();
+}
+
+// Pick black or white text for a given brand-color background, using WCAG
+// relative luminance. Threshold 0.4 lands right — bright yellows/limes stay
+// on black, medium colors like gold (#C9A84C) stay on black, dark greens
+// (#253E1E) flip to white.
+function readableFgFor(hex) {
+  const h = hex.replace('#', '');
+  const n = h.length === 3 ? h.split('').map(c => c + c).join('') : h;
+  const num = parseInt(n, 16);
+  const chan = v => {
+    const s = (v / 255);
+    return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+  };
+  const L = 0.2126 * chan((num >> 16) & 0xff)
+          + 0.7152 * chan((num >> 8)  & 0xff)
+          + 0.0722 * chan( num        & 0xff);
+  return L < 0.4 ? '#FFFFFF' : '#0F0F0F';
 }
 
 function escapeHtml(s) {

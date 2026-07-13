@@ -49,7 +49,7 @@ Optional: `brandColorDark` (auto-derived 12% darker from `brandColor` if omitted
 
 ## Everything that stays frozen
 
-Do NOT accept inputs for any of these. They come from `meg/index.html` verbatim:
+Do NOT accept inputs for any of these. They come from `.claude/skills/pixsort-creator-page/template.html` verbatim:
 
 - Headline: **"Your camera roll, / *auto-organized* for you."**
 - Sub-copy: "100 photos sorted, on us."
@@ -155,7 +155,7 @@ Track shipped partners to keep pattern consistent:
 
 ## Related files
 
-- **Canonical template:** `meg/index.html` (freeze point as of 2026-07-06)
+- **Canonical template:** `.claude/skills/pixsort-creator-page/template.html`. Lives inside the skill so it can evolve without touching any live partner page. Includes `--lime-fg` variable (text color for surfaces on `--lime`) that `generate.js` auto-computes from brand-color luminance — dark palettes (e.g. Salha's `#253E1E`) get white text, light palettes stay on black.
 - Walkthrough embed: `walkthrough-embed.html` (iframed on partner pages, kept in sync with homepage)
 - Homepage: `index.html` (sort → albums → push → real iPhone Photos)
 - QR generator: `tools/html-to-png/node_modules/qrcode`
