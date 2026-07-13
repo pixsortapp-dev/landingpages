@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salha Aziz × PixSort: 100 Photos Sorted Free</title>
+  <meta name="description" content="Get 100 photos sorted free with Salha Aziz&#39;s PixSort link.">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PixSort">
+  <meta property="og:title" content="Salha Aziz × PixSort: 100 Photos Sorted Free">
+  <meta property="og:description" content="Get 100 photos sorted free with Salha Aziz&#39;s PixSort link.">
+  <meta property="og:image" content="https://pixsort.app/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://pixsort.app/salha-aziz/">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Salha Aziz × PixSort: 100 Photos Sorted Free">
+  <meta name="twitter:description" content="Get 100 photos sorted free with Salha Aziz&#39;s PixSort link.">
+  <meta name="twitter:image" content="https://pixsort.app/assets/og-image.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="../assets/pixsort-icon.jpeg">
+  <link rel="apple-touch-icon" href="../assets/pixsort-icon.jpeg">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400;1,9..40,700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:        #FFFFFF;
+      --bg2:       #FAFAF8;
+      --bg3:       #F4F4F0;
+      --lime:      #C1FF72;
+      --limedark:  #A2E053;
+      --ink:       #0F0F0F;
+      --ink2:      #1A1A1A;
+      --grey:      #555555;
+      --grey2:     #888888;
+      --border:    #E5E5E5;
+      --gold:      #0F0F0F;
+      --golddark:  #333333;
+      --white:     #0F0F0F;
+      --app-bg:    #F0EBE0;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      font-family: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── Nav ─────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 64px;
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      transition: background .3s;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo img { width: 28px; height: 28px; border-radius: 7px; }
+    .nav-logo span { font-size: 16px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+    .nav-cta {
+      background: var(--lime); color: var(--ink); border: 1.5px solid var(--ink);
+      font-family: inherit; font-size: 13px; font-weight: 800;
+      padding: 10px 22px; border-radius: 999px; cursor: pointer;
+      transition: background .15s, transform .1s; text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .nav-cta:hover { background: var(--limedark); transform: translateY(-1px); }
+
+    /* ── Hero (2-column collab layout) ────────────────── */
+    .hero {
+      min-height: 100svh;
+      display: grid; grid-template-columns: 1.05fr 1fr; gap: 64px;
+      align-items: center; max-width: 1240px; margin: 0 auto;
+      padding: 120px 40px 80px; position: relative;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 25% 30%, rgba(193,255,114,0.35) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+    .hero-text { position: relative; z-index: 1; }
+    .hero-photo-wrap { position: relative; z-index: 1; }
+    .hero-photo {
+      width: 100%; max-width: 460px; aspect-ratio: 3/4;
+      object-fit: cover; border-radius: 24px;
+      border: 1.5px solid var(--ink);
+      box-shadow: 10px 10px 0 var(--ink);
+      display: block; margin: 0 auto;
+    }
+    .hero-photo-caption {
+      margin-top: 18px; text-align: center;
+      font-size: 13px; font-weight: 700; color: var(--ink);
+    }
+    .hero-photo-caption .credit {
+      display: inline-block; margin-top: 6px;
+      background: var(--lime); padding: 4px 10px;
+      border-radius: 4px; border: 1px solid var(--ink);
+      font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .appstore-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--ink); color: var(--bg); font-size: 12px; font-weight: 700;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      padding: 9px 16px; border-radius: 999px; text-decoration: none;
+      margin-bottom: 18px; transition: transform .15s, background .15s;
+    }
+    .appstore-pill:hover { background: var(--ink2); transform: translateY(-1px); }
+    .appstore-pill .apple-glyph { display: inline-block; width: 14px; height: 14px; }
+    .collab-mark {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 13px; font-weight: 800; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--ink); margin-bottom: 22px;
+    }
+    .collab-mark .collab-x {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 22px; height: 22px; background: var(--lime);
+      border: 1.5px solid var(--ink); border-radius: 50%;
+      font-size: 11px; font-weight: 900;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(36px, 5.4vw, 68px);
+      font-weight: 400; line-height: 1.05; letter-spacing: -0.03em;
+      color: var(--ink); margin-bottom: 22px;
+    }
+    .hero h1 .h1-line {
+      display: block; white-space: nowrap;
+    }
+    @media (max-width: 480px) {
+      .hero h1 .h1-line { white-space: normal; }
+    }
+    .hero h1 em {
+      font-style: italic; color: var(--ink); position: relative; display: inline-block;
+    }
+    .hero h1 em::after {
+      content: ''; position: absolute; left: -2px; right: -2px;
+      bottom: 0.05em; height: 0.30em;
+      background: var(--lime); z-index: -1;
+    }
+    .hero-sub {
+      font-size: clamp(16px, 1.5vw, 19px); color: var(--grey);
+      line-height: 1.55; margin-bottom: 18px; text-wrap: pretty; max-width: 540px;
+    }
+    .hero-discount-line {
+      font-size: clamp(15px, 1.4vw, 17px); font-weight: 800;
+      color: var(--ink); margin-bottom: 32px;
+    }
+    .hero-discount-line span {
+      position: relative; display: inline-block;
+    }
+    .hero-discount-line span::after {
+      content: ''; position: absolute; left: -3px; right: -3px;
+      bottom: 0.05em; height: 0.45em;
+      background: var(--lime); z-index: -1;
+    }
+
+    .cta-block { display: flex; flex-direction: column; align-items: stretch; gap: 14px; width: 100%; max-width: 460px; position: relative; z-index: 1; }
+    .cta-download {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      background: var(--ink); color: var(--bg);
+      font-family: inherit; font-size: 17px; font-weight: 800;
+      letter-spacing: -0.01em;
+      padding: 18px 28px; border-radius: 999px;
+      text-decoration: none; border: 1.5px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      transition: transform .15s, box-shadow .2s;
+      width: 100%;
+    }
+    .cta-download:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--lime); }
+    .cta-download svg { width: 18px; height: 18px; }
+
+    /* ── Product bumper (between hero and offer) ──────── */
+    .product-bumper {
+      background: var(--ink); color: var(--bg);
+      padding: 56px 24px; text-align: center;
+      border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
+    }
+    .product-bumper .bumper-label {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--lime); margin-bottom: 18px;
+    }
+    .product-bumper p {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(24px, 2.8vw, 38px);
+      line-height: 1.25; color: var(--bg); letter-spacing: -0.01em;
+      max-width: 920px; margin: 0 auto; text-wrap: balance;
+    }
+    .product-bumper p em {
+      font-style: italic; color: var(--bg); position: relative; display: inline-block;
+    }
+    .product-bumper p em::after {
+      content: ''; position: absolute; left: -3px; right: -3px;
+      bottom: 0.06em; height: 0.32em; background: var(--lime); z-index: -1;
+    }
+    .input-row {
+      display: flex; width: 100%;
+      background: var(--bg2); border: 1.5px solid var(--ink);
+      border-radius: 999px; overflow: hidden;
+      box-shadow: 4px 4px 0 var(--ink);
+      transition: box-shadow .2s, transform .15s;
+    }
+    .input-row:focus-within {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--ink);
+    }
+    .input-row input {
+      flex: 1; border: none; outline: none; background: transparent;
+      font-family: inherit; font-size: 16px; color: var(--ink);
+      padding: 14px 20px;
+    }
+    .input-row input::placeholder { color: var(--grey2); }
+    .input-row button {
+      background: var(--lime); color: var(--ink); border: none; cursor: pointer;
+      font-family: inherit; font-size: 13px; font-weight: 800;
+      padding: 0 22px; white-space: nowrap;
+      border-radius: 999px; margin: 4px;
+      transition: background .15s;
+    }
+    .input-row button:hover { background: var(--limedark); }
+    .microcopy {
+      font-size: 12px; color: var(--grey2);
+      display: flex; gap: 0; align-items: center; justify-content: center;
+    }
+    .microcopy span { display: flex; align-items: center; gap: 8px; }
+    .microcopy span + span::before { content: '·'; margin: 0 10px; color: var(--grey2); }
+    .sms-disclosure {
+      font-size: 11px; color: var(--grey2); line-height: 1.45;
+      margin-top: 4px; max-width: 460px; text-align: center;
+    }
+    .success-msg {
+      display: none;
+      background: rgba(193,255,114,0.4); border: 1.5px solid var(--ink);
+      color: var(--ink); font-size: 15px; font-weight: 700;
+      border-radius: 16px; padding: 16px 24px; width: 100%;
+      text-align: center; line-height: 1.5;
+    }
+
+    /* ── Discount banner ─────────────────────────────── */
+    .discount-banner {
+      background: var(--lime);
+      border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
+      padding: 110px 40px;
+    }
+    .discount-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.4fr auto;
+      gap: 96px; align-items: center;
+    }
+    .discount-text { text-align: left; }
+    .discount-eyebrow {
+      font-size: 12px; font-weight: 800; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--ink); margin-bottom: 22px;
+    }
+    .discount-banner h2 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(40px, 5.6vw, 72px);
+      font-weight: 400; letter-spacing: -0.03em; line-height: 1.05;
+      color: var(--ink); margin-bottom: 20px; text-wrap: balance;
+    }
+    .discount-banner h2 em.discount-price {
+      font-style: italic; color: var(--ink);
+      position: relative; display: inline-block;
+    }
+    .discount-banner h2 em.discount-price::after {
+      content: ''; position: absolute; left: -3px; right: -3px;
+      bottom: 0.06em; height: 0.32em;
+      background: var(--bg); z-index: -1;
+    }
+    .discount-banner p {
+      font-size: 18px; color: var(--ink); opacity: 0.82; max-width: 560px;
+      margin: 0; line-height: 1.55;
+    }
+    .discount-qr { text-align: center; }
+    .discount-qr-card {
+      background: var(--bg); border: 1.5px solid var(--ink);
+      border-radius: 20px; padding: 18px;
+      box-shadow: 8px 8px 0 var(--ink);
+      display: inline-block;
+    }
+    .discount-qr-card img {
+      display: block; width: 240px; height: 240px;
+    }
+    .discount-qr-label {
+      margin-top: 18px; font-size: 13px; font-weight: 800;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink);
+    }
+    @media (max-width: 760px) {
+      .discount-inner { grid-template-columns: 1fr; gap: 32px; text-align: center; }
+      .discount-text { text-align: center; }
+      .discount-banner p { margin: 0 auto; }
+      .discount-qr { display: none; }
+    }
+
+    /* ── Statement ───────────────────────────────────── */
+    .statement {
+      padding: 100px 24px; text-align: center; border-top: 1px solid var(--border);
+    }
+    .statement p {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(40px, 6vw, 84px);
+      font-weight: 400; letter-spacing: -0.03em; line-height: 1.1;
+      color: var(--ink); max-width: 900px; margin: 0 auto;
+      text-wrap: balance;
+    }
+    .statement p em {
+      font-style: italic; color: var(--ink); position: relative; display: inline-block;
+    }
+    .statement p em::after {
+      content: ''; position: absolute; left: -2px; right: -2px;
+      bottom: 0.06em; height: 0.30em;
+      background: var(--lime); z-index: -1;
+    }
+
+    /* ── Live walkthrough iframe wrapper ──────────────── */
+    .walkthrough-embed-wrap {
+      max-width: 1280px; margin: 0 auto; padding: 40px 0 80px;
+    }
+    .walkthrough-embed-wrap iframe {
+      width: 100%; border: 0; display: block;
+      min-height: 1400px; background: transparent;
+    }
+    @media (max-width: 760px) {
+      .walkthrough-embed-wrap { padding: 24px 0 56px; }
+      .walkthrough-embed-wrap iframe { min-height: 1900px; }
+    }
+
+    /* ── Walkthrough video (legacy, no longer used) ───── */
+    .walkthrough {
+      padding: 80px 40px 120px; max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr auto; gap: 64px; align-items: center;
+    }
+    .walkthrough-text { max-width: 480px; }
+    .walkthrough-eyebrow {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--ink); margin-bottom: 20px;
+    }
+    .walkthrough h2 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(32px, 4.2vw, 52px);
+      font-weight: 400; letter-spacing: -0.02em; line-height: 1.05;
+      color: var(--ink); margin-bottom: 22px;
+    }
+    .walkthrough h2 em {
+      font-style: italic; color: var(--ink); position: relative; display: inline-block;
+    }
+    .walkthrough h2 em::after {
+      content: ''; position: absolute; left: -2px; right: -2px;
+      bottom: 0.06em; height: 0.32em; background: var(--lime); z-index: -1;
+    }
+    .walkthrough-text p {
+      font-size: 17px; line-height: 1.55; color: var(--grey); max-width: 460px;
+    }
+    .walkthrough-video {
+      width: 320px; aspect-ratio: 332/720;
+      border: 1.5px solid var(--ink); border-radius: 28px;
+      overflow: hidden; box-shadow: 10px 10px 0 var(--ink);
+      background: var(--ink); position: relative; cursor: pointer;
+    }
+    .walkthrough-video video { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .video-mute-toggle {
+      position: absolute; bottom: 14px; right: 14px;
+      background: rgba(0,0,0,0.72); color: #fff;
+      border: 1px solid rgba(255,255,255,0.4); border-radius: 999px;
+      padding: 7px 13px; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 6px;
+      cursor: pointer; backdrop-filter: blur(8px); transition: opacity .2s;
+    }
+    .video-mute-toggle svg { width: 12px; height: 12px; }
+    .walkthrough-video.is-unmuted .video-mute-toggle { opacity: 0; pointer-events: none; }
+    @media (max-width: 760px) {
+      .walkthrough { grid-template-columns: 1fr; gap: 40px; text-align: center; padding: 64px 24px 80px; }
+      .walkthrough-text { margin: 0 auto; }
+      .walkthrough-video { margin: 0 auto; }
+    }
+
+    /* ── Feature rows (kept for legacy, currently unused) ───── */
+    .features { padding: 0 40px 120px; max-width: 1200px; margin: 0 auto; }
+    .feature-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+      padding: 100px 0;
+      border-top: 1px solid var(--border);
+    }
+    .feature-row:first-child { border-top: none; }
+    .feature-kw {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(48px, 7vw, 88px);
+      font-weight: 400; font-style: italic;
+      color: var(--ink); letter-spacing: -0.04em;
+      line-height: 1; margin-bottom: 24px;
+      position: relative; display: inline-block;
+    }
+    .feature-kw::after {
+      content: ''; position: absolute; left: -4px; right: -4px;
+      bottom: 0.08em; height: 0.30em;
+      background: var(--lime); z-index: -1;
+    }
+    .feature-caption {
+      font-size: clamp(16px, 1.6vw, 19px); color: var(--grey);
+      line-height: 1.65; max-width: 420px; text-wrap: pretty;
+    }
+    .feature-phone-wrap { display: flex; justify-content: center; align-items: center; }
+    .feature-phone-wrap .phone-tilt-l {
+      transform: perspective(800px) rotateY(8deg) rotateX(2deg);
+      filter: drop-shadow(0 30px 60px rgba(0,0,0,0.15)) drop-shadow(0 0 40px rgba(193,255,114,0.4));
+    }
+    .feature-phone-wrap .phone-tilt-r {
+      transform: perspective(800px) rotateY(-8deg) rotateX(2deg);
+      filter: drop-shadow(0 30px 60px rgba(0,0,0,0.15)) drop-shadow(0 0 40px rgba(193,255,114,0.4));
+    }
+
+    /* ── Social proof ─────────────────────────────────── */
+    .social { background: var(--bg2); padding: 100px 40px; border-top: 1px solid var(--border); }
+    .social-inner { max-width: 1100px; margin: 0 auto; }
+    .social-label {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--ink); margin-bottom: 56px;
+      text-align: center;
+    }
+    .quotes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .quote-card {
+      background: var(--bg); border: 1.5px solid var(--ink);
+      border-radius: 20px; padding: 32px 26px;
+      display: flex; flex-direction: column; gap: 24px;
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .quote-text {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(18px, 1.7vw, 21px);
+      font-style: italic; color: var(--ink);
+      line-height: 1.5; flex: 1;
+    }
+    .quote-attr { font-size: 13px; font-weight: 700; color: var(--ink); letter-spacing: 0.02em; }
+
+    /* ── FAQ ──────────────────────────────────────────── */
+    .faq { padding: 100px 40px; max-width: 800px; margin: 0 auto; }
+    .faq-label {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--ink); margin-bottom: 40px;
+    }
+    .faq-item { border-top: 1px solid var(--border); }
+    .faq-item:last-child { border-bottom: 1px solid var(--border); }
+    .faq-q {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 0; cursor: pointer; gap: 16px;
+      font-size: 17px; font-weight: 700; color: var(--ink);
+      list-style: none; user-select: none;
+    }
+    .faq-icon {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 1.5px solid var(--ink);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: background .2s, transform .3s;
+    }
+    .faq-icon svg { transition: transform .3s; }
+    .faq-item.open .faq-icon { background: var(--lime); }
+    .faq-item.open .faq-icon svg { transform: rotate(45deg); }
+    .faq-a {
+      font-size: 15px; color: var(--grey); line-height: 1.7;
+      max-height: 0; overflow: hidden;
+      transition: max-height .35s ease, padding .35s ease;
+    }
+    .faq-item.open .faq-a { max-height: 280px; padding-bottom: 22px; }
+
+    /* ── Final CTA ────────────────────────────────────── */
+    .final-cta {
+      background: var(--bg3); border-top: 1px solid var(--border);
+      padding: 120px 24px; text-align: center;
+    }
+    .final-cta h2 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(40px, 6vw, 84px);
+      font-weight: 400; letter-spacing: -0.03em; line-height: 1;
+      color: var(--ink); margin-bottom: 18px; text-wrap: balance;
+    }
+    .final-cta h2 em {
+      font-style: italic; color: var(--ink); position: relative; display: inline-block;
+    }
+    .final-cta h2 em::after {
+      content: ''; position: absolute; left: -2px; right: -2px;
+      bottom: 0.05em; height: 0.28em;
+      background: var(--lime); z-index: -1;
+    }
+    .final-cta p { font-size: 17px; color: var(--grey); margin-bottom: 40px; }
+    .final-cta .cta-block { margin: 0 auto; }
+
+    /* ── Footer ───────────────────────────────────────── */
+    footer {
+      background: var(--bg); border-top: 1px solid var(--border);
+      padding: 32px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-logo { display: flex; align-items: center; gap: 10px; }
+    .footer-logo img { width: 22px; height: 22px; border-radius: 6px; opacity: 0.7; }
+    .footer-logo span { font-size: 14px; font-weight: 800; color: var(--grey2); }
+    footer p { font-size: 13px; color: var(--grey2); }
+
+    /* ── Responsive ───────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .hero { grid-template-columns: 1fr; gap: 40px; padding: 100px 24px 60px; text-align: center; }
+      .hero-text .collab-mark, .hero-text .microcopy { justify-content: center; }
+      .cta-block { margin: 0 auto; }
+      .hero-photo { max-width: 320px; }
+      .features { padding: 0 20px 80px; }
+      .feature-row { grid-template-columns: 1fr; gap: 40px; padding: 70px 0; text-align: center; }
+      .feature-phone-wrap .phone-tilt-l,
+      .feature-phone-wrap .phone-tilt-r {
+        transform: none; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.15));
+      }
+      .feature-kw { display: inline-block; }
+      .feature-caption { margin: 0 auto; }
+      .quotes-grid { grid-template-columns: 1fr; gap: 12px; }
+      .social, .faq, .final-cta { padding-left: 20px; padding-right: 20px; }
+      .social, .faq { padding-top: 80px; padding-bottom: 80px; }
+      .final-cta { padding-top: 90px; padding-bottom: 90px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+    @media (max-width: 500px) {
+      .input-row { flex-direction: column; border-radius: 20px; padding: 4px; gap: 4px; }
+      .input-row button { border-radius: 16px; padding: 14px; margin: 0; }
+    }
+  </style>
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '2969207136622638');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=2969207136622638&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wlslgim6u9");
+  </script>
+  <!-- End Microsoft Clarity -->
+</head>
+<body data-pixsort-auto-landing="true">
+  <!-- pixsort-auto-affiliate:v2 -->
+  <!-- pixsort-auto-affiliate-commission:0.2 -->
+  <!-- pixsort-auto-affiliate-landing:v1 -->
+  <!-- pixsort-auto-affiliate-version:e23ab3c08c3821a3 -->
+
+<!-- ── Nav ──────────────────────────────────────────── -->
+<nav>
+  <a class="nav-logo" href="https://pixsort.app/">
+    <img src="../assets/pixsort-logo.jpeg" alt="PixSort">
+    <span>PixSort</span>
+  </a>
+  <a class="nav-cta" href="https://app.appsflyer.com/id6760485464?pid=salha-aziz&c=salha-aziz-2026-07&af_channel=influencer&af_adset=salha-aziz-landing&af_ad=salha-aziz-public-link&af_siteid=salha-aziz&af_sub1=salha-aziz&af_sub2=salha-aziz-2026-07&af_sub3=pixsort-app-salha-aziz&deep_link_value=collab&deep_link_sub1=salha-aziz&deep_link_sub2=salha-aziz-2026-07&deep_link_sub3=pixsort-app-salha-aziz&af_dp=sortscout%3A%2F%2Fcollab%2Fsalha-aziz%3Futm_source%3Dsalha-aziz%26utm_medium%3Dinfluencer%26utm_campaign%3Dsalha-aziz-2026-07%26click_id%3Dpixsort-app-salha-aziz&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_click_lookback=30d">Download Now</a>
+</nav>
+
+<!-- ── Hero ─────────────────────────────────────────── -->
+<section class="hero" id="top">
+  <div class="hero-text">
+    <a class="appstore-pill" href="https://app.appsflyer.com/id6760485464?pid=salha-aziz&c=salha-aziz-2026-07&af_channel=influencer&af_adset=salha-aziz-landing&af_ad=salha-aziz-public-link&af_siteid=salha-aziz&af_sub1=salha-aziz&af_sub2=salha-aziz-2026-07&af_sub3=pixsort-app-salha-aziz&deep_link_value=collab&deep_link_sub1=salha-aziz&deep_link_sub2=salha-aziz-2026-07&deep_link_sub3=pixsort-app-salha-aziz&af_dp=sortscout%3A%2F%2Fcollab%2Fsalha-aziz%3Futm_source%3Dsalha-aziz%26utm_medium%3Dinfluencer%26utm_campaign%3Dsalha-aziz-2026-07%26click_id%3Dpixsort-app-salha-aziz&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_click_lookback=30d">
+      <svg class="apple-glyph" viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+      Available on the App Store
+    </a>
+    <div class="collab-mark">
+      <span>Salha Aziz</span>
+      <span class="collab-x">×</span>
+      <span>PixSort</span>
+    </div>
+    <h1>
+      <span class="h1-line">Your camera roll,</span>
+      <span class="h1-line"><em>auto-organized</em> for you.</span>
+    </h1>
+    <p class="hero-discount-line"><span>100 photos sorted, on us.</span></p>
+
+    <div class="cta-block" id="hero-cta">
+      <a class="cta-download" href="https://app.appsflyer.com/id6760485464?pid=salha-aziz&c=salha-aziz-2026-07&af_channel=influencer&af_adset=salha-aziz-landing&af_ad=salha-aziz-public-link&af_siteid=salha-aziz&af_sub1=salha-aziz&af_sub2=salha-aziz-2026-07&af_sub3=pixsort-app-salha-aziz&deep_link_value=collab&deep_link_sub1=salha-aziz&deep_link_sub2=salha-aziz-2026-07&deep_link_sub3=pixsort-app-salha-aziz&af_dp=sortscout%3A%2F%2Fcollab%2Fsalha-aziz%3Futm_source%3Dsalha-aziz%26utm_medium%3Dinfluencer%26utm_campaign%3Dsalha-aziz-2026-07%26click_id%3Dpixsort-app-salha-aziz&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_click_lookback=30d">
+        <svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+        Download Now
+      </a>
+      <div class="microcopy">
+        <span>iOS</span>
+        <span>100 photos free</span>
+        <span>Salha Aziz's link</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-photo-wrap">
+    <img class="hero-photo" src="../assets/camera-roll-ui.PNG" alt="PixSort app preview for Salha Aziz">
+    <div class="hero-photo-caption">
+      Salha Aziz · <span style="color:var(--grey);font-weight:600;">PixSort creator partner</span><br>
+      <span class="credit">Creator partner</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── Product bumper (what PixSort is) ─────────────── -->
+<section class="product-bumper">
+  <div class="bumper-label">What is PixSort?</div>
+  <p>The iPhone app that auto-sorts your camera roll into <em>smart albums.</em></p>
+</section>
+
+<!-- ── Discount banner ─────────────────────────────── -->
+<section class="discount-banner">
+  <div class="discount-inner">
+    <div class="discount-text">
+      <div class="discount-eyebrow">✦ Salha Aziz's audience exclusive</div>
+      <h2>Your first 100 photos. <em class="discount-price">Sorted on us.</em></h2>
+      <p>Install PixSort through this page and the first 100 photos in your camera roll get sorted into smart albums automatically. Tap <strong>Download Now</strong> above, or scan the QR with your iPhone.</p>
+    </div>
+    <div class="discount-qr">
+      <div class="discount-qr-card">
+        <img src="../assets/salha-aziz-qr.png" alt="Scan with your iPhone to install PixSort with Salha Aziz's link">
+      </div>
+      <div class="discount-qr-label">Scan with your iPhone</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Statement ─────────────────────────────────────── -->
+<div class="statement">
+  <p>Sort your camera roll<br><em>in seconds.</em></p>
+</div>
+
+<!-- ── Live walkthrough (animated phone + screen by screen) ── -->
+<section class="walkthrough-embed-wrap">
+  <iframe id="walkthrough-frame" src="/walkthrough-embed.html" title="PixSort walkthrough" loading="lazy" scrolling="no"></iframe>
+</section>
+
+<!-- ── Meg spotlight ────────────────────────────────── -->
+<section class="social">
+  <div class="social-inner">
+    <div class="social-label">Why Salha Aziz uses PixSort</div>
+    <div class="quotes-grid" style="grid-template-columns: 1fr;">
+      <div class="quote-card" style="max-width: 760px; margin: 0 auto; text-align: center;">
+        <p class="quote-text" style="font-size: clamp(20px, 2vw, 26px);">
+          "Salha Aziz&#39;s audience can use PixSort to find the photos and clips they need faster."
+        </p>
+        <div class="quote-attr">Salha Aziz · PixSort creator partner · Creator partner</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ────────────────────────────────────────────── -->
+<section class="faq">
+  <div class="faq-label">Common questions</div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>How do I get 100 photos sorted free?</span>
+      <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+    </div>
+    <div class="faq-a">Tap <strong>Download Now</strong> anywhere on this page (or scan the QR with your iPhone). Every button carries Salha Aziz's link into the App Store, and the 100-photo free unlock activates automatically the first time you open the app.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>What if I install PixSort directly from the App Store?</span>
+      <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+    </div>
+    <div class="faq-a">You'll get the standard free tier. The 100-photo bonus is tied to coming through Salha Aziz's link, which is why this page is the only place to claim it.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>What is PixSort?</span>
+      <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+    </div>
+    <div class="faq-a">PixSort is an iPhone app that uses AI to auto-organize your camera roll into smart albums by subject, event, person, or any custom category you create. Then it pushes those albums into native iOS Photos so you can hand them to your editor or the brand in seconds.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>Does it work on videos too?</span>
+      <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+    </div>
+    <div class="faq-a">Yes. PixSort organizes both photos and videos. Built for creators who shoot a lot of UGC, B-roll, and product footage and need to find the right clip fast.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>Will it delete my photos?</span>
+      <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+    </div>
+    <div class="faq-a">Never. PixSort only organizes. It never deletes anything without your explicit approval. The Clean Up feature shows you duplicates and screenshots, and you decide what goes.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>I'm on Android. Can I use this?</span>
+      <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+    </div>
+    <div class="faq-a">PixSort is iOS-only right now. The Android version is in the works. Check back here when you're ready to install on an iPhone.</div>
+  </div>
+</section>
+
+<!-- ── Final CTA ──────────────────────────────────────── -->
+<section class="final-cta">
+  <h2>Get PixSort.<br><em>On us.</em></h2>
+  <p>100 photos sorted free, exclusive to Salha Aziz's audience.</p>
+  <div class="cta-block" style="margin: 0 auto;">
+    <a class="cta-download" href="https://app.appsflyer.com/id6760485464?pid=salha-aziz&c=salha-aziz-2026-07&af_channel=influencer&af_adset=salha-aziz-landing&af_ad=salha-aziz-public-link&af_siteid=salha-aziz&af_sub1=salha-aziz&af_sub2=salha-aziz-2026-07&af_sub3=pixsort-app-salha-aziz&deep_link_value=collab&deep_link_sub1=salha-aziz&deep_link_sub2=salha-aziz-2026-07&deep_link_sub3=pixsort-app-salha-aziz&af_dp=sortscout%3A%2F%2Fcollab%2Fsalha-aziz%3Futm_source%3Dsalha-aziz%26utm_medium%3Dinfluencer%26utm_campaign%3Dsalha-aziz-2026-07%26click_id%3Dpixsort-app-salha-aziz&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_click_lookback=30d">
+      <svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+      Download Now
+    </a>
+    <div class="microcopy">
+      <span>iOS</span>
+      <span>100 photos free</span>
+      <span>Salha Aziz's link</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ─────────────────────────────────────────── -->
+<footer>
+  <div class="footer-logo">
+    <img src="../assets/pixsort-logo.jpeg" alt="PixSort">
+    <span>PixSort</span>
+  </div>
+  <p>© 2026 PixSort</p>
+</footer>
+
+<!-- ── React phone mockups ───────────────────────────── -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel">
+const C = {
+  bg:'#F0EBE0', card:'#E8E2D6', inner:'#EDE7DB', gold:'#C4A060',
+  goldDk:'#A8864A', olive:'#9B8B3A', prog:'#8B9B5E', t1:'#2D2A22',
+  t2:'#8A7E6E', t3:'#B0A898', badge:'#D4704A', border:'#DDD7CB',
+  iconBg:'#E8C87A', pill:'#E4DDD1',
+};
+const F = "'DM Sans','Helvetica Neue',Helvetica,Arial,sans-serif";
+
+const PW = 390; const PH = 844;
+const HERO_DW = 280;
+const FEAT_DW = 260; const FEAT_DH = Math.round(FEAT_DW * PH / PW);
+const FEAT_SC = FEAT_DW / PW;
+
+const StatusBar = () => (
+  <div style={{height:52,display:'flex',alignItems:'flex-end',justifyContent:'space-between',padding:'0 28px 10px',fontFamily:F}}>
+    <span style={{fontSize:16,fontWeight:700,color:C.t1,letterSpacing:'-0.02em'}}>9:41</span>
+    <div style={{display:'flex',gap:7,alignItems:'center'}}>
+      <svg width="18" height="13" viewBox="0 0 18 13" fill={C.t1}>
+        <rect x="0" y="6" width="3" height="7" rx="0.6"/>
+        <rect x="5" y="4" width="3" height="9" rx="0.6"/>
+        <rect x="10" y="2" width="3" height="11" rx="0.6"/>
+        <rect x="15" y="0" width="3" height="13" rx="0.6" opacity="0.28"/>
+      </svg>
+      <svg width="17" height="13" viewBox="0 0 17 13" fill="none" stroke={C.t1} strokeWidth="1.6" strokeLinecap="round">
+        <path d="M1 5.5c4-5 11-5 15 0M3.5 8.5c2.5-3 8-3 10 0M6.5 11.5c1.5-1.8 3.5-1.8 4 0"/>
+      </svg>
+      <div style={{display:'flex',alignItems:'center',gap:1.5}}>
+        <div style={{width:24,height:12,border:`1.5px solid ${C.t1}`,borderRadius:3.5,padding:'1.5px',display:'flex'}}>
+          <div style={{flex:1,background:C.t1,borderRadius:1.5}}/>
+        </div>
+        <div style={{width:2.5,height:6,background:C.t1,borderRadius:1}}/>
+      </div>
+    </div>
+  </div>
+);
+
+const TabBar = ({ active='home' }) => {
+  const tabs = [
+    {id:'home',label:'Albums',icon:(a)=>(<svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke={a?C.gold:C.t2} strokeWidth="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>)},
+    {id:'search',label:'Search',icon:(a)=>(<svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke={a?C.gold:C.t2} strokeWidth="1.8"><circle cx="11" cy="11" r="7"/><line x1="17" y1="17" x2="21.5" y2="21.5"/></svg>)},
+    {id:'cleanup',label:'Clean Up',icon:(a)=>(<svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke={a?C.gold:C.t2} strokeWidth="1.8"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" strokeLinecap="round" strokeLinejoin="round"/></svg>)},
+    {id:'settings',label:'Settings',icon:(a)=>(<svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke={a?C.gold:C.t2} strokeWidth="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>)},
+  ];
+  return (
+    <div style={{height:88,background:'rgba(240,235,224,0.97)',backdropFilter:'blur(12px)',borderTop:`1px solid ${C.border}`,display:'flex',padding:'10px 0 26px',fontFamily:F}}>
+      {tabs.map(tab=>(
+        <div key={tab.id} style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',gap:4}}>
+          {tab.icon(active===tab.id)}
+          <span style={{fontSize:10.5,fontWeight:700,color:active===tab.id?C.gold:C.t2}}>{tab.label}</span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const Phone = ({ children, active='home', dw=FEAT_DW }) => {
+  const dh = Math.round(dw * PH / PW);
+  const sc = dw / PW;
+  return (
+    <div style={{
+      width:dw+16, height:dh+16, borderRadius:Math.round(56*sc)+8, padding:8,
+      background:'linear-gradient(155deg,#2A2A2A 0%,#141414 100%)',
+      boxShadow:'0 40px 100px rgba(0,0,0,0.9),0 0 0 1px rgba(255,255,255,0.07),inset 0 1px 0 rgba(255,255,255,0.05)',
+      position:'relative', flexShrink:0,
+    }}>
+      <div style={{position:'absolute',left:-3.5,top:'19%',width:3.5,height:'5%',background:'#333',borderRadius:'2px 0 0 2px'}}/>
+      <div style={{position:'absolute',left:-3.5,top:'27%',width:3.5,height:'8.5%',background:'#333',borderRadius:'2px 0 0 2px'}}/>
+      <div style={{position:'absolute',left:-3.5,top:'38%',width:3.5,height:'8.5%',background:'#333',borderRadius:'2px 0 0 2px'}}/>
+      <div style={{position:'absolute',right:-3.5,top:'25%',width:3.5,height:'13%',background:'#333',borderRadius:'0 2px 2px 0'}}/>
+      <div style={{width:dw,height:dh,borderRadius:Math.round(56*sc),overflow:'hidden',background:C.bg,position:'relative',WebkitMaskImage:'-webkit-radial-gradient(white,black)'}}>
+        <div style={{position:'absolute',top:Math.round(52*sc*0.35),left:'50%',transform:'translateX(-50%)',width:Math.round(130*sc),height:Math.round(36*sc),background:'#111',borderRadius:999,zIndex:20,pointerEvents:'none'}}/>
+        <div style={{position:'absolute',top:0,left:0,transform:`scale(${sc})`,transformOrigin:'top left',width:PW,height:PH,display:'flex',flexDirection:'column'}}>
+          <StatusBar/>
+          <div style={{flex:1,overflow:'hidden'}}>{children}</div>
+          <TabBar active={active}/>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const AlbumRow = ({ icon, name, count, imgA, imgB, extra }) => (
+  <div style={{display:'flex',alignItems:'center',gap:14,background:C.card,borderRadius:16,padding:'13px 16px',marginBottom:9,boxShadow:'0 1px 4px rgba(45,42,34,0.05)'}}>
+    <div style={{width:46,height:46,background:C.iconBg,borderRadius:13,display:'flex',alignItems:'center',justifyContent:'center',fontSize:22,flexShrink:0}}>{icon}</div>
+    <div style={{flex:1}}>
+      <div style={{fontSize:16,fontWeight:700,color:C.t1}}>{name}</div>
+      <div style={{fontSize:13,color:C.t2,marginTop:2}}>{count} photos</div>
+    </div>
+    <div style={{display:'flex',gap:3}}>
+      <div style={{width:42,height:42,background:'#C8C0B0',borderRadius:7,overflow:'hidden'}}>{imgA&&<img src={imgA} style={{width:'100%',height:'100%',objectFit:'cover'}}/>}</div>
+      <div style={{width:42,height:42,background:'#D0C8B8',borderRadius:7,overflow:'hidden'}}>{imgB&&<img src={imgB} style={{width:'100%',height:'100%',objectFit:'cover'}}/>}</div>
+      <div style={{width:42,height:42,background:'#DDD7CB',borderRadius:7,overflow:'hidden',display:'flex',alignItems:'center',justifyContent:'center',fontSize:11,fontWeight:700,color:C.t2}}>{extra?<img src={extra} style={{width:'100%',height:'100%',objectFit:'cover'}}/>:`+${count-2}`}</div>
+    </div>
+  </div>
+);
+
+const Screen1 = () => (
+  <div style={{padding:'8px 20px 20px',fontFamily:F}}>
+    <div style={{fontSize:30,fontWeight:800,color:C.t1,marginBottom:18,letterSpacing:'-0.02em'}}>Pixsort</div>
+    <div style={{background:C.card,borderRadius:26,padding:22,marginBottom:20,boxShadow:'0 1px 3px rgba(45,42,34,0.06)'}}>
+      <div style={{display:'flex',alignItems:'flex-end',gap:10}}>
+        <div style={{fontSize:60,fontWeight:800,color:C.olive,lineHeight:1,letterSpacing:'-0.03em'}}>150</div>
+        <div style={{fontSize:14,color:C.t2,lineHeight:1.35,paddingBottom:7}}>photos<br/>organized</div>
+      </div>
+      <div style={{display:'inline-flex',alignItems:'center',gap:7,background:C.pill,borderRadius:999,padding:'6px 14px',marginTop:11}}>
+        <div style={{width:13,height:13,border:`2px solid ${C.t3}`,borderTopColor:C.prog,borderRadius:'50%',animation:'spin 0.9s linear infinite'}}/>
+        <span style={{fontSize:13,fontWeight:600,color:C.t2}}>Sorting now</span>
+      </div>
+      <div style={{background:C.inner,borderRadius:16,padding:'13px 15px',marginTop:13,display:'flex',gap:13,alignItems:'flex-start'}}>
+        <div style={{fontSize:28,lineHeight:1,marginTop:2}}>🌸</div>
+        <div>
+          <div style={{fontSize:13,fontWeight:700,color:C.gold}}>Uploading photos</div>
+          <div style={{fontSize:12,color:C.t1,marginTop:3,lineHeight:1.4}}>Working through your library.</div>
+        </div>
+      </div>
+      <div style={{background:C.border,borderRadius:999,height:7,marginTop:15,overflow:'hidden'}}>
+        <div style={{background:C.prog,width:'30%',height:'100%',borderRadius:999}}/>
+      </div>
+      <div style={{display:'flex',justifyContent:'space-between',marginTop:6}}>
+        <span style={{fontSize:12,color:C.t2}}>30% sorted</span>
+        <span style={{fontSize:12,color:C.t2}}>500 total</span>
+      </div>
+    </div>
+    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:13}}>
+      <span style={{fontSize:20,fontWeight:800,color:C.t1}}>Your Albums</span>
+      <span style={{fontSize:15,fontWeight:600,color:C.gold}}>Edit</span>
+    </div>
+    <AlbumRow icon="📱" name="Screenshots" count={35} imgA="../assets/crop_ss_r1c1.jpg" imgB="../assets/crop_ss_r1c2.jpg" extra="../assets/crop_ss_r2c1.jpg"/>
+    <AlbumRow icon="🍔" name="Food" count={30} imgA="../assets/crop_food_r1c1.jpg" imgB="../assets/crop_food_r1c2.jpg" extra="../assets/crop_food_r2c1.jpg"/>
+    <AlbumRow icon="✈️" name="Travel" count={124} imgA="../assets/crop_travel_r1c2.jpg" imgB="../assets/crop_travel_r2c1.jpg" extra="../assets/crop_travel_r4c2.jpg"/>
+    <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+  </div>
+);
+
+const Screen2 = () => {
+  const gymThumbs = [
+    {src:'../assets/crop_gym_r1c1.jpg',v:true},{src:'../assets/crop_gym_r1c2.jpg',v:false},{src:'../assets/crop_gym_r1c3.jpg',v:false},
+    {src:'../assets/crop_gym_r2c1.jpg',v:true},{src:'../assets/crop_gym_r2c2.jpg',v:false},{src:'../assets/crop_gym_r2c3.jpg',v:false},
+    {src:'../assets/crop_gym_r3c1.jpg',v:false},{src:'../assets/crop_gym_r3c2.jpg',v:true},{src:'../assets/crop_gym_r3c3.jpg',v:false},
+  ];
+  return (
+    <div style={{padding:'8px 20px 16px',fontFamily:F}}>
+      <div style={{fontSize:30,fontWeight:800,color:C.t1,marginBottom:15,letterSpacing:'-0.02em'}}>Search</div>
+      <div style={{display:'flex',alignItems:'center',gap:10,background:C.card,borderRadius:16,padding:'13px 18px',marginBottom:18,boxShadow:`0 0 0 2.5px ${C.gold},0 2px 8px rgba(196,160,96,0.2)`}}>
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke={C.gold} strokeWidth="2.2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+        <span style={{fontSize:16,color:C.t1,flex:1,fontWeight:500}}>gym</span>
+        <div style={{background:C.t3,borderRadius:999,width:20,height:20,display:'flex',alignItems:'center',justifyContent:'center'}}>
+          <svg width="10" height="10" viewBox="0 0 10 10" stroke="white" strokeWidth="2"><line x1="2" y1="2" x2="8" y2="8"/><line x1="8" y1="2" x2="2" y2="8"/></svg>
+        </div>
+      </div>
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}}>
+        <span style={{fontSize:12,fontWeight:700,letterSpacing:'0.06em',textTransform:'uppercase',color:C.t2}}>9 results</span>
+        <span style={{fontSize:13,fontWeight:600,color:C.gold}}>Sort ↓</span>
+      </div>
+      <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:4}}>
+        {gymThumbs.map((t,i)=>(
+          <div key={i} style={{aspectRatio:'1',borderRadius:8,position:'relative',overflow:'hidden'}}>
+            <img src={t.src} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
+            {t.v&&<div style={{position:'absolute',bottom:5,left:5,background:'rgba(45,42,34,0.55)',borderRadius:4,width:18,height:18,display:'flex',alignItems:'center',justifyContent:'center'}}><svg width="8" height="8" viewBox="0 0 8 8" fill="white"><polygon points="2,1 7,4 2,7"/></svg></div>}
+          </div>
+        ))}
+      </div>
+      <div style={{display:'flex',gap:8,marginTop:18,flexWrap:'wrap'}}>
+        {['gym','workout','fitness'].map((k,i)=>(
+          <div key={k} style={{background:i===0?C.gold:C.card,color:i===0?'#fff':C.t2,borderRadius:999,padding:'6px 14px',fontSize:13,fontWeight:700}}>{k}</div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const Screen4 = () => (
+  <div style={{padding:'8px 20px 16px',fontFamily:F}}>
+    <div style={{fontSize:30,fontWeight:800,color:C.t1,marginBottom:15,letterSpacing:'-0.02em'}}>Search</div>
+    <div style={{display:'flex',alignItems:'center',gap:10,background:C.card,borderRadius:16,padding:'13px 18px',marginBottom:18,boxShadow:`0 0 0 2.5px ${C.gold}`}}>
+      <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke={C.gold} strokeWidth="2.2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+      <span style={{fontSize:17,color:C.t1,fontWeight:500,flex:1}}>beach sunset</span>
+      <div style={{background:C.t3,borderRadius:999,width:21,height:21,display:'flex',alignItems:'center',justifyContent:'center'}}>
+        <svg width="10" height="10" viewBox="0 0 10 10" stroke="white" strokeWidth="2"><line x1="2" y1="2" x2="8" y2="8"/><line x1="8" y1="2" x2="2" y2="8"/></svg>
+      </div>
+    </div>
+    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:14}}>
+      <span style={{fontSize:12,fontWeight:700,letterSpacing:'0.06em',textTransform:'uppercase',color:C.t2}}>3 results</span>
+      <span style={{fontSize:13,fontWeight:600,color:C.gold}}>Sort ↓</span>
+    </div>
+    <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:4}}>
+      {['../assets/crop_sunset_r1c1.jpg','../assets/crop_sunset_r1c2.jpg','../assets/crop_sunset_r2c1.jpg'].map((src,i)=>(
+        <div key={i} style={{aspectRatio:'1',borderRadius:8,position:'relative',overflow:'hidden'}}>
+          <img src={src} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
+          <div style={{position:'absolute',top:6,right:6,width:18,height:18,background:C.gold,borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center'}}>
+            <svg width="9" height="9" viewBox="0 0 9 9" fill="none" stroke="white" strokeWidth="2"><polyline points="1.5,4.5 3.5,7 7.5,2"/></svg>
+          </div>
+          {(i===0||i===2)&&<div style={{position:'absolute',bottom:5,left:5,background:'rgba(45,42,34,0.55)',borderRadius:4,width:18,height:18,display:'flex',alignItems:'center',justifyContent:'center'}}><svg width="8" height="8" viewBox="0 0 8 8" fill="white"><polygon points="2,1 7,4 2,7"/></svg></div>}
+        </div>
+      ))}
+    </div>
+    <div style={{marginTop:18,background:C.inner,borderRadius:16,padding:'14px 16px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.gold}}>Save as smart album</div>
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke={C.gold} strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+  </div>
+);
+
+const Screen5 = () => {
+  const pixTiles = [
+    '../assets/crop_travel5_r1c2.jpg','../assets/crop_travel5_r1c3.jpg','../assets/crop_travel5_r2c1.jpg',
+    '../assets/crop_travel5_r2c2.jpg','../assets/crop_travel5_r4c1.jpg','../assets/crop_travel5_r4c2.jpg',
+    '../assets/crop_travel5_r1c2.jpg','../assets/crop_travel5_r2c1.jpg','../assets/crop_travel5_r4c1.jpg',
+  ];
+  return (
+    <div style={{padding:'12px 16px 8px',fontFamily:F,height:'100%',display:'flex',flexDirection:'column',gap:12}}>
+      <div style={{background:C.card,borderRadius:20,overflow:'hidden',boxShadow:'0 2px 12px rgba(45,42,34,0.1)'}}>
+        <div style={{padding:'12px 14px 10px',display:'flex',alignItems:'center',gap:10,borderBottom:`1px solid ${C.border}`}}>
+          <img src="../assets/pixsort-logo.jpeg" alt="" style={{width:26,height:26,borderRadius:7}}/>
+          <div style={{flex:1}}>
+            <div style={{fontSize:14,fontWeight:800,color:C.t1}}>Travel</div>
+            <div style={{fontSize:11,color:C.t2}}>60 photos · sorted</div>
+          </div>
+          <div style={{background:'rgba(196,160,96,0.15)',borderRadius:8,padding:'3px 8px'}}>
+            <span style={{fontSize:10,fontWeight:800,color:C.gold}}>✦ Ready</span>
+          </div>
+        </div>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:2,padding:'2px'}}>
+          {pixTiles.map((src,i)=>(
+            <div key={i} style={{aspectRatio:'1',overflow:'hidden'}}>
+              <img src={src} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div style={{background:C.t1,borderRadius:18,padding:'16px',textAlign:'center',boxShadow:'0 4px 20px rgba(45,42,34,0.25)'}}>
+        <span style={{fontSize:15,fontWeight:800,color:'#F0EBE0',letterSpacing:'-0.01em'}}>Send to camera roll →</span>
+      </div>
+      <div style={{background:'#FFFFFF',borderRadius:18,padding:'12px',display:'flex',alignItems:'center',gap:10,boxShadow:'0 2px 12px rgba(0,0,0,0.08)'}}>
+        <div style={{width:48,height:48,borderRadius:12,overflow:'hidden',display:'grid',gridTemplateColumns:'1fr 1fr',gap:1}}>
+          <img src="../assets/crop_travel5_r1c2.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
+          <img src="../assets/crop_travel5_r2c1.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
+        </div>
+        <div style={{flex:1}}>
+          <div style={{fontSize:13,fontWeight:700,color:'#1C1C1E'}}>Added to Photos</div>
+          <div style={{fontSize:11,color:'#8A8A8E',marginTop:2}}>60 items · Travel</div>
+        </div>
+        <div style={{width:28,height:28,background:'#F0F0F0',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center'}}>
+          <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="#34C759" strokeWidth="3"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const mountPhone = (id, component) => {
+  const el = document.getElementById(id);
+  if (el) ReactDOM.createRoot(el).render(component);
+};
+mountPhone('phone-search', <Phone dw={FEAT_DW} active="search"><Screen2/></Phone>);
+mountPhone('phone-sort',   <Phone dw={FEAT_DW} active="search"><Screen4/></Phone>);
+mountPhone('phone-send',   <Phone dw={FEAT_DW} active="home"><Screen5/></Phone>);
+</script>
+
+<!-- ── Interactions ──────────────────────────────────────── -->
+<script>
+const APP_STORE_URL = 'https://app.appsflyer.com/id6760485464?pid=salha-aziz&c=salha-aziz-2026-07&af_channel=influencer&af_adset=salha-aziz-landing&af_ad=salha-aziz-public-link&af_siteid=salha-aziz&af_sub1=salha-aziz&af_sub2=salha-aziz-2026-07&af_sub3=pixsort-app-salha-aziz&deep_link_value=collab&deep_link_sub1=salha-aziz&deep_link_sub2=salha-aziz-2026-07&deep_link_sub3=pixsort-app-salha-aziz&af_dp=sortscout%3A%2F%2Fcollab%2Fsalha-aziz%3Futm_source%3Dsalha-aziz%26utm_medium%3Dinfluencer%26utm_campaign%3Dsalha-aziz-2026-07%26click_id%3Dpixsort-app-salha-aziz&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_web_dp=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fpixsort-ai-photo-organizer%2Fid6760485464&af_click_lookback=30d';
+
+// Auto-resize walkthrough iframe to its content height
+(function() {
+  const frame = document.getElementById('walkthrough-frame');
+  if (!frame) return;
+  window.addEventListener('message', (e) => {
+    if (!e.data || e.data.type !== 'walkthrough-height') return;
+    const h = Number(e.data.h);
+    if (h > 0) frame.style.height = h + 'px';
+  });
+})();
+
+function toggleFaq(el) {
+  const item = el.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+</script>
+
+  <script>
+    (function () {
+      var POSTHOG_HOST = 'https://us.i.posthog.com';
+      var POSTHOG_API_KEY = 'phc_bjXi1mYTYZTzuTmaCq7BUTEbdGJOGegDvklVMx5IuTP';
+      var CLIENT_ID_KEY = 'pixsort_affiliate_client_id_v1';
+      var attribution = {
+        partnerId: 'salha-aziz',
+        campaignId: 'salha-aziz-2026-07',
+        clickId: 'pixsort-app-salha-aziz'
+      };
+      function uuid() {
+        if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+          return window.crypto.randomUUID();
+        }
+        return String(Date.now()) + '-' + Math.random().toString(16).slice(2);
+      }
+      function clientId() {
+        try {
+          var existing = window.localStorage.getItem(CLIENT_ID_KEY);
+          if (existing) return existing;
+          var next = uuid();
+          window.localStorage.setItem(CLIENT_ID_KEY, next);
+          return next;
+        } catch (error) {
+          return uuid();
+        }
+      }
+      function capture(event, extra) {
+        var payload = {
+          api_key: POSTHOG_API_KEY,
+          event: event,
+          distinct_id: 'affiliate-page-' + attribution.partnerId + '-' + clientId(),
+          properties: Object.assign({
+            partner_id: attribution.partnerId,
+            campaign_id: attribution.campaignId,
+            click_id: attribution.clickId,
+            source_path: window.location.pathname,
+            source_host: window.location.hostname,
+            referrer: document.referrer || null,
+            user_agent: navigator.userAgent || null
+          }, extra || {})
+        };
+        var body = JSON.stringify(payload);
+        if (navigator.sendBeacon) {
+          var sent = navigator.sendBeacon(POSTHOG_HOST + '/capture/', new Blob([body], { type: 'application/json' }));
+          if (sent) return;
+        }
+        fetch(POSTHOG_HOST + '/capture/', {
+          method: 'POST',
+          mode: 'cors',
+          keepalive: true,
+          headers: { 'Content-Type': 'application/json' },
+          body: body
+        }).catch(function () {});
+      }
+      capture('pixsort_partner_link_clicked', { source_surface: 'automatic_affiliate_landing_page' });
+      
+      document.addEventListener('click', function (event) {
+        var link = event.target && event.target.closest
+          ? event.target.closest('a[href^="https://app.appsflyer.com/id6760485464"]')
+          : null;
+        if (!link) return;
+        capture('pixsort_partner_app_store_clicked', {
+          source_surface: 'automatic_affiliate_landing_page',
+          target_href: link.href,
+          redirect_mode: 'anchor'
+        });
+      }, true);
+    })();
+  </script>
+</body>
+</html>
