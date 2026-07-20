@@ -178,7 +178,8 @@
   .ph-head .ttl span{font-size:15px;color:var(--ink-faint);font-weight:500;margin-left:6px;}
   .ph-head .edit{font-size:14px;color:var(--gold);font-weight:600;}
   .ph-scroll{position:absolute;left:18px;right:18px;top:118px;bottom:66px;
-    display:flex;flex-direction:column;gap:13px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px;}
+    display:flex;flex-direction:column;gap:13px;overflow-y:auto;-webkit-overflow-scrolling:touch;
+    padding-bottom:8px;pointer-events:auto;}
   .prow{background:var(--card);border-radius:16px;padding:13px;box-shadow:0 6px 16px rgba(120,100,60,.06);position:relative;overflow:hidden;flex:0 0 auto;}
   .prow::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:4px;border-radius:3px;background:var(--c,#bbb);}
   .prow .top{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-left:6px;}
@@ -512,9 +513,13 @@ function forward(){
   go(idx<ORDER.length-1?ORDER[idx+1]:ORDER[0]);
 }
 function back(){ if(idx>0) go(ORDER[idx-1]); }
-// tap left half = back, right half = forward
+// tap left half = back, right half = forward; a drag (scrolling the albums) never navigates
 const phoneEl=document.querySelector('.hero .phone');
+let downX=0,downY=0,dragged=false;
+phoneEl.addEventListener('pointerdown',e=>{downX=e.clientX;downY=e.clientY;dragged=false;});
+phoneEl.addEventListener('pointermove',e=>{if(Math.abs(e.clientX-downX)>8||Math.abs(e.clientY-downY)>8)dragged=true;});
 phoneEl.addEventListener('click',function(e){
+  if(dragged) return;
   const r=phoneEl.getBoundingClientRect();
   (e.clientX - r.left < r.width/2) ? back() : forward();
 });
