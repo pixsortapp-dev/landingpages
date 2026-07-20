@@ -177,9 +177,9 @@
   .ph-head .ttl{font-size:25px;font-weight:700;letter-spacing:-.02em;}
   .ph-head .ttl span{font-size:15px;color:var(--ink-faint);font-weight:500;margin-left:6px;}
   .ph-head .edit{font-size:14px;color:var(--gold);font-weight:600;}
-  .ph-scroll{margin-top:12px;display:flex;flex-direction:column;gap:13px;
-    transition:transform 2.4s linear;}
-  .prow{background:var(--card);border-radius:16px;padding:13px;box-shadow:0 6px 16px rgba(120,100,60,.06);position:relative;overflow:hidden;}
+  .ph-scroll{position:absolute;left:18px;right:18px;top:118px;bottom:66px;
+    display:flex;flex-direction:column;gap:13px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px;}
+  .prow{background:var(--card);border-radius:16px;padding:13px;box-shadow:0 6px 16px rgba(120,100,60,.06);position:relative;overflow:hidden;flex:0 0 auto;}
   .prow::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:4px;border-radius:3px;background:var(--c,#bbb);}
   .prow .top{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-left:6px;}
   .prow .ic{width:34px;height:34px;border-radius:9px;background:var(--c,#bbb);display:flex;align-items:center;justify-content:center;font-size:17px;}
@@ -505,18 +505,19 @@ function go(id){
   setScene(id);
   if(id==='s1'){ resetSort(); t(()=>animateSort(2300, ()=>$('pushcta').classList.add('up')), 250); }
   if(id==='s2'){ runCluster(); }
-  if(id==='s4'){
-    ph.style.transition='none';ph.style.transform='translateY(0)';
-    void ph.offsetWidth;
-    ph.style.transition='transform 4.5s linear';
-    t(()=>{ph.style.transform='translateY(-280px)';},400);
-  }
+  if(id==='s4'){ ph.style.transition='none';ph.style.transform='none';ph.scrollTop=0; }
 }
-function advance(){
+function forward(){
   if(ORDER[idx]==='s2'){ const b=$('syncbtn'); b.classList.add('press'); setTimeout(()=>b.classList.remove('press'),150); }
   go(idx<ORDER.length-1?ORDER[idx+1]:ORDER[0]);
 }
-document.querySelector('.hero .phone').addEventListener('click',advance);
+function back(){ if(idx>0) go(ORDER[idx-1]); }
+// tap left half = back, right half = forward
+const phoneEl=document.querySelector('.hero .phone');
+phoneEl.addEventListener('click',function(e){
+  const r=phoneEl.getBoundingClientRect();
+  (e.clientX - r.left < r.width/2) ? back() : forward();
+});
 go('s1');
 
 // ================= STATIC SCREEN-BY-SCREEN =================
