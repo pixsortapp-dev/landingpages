@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Photos</title>
+<meta name="theme-color" content="#ffffff" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Photos" />
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;background:#000;overflow:hidden;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;color:#111;}
+  .fill{position:fixed;inset:0;background:#fff;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);overflow:hidden;}
+
+  .screen{position:absolute;inset:0;background:#fff;transition:transform .34s cubic-bezier(.32,.72,0,1),opacity .3s;}
+  #collections{z-index:1;}
+  #albums{z-index:2;transform:translateX(100%);}       /* slides in from right */
+  #albums.show{transform:translateX(0);}
+  #collections.behind{transform:translateX(-24%);}      /* parallax back like iOS */
+
+  /* status bar */
+  .sb{height:46px;display:flex;align-items:center;justify-content:space-between;padding:13px 24px 0;
+    font-size:15px;font-weight:600;flex:0 0 auto;}
+  .sb .r{display:flex;align-items:center;gap:6px;font-size:12px;}
+  .batt{border:1.4px solid #111;border-radius:3px;width:23px;height:11.5px;position:relative;display:inline-block;}
+  .batt::after{content:"";position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:74%;background:#111;border-radius:1px;}
+  .batt::before{content:"";position:absolute;right:-3px;top:3.5px;height:4.5px;width:2px;background:#111;border-radius:1px;}
+
+  /* ---------------- COLLECTIONS ---------------- */
+  #collections{display:flex;flex-direction:column;}
+  .cscroll{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:96px;}
+  .sec{padding:22px 16px 0;}
+  .sec .h{display:flex;align-items:center;gap:5px;font-size:22px;font-weight:800;letter-spacing:-.02em;color:#111;margin-bottom:12px;}
+  .sec .h .cv{font-size:15px;color:#8a8a8e;font-weight:700;}
+  .sec .h.tap{cursor:pointer;}
+  .row{display:flex;gap:12px;overflow-x:auto;padding-bottom:2px;}
+  .row::-webkit-scrollbar{display:none;}
+  .mcard{flex:0 0 auto;width:270px;height:340px;border-radius:20px;background:#ccc center/cover;position:relative;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.12);}
+  .mcard.sm{width:150px;height:190px;}
+  .mcard .lbl{position:absolute;left:16px;bottom:14px;color:#fff;font-size:20px;font-weight:800;text-shadow:0 1px 4px rgba(0,0,0,.5);z-index:2;}
+  .mcard .sub{position:absolute;left:16px;bottom:40px;color:rgba(255,255,255,.85);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;z-index:2;}
+  .mcard::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45));}
+  .pin{flex:0 0 auto;width:150px;}
+  .pin .th{width:150px;height:150px;border-radius:16px;background:#ccc center/cover;position:relative;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.1);}
+  .pin .th .ic{position:absolute;left:9px;bottom:9px;font-size:20px;z-index:2;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5));}
+  .pin .nm{font-size:14px;font-weight:600;color:#111;margin-top:7px;}
+  .albm{flex:0 0 auto;width:150px;}
+  .albm .th{width:150px;height:150px;border-radius:16px;background:#ccc center/cover;box-shadow:0 3px 10px rgba(0,0,0,.1);}
+  .albm .nm{font-size:14px;font-weight:600;color:#111;margin-top:7px;}
+  .albm .ct{font-size:12px;color:#8a8a8e;}
+  .face{flex:0 0 auto;width:96px;text-align:center;}
+  .face .ph{width:96px;height:96px;border-radius:50%;background:#ccc center/cover;box-shadow:0 3px 8px rgba(0,0,0,.12);}
+  .face .nm{font-size:13px;font-weight:600;margin-top:6px;color:#111;}
+
+  /* ---------------- ALBUMS GRID ---------------- */
+  #albums{display:flex;flex-direction:column;}
+  .ahead{position:relative;height:44px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;padding-top:4px;}
+  .ahead .ttl{font-size:17px;font-weight:700;}
+  .ahead .circ{position:absolute;width:34px;height:34px;border-radius:50%;background:#eceef1;display:flex;align-items:center;justify-content:center;font-size:17px;color:#111;top:2px;}
+  .ahead .back{left:16px;font-size:22px;} .ahead .plus{right:58px;} .ahead .more{right:16px;font-size:15px;}
+  .seg{margin:8px 16px 12px;background:#eceef1;border-radius:12px;display:flex;padding:3px;flex:0 0 auto;}
+  .seg span{flex:1;text-align:center;font-size:14px;font-weight:600;color:#3c3c43;padding:7px;border-radius:9px;}
+  .seg span.on{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.14);}
+  .agrid{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;
+    display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:4px 16px 100px;align-content:start;}
+  .acard{position:relative;border-radius:15px;overflow:hidden;aspect-ratio:1/1.12;background:#ccc center/cover;box-shadow:0 2px 10px rgba(0,0,0,.1);}
+  .acard::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.5));}
+  .acard .nm{position:absolute;left:13px;bottom:11px;z-index:2;color:#fff;font-size:18px;font-weight:700;letter-spacing:-.01em;text-shadow:0 1px 4px rgba(0,0,0,.45);}
+
+  /* shared bottom bar */
+  .tbar{position:absolute;bottom:calc(18px + env(safe-area-inset-bottom));left:0;right:0;display:flex;justify-content:center;align-items:center;gap:12px;z-index:20;}
+  .tbar .pill{background:rgba(248,248,250,.9);backdrop-filter:blur(18px);border-radius:24px;display:flex;box-shadow:0 6px 20px rgba(0,0,0,.13);}
+  .tbar .it{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;color:#8a8a8e;padding:9px 22px;font-weight:600;}
+  .tbar .it .gi{font-size:18px;}
+  .tbar .it.on{color:#0a84ff;}
+  .tbar .search{width:46px;height:46px;border-radius:50%;background:rgba(248,248,250,.9);backdrop-filter:blur(18px);
+    display:flex;align-items:center;justify-content:center;font-size:19px;color:#111;box-shadow:0 6px 20px rgba(0,0,0,.13);}
+</style>
+</head>
+<body>
+  <div class="fill">
+
+    <!-- ===== COLLECTIONS ===== -->
+    <div class="screen" id="collections">
+      <div class="sb"><span>10:40</span><span class="r">•••&nbsp;<svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 1C5 1 2.6 2 1 3.6l7 6.4 7-6.4C13.4 2 11 1 8 1Z" fill="#111" opacity=".9"/></svg><span class="batt"></span></span></div>
+      <div class="cscroll">
+        <div class="sec">
+          <div class="h">Memories</div>
+          <div class="row" id="memRow"></div>
+        </div>
+        <div class="sec">
+          <div class="h">Pinned Collections</div>
+          <div class="row" id="pinRow"></div>
+        </div>
+        <div class="sec">
+          <div class="h tap" id="albumsLink">Albums <span class="cv">›</span></div>
+          <div class="row" id="albRow"></div>
+        </div>
+        <div class="sec">
+          <div class="h">People &amp; Pets</div>
+          <div class="row" id="faceRow"></div>
+        </div>
+      </div>
+      <div class="tbar">
+        <div class="pill"><div class="it"><span class="gi">▤</span>Library</div><div class="it on"><span class="gi">▦</span>Collections</div></div>
+        <div class="search">⌕</div>
+      </div>
+    </div>
+
+    <!-- ===== ALBUMS GRID ===== -->
+    <div class="screen" id="albums">
+      <div class="sb"><span>10:40</span><span class="r">•••&nbsp;<svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 1C5 1 2.6 2 1 3.6l7 6.4 7-6.4C13.4 2 11 1 8 1Z" fill="#111" opacity=".9"/></svg><span class="batt"></span></span></div>
+      <div class="ahead">
+        <div class="circ back" id="backBtn">‹</div>
+        <div class="ttl">Albums</div>
+        <div class="circ plus">+</div>
+        <div class="circ more">···</div>
+      </div>
+      <div class="seg"><span class="on">Personal</span><span>Shared</span><span>Activity</span></div>
+      <div class="agrid" id="agrid"></div>
+      <div class="tbar">
+        <div class="pill"><div class="it"><span class="gi">▤</span>Library</div><div class="it on"><span class="gi">▦</span>Collections</div></div>
+        <div class="search">⌕</div>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+const T="assets/tiff-roll/";
+const P=f=>T+f;
+
+// ---- standard albums (swap names/covers with your ideas) ----
+const ALBUMS=[
+  {n:"Travel",      cv:"crop_travel5_r1c2.jpg"},
+  {n:"Family",      cv:"crop_gym_r3c1.jpg"},
+  {n:"Food",        cv:"crop_food_r1c1.jpg"},
+  {n:"Screenshots", cv:"crop_ss_r1c1.jpg"},
+  {n:"Selfies",     cv:"crop_gym_r3c2.jpg"},
+  {n:"Beach",       cv:"crop_travel5_r2c2.jpg"},
+  {n:"Friends",     cv:"crop_gym_r2c1.jpg"},
+  {n:"Nature",      cv:"crop_travel_r1c2.jpg"},
+  {n:"Sunsets",     cv:"crop_sunset_r1c1.jpg"},
+  {n:"Events",      cv:"crop_gym_r4c1.jpg"},
+  {n:"City",        cv:"crop_travel_r2c1.jpg"},
+  {n:"Work",        cv:"crop_ss_r1c2.jpg"},
+];
+
+const $=id=>document.getElementById(id);
+
+// ---- build Collections previews ----
+$('memRow').innerHTML=`
+  <div class="mcard" style="background-image:url('${P("crop_sunset_r1c1.jpg")}')"><div class="sub">Over the years</div><div class="lbl">Golden Hour</div></div>
+  <div class="mcard" style="background-image:url('${P("crop_gym_r3c1.jpg")}')"><div class="sub">People</div><div class="lbl">Portraits</div></div>
+  <div class="mcard" style="background-image:url('${P("crop_travel5_r2c2.jpg")}')"><div class="sub">Trips</div><div class="lbl">Best of 2026</div></div>`;
+const pins=[{n:"Favorites",ic:"♥",cv:"crop_gym_r3c2.jpg"},{n:"Recently Saved",ic:"",cv:"crop_ss_r1c1.jpg"},{n:"Map",ic:"",cv:"crop_travel_r2c1.jpg"}];
+$('pinRow').innerHTML=pins.map(p=>`<div class="pin"><div class="th" style="background-image:url('${P(p.cv)}')">${p.ic?`<div class="ic">${p.ic}</div>`:''}</div><div class="nm">${p.n}</div></div>`).join('');
+$('albRow').innerHTML=ALBUMS.slice(0,4).map(a=>`<div class="albm"><div class="th" style="background-image:url('${P(a.cv)}')"></div><div class="nm">${a.n}</div></div>`).join('');
+$('faceRow').innerHTML=["crop_gym_r3c1.jpg","crop_gym_r3c2.jpg","crop_gym_r2c1.jpg","crop_gym_r3c3.jpg"].map((c,i)=>`<div class="face"><div class="ph" style="background-image:url('${P(c)}')"></div><div class="nm">${["You","Mom","Friends","Dad"][i]}</div></div>`).join('');
+
+// ---- build Albums grid ----
+$('agrid').innerHTML=ALBUMS.map(a=>`<div class="acard" style="background-image:url('${P(a.cv)}')"><div class="nm">${a.n}</div></div>`).join('');
+
+// ---- navigation: tap Albums -> grid, back -> collections ----
+function openAlbums(){ $('albums').classList.add('show'); $('collections').classList.add('behind'); }
+function closeAlbums(){ $('albums').classList.remove('show'); $('collections').classList.remove('behind'); }
+$('albumsLink').addEventListener('click',openAlbums);
+$('backBtn').addEventListener('click',closeAlbums);
+</script>
+</body>
+</html>
