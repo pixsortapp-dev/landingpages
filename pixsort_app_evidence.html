@@ -12,88 +12,174 @@
 <meta name="apple-mobile-web-app-title" content="PixSort" />
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
 <style>
-  :root{
-    --cream:#efe7da; --card:#fbf7ef; --gold:#bfa05c; --gold-d:#a98a47;
-    --ink:#2b2926; --ink-dim:#8d877a; --ink-faint:#b3ac9d; --line:#e7ded0;
-  }
+  :root{ --pink:#e87bb0; --gold:#bfa05c; --ink:#2b2926; --dim:#8d877a; }
   *{box-sizing:border-box;margin:0;padding:0;}
   html,body{height:100%;background:#000;overflow:hidden;
     font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;}
+  .fill{position:fixed;inset:0;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);overflow:hidden;}
 
-  .app{position:fixed;inset:0;background:var(--cream);color:var(--ink);
-    padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);display:flex;flex-direction:column;}
+  .scene{position:absolute;inset:0;opacity:0;transform:translateY(6px);
+    transition:opacity .4s ease, transform .45s ease;pointer-events:none;}
+  .scene.show{opacity:1;transform:none;pointer-events:auto;}
 
-  .status{flex:0 0 auto;height:46px;display:flex;align-items:center;justify-content:space-between;
-    padding:14px 26px 0;font-size:14px;font-weight:600;}
-  .status .right{display:flex;align-items:center;gap:6px;font-size:12px;}
-  .batt{border:1.4px solid var(--ink);border-radius:3px;width:22px;height:11px;position:relative;display:inline-block;}
-  .batt::after{content:"";position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:78%;background:var(--ink);border-radius:1px;}
-  .batt::before{content:"";position:absolute;right:-3px;top:3px;height:5px;width:2px;background:var(--ink);border-radius:1px;}
+  /* status bars */
+  .sb{position:absolute;top:0;left:0;right:0;height:48px;display:flex;align-items:center;justify-content:space-between;
+    padding:14px 24px 0;font-size:14px;font-weight:600;z-index:20;}
+  .sb .right{display:flex;align-items:center;gap:6px;font-size:12px;}
+  .sb.dark{color:#fff;} .sb.light{color:#111;}
+  .batt{border:1.4px solid currentColor;border-radius:3px;width:22px;height:11px;position:relative;display:inline-block;}
+  .batt::after{content:"";position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:78%;background:currentColor;border-radius:1px;}
+  .batt::before{content:"";position:absolute;right:-3px;top:3px;height:5px;width:2px;background:currentColor;border-radius:1px;}
+  .camback{position:absolute;top:34px;left:22px;font-size:12px;color:#111;z-index:21;}
 
-  .head{flex:0 0 auto;padding:8px 20px 12px;}
-  .eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:800;}
-  .head h1{font-size:30px;font-weight:800;letter-spacing:-.02em;margin-top:3px;display:flex;align-items:center;gap:8px;}
-  .head .sub{font-size:13px;color:var(--ink-dim);margin-top:4px;}
-  .head .sub b{color:var(--gold-d);font-weight:700;}
+  /* ---------- MESSY camera roll ---------- */
+  #messy{background:#000;}
+  #messy video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .wall{position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,1fr);gap:3px;}
+  .wall .t{aspect-ratio:1;background:#333 center/cover;}
+  .mbar{position:absolute;top:0;left:0;right:0;padding:52px 20px 24px;z-index:10;color:#fff;
+    background:linear-gradient(180deg,rgba(0,0,0,.8) 40%,transparent);}
+  .mbar .t1{font-size:27px;font-weight:800;letter-spacing:-.02em;}
+  .mbar .t2{font-size:13px;color:rgba(255,255,255,.8);margin-top:2px;}
+  .mchip{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);z-index:10;white-space:nowrap;
+    font-size:13px;font-weight:700;color:#fff;background:rgba(196,30,118,.94);padding:9px 17px;border-radius:22px;
+    box-shadow:0 8px 22px rgba(0,0,0,.4);}
 
-  .grid{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;
-    display:grid;grid-template-columns:1fr 1fr;gap:13px;padding:4px 18px 24px;align-content:start;}
-  .card{border-radius:16px;overflow:hidden;background:var(--card);box-shadow:0 6px 16px rgba(120,100,60,.09);}
-  .card .thumb{height:104px;background:#ddd center/cover;position:relative;}
-  .card .thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.18));}
-  .card .meta{display:flex;align-items:center;justify-content:space-between;padding:10px 13px;}
-  .card .nm{font-size:14.5px;font-weight:700;display:flex;align-items:center;gap:6px;letter-spacing:-.01em;}
-  .card .ct{font-size:12px;color:var(--ink-faint);font-weight:600;}
-  .card.flag .nm{color:#b23a48;}
+  /* ---------- PixSort sorting ---------- */
+  #sort{background:linear-gradient(165deg,#ffd9e8,#ffc2dd 50%,#ffd3bf);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  #sort .logo{width:96px;height:96px;border-radius:24px;background:url('assets/pixsort-icon.jpeg') center/cover;
+    box-shadow:0 18px 40px rgba(190,90,140,.35);}
+  #sort .rot{width:128px;height:128px;border-radius:18px;margin-top:26px;background:#ddd center/cover;
+    border:4px solid #fff;box-shadow:0 14px 32px rgba(0,0,0,.2);}
+  #sort .num{font-size:40px;font-weight:800;color:#a83a72;margin-top:18px;letter-spacing:-.02em;}
+  #sort .lbl{font-size:13px;color:#b5658c;margin-top:2px;font-weight:600;}
+  #sort .bar{width:200px;height:8px;border-radius:6px;background:rgba(255,255,255,.55);margin-top:18px;overflow:hidden;}
+  #sort .bar i{display:block;height:100%;width:0;background:#c95e92;border-radius:6px;}
 
-  .tabbar{flex:0 0 auto;height:58px;background:rgba(250,247,239,.95);border-top:1px solid var(--line);
-    display:flex;justify-content:space-around;align-items:flex-start;padding-top:9px;}
-  .tab{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9px;color:var(--ink-faint);}
-  .tab.active{color:var(--gold);}
-  .tab .gi{font-size:16px;line-height:1;}
+  /* ---------- native PHOTOS albums ---------- */
+  #photos{background:#fbfbfd;}
+  .phead{position:absolute;top:52px;left:0;right:0;height:44px;display:flex;align-items:center;justify-content:center;z-index:12;}
+  .phead .ttl{font-size:17px;font-weight:700;color:#111;}
+  .phead .circ{position:absolute;width:34px;height:34px;border-radius:50%;background:#eceef1;display:flex;align-items:center;justify-content:center;font-size:16px;color:#111;top:5px;}
+  .phead .back{left:16px;} .phead .plus{right:58px;} .phead .more{right:16px;}
+  .pseg{position:absolute;top:104px;left:16px;right:16px;background:#eceef1;border-radius:12px;display:flex;padding:3px;z-index:12;}
+  .pseg span{flex:1;text-align:center;font-size:14px;font-weight:600;color:#3c3c43;padding:7px;border-radius:9px;}
+  .pseg span.on{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.14);}
+  .pgrid{position:absolute;top:160px;left:0;right:0;bottom:0;overflow-y:auto;-webkit-overflow-scrolling:touch;
+    display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:6px 16px 96px;align-content:start;}
+  .pcard{position:relative;border-radius:15px;overflow:hidden;aspect-ratio:1/1.02;background:#ccc center/cover;
+    box-shadow:0 2px 10px rgba(0,0,0,.1);}
+  .pcard::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 52%,rgba(0,0,0,.55));}
+  .pcard .pn{position:absolute;left:13px;bottom:11px;z-index:2;color:#fff;font-size:18px;font-weight:700;letter-spacing:-.01em;
+    text-shadow:0 1px 4px rgba(0,0,0,.45);}
+  .pbar{position:absolute;bottom:20px;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:12px;z-index:14;}
+  .pbar .pill{background:rgba(248,248,250,.92);backdrop-filter:blur(14px);border-radius:24px;display:flex;
+    box-shadow:0 6px 20px rgba(0,0,0,.14);}
+  .pbar .it{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;color:#8a8a8e;padding:9px 22px;}
+  .pbar .it .gi{font-size:17px;}
+  .pbar .it.on{color:#0a84ff;font-weight:700;}
+  .pbar .search{width:46px;height:46px;border-radius:50%;background:rgba(248,248,250,.92);backdrop-filter:blur(14px);
+    display:flex;align-items:center;justify-content:center;font-size:18px;color:#111;box-shadow:0 6px 20px rgba(0,0,0,.14);}
+
+  .hint{position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:11px;color:rgba(255,255,255,.5);z-index:30;pointer-events:none;}
 </style>
 </head>
 <body>
-  <div class="app">
-    <div class="status">
-      <span>9:41</span>
-      <span class="right">•••&nbsp; <svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 1C5 1 2.6 2 1 3.6l7 6.4 7-6.4C13.4 2 11 1 8 1Z" fill="#2b2926" opacity=".9"/></svg> <span class="batt"></span></span>
+  <div class="fill" id="fill">
+
+    <!-- MESSY (your real camera roll recording) -->
+    <div class="scene show" id="messy">
+      <video id="rollvid" src="assets/messy-roll.mp4" muted autoplay loop playsinline preload="auto"></video>
     </div>
 
-    <div class="head">
-      <div class="eyebrow">🕵️‍♀️ Sorted just now</div>
-      <h1>Collections</h1>
-      <div class="sub"><b>676 items</b> pulled from your camera roll · 8 albums</div>
+    <!-- PIXSORT SORTING -->
+    <div class="scene" id="sort">
+      <div class="sb light"><span>1:46</span><span class="right">•••&nbsp;<svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 1C5 1 2.6 2 1 3.6l7 6.4 7-6.4C13.4 2 11 1 8 1Z" fill="#111" opacity=".9"/></svg><span class="batt"></span></span></div>
+      <div class="logo"></div>
+      <div class="rot" id="rot"></div>
+      <div class="num" id="num">0</div>
+      <div class="lbl">sorting the evidence…</div>
+      <div class="bar"><i id="bar"></i></div>
     </div>
 
-    <div class="grid" id="grid"></div>
-
-    <div class="tabbar">
-      <div class="tab active"><span class="gi">▦</span>Albums</div>
-      <div class="tab"><span class="gi">⌕</span>Search</div>
-      <div class="tab"><span class="gi">✦</span>Clean Up</div>
-      <div class="tab"><span class="gi">⚙</span>Settings</div>
+    <!-- NATIVE PHOTOS ALBUMS -->
+    <div class="scene" id="photos">
+      <div class="sb light"><span>1:46</span><span class="right">•••&nbsp;<svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 1C5 1 2.6 2 1 3.6l7 6.4 7-6.4C13.4 2 11 1 8 1Z" fill="#111" opacity=".9"/></svg><span class="batt"></span></span></div>
+      <div class="camback">◀ Camera</div>
+      <div class="phead">
+        <div class="circ back">‹</div>
+        <div class="ttl">Albums</div>
+        <div class="circ plus">+</div>
+        <div class="circ more">···</div>
+      </div>
+      <div class="pseg"><span class="on">Personal</span><span>Shared</span><span>Activity</span></div>
+      <div class="pgrid" id="pgrid"></div>
+      <div class="pbar">
+        <div class="pill">
+          <div class="it"><span class="gi">▤</span>Library</div>
+          <div class="it on"><span class="gi">▦</span>Collections</div>
+        </div>
+        <div class="search">⌕</div>
+      </div>
     </div>
+
   </div>
 
 <script>
 const T="assets/tiff-roll/";
-// evidence albums (flag=true tints the name red for the "gotcha" ones)
+const POOL=["crop_food_r1c1.jpg","crop_food_r1c2.jpg","crop_food_r2c1.jpg","crop_food_r2c2.jpg","crop_food_r3c2.jpg",
+"crop_gym_r1c1.jpg","crop_gym_r1c2.jpg","crop_gym_r1c3.jpg","crop_gym_r2c1.jpg","crop_gym_r2c2.jpg","crop_gym_r2c3.jpg",
+"crop_gym_r3c1.jpg","crop_gym_r3c2.jpg","crop_gym_r3c3.jpg","crop_gym_r4c1.jpg","crop_ss_r1c1.jpg","crop_ss_r1c2.jpg",
+"crop_ss_r2c1.jpg","crop_sunset_r1c1.jpg","crop_sunset_r1c2.jpg","crop_sunset_r2c1.jpg","crop_travel5_r1c2.jpg",
+"crop_travel5_r1c3.jpg","crop_travel5_r2c1.jpg","crop_travel5_r2c2.jpg","crop_travel5_r4c1.jpg","crop_travel5_r4c2.jpg",
+"crop_travel_r1c2.jpg","crop_travel_r2c1.jpg","crop_travel_r4c2.jpg"].map(f=>T+f);
+
+// evidence albums — swap `cv` with your revised thumbnails (drop them in assets/evidence/ and point here)
 const ALB=[
-  {n:"Screenshots", c:247, ic:"📱", cv:"crop_ss_r1c1.jpg"},
-  {n:"DMs",         c:134, ic:"💬", cv:"crop_ss_r1c2.jpg", flag:true},
-  {n:"Late Nights", c:92,  ic:"🌙", cv:"crop_sunset_r2c1.jpg", flag:true},
-  {n:"Call Log",    c:67,  ic:"📞", cv:"crop_ss_r2c1.jpg"},
-  {n:"Locations",   c:58,  ic:"📍", cv:"crop_travel5_r1c3.jpg"},
-  {n:"Receipts",    c:41,  ic:"🧾", cv:"crop_ss_r1c2.jpg"},
-  {n:"Her",         c:23,  ic:"👀", cv:"crop_gym_r3c1.jpg", flag:true},
-  {n:"Hotels",      c:14,  ic:"🏨", cv:"crop_travel5_r2c2.jpg", flag:true},
+  {n:"Screenshots", cv:T+"crop_ss_r1c1.jpg"},
+  {n:"DMs",         cv:T+"crop_ss_r1c2.jpg"},
+  {n:"Late Nights", cv:T+"crop_sunset_r2c1.jpg"},
+  {n:"Call Log",    cv:T+"crop_ss_r2c1.jpg"},
+  {n:"Locations",   cv:T+"crop_travel5_r1c3.jpg"},
+  {n:"Receipts",    cv:T+"crop_ss_r1c2.jpg"},
+  {n:"Her",         cv:T+"crop_gym_r3c1.jpg"},
+  {n:"Hotels",      cv:T+"crop_travel5_r2c2.jpg"},
 ];
-document.getElementById('grid').innerHTML = ALB.map(a=>`
-  <div class="card${a.flag?' flag':''}">
-    <div class="thumb" style="background-image:url('${T+a.cv}')"></div>
-    <div class="meta"><span class="nm">${a.ic} ${a.n}</span><span class="ct">${a.c}</span></div>
-  </div>`).join('');
+
+const $=id=>document.getElementById(id);
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+// build native photos album cards
+$('pgrid').innerHTML=ALB.map(a=>`<div class="pcard" style="background-image:url('${a.cv}')"><div class="pn">${a.n}</div></div>`).join('');
+
+// ---- fast sort animation ----
+let rot,raf;
+function runSort(){
+  const seq=shuffle(POOL); let k=0;
+  rot=setInterval(()=>{$('rot').style.backgroundImage=`url('${seq[k%seq.length]}')`;k++;},80);
+  const start=performance.now(),dur=2200,TARGET=2431;
+  (function step(now){
+    const p=Math.min(1,(now-start)/dur),e=1-Math.pow(1-p,3);
+    $('num').textContent=Math.round(e*TARGET).toLocaleString();
+    $('bar').style.width=(e*100)+'%';
+    if(p<1) raf=requestAnimationFrame(step); else clearInterval(rot);
+  })(start);
+}
+
+// ---- tap-driven flow ----
+const ORDER=['messy','sort','photos'];
+let i=0;
+function go(n){
+  clearInterval(rot);cancelAnimationFrame(raf);
+  i=n;
+  ORDER.forEach((s,k)=>$(s).classList.toggle('show',k===n));
+  const v=$('rollvid');
+  if(ORDER[n]==='messy'){ try{v.currentTime=0;v.play();}catch(e){} } else { try{v.pause();}catch(e){} }
+  if(ORDER[n]==='sort'){ $('num').textContent='0';$('bar').style.width='0'; runSort(); }
+}
+document.getElementById('fill').addEventListener('click',()=>{ go(i<ORDER.length-1 ? i+1 : 0); });
+go(0);
 </script>
 </body>
 </html>
