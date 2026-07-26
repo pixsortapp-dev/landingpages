@@ -165,6 +165,12 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:99px;ba
 .ptile.add{background:var(--cream-3);display:grid;place-items:center;box-shadow:none;border:1.5px dashed #D3C7B1}
 .ptile.add .in{text-align:center;color:var(--gold);font-weight:600;font-size:11px}
 .ptile.add .in div:first-child{font-size:20px}
+/* compact variant: 12 albums on one screen, no scroll */
+.pgrid.compact{grid-template-columns:repeat(3,1fr);gap:8px}
+.pgrid.compact .ptile{aspect-ratio:1.18;border-radius:12px}
+.pgrid.compact .pl{font-size:9.5px;padding:10px 6px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pgrid.compact .ptile.add .in{font-size:10px}
+.pgrid.compact .ptile.add .in div:first-child{font-size:17px}
 
 /* ---------- custom album card ---------- */
 .newalbum{background:var(--cream-2);border:1px solid var(--line);border-radius:20px;padding:16px}
@@ -255,7 +261,8 @@ const pick = (cat,i) => img(P[cat][i % P[cat].length]);
 const O = 'assets/onboarding/';
 const N = {
   you:O+'you.jpg', pets:O+'pets.jpg', fitness:O+'fitness.jpg', friends:O+'friends.jpg',
-  food:O+'food.jpg', travel:O+'travel.jpg', mxAltar:O+'mx-altar.jpg', mxLucha:O+'mx-lucha.jpg'
+  food:O+'food.jpg', travel:O+'travel.jpg', mxAltar:O+'mx-altar.jpg', mxLucha:O+'mx-lucha.jpg',
+  nature:O+'nature.jpg', work:O+'work.jpg'
 };
 
 /* ---- slider maps ---- */
@@ -320,9 +327,9 @@ const screens=[
 
 /* 10 — MECHANISM: smart albums w/ real covers */
 {eyebrow:'Smart albums, day one,', title:'albums are ready <em>on day one.</em>', sub:'Photos and videos, sorted automatically. Turn any album off later.', render:()=>`
-  <div class="body top">
-    <div class="pgrid">
-      ${[[N.travel,'Travel'],[N.you,'You'],[N.pets,'Pets'],[N.food,'Food'],[N.fitness,'Fitness'],[pick('travel',5),'Nature'],[N.friends,'Friends'],[pick('ss',0),'Screenshots'],[pick('ss',1),'Work'],[pick('food',3),'Product Photos'],[pick('gym',6),'You + Product']]
+  <div class="body">
+    <div class="pgrid compact">
+      ${[[N.travel,'Travel'],[N.you,'You'],[N.pets,'Pets'],[N.food,'Food'],[N.fitness,'Fitness'],[N.nature,'Nature'],[N.friends,'Friends'],[pick('ss',0),'Screenshots'],[N.work,'Work'],[pick('food',3),'Product Photos'],[pick('gym',6),'You + Product']]
         .map(t=>`<div class="ptile"><img src="${t[0]}"><div class="pl">${t[1]}</div></div>`).join('')}
       <div class="ptile add"><div class="in"><div>＋</div><div>Custom</div></div></div>
     </div>
