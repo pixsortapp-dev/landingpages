@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pixsort — Onboarding Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F4EEE2;
+  --cream-2:#FAF6EE;
+  --cream-3:#EFE7D8;
+  --gold:#9C7B33;
+  --gold-2:#A8843A;
+  --gold-soft:#C9A85F;
+  --ink:#2E2B26;
+  --ink-2:#6B6459;
+  --ink-3:#948B7C;
+  --line:#E4DACA;
+  --green:#6E8B5B;
+  --green-bg:#E5EFDB;
+  --danger:#B4534B;
+  --serif:'Newsreader','New York',Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',system-ui,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{
+  font-family:var(--sans);
+  background:radial-gradient(1200px 600px at 50% -10%, #EFE6D6 0%, #E7DCC8 55%, #E1D5BF 100%);
+  color:var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  min-height:100vh;padding:28px 16px;
+}
+.stage{display:flex;flex-direction:column;align-items:center;gap:14px}
+.device{
+  width:375px;height:812px;position:relative;
+  background:var(--cream);border-radius:46px;
+  box-shadow:0 2px 0 #fff inset, 0 30px 70px -20px rgba(60,45,20,.45), 0 0 0 11px #17130c, 0 0 0 13px #2a2216;
+  overflow:hidden;
+}
+.statusbar{
+  position:absolute;top:0;left:0;right:0;height:46px;z-index:8;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 26px;font-size:13px;font-weight:600;color:var(--ink);pointer-events:none;
+}
+.statusbar .right{display:flex;align-items:center;gap:6px}
+.batt{width:22px;height:11px;border:1.4px solid var(--ink);border-radius:3px;position:relative;opacity:.75}
+.batt::after{content:"";position:absolute;right:-3px;top:3px;width:2px;height:5px;background:var(--ink);border-radius:0 1px 1px 0}
+.batt::before{content:"";position:absolute;left:1px;top:1px;bottom:1px;width:70%;background:var(--ink);border-radius:1px}
+
+/* ---------- Airclub-style top: back chevron + progress bar ---------- */
+.topnav{
+  position:absolute;top:46px;left:0;right:0;height:44px;z-index:7;
+  display:flex;align-items:center;gap:14px;padding:0 22px;
+}
+.nav-btn.back{font-size:22px;color:var(--ink);background:none;border:0;cursor:pointer;padding:4px 8px 4px 0;opacity:.85;font-family:var(--sans);line-height:1}
+.nav-btn.back:disabled{opacity:0;pointer-events:none}
+.progress{flex:1;height:4px;border-radius:99px;background:#E0D5C0;overflow:hidden}
+.progress>i{display:block;height:100%;background:var(--gold);border-radius:99px;transition:width .4s cubic-bezier(.4,0,.2,1)}
+.nav-btn.skipbtn{font-size:13.5px;color:var(--ink-3);background:none;border:0;cursor:pointer;padding:4px 0 4px 8px;font-family:var(--sans)}
+
+/* ---------- screen ---------- */
+.screen{
+  position:absolute;inset:0;padding:104px 26px 30px;z-index:2;
+  display:flex;flex-direction:column;
+  opacity:0;transform:translateY(8px);pointer-events:none;
+  transition:opacity .34s ease, transform .34s ease;
+  overflow-y:auto;overflow-x:hidden;
+}
+.screen.active{opacity:1;transform:none;pointer-events:auto}
+.screen::-webkit-scrollbar{display:none}
+
+/* Airclub-style left-aligned header */
+.eyebrow{font-size:15px;color:var(--ink-3);margin-bottom:4px;text-align:left}
+h1{font-family:var(--serif);font-weight:500;font-size:30px;line-height:1.12;letter-spacing:-.4px;text-align:left;margin:0 0 10px;color:var(--ink)}
+h1 em{font-style:italic;color:var(--gold)}
+.sub{font-size:14.5px;line-height:1.5;color:var(--ink-2);text-align:left;margin:0 0 20px;max-width:310px}
+.body{flex:1;display:flex;flex-direction:column;justify-content:center}
+.body.top{justify-content:flex-start}
+
+/* ---------- footer / buttons ---------- */
+.foot{margin-top:auto;padding-top:16px;display:flex;flex-direction:column;gap:2px}
+.btn{
+  width:100%;border:0;cursor:pointer;font-family:var(--sans);
+  background:var(--gold-2);color:#FDFAF3;font-size:16px;font-weight:600;
+  padding:16px;border-radius:16px;letter-spacing:.2px;
+  box-shadow:0 8px 20px -8px rgba(120,90,30,.6);
+  transition:transform .1s ease, filter .1s ease;
+}
+.btn.tapped{transform:scale(.965);filter:brightness(.95)}
+.legal{text-align:center;font-size:11px;color:var(--ink-3)}
+
+/* ---------- HERO: value prop + the gap (mess video → sorted albums) ---------- */
+.vidcard{
+  position:relative;width:258px;aspect-ratio:1;margin:0 auto;border-radius:22px;overflow:hidden;
+  box-shadow:0 16px 34px -14px rgba(60,45,20,.5);
+}
+.vidcard video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.vidcard .vlabel{position:absolute;top:10px;left:10px;background:rgba(22,17,10,.72);backdrop-filter:blur(6px);color:#F2EAD8;font-size:11px;font-weight:600;padding:5px 10px;border-radius:99px;letter-spacing:.3px}
+.gap-arrow{text-align:center;color:var(--gold);font-size:20px;line-height:1;margin:9px 0}
+.after-row{display:flex;gap:8px;justify-content:center}
+.after-row .ptile{width:78px;aspect-ratio:.9}
+.after-label{text-align:center;font-size:11px;font-weight:600;color:var(--gold);letter-spacing:1.6px;text-transform:uppercase;margin-bottom:8px}
+
+/* ---------- ORBIT: Camera Roll Sync (recreated from shipped app screen) ---------- */
+.orbit{position:relative;width:296px;height:296px;margin:4px auto 0}
+.orbit .ring{position:absolute;inset:34px;border:1.5px dashed #D8CBAF;border-radius:99px}
+.orbit .core{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:88px;background:#fff;border-radius:20px;padding:10px 8px 7px;text-align:center;
+  box-shadow:0 10px 24px -8px rgba(60,45,20,.35);z-index:2;
+}
+.orbit .core svg{width:52px;height:52px}
+.orbit .core .cl{font-size:11px;font-weight:600;color:#333;margin-top:2px}
+.orbit .sat{
+  position:absolute;width:74px;background:#fff;border-radius:14px;padding:4px 4px 3px;
+  box-shadow:0 8px 18px -8px rgba(60,45,20,.4);
+}
+.orbit .sat img{width:100%;aspect-ratio:1.05;object-fit:cover;border-radius:11px;display:block}
+.orbit .sat .sl{font-size:9.5px;font-weight:600;color:#3c362c;padding:3px 3px 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.share-row{display:flex;gap:8px;justify-content:center;margin-top:16px}
+.share-pill{display:flex;gap:6px;align-items:center;background:var(--cream-2);border:1px solid var(--line);border-radius:99px;padding:8px 14px;font-size:12px;color:var(--ink-2);font-weight:500}
+
+/* ---------- chips ---------- */
+.chips{display:flex;flex-direction:column;gap:10px}
+.chip{
+  display:flex;align-items:center;gap:12px;cursor:pointer;
+  background:var(--cream-2);border:1.5px solid var(--line);border-radius:15px;
+  padding:14px 16px;font-size:14.5px;color:var(--ink);transition:.15s;text-align:left;font-family:var(--sans);
+}
+.chip .emo{font-size:18px;width:22px;text-align:center}
+.chip .tick{margin-left:auto;width:22px;height:22px;border-radius:99px;border:1.6px solid #D3C7B1;display:grid;place-items:center;color:#fff;font-size:12px;transition:.15s;flex:none}
+.chip.sel{border-color:var(--gold);background:#FBF4E6}
+.chip.sel .tick{background:var(--gold);border-color:var(--gold)}
+
+/* ---------- slider ---------- */
+.answer{font-family:var(--serif);font-size:40px;font-weight:500;text-align:center;color:var(--ink);line-height:1;margin:6px 0}
+.answer-sub{text-align:center;font-size:13.5px;color:var(--gold);font-style:italic;min-height:18px;margin-bottom:26px;font-family:var(--serif)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:99px;background:var(--cream-3);outline:none;margin:8px 0}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:99px;background:var(--gold-2);border:4px solid #fff;box-shadow:0 4px 12px -2px rgba(120,90,30,.6);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:99px;background:var(--gold-2);border:4px solid #fff;cursor:pointer}
+.ticks{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);padding:2px 2px 0}
+
+/* ---------- reveal ---------- */
+.big-num{font-family:var(--serif);font-size:64px;font-weight:500;text-align:center;color:var(--ink);line-height:1;margin:4px 0 2px}
+.big-num b{color:var(--gold)}
+.reveal-line{text-align:center;font-size:15px;color:var(--ink-2);margin-bottom:22px}
+.vs{background:var(--cream-2);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.vs-row{display:flex;align-items:center;justify-content:space-between;padding:15px 18px}
+.vs-row+.vs-row{border-top:1px solid var(--line)}
+.vs-row .lab{font-size:13.5px;color:var(--ink-2)}
+.vs-row .amt{font-family:var(--serif);font-size:21px;font-weight:600}
+.vs-row.you .amt{color:var(--ink-3)}
+.vs-row.px{background:var(--green-bg)}
+.vs-row.px .amt{color:var(--green)}
+
+/* ---------- photo album tiles (real photos) ---------- */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.ptile{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:.86;box-shadow:0 5px 14px -6px rgba(60,45,20,.35)}
+.ptile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ptile .pl{position:absolute;left:0;right:0;bottom:0;padding:14px 8px 6px;font-size:10.5px;font-weight:600;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.55));text-shadow:0 1px 3px rgba(0,0,0,.4)}
+.ptile.add{background:var(--cream-3);display:grid;place-items:center;box-shadow:none;border:1.5px dashed #D3C7B1}
+.ptile.add .in{text-align:center;color:var(--gold);font-weight:600;font-size:11px}
+.ptile.add .in div:first-child{font-size:20px}
+
+/* ---------- custom album card ---------- */
+.newalbum{background:var(--cream-2);border:1px solid var(--line);border-radius:20px;padding:16px}
+.newalbum .lab{font-size:10.5px;letter-spacing:1.5px;color:var(--ink-3);font-weight:600}
+.newalbum .name{font-family:var(--serif);font-size:23px;margin:6px 0 12px}
+.newalbum .name .caret{display:inline-block;width:2px;height:20px;background:var(--gold);margin-left:2px;vertical-align:-3px;animation:blink 1.1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.newalbum .thumbs{display:flex;gap:7px;margin-bottom:14px}
+.newalbum .thumbs img{width:52px;height:52px;border-radius:11px;object-fit:cover}
+
+/* ---------- faces ---------- */
+.face-add{width:88px;height:88px;border-radius:99px;background:var(--cream-3);border:2px dashed #D3C7B1;display:grid;place-items:center;margin:6px auto 8px;color:var(--gold);font-size:30px;cursor:pointer}
+.face-cap{font-size:12px;color:var(--ink-2);text-align:center}
+.note{display:flex;gap:7px;align-items:center;justify-content:center;font-size:12px;color:var(--ink-3);margin-top:14px}
+.chosen{display:flex;gap:8px;justify-content:center;margin-top:12px;min-height:44px}
+.chosen span{width:44px;height:44px;border-radius:99px;background-size:cover;background-position:center;border:2px solid #fff;box-shadow:0 3px 8px -3px rgba(0,0,0,.3)}
+
+/* ---------- sync / trust / paywall ---------- */
+.sync-mark{width:110px;height:110px;border-radius:99px;background:var(--green-bg);display:grid;place-items:center;margin:0 auto 16px;color:var(--green);font-size:48px}
+.shield{width:100px;height:100px;border-radius:26px;background:var(--cream-2);border:1px solid var(--line);display:grid;place-items:center;margin:0 auto 18px;font-size:44px}
+.trust-list{display:flex;flex-direction:column;gap:12px;margin-top:6px}
+.trust-list .li{display:flex;gap:11px;align-items:flex-start;font-size:13.5px;color:var(--ink-2)}
+.trust-list .li b{color:var(--ink);font-weight:600}
+.trust-list .ck{color:var(--green);font-size:15px;margin-top:1px}
+.pw-badge{display:inline-flex;gap:6px;align-items:center;background:#2E2B26;color:#F4E9CE;font-size:11px;font-weight:600;padding:6px 11px;border-radius:99px;letter-spacing:.4px;margin-bottom:12px}
+.plan{display:flex;align-items:center;justify-content:space-between;background:var(--cream-2);border:1.6px solid var(--line);border-radius:16px;padding:14px 15px;cursor:pointer;transition:.15s;margin-bottom:10px}
+.plan.sel{border-color:var(--gold);background:#FBF4E6}
+.plan .pl-l .name{font-size:15px;font-weight:600}
+.plan .pl-l .desc{font-size:11.5px;color:var(--ink-3);margin-top:2px}
+.plan .pl-r{text-align:right}
+.plan .pl-r .price{font-family:var(--serif);font-size:17px;font-weight:600}
+.plan .pl-r .per{font-size:11px;color:var(--ink-3)}
+.tag{display:inline-block;background:var(--gold);color:#fff;font-size:9.5px;font-weight:700;letter-spacing:.5px;padding:2px 7px;border-radius:6px}
+.radio{width:20px;height:20px;border-radius:99px;border:1.8px solid #D3C7B1;flex:none;position:relative}
+.plan.sel .radio{border-color:var(--gold)}
+.plan.sel .radio::after{content:"";position:absolute;inset:4px;border-radius:99px;background:var(--gold)}
+.pw-foot-links{display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:center;font-size:11px;margin-top:12px;color:var(--ink-3)}
+.pw-foot-links a{color:var(--ink-3);text-decoration:none}
+
+/* ---------- all-screens gallery (#all) ---------- */
+.allgrid{display:flex;flex-wrap:wrap;gap:26px 22px;justify-content:center;align-items:flex-start;padding:26px 20px 60px;max-width:1400px}
+.alltitle{width:100%;text-align:center;font-family:var(--serif);font-size:26px;color:var(--ink);margin:6px 0 4px}
+.alltitle span{display:block;font-family:var(--sans);font-size:12.5px;color:var(--ink-3);margin-top:5px}
+.mini{width:245px}
+.miniwrap{width:245px;height:531px;overflow:hidden;border-radius:31px;box-shadow:0 14px 30px -14px rgba(60,45,20,.4)}
+.miniwrap .device{transform:scale(.6533);transform-origin:top left;box-shadow:none;border-radius:46px}
+.mlabel{text-align:center;font-size:12.5px;font-weight:600;color:var(--ink-2);margin-top:9px}
+
+@media(max-height:860px){.device{transform:scale(.92)}}
+@media(max-width:420px){.device{transform:scale(.86);margin:-40px 0}}
+.hint{font-size:12px;color:#7a6f56;background:#fff8e9;border:1px solid #ecd9a8;border-radius:10px;padding:8px 12px;max-width:375px;text-align:center;line-height:1.4}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="device">
+    <div class="statusbar"><span>9:41</span><span class="right">Pixsort <span class="batt"></span></span></div>
+    <div class="topnav">
+      <button class="nav-btn back" id="back">‹</button>
+      <div class="progress"><i id="pbar" style="width:0%"></i></div>
+      <button class="nav-btn skipbtn" id="skip">Skip</button>
+    </div>
+    <div id="screens"></div>
+  </div>
+  <div class="hint">Interactive prototype — Airclub-style progress bar, haptic tap feedback, Tiff's real photos. Sliders drag, chips select.</div>
+</div>
+
+<script>
+/* ============================================================
+   PIXSORT — quiz onboarding v2 (Spencer handoff)
+   Feedback applied: Airclub top bar, left headers, haptics,
+   sliding messy-roll hero, photos AND videos copy, Hawaii 2025
+   custom album, native-Albums payoff, real personable photos.
+   ============================================================ */
+
+const A = 'assets/tiff camera roll/';
+const P = {
+  food:['crop_food_r1c1.jpg','crop_food_r1c2.jpg','crop_food_r2c1.jpg','crop_food_r2c2.jpg','crop_food_r3c2.jpg'],
+  gym:['crop_gym_r1c1.jpg','crop_gym_r1c2.jpg','crop_gym_r1c3.jpg','crop_gym_r2c1.jpg','crop_gym_r2c2.jpg','crop_gym_r2c3.jpg','crop_gym_r3c1.jpg','crop_gym_r3c2.jpg','crop_gym_r3c3.jpg','crop_gym_r4c1.jpg'],
+  ss:['crop_ss_r1c1.jpg','crop_ss_r1c2.jpg','crop_ss_r2c1.jpg'],
+  sunset:['crop_sunset_r1c1.jpg','crop_sunset_r1c2.jpg','crop_sunset_r2c1.jpg'],
+  travel:['crop_travel5_r1c2.jpg','crop_travel5_r1c3.jpg','crop_travel5_r2c1.jpg','crop_travel5_r2c2.jpg','crop_travel5_r4c1.jpg','crop_travel5_r4c2.jpg','crop_travel_r1c2.jpg','crop_travel_r2c1.jpg','crop_travel_r4c2.jpg']
+};
+const img = f => A + f;
+const pick = (cat,i) => img(P[cat][i % P[cat].length]);
+
+/* Real album-cover photos (Tiff-supplied, clean stills) */
+const O = 'assets/onboarding/';
+const N = {
+  you:O+'you.jpg', pets:O+'pets.jpg', fitness:O+'fitness.jpg', friends:O+'friends.jpg',
+  food:O+'food.jpg', travel:O+'travel.jpg', mxAltar:O+'mx-altar.jpg', mxLucha:O+'mx-lucha.jpg'
+};
+
+/* ---- slider maps ---- */
+const MAP_DUPES=[['barely any','a clean roll, rare'],['some','they pile up quietly'],['a lot','same shot, ten times'],['hundreds','half your roll is copies']];
+const MAP_GRADE=[['spotless','sure it is 🙂'],['okay','a little buried'],['messy','you know the feeling'],['total chaos','you just labeled it']];
+const MAP_STORAGE=[['never','lucky you'],['sometimes','it creeps up'],['weekly','that “almost full” ping'],['every day','chronic storage dread']];
+const wordAt=(v,map)=>map[Math.min(3,Math.floor(v/25.01))];
+
+const state={pains:new Set(),useCase:null,dupes:75,grade:75,storage:100,plan:'annual',downsell:false};
+
+/* ============================================================ SCREENS */
+const screens=[
+
+/* 1 — HOOK: full-bleed real camera-roll scroll footage */
+{kind:'hero'},
+
+/* 2 — PAIN checklist */
+{eyebrow:'Sound familiar?', title:'Tap the ones that are <em>you.</em>', sub:'Pick everything that fits — we’ll fix all of them.', render:()=>{
+  const opts=[['🔍','I scroll forever to find one photo or video'],['🖼️','Hundreds of screenshots I never look at'],['🎂','Birthdays and weddings are buried'],['🙂','I can’t find photos of my favorite people'],['🎬','My best videos are lost in the pile'],['☁️','“Storage almost full” haunts me']];
+  return `<div class="body"><div class="chips">${opts.map((o,i)=>`
+    <button class="chip ${state.pains.has(i)?'sel':''}" data-multi="${i}">
+      <span class="emo">${o[0]}</span><span>${o[1]}</span><span class="tick">✓</span>
+    </button>`).join('')}</div></div>`;
+}, cta:'That’s me — continue'},
+
+/* 3 — USE CASE */
+{eyebrow:'What brings you here,', title:'what do you want <em>most?</em>', sub:'Pick the one that matters right now.', render:()=>{
+  const opts=[['👨‍👩‍👧','Sort photos & videos of my family and friends'],['🎬','Pull my videos into B-roll albums'],['💾','Back everything up somewhere safe'],['🧹','Clean up the junk and free space'],['⚡','Find any photo or video, fast']];
+  return `<div class="body"><div class="chips">${opts.map((o,i)=>`
+    <button class="chip ${state.useCase===i?'sel':''}" data-single="${i}">
+      <span class="emo">${o[0]}</span><span>${o[1]}</span><span class="tick">✓</span>
+    </button>`).join('')}</div></div>`;
+}, cta:'Continue'},
+
+/* 4-6 — QUANTIFY sliders */
+{eyebrow:'Quick gut check,', title:'how many <em>near-duplicates?</em>', kind:'slider', key:'dupes', map:MAP_DUPES, ticks:['none','some','a lot','hundreds'], cta:'Next'},
+{eyebrow:'Quick gut check,', title:'how organized does it <em>feel?</em>', kind:'slider', key:'grade', map:MAP_GRADE, ticks:['spotless','okay','messy','chaos'], cta:'Next'},
+{eyebrow:'Quick gut check,', title:'how often do you worry about <em>storage?</em>', kind:'slider', key:'storage', map:MAP_STORAGE, ticks:['never','sometimes','weekly','daily'], cta:'See what this means'},
+
+/* 7 — REVEAL */
+{eyebrow:'Based on what you said,', title:'', kind:'reveal', cta:'Okay… help me'},
+
+/* 8 — RELIEF 1: real photo albums */
+{eyebrow:'Here’s the good news,', title:'we can sort <em>all of that.</em>', sub:'Every photo and video, grouped into albums automatically — in the background, while you live your life.', render:()=>`
+  <div class="body">
+    <div class="pgrid">
+      ${[[N.travel,'Travel'],[N.you,'You'],[N.pets,'Pets'],[N.food,'Food'],[N.fitness,'Fitness'],[N.friends,'Friends']]
+        .map(t=>`<div class="ptile"><img src="${t[0]}"><div class="pl">${t[1]}</div></div>`).join('')}
+    </div>
+  </div>`, cta:'What else?'},
+
+/* 9 — RELIEF 2: cleanup */
+{eyebrow:'And the storage panic,', title:'we can clean <em>that too.</em>', sub:'Pixsort spots duplicates, screenshots, and your biggest videos so you can free up space in a couple of taps.', render:()=>`
+  <div class="body">
+    <div class="vs">
+      <div class="vs-row"><span class="lab">Duplicate shots</span><span class="amt" style="color:var(--danger)">1,240</span></div>
+      <div class="vs-row"><span class="lab">Old screenshots</span><span class="amt" style="color:var(--danger)">813</span></div>
+      <div class="vs-row"><span class="lab">Giant forgotten videos</span><span class="amt" style="color:var(--danger)">62</span></div>
+      <div class="vs-row px"><span class="lab">Space you could free</span><span class="amt">≈ 24 GB</span></div>
+    </div>
+  </div>`, cta:'How does it work?'},
+
+/* 10 — MECHANISM: smart albums w/ real covers */
+{eyebrow:'Smart albums, day one,', title:'albums are ready <em>on day one.</em>', sub:'Photos and videos, sorted automatically. Turn any album off later.', render:()=>`
+  <div class="body top">
+    <div class="pgrid">
+      ${[[N.travel,'Travel'],[N.you,'You'],[N.pets,'Pets'],[N.food,'Food'],[N.fitness,'Fitness'],[pick('travel',5),'Nature'],[N.friends,'Friends'],[pick('ss',0),'Screenshots'],[pick('ss',1),'Work'],[pick('food',3),'Product Photos'],[pick('gym',6),'You + Product']]
+        .map(t=>`<div class="ptile"><img src="${t[0]}"><div class="pl">${t[1]}</div></div>`).join('')}
+      <div class="ptile add"><div class="in"><div>＋</div><div>Custom</div></div></div>
+    </div>
+  </div>`, cta:'Next'},
+
+/* 11 — MECHANISM: faces */
+{eyebrow:'Find your people,', title:'add favorite <em>faces.</em>', sub:'Pick up to 3 people Pixsort should recognize in your camera roll.', render:()=>`
+  <div class="body">
+    <div class="face-add" id="faceAdd">＋</div>
+    <div class="face-cap" id="faceCap">Add</div>
+    <div class="chosen" id="chosen"></div>
+    <div class="note">🔒 Face photos stay on device, tied to sorting your own library.</div>
+  </div>`, cta:'Continue'},
+
+/* 12 — MECHANISM: custom album (Hawaii 2025) */
+{eyebrow:'Custom albums,', title:'or make your own, <em>in plain words.</em>', sub:'Type what you want — Pixsort builds the album from your photos and videos.', render:()=>`
+  <div class="body">
+    <div class="newalbum">
+      <div class="lab">NEW ALBUM</div>
+      <div class="name">Mexico City<span class="caret"></span></div>
+      <div class="thumbs">
+        ${[N.mxAltar,N.mxLucha,N.food,N.travel].map(s=>`<img src="${s}">`).join('')}
+      </div>
+      <button class="btn" style="font-size:14px;padding:12px" disabled>Sort 214 photos · 38 videos</button>
+    </div>
+    <p class="sub" style="margin-top:14px;font-style:italic;font-family:var(--serif);color:var(--ink-3)">“Mexico City” · “the dog” · “gym clips” · anything.</p>
+  </div>`, cta:'Next'},
+
+/* 13 — PAYOFF: Camera Roll Sync orbit (recreated from the shipped app screen) */
+{eyebrow:'And here’s the magic,', title:'they live in <em>your</em> camera roll.', sub:'Pixsort creates and updates Apple Photos albums for you. Share them, download them — it’s your photos now.', render:()=>{
+  const petals=['#FDBE2C','#F5821F','#EE4136','#D9418C','#9E4E9E','#4E7DBF','#4FB9E9','#7CC142'];
+  const flower=`<svg viewBox="0 0 100 100">${petals.map((c,i)=>`<ellipse cx="50" cy="27" rx="11" ry="20" fill="${c}" fill-opacity=".85" transform="rotate(${i*45} 50 50)"/>`).join('')}<circle cx="50" cy="50" r="7" fill="#fff"/></svg>`;
+  const sats=[
+    [N.travel,'Travel','left:111px;top:-6px'],
+    [N.fitness,'Fitness','right:-2px;top:52px'],
+    [N.food,'Food','right:2px;top:172px'],
+    [N.you,'You','left:111px;top:214px'],
+    [N.pets,'Pets','left:2px;top:172px'],
+    [N.friends,'Friends','left:-2px;top:52px']
+  ];
+  return `<div class="body top">
+    <div class="orbit">
+      <div class="ring"></div>
+      <div class="core">${flower}<div class="cl">Photos</div></div>
+      ${sats.map(s=>`<div class="sat" style="${s[2]}"><img src="${s[0]}"><div class="sl">${s[1]}</div></div>`).join('')}
+    </div>
+    <div class="share-row" style="margin-top:auto;padding-top:18px">
+      <span class="share-pill">↗ Share</span>
+      <span class="share-pill">↓ Download</span>
+      <span class="share-pill">🔄 Auto-updating</span>
+    </div>
+  </div>`;
+}, cta:'I want this'},
+
+/* 14 — TRUST */
+{eyebrow:'Your photos, your phone,', title:'everything stays <em>on your device.</em>', render:()=>`
+  <div class="body">
+    <div class="shield">🔒</div>
+    <div class="trust-list">
+      <div class="li"><span class="ck">✓</span><span><b>Nothing is uploaded.</b> Sorting runs on your iPhone, powered by Apple’s on-device intelligence.</span></div>
+      <div class="li"><span class="ck">✓</span><span><b>We never see your photos or videos.</b> No cloud copy, no training, no selling.</span></div>
+      <div class="li"><span class="ck">✓</span><span><b>You stay in control.</b> Turn albums off or delete them anytime — your originals are untouched.</span></div>
+    </div>
+  </div>`, cta:'Start sorting'},
+
+/* 15 — PAYWALL */
+{kind:'paywall'},
+
+/* 16 — ALL SET */
+{eyebrow:'You’re all set,', title:'ready to find the moments <em>that matter?</em>', sub:'Pixsort turns your camera roll into something you’ll actually use. Sorted, searchable, ready to share.', render:()=>`
+  <div class="body">
+    <div class="pgrid" style="max-width:270px;margin:0 auto">
+      ${[[N.travel,'Travel'],[N.you,'You'],[N.friends,'Friends']]
+        .map(t=>`<div class="ptile"><img src="${t[0]}"><div class="pl">${t[1]}</div></div>`).join('')}
+    </div>
+  </div>`, cta:'Let’s get started'},
+
+/* 17 — SELFIE UPLOAD (powers the You album + face sorting) */
+{eyebrow:'One quick selfie,', title:'help Pixsort find <em>you.</em>', sub:'Powers your You album and face sorting. Your selfie stays on your device.', render:()=>`
+  <div class="body">
+    <div class="face-add" id="selfieAdd" style="width:112px;height:112px;font-size:36px">📸</div>
+    <div class="face-cap" id="selfieCap">Tap to add a selfie</div>
+    <div class="chosen" id="selfieChosen"></div>
+    <div class="note">🔒 Never uploaded. Never shared. Just for sorting.</div>
+  </div>`, cta:'Continue'},
+
+/* 18 — CAMERA ROLL ACCESS (final gate) */
+{eyebrow:'Last step,', title:'let Pixsort see your <em>camera roll.</em>', sub:'Pixsort needs access to your photos and videos to sort them — right on your device. Nothing is uploaded.', render:()=>`
+  <div class="body">
+    <div style="background:#fff;border-radius:18px;padding:20px 18px;box-shadow:0 14px 30px -14px rgba(60,45,20,.35);max-width:270px;margin:0 auto;text-align:center;font-family:var(--sans)">
+      <div style="font-size:15px;font-weight:600;color:#111;line-height:1.35">“Pixsort” Would Like to<br>Access Your Photos</div>
+      <div style="font-size:12px;color:#666;margin:8px 0 14px;line-height:1.4">Photos and videos are sorted on this iPhone. Nothing leaves your device.</div>
+      <div style="border-top:1px solid #E5E5EA;margin:0 -18px">
+        <div style="padding:11px;font-size:14.5px;color:#8E8E93;border-bottom:1px solid #E5E5EA">Limit Access…</div>
+        <div style="padding:11px;font-size:14.5px;color:#0A84FF;font-weight:600">Allow Full Access</div>
+      </div>
+    </div>
+    <div class="note">💛 Full access = every album sorted, day one.</div>
+  </div>`, cta:'Let’s start sorting', last:true}
+];
+
+/* ============================================================ ENGINE */
+let cur=0;
+const $screens=document.getElementById('screens');
+const $pbar=document.getElementById('pbar');
+const $back=document.getElementById('back');
+const $skip=document.getElementById('skip');
+
+/* haptic: real build = UIImpactFeedbackGenerator(.light); web sim = vibrate + press scale */
+function haptic(el){
+  if(navigator.vibrate) navigator.vibrate(10);
+  if(el){el.classList.add('tapped');setTimeout(()=>el.classList.remove('tapped'),120);}
+}
+
+/* HERO — value prop first (photogenik/Airclub pattern), then the gap:
+   real messy-roll footage in a square card on cream vs sorted albums. */
+function renderHero(){
+  return `<div class="screen">
+    <div class="eyebrow">Welcome to Pixsort,</div>
+    <h1>albums that organize <em>themselves.</em></h1>
+    <p class="sub" style="margin-bottom:14px">Every photo and video in your library, sorted into albums automatically — and kept sorted, ongoing.</p>
+    <div class="body top">
+      <div class="vidcard">
+        <img src="assets/messy-roll-still.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" alt="">
+        <span class="vlabel">your camera roll today</span>
+      </div>
+      <div class="gap-arrow">↓</div>
+      <div class="after-label">with Pixsort</div>
+      <div class="after-row">
+        ${[[N.travel,'Travel'],[N.you,'You'],[N.food,'Food'],[N.fitness,'Fitness']]
+          .map(t=>`<div class="ptile"><img src="${t[0]}"><div class="pl">${t[1]}</div></div>`).join('')}
+      </div>
+    </div>
+    <div class="foot"><button class="btn" data-next>Get started</button></div>
+  </div>`;
+}
+
+function renderReveal(){
+  const hrs=Math.round(6+(state.dupes+state.grade+state.storage)/300*24);
+  return `
+  <div class="body">
+    <div class="big-num">≈ <b>${hrs}</b> hrs</div>
+    <div class="reveal-line">of manual work to fix this by hand.</div>
+    <div class="vs">
+      <div class="vs-row you"><span class="lab">Doing it yourself</span><span class="amt">≈ ${hrs} hrs</span></div>
+      <div class="vs-row px"><span class="lab">Pixsort</span><span class="amt">≈ 2 min</span></div>
+    </div>
+    <p class="sub" style="margin-top:20px">You don’t have a hoarding problem. You have a sorting problem — and it’s solvable.</p>
+  </div>`;
+}
+
+/* DOWNSELL — shown once when the paywall is X-ed out.
+   ⚠️ COMPLIANCE: Spencer to confirm App Store rules on rejection-triggered
+   discounts before shipping (meeting 2026-05-26). If disallowed, swap for an
+   Apple-sanctioned offer code / win-back offer, or remove entirely. */
+function renderDownsell(){
+  return `<div class="screen">
+    <div><span class="pw-badge" style="background:var(--gold)">✦ One-time offer</span></div>
+    <div class="eyebrow">Before you go,</div>
+    <h1>keep the sorted life for <em>less.</em></h1>
+    <p class="sub">Your albums are already taking shape. Lock in a year of unlimited sorting at our lowest price — this offer won’t show again.</p>
+    <div class="body" style="justify-content:flex-start">
+      <div class="plan sel" style="margin-top:6px">
+        <div style="display:flex;align-items:center;gap:12px"><span class="radio"></span>
+          <div class="pl-l"><div class="name">Annual <span class="tag">SAVE 29%</span></div><div class="desc">Everything in Premium, one year</div></div></div>
+        <div class="pl-r"><div class="price"><s style="color:var(--ink-3);font-size:13px;font-weight:400">$70.00</s> $49.99</div><div class="per">per year</div></div>
+      </div>
+      <div class="note" style="margin-top:10px">🔒 Secured with Apple · cancel anytime</div>
+    </div>
+    <div class="foot">
+      <button class="btn" data-next>Claim offer</button>
+      <button class="btn ghost" data-next style="background:none;box-shadow:none;color:var(--ink-3);font-weight:500;font-size:14px;padding:12px">No thanks, continue</button>
+    </div>
+  </div>`;
+}
+
+function renderPaywall(){
+  return `<div class="screen">
+    <div style="display:flex;align-items:center;justify-content:space-between"><span class="pw-badge">✦ Pixsort Premium</span><button id="pwClose" style="background:var(--cream-3);border:0;width:30px;height:30px;border-radius:99px;color:var(--ink-2);font-size:14px;cursor:pointer;margin-bottom:12px">✕</button></div>
+    <h1 style="font-size:26px">Unlock <em>unlimited</em> sorting.</h1>
+    <p class="sub">Keep organizing past your first 100 photos and keep every album auto-updating.</p>
+    <div class="body" style="justify-content:flex-start">
+      <div style="font-size:13px;font-weight:600;margin-bottom:4px">Choose your plan</div>
+      <div style="font-size:11.5px;color:var(--ink-3);margin-bottom:10px">Pricing stays visible before you buy. Cancel anytime.</div>
+      <div class="plan ${state.plan==='weekly'?'sel':''}" data-plan="weekly">
+        <div style="display:flex;align-items:center;gap:12px"><span class="radio"></span>
+          <div class="pl-l"><div class="name">Weekly</div><div class="desc">Quick cleanup, renews weekly</div></div></div>
+        <div class="pl-r"><div class="price">$7.00</div><div class="per">per week</div></div>
+      </div>
+      <div class="plan ${state.plan==='annual'?'sel':''}" data-plan="annual">
+        <div style="display:flex;align-items:center;gap:12px"><span class="radio"></span>
+          <div class="pl-l"><div class="name">Annual <span class="tag">BEST VALUE</span></div><div class="desc">Best for unlimited sorting</div></div></div>
+        <div class="pl-r"><div class="price">$70.00</div><div class="per">per year</div></div>
+      </div>
+    </div>
+    <div class="foot">
+      <button class="btn" data-next>Continue with ${state.plan==='annual'?'Annual':'Weekly'}</button>
+      <div class="pw-foot-links"><a>Redeem code</a><a>Restore access</a><a>Terms</a><a>Privacy</a><a>Support</a></div>
+    </div>
+  </div>`;
+}
+
+function screenHTML(s){
+  if(s.kind==='hero') return renderHero();
+  if(s.kind==='paywall') return renderPaywall();
+  let inner;
+  if(s.kind==='reveal') inner=renderReveal();
+  else if(s.kind==='slider'){
+    const w=wordAt(state[s.key],s.map);
+    inner=`<div class="body">
+      <div class="answer" id="ans">${w[0]}</div>
+      <div class="answer-sub" id="anssub">${w[1]}</div>
+      <div><input type="range" min="0" max="100" value="${state[s.key]}" id="sl">
+      <div class="ticks">${s.ticks.map(t=>`<span>${t}</span>`).join('')}</div></div></div>`;
+  } else inner=s.render();
+  return `<div class="screen">
+    ${s.eyebrow?`<div class="eyebrow">${s.eyebrow}</div>`:''}
+    ${s.title?`<h1>${s.title}</h1>`:''}
+    ${s.sub?`<p class="sub">${s.sub}</p>`:''}
+    ${inner}
+    <div class="foot"><button class="btn" data-next>${s.cta||'Continue'}</button></div>
+  </div>`;
+}
+
+function render(){
+  const s=screens[cur];
+  const html=(s.kind==='paywall'&&state.downsell)?renderDownsell():screenHTML(s);
+
+  $screens.innerHTML=html;
+  const scr=$screens.firstElementChild;
+  requestAnimationFrame(()=>scr.classList.add('active'));
+
+  /* Airclub progress bar */
+  $pbar.style.width=((cur+1)/screens.length*100)+'%';
+  $back.disabled=cur===0;
+  $skip.style.visibility=(s.kind==='paywall'||s.last)?'hidden':'visible';
+
+  wire(s,scr);
+}
+
+function wire(s,scr){
+  scr.querySelectorAll('[data-next]').forEach(b=>b.onclick=()=>{haptic(b);setTimeout(next,110);});
+  scr.querySelectorAll('[data-multi]').forEach(c=>c.onclick=()=>{
+    haptic();
+    const i=+c.dataset.multi;state.pains.has(i)?state.pains.delete(i):state.pains.add(i);
+    c.classList.toggle('sel');
+  });
+  scr.querySelectorAll('[data-single]').forEach(c=>c.onclick=()=>{
+    haptic();
+    state.useCase=+c.dataset.single;
+    scr.querySelectorAll('[data-single]').forEach(x=>x.classList.remove('sel'));
+    c.classList.add('sel');
+  });
+  scr.querySelectorAll('[data-plan]').forEach(p=>p.onclick=()=>{haptic();state.plan=p.dataset.plan;render();});
+  const pwc=scr.querySelector('#pwClose');
+  if(pwc){pwc.onclick=()=>{haptic();state.downsell=true;render();};}
+  const sl=scr.querySelector('#sl');
+  if(sl){sl.oninput=()=>{
+    state[s.key]=+sl.value;
+    const w=wordAt(+sl.value,s.map);
+    scr.querySelector('#ans').textContent=w[0];
+    scr.querySelector('#anssub').textContent=w[1];
+  };}
+  const sa=scr.querySelector('#selfieAdd');
+  if(sa){sa.onclick=()=>{
+    haptic();
+    sa.style.backgroundImage=`url("${N.you}")`;
+    sa.style.backgroundSize='cover';sa.style.backgroundPosition='center';
+    sa.style.border='3px solid var(--gold)';sa.textContent='';
+    scr.querySelector('#selfieCap').textContent='Looking good ✓';
+  };}
+  const fa=scr.querySelector('#faceAdd');
+  if(fa){let n=0;const faces=[N.you,N.friends,N.fitness];
+    fa.onclick=()=>{
+      if(n>=3)return;haptic();
+      const sp=document.createElement('span');
+      sp.style.backgroundImage=`url("${faces[n]}")`;
+      scr.querySelector('#chosen').appendChild(sp);n++;
+      if(n>=3){fa.style.opacity=.4;scr.querySelector('#faceCap').textContent='3 of 3 added';}
+    };}
+}
+
+function next(){cur=Math.min(cur+1,screens.length-1);render();}
+$back.onclick=()=>{if(cur>0){haptic();cur--;render();}};
+$skip.onclick=()=>{haptic();next();};
+
+/* ===== ALL-SCREENS GALLERY — open with #all (for design review) ===== */
+const LABELS=['Value prop / hook','Pain checklist','Use case','Dupes slider','Grade slider','Storage slider','Reveal','Relief: we sort it','Relief: we clean it','Smart albums','Favorite faces','Custom albums','Camera Roll Sync','Privacy','Paywall','All set','Selfie','Camera roll access'];
+function buildAll(){
+  document.querySelector('.stage').style.display='none';
+  const cards=[];
+  const dev=(html,pct,label,i)=>`
+    <div class="mini">
+      <div class="miniwrap"><div class="device">
+        <div class="statusbar"><span>9:41</span><span class="right">Pixsort <span class="batt"></span></span></div>
+        <div class="topnav"><button class="nav-btn back">‹</button><div class="progress"><i style="width:${pct}%"></i></div><button class="nav-btn skipbtn">Skip</button></div>
+        ${html.replace('class="screen"','class="screen active"')}
+      </div></div>
+      <div class="mlabel">${i}. ${label}</div>
+    </div>`;
+  screens.forEach((s,i)=>{
+    cards.push(dev(screenHTML(s),(i+1)/screens.length*100,LABELS[i]||'',i+1));
+    if(s.kind==='paywall') cards.push(dev(renderDownsell(),(i+1)/screens.length*100,'Downsell (on paywall ✕) — pending Apple-compliance check','15b'));
+  });
+  const grid=document.createElement('div');
+  grid.className='allgrid';
+  grid.innerHTML=`<div class="alltitle">Pixsort onboarding — all screens<span>tap-through version: remove #all from the URL</span></div>`+cards.join('');
+  document.body.appendChild(grid);
+}
+if(location.hash==='#all'){buildAll();}else{render();}
+window.addEventListener('hashchange',()=>location.reload());
+</script>
+</body>
+</html>
