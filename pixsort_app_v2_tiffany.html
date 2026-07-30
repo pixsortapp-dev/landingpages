@@ -274,27 +274,27 @@
  </div>
 
 <script>
-const T="assets/";
-const POOL=["template/food-2.svg","template/food-3.svg","template/food-1.svg","template/food-2.svg","template/food-3.svg",
-"template/fitness-1.svg","template/fitness-2.svg","template/fitness-3.svg","template/fitness-1.svg","template/fitness-2.svg","template/fitness-3.svg",
-"template/selfie-1.svg","template/selfie-2.svg","template/selfie-3.svg","template/fitness-1.svg","template/screenshots-2.svg","template/screenshots-3.svg",
-"template/screenshots-1.svg","template/sunset-2.svg","template/sunset-3.svg","template/sunset-1.svg","template/travel-3.svg",
-"template/travel-1.svg","template/travel-2.svg","template/travel-3.svg","template/travel-1.svg","template/travel-2.svg",
-"template/travel-3.svg","template/travel-1.svg","template/travel-2.svg"].map(f=>T+f);
+const T="assets/tiff-roll/";
+const POOL=["crop_food_r1c1.jpg","crop_food_r1c2.jpg","crop_food_r2c1.jpg","crop_food_r2c2.jpg","crop_food_r3c2.jpg",
+"crop_gym_r1c1.jpg","crop_gym_r1c2.jpg","crop_gym_r1c3.jpg","crop_gym_r2c1.jpg","crop_gym_r2c2.jpg","crop_gym_r2c3.jpg",
+"crop_gym_r3c1.jpg","crop_gym_r3c2.jpg","crop_gym_r3c3.jpg","crop_gym_r4c1.jpg","crop_ss_r1c1.jpg","crop_ss_r1c2.jpg",
+"crop_ss_r2c1.jpg","crop_sunset_r1c1.jpg","crop_sunset_r1c2.jpg","crop_sunset_r2c1.jpg","crop_travel5_r1c2.jpg",
+"crop_travel5_r1c3.jpg","crop_travel5_r2c1.jpg","crop_travel5_r2c2.jpg","crop_travel5_r4c1.jpg","crop_travel5_r4c2.jpg",
+"crop_travel_r1c2.jpg","crop_travel_r2c1.jpg","crop_travel_r4c2.jpg"].map(f=>T+f);
 
 const ALB=[
- {n:"Travel",c:104,cv:"template/travel-3.svg",ic:"✈️"},
- {n:"Food",c:88,cv:"template/food-1.svg",ic:"🍽️"},
- {n:"Fitness",c:96,cv:"template/fitness-2.svg",ic:"🏋️"},
- {n:"Sunsets",c:42,cv:"template/sunset-2.svg",ic:"🌅"},
- {n:"Screenshots",c:84,cv:"template/screenshots-2.svg",ic:"📱"},
- {n:"Selfies",c:80,cv:"template/selfie-1.svg",ic:"🤳"},
- {n:"Beach",c:61,cv:"template/travel-1.svg",ic:"🏖️"},
- {n:"Nature",c:53,cv:"template/travel-2.svg",ic:"🌿"},
- {n:"City",c:47,cv:"template/travel-3.svg",ic:"🏙️"},
- {n:"Friends",c:73,cv:"template/fitness-3.svg",ic:"👯"},
- {n:"Brunch",c:38,cv:"template/food-2.svg",ic:"🥐"},
- {n:"Events",c:29,cv:"template/fitness-1.svg",ic:"🎉"},
+ {n:"Travel",c:104,cv:"crop_travel5_r1c2.jpg",ic:"✈️"},
+ {n:"Food",c:88,cv:"crop_food_r1c1.jpg",ic:"🍽️"},
+ {n:"Fitness",c:96,cv:"crop_gym_r1c1.jpg",ic:"🏋️"},
+ {n:"Sunsets",c:42,cv:"crop_sunset_r1c1.jpg",ic:"🌅"},
+ {n:"Screenshots",c:84,cv:"crop_ss_r1c1.jpg",ic:"📱"},
+ {n:"Selfies",c:80,cv:"crop_gym_r3c1.jpg",ic:"🤳"},
+ {n:"Beach",c:61,cv:"crop_travel5_r2c2.jpg",ic:"🏖️"},
+ {n:"Nature",c:53,cv:"crop_travel_r1c2.jpg",ic:"🌿"},
+ {n:"City",c:47,cv:"crop_travel_r2c1.jpg",ic:"🏙️"},
+ {n:"Friends",c:73,cv:"crop_gym_r2c1.jpg",ic:"👯"},
+ {n:"Brunch",c:38,cv:"crop_food_r2c1.jpg",ic:"🥐"},
+ {n:"Events",c:29,cv:"crop_gym_r4c1.jpg",ic:"🎉"},
 ];
 const CATS=["TRAVEL","FOOD","FITNESS","SUNSETS","SCREENSHOTS","SELFIES","BEACH","FRIENDS"];
 
@@ -360,7 +360,7 @@ const screenMessy=()=>`<div class="scene" style="opacity:1"><div class="wall">${
 const screenPerm=`<div class="scene perm-dim" style="opacity:1"><div class="sheet up"><div class="ic" style="background-image:url('assets/pixsort-icon.jpeg')"></div><h3>Allow PixSort to access<br>your photos?</h3><p>PixSort sorts everything on-device.<br>Your photos never leave your phone.</p><div class="allow">Give access to my photos</div><div class="deny">Not now</div></div></div>`;
 const screenSort=`<div class="scene pad sortscene" style="opacity:1"><div class="brandrow"><img src="assets/pixsort-icon.jpeg" alt=""><span>PixSort</span></div><div class="ready">2,431 photos ready to sort</div><div class="sortbtn"><b>SORT</b></div><div class="tip">one tap. that's it.</div></div>`;
 const screenSplash=`<div class="scene splash stat" style="opacity:1"><div class="logo" style="background-image:url('assets/pixsort-icon.jpeg')"></div><div class="wm">PixSort</div><div class="sub">sorting your library…</div><div class="dots"><i></i><i></i><i></i></div></div>`;
-const screenFast=`<div class="scene pad fastscene" style="opacity:1"><div class="top"><div class="cat">FOOD</div><div class="rot" style="background-image:url('${T}template/food-3.svg')"></div><div class="num">1,284</div><div class="lbl">photos sorted</div></div><div class="bar"><i style="width:53%"></i></div></div>`;
+const screenFast=`<div class="scene pad fastscene" style="opacity:1"><div class="top"><div class="cat">FOOD</div><div class="rot" style="background-image:url('${T}crop_food_r1c1.jpg')"></div><div class="num">1,284</div><div class="lbl">photos sorted</div></div><div class="bar"><i style="width:53%"></i></div></div>`;
 const screenAlbums=`<div class="scene" style="opacity:1"><div class="a2a"><img src="assets/photos-logo.jpeg" alt=""> Add to Apple Photos</div><div class="s5scroll" style="transform:none"><div class="s5head"><span class="t">Collections</span><span class="x">12 albums · sorted</span></div>${albCardsHTML}</div>${TABBAR}</div>`;
 const screenApple=`<div class="scene apple" style="opacity:1;transform:none"><div class="phead"><span class="t">Albums</span><span class="see">See All</span></div><div class="psub">My Albums · 12</div><div class="pscroll"><div class="pinner" style="transform:none">${appleCardsHTML}</div></div><div class="ptab"><div class="tb"><span class="gi">▤</span>Library</div><div class="tb"><span class="gi">❋</span>For You</div><div class="tb on"><span class="gi">▦</span>Albums</div><div class="tb"><span class="gi">⌕</span>Search</div></div></div>`;
 

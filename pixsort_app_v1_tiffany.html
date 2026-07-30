@@ -282,11 +282,11 @@
             <div class="left" id="leftSort">500 left to sort</div>
           </div>
           <div class="stack">
-            <i style="background-image:url('assets/template/food-1.svg')"></i>
-            <i style="background-image:url('assets/template/travel-1.svg')"></i>
-            <i style="background-image:url('assets/template/fitness-1.svg')"></i>
-            <i style="background-image:url('assets/template/screenshots-1.svg')"></i>
-            <i style="background-image:url('assets/template/sunset-1.svg')"></i>
+            <i style="background-image:url('assets/tiff-roll/crop_food_r1c1.jpg')"></i>
+            <i style="background-image:url('assets/tiff-roll/crop_travel5_r2c1.jpg')"></i>
+            <i style="background-image:url('assets/tiff-roll/crop_gym_r1c1.jpg')"></i>
+            <i style="background-image:url('assets/tiff-roll/crop_ss_r1c1.jpg')"></i>
+            <i style="background-image:url('assets/tiff-roll/crop_sunset_r1c1.jpg')"></i>
           </div>
         </div>
 
@@ -347,29 +347,29 @@
  </div>
 
 <script>
-const T = "assets/";
+const T = "assets/tiff-roll/";
 // album definitions (cover + count target + thumbs)
 const ALBUMS = [
-  {nm:"Travel",  ct:104, c:"#cfe3e6", ic:"✈️", cover:T+"template/travel-2.svg",
-    thumbs:["template/travel-3.svg","template/travel-1.svg","template/travel-2.svg","template/travel-3.svg"]},
-  {nm:"Food",    ct:88,  c:"#f0d9c2", ic:"🍽️", cover:T+"template/food-2.svg",
-    thumbs:["template/food-3.svg","template/food-1.svg","template/food-2.svg","template/food-3.svg"]},
-  {nm:"Fitness", ct:96,  c:"#d8e0c6", ic:"🏋️", cover:T+"template/fitness-2.svg",
-    thumbs:["template/fitness-3.svg","template/fitness-1.svg","template/fitness-2.svg","template/fitness-3.svg"]},
-  {nm:"Sunset",  ct:42,  c:"#f0d2cb", ic:"🌅", cover:T+"template/sunset-2.svg",
-    thumbs:["template/sunset-3.svg","template/sunset-1.svg","template/travel-1.svg","template/travel-2.svg"]},
-  {nm:"Screenshots", ct:84, c:"#e6dcc2", ic:"📱", cover:T+"template/screenshots-2.svg",
-    thumbs:["template/screenshots-3.svg","template/screenshots-1.svg","template/screenshots-2.svg","template/screenshots-3.svg"]},
-  {nm:"You",     ct:86,  c:"#ddd2ea", ic:"👤", cover:T+"template/selfie-1.svg",
-    thumbs:["template/selfie-2.svg","template/selfie-3.svg","template/fitness-1.svg","template/fitness-2.svg"]},
-  {nm:"Beach",   ct:61,  c:"#cfe3e6", ic:"🏖️", cover:T+"template/travel-3.svg",
-    thumbs:["template/travel-1.svg","template/travel-2.svg","template/sunset-2.svg","template/travel-3.svg"]},
-  {nm:"Nature",  ct:53,  c:"#d8e0c6", ic:"🌿", cover:T+"template/travel-1.svg",
-    thumbs:["template/travel-2.svg","template/travel-3.svg","template/sunset-3.svg","template/travel-1.svg"]},
-  {nm:"Friends", ct:73,  c:"#ddd2ea", ic:"👯", cover:T+"template/fitness-3.svg",
-    thumbs:["template/fitness-1.svg","template/fitness-2.svg","template/fitness-3.svg","template/selfie-1.svg"]},
-  {nm:"Events",  ct:38,  c:"#f0d9c2", ic:"🎉", cover:T+"template/food-1.svg",
-    thumbs:["template/food-2.svg","template/food-3.svg","template/fitness-1.svg","template/food-1.svg"]},
+  {nm:"Travel",  ct:104, c:"#cfe3e6", ic:"✈️", cover:T+"crop_travel5_r1c2.jpg",
+    thumbs:["crop_travel5_r2c1.jpg","crop_travel5_r2c2.jpg","crop_travel_r1c2.jpg","crop_travel5_r4c1.jpg"]},
+  {nm:"Food",    ct:88,  c:"#f0d9c2", ic:"🍽️", cover:T+"crop_food_r1c1.jpg",
+    thumbs:["crop_food_r1c2.jpg","crop_food_r2c1.jpg","crop_food_r2c2.jpg","crop_food_r3c2.jpg"]},
+  {nm:"Fitness", ct:96,  c:"#d8e0c6", ic:"🏋️", cover:T+"crop_gym_r1c1.jpg",
+    thumbs:["crop_gym_r1c2.jpg","crop_gym_r1c3.jpg","crop_gym_r2c1.jpg","crop_gym_r2c2.jpg"]},
+  {nm:"Sunset",  ct:42,  c:"#f0d2cb", ic:"🌅", cover:T+"crop_sunset_r1c1.jpg",
+    thumbs:["crop_sunset_r1c2.jpg","crop_sunset_r2c1.jpg","crop_travel_r4c2.jpg","crop_travel5_r4c2.jpg"]},
+  {nm:"Screenshots", ct:84, c:"#e6dcc2", ic:"📱", cover:T+"crop_ss_r1c1.jpg",
+    thumbs:["crop_ss_r1c2.jpg","crop_ss_r2c1.jpg","crop_ss_r1c1.jpg","crop_ss_r2c1.jpg"]},
+  {nm:"You",     ct:86,  c:"#ddd2ea", ic:"👤", cover:T+"crop_gym_r3c1.jpg",
+    thumbs:["crop_gym_r3c2.jpg","crop_gym_r3c3.jpg","crop_gym_r4c1.jpg","crop_gym_r2c3.jpg"]},
+  {nm:"Beach",   ct:61,  c:"#cfe3e6", ic:"🏖️", cover:T+"crop_travel5_r2c2.jpg",
+    thumbs:["crop_travel5_r2c1.jpg","crop_travel5_r4c1.jpg","crop_sunset_r1c1.jpg","crop_travel_r1c2.jpg"]},
+  {nm:"Nature",  ct:53,  c:"#d8e0c6", ic:"🌿", cover:T+"crop_travel_r1c2.jpg",
+    thumbs:["crop_travel_r2c1.jpg","crop_travel5_r1c3.jpg","crop_sunset_r2c1.jpg","crop_travel_r4c2.jpg"]},
+  {nm:"Friends", ct:73,  c:"#ddd2ea", ic:"👯", cover:T+"crop_gym_r2c1.jpg",
+    thumbs:["crop_gym_r2c2.jpg","crop_gym_r2c3.jpg","crop_gym_r1c2.jpg","crop_gym_r3c3.jpg"]},
+  {nm:"Events",  ct:38,  c:"#f0d9c2", ic:"🎉", cover:T+"crop_food_r2c1.jpg",
+    thumbs:["crop_food_r1c2.jpg","crop_food_r2c2.jpg","crop_gym_r4c1.jpg","crop_food_r3c2.jpg"]},
 ];
 
 // ---- build scene1 album grid ----
@@ -413,10 +413,10 @@ function easeOut(t){return 1-Math.pow(1-t,3);}
 
 // real-photo pools per grid card (Travel, Food, Fitness, Sunset)
 const POOLS=[
-  ["template/travel-2.svg","template/travel-3.svg","template/travel-1.svg","template/travel-2.svg","template/travel-3.svg","template/travel-1.svg","template/travel-2.svg","template/travel-3.svg","template/travel-1.svg"],
-  ["template/food-2.svg","template/food-3.svg","template/food-1.svg","template/food-2.svg","template/food-3.svg"],
-  ["template/fitness-2.svg","template/fitness-3.svg","template/fitness-1.svg","template/fitness-2.svg","template/fitness-3.svg","template/fitness-1.svg","template/selfie-2.svg","template/selfie-3.svg","template/fitness-2.svg"],
-  ["template/sunset-1.svg","template/sunset-2.svg","template/sunset-3.svg"],
+  ["crop_travel5_r1c2.jpg","crop_travel5_r2c1.jpg","crop_travel5_r2c2.jpg","crop_travel_r1c2.jpg","crop_travel5_r4c1.jpg","crop_travel5_r1c3.jpg","crop_travel_r2c1.jpg","crop_travel5_r4c2.jpg","crop_travel_r4c2.jpg"],
+  ["crop_food_r1c1.jpg","crop_food_r1c2.jpg","crop_food_r2c1.jpg","crop_food_r2c2.jpg","crop_food_r3c2.jpg"],
+  ["crop_gym_r1c1.jpg","crop_gym_r1c2.jpg","crop_gym_r1c3.jpg","crop_gym_r2c1.jpg","crop_gym_r2c2.jpg","crop_gym_r2c3.jpg","crop_gym_r3c1.jpg","crop_gym_r3c2.jpg","crop_gym_r4c1.jpg"],
+  ["crop_sunset_r1c1.jpg","crop_sunset_r1c2.jpg","crop_sunset_r2c1.jpg"],
 ].map(arr=>arr.map(f=>T+f));
 // the photo that will be sorted on step k (cycles Travel→Food→Fitness→Sunset)
 function libImg(k){const p=POOLS[k%4];return p[Math.floor(k/4)%p.length];}
@@ -537,7 +537,7 @@ const screenSort=`<div class="scene" style="opacity:1;transform:none">
       <svg class="ring" viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="19"/><circle class="fg" cx="25" cy="25" r="19" style="stroke-dashoffset:45"/></svg>
       <div><div class="pct">62%</div><div class="frac">312 / 500</div></div></div></div>
   </div>
-  <div class="libcard"><div><div class="lab">Photos from</div><div class="lib">YOUR LIBRARY</div><div class="left">188 left to sort</div></div><div class="stack"><i style="background-image:url('${T}template/food-1.svg')"></i><i style="background-image:url('${T}template/travel-2.svg')"></i><i style="background-image:url('${T}template/fitness-3.svg')"></i><i style="background-image:url('${T}template/screenshots-1.svg')"></i><i style="background-image:url('${T}template/sunset-1.svg')"></i></div></div>
+  <div class="libcard"><div><div class="lab">Photos from</div><div class="lib">YOUR LIBRARY</div><div class="left">188 left to sort</div></div><div class="stack"><i style="background-image:url('${T}crop_food_r1c1.jpg')"></i><i style="background-image:url('${T}crop_travel5_r2c1.jpg')"></i><i style="background-image:url('${T}crop_gym_r1c1.jpg')"></i><i style="background-image:url('${T}crop_ss_r1c1.jpg')"></i><i style="background-image:url('${T}crop_sunset_r1c1.jpg')"></i></div></div>
   <div class="createbtn">+ Create new album</div>
   <div class="albgrid">${gridStatic([64,52,58,26])}</div>
   <div class="flyer" style="left:60px;top:300px;background-image:url('${POOLS[0][3]}');transform:rotate(-9deg)"></div>
