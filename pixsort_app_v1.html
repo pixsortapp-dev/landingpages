@@ -51,17 +51,8 @@
   }
 
   /* status bar */
-  .status{
-    position:absolute;top:0;left:0;right:0;height:54px;z-index:55;
-    display:flex;align-items:center;justify-content:space-between;
-    padding:18px 26px 0;font-size:14px;font-weight:600;color:var(--ink);
-    background:var(--cream);
-  }
-  /* installed fullscreen: iOS draws the real one, so drop ours to avoid doubling */
-  @media (display-mode: standalone){
-    .status{display:none;}
-    .s1scroll{top:14px !important;}
-  }
+  /* no fake time/wifi/battery — the phone draws the real ones */
+  .status{display:none !important;}
   .status .time{font-size:16px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
   .status .moon{font-size:14px;}
   .status .right{display:flex;align-items:center;gap:7px;}
@@ -100,7 +91,7 @@
   .progrow .frac{font-size:10px;white-space:nowrap;color:var(--ink-dim);margin-top:2px;}
 
   /* scene1 scrolls like the real app */
-  .s1scroll{position:absolute;left:18px;right:18px;top:60px;bottom:58px;scrollbar-width:none;
+  .s1scroll{position:absolute;left:18px;right:18px;top:16px;bottom:58px;scrollbar-width:none;
     overflow-y:auto;-webkit-overflow-scrolling:touch;pointer-events:auto;padding-bottom:14px;}
   .s1scroll::-webkit-scrollbar{display:none;}
   .bigrow{display:flex;align-items:baseline;gap:8px;}
@@ -248,21 +239,23 @@
   .mp .scene{opacity:1;transform:none;}
 </style>
 <style id="fsmode">
-  html,body{height:100%;margin:0;background:#000;overflow:hidden;}
+  /* cream fills the whole screen edge to edge — never let black show through */
+  html,body{height:100%;margin:0;background:var(--cream) !important;overflow:hidden;}
   body{display:block !important;}
   .pghead,.board{display:none !important;}
   .page{max-width:none !important;margin:0 !important;padding:0 !important;}
   .hero{display:block !important;margin:0 !important;}
   .hero .phone{width:100vw !important;height:100vh !important;height:100dvh !important;
-    border-radius:0 !important;padding:0 !important;box-shadow:none !important;background:#000 !important;}
-  .hero .screen{border-radius:0 !important;width:100% !important;height:100% !important;}
+    border-radius:0 !important;padding:0 !important;box-shadow:none !important;
+    background:var(--cream) !important;}
+  .hero .screen{border-radius:0 !important;width:100% !important;height:100% !important;
+    background:var(--cream) !important;}
   .notch{display:none !important;}
   .replay{display:none !important;}
-  /* installed-as-app: real iOS status bar + safe areas, hide the fake bar */
+  /* installed-as-app: inset content past the notch/home indicator, but keep the fill cream */
   @media (display-mode: standalone){
-    html,body{background:#000;}
-    .hero .phone{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom) !important;background:#000 !important;}
-    .status{display:none !important;}
+    .hero .phone{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom) !important;
+      background:var(--cream) !important;}
   }
 </style>
 </head>
@@ -392,6 +385,7 @@ const CONCEPTS = {
     {nm:"Nature",      ct:60,  cover:T+"template/nature-1.svg"},
     {nm:"Friends",     ct:51,  cover:T+"template/friends-1.svg"},
   ]},
+  /* every concept is exactly 6 albums so the grid stays 1:1 with the real app */
   countries: { total:18432, start:2140, albums:[
     {nm:"Japan",     ct:312, cover:T+"travel/japan.jpg"},
     {nm:"France",    ct:248, cover:T+"travel/paris.jpg"},
@@ -399,17 +393,12 @@ const CONCEPTS = {
     {nm:"Thailand",  ct:184, cover:T+"travel/thailand.jpg"},
     {nm:"Peru",      ct:143, cover:T+"travel/peru.jpg"},
     {nm:"Australia", ct:97,  cover:T+"travel/sydney.jpg"},
-    {nm:"Taiwan",    ct:88,  cover:T+"travel/taiwan.jpg"},
-    {nm:"Hawaii",    ct:76,  cover:T+"travel/hawaii.jpg"},
-    {nm:"Amsterdam", ct:64,  cover:T+"travel/amsterdam.jpg"},
-    {nm:"Sedona",    ct:51,  cover:T+"travel/sedona.jpg"},
   ]},
   gym: { total:9840, start:1206, albums:[
     {nm:"Progress Pics", ct:284, cover:T+"gym/progress.jpg"},
     {nm:"Mirror Selfies",ct:212, cover:T+"gym/mirror.jpg"},
     {nm:"Back Day",      ct:143, cover:T+"gym/back.jpg"},
     {nm:"Leg Day",       ct:128, cover:T+"gym/glutes.jpg"},
-    {nm:"Arms",          ct:96,  cover:T+"gym/arms.jpg"},
     {nm:"Meals",         ct:174, cover:T+"gym/meals.jpg"},
     {nm:"Weigh-Ins",     ct:67,  cover:T+"gym/weight.jpg"},
   ]},
@@ -419,9 +408,7 @@ const CONCEPTS = {
     {nm:"Late Nights", ct:92,  cover:T+"evidence/late-nights.jpg"},
     {nm:"Call Logs",   ct:67,  cover:T+"evidence/call-log.jpg"},
     {nm:"Locations",   ct:58,  cover:T+"evidence/locations.jpg"},
-    {nm:"Receipts",    ct:41,  cover:T+"evidence/receipts.jpg"},
     {nm:"Her",         ct:23,  cover:T+"evidence/her.jpg"},
-    {nm:"Hotels",      ct:14,  cover:T+"evidence/hotels.jpg"},
   ]},
 };
 const CONCEPT = CONCEPTS[new URLSearchParams(location.search).get('c')] || CONCEPTS.standard;

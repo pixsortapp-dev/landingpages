@@ -29,9 +29,7 @@
   .screen{position:relative;width:100%;height:100%;border-radius:42px;overflow:hidden;background:var(--cream);}
   .notch{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:108px;height:30px;
     background:#0a0a0c;border-radius:18px;z-index:60;}
-  .status{position:absolute;top:0;left:0;right:0;height:54px;z-index:55;display:flex;align-items:center;
-    justify-content:space-between;padding:18px 26px 0;font-size:14px;font-weight:600;color:var(--ink);}
-  @media (display-mode: standalone){ .status{display:none;} .pad{padding-top:18px !important;} }
+  .status{display:none !important;}
   .status.light{color:#fff;}
   .status .right{display:flex;align-items:center;gap:6px;font-size:12px;}
   .batt{border:1.4px solid currentColor;border-radius:3px;width:22px;height:11px;position:relative;display:inline-block;}
@@ -41,7 +39,7 @@
   .scene{position:absolute;inset:0;opacity:0;transform:translateY(8px);
     transition:opacity .4s ease, transform .45s ease;pointer-events:none;}
   .scene.show{opacity:1;transform:none;}
-  .pad{padding:62px 18px 0;}
+  .pad{padding:20px 18px 0;}
 
   /* ===== messy collections (full-bleed photo wall) ===== */
   .wall{position:absolute;inset:0;display:grid;grid-template-columns:repeat(5,1fr);gap:3px;}
@@ -183,23 +181,22 @@
   .mp .scene{opacity:1;transform:none;}
 </style>
 <style id="fsmode">
-  html,body{height:100%;margin:0;background:#000;overflow:hidden;}
+  /* cream fills the whole screen edge to edge — never let black show through */
+  html,body{height:100%;margin:0;background:var(--cream) !important;overflow:hidden;}
   body{display:block !important;}
   .pghead,.board{display:none !important;}
   .page{max-width:none !important;margin:0 !important;padding:0 !important;}
   .hero{display:block !important;margin:0 !important;}
   .hero .phone{width:100vw !important;height:100vh !important;height:100dvh !important;
-    border-radius:0 !important;padding:0 !important;box-shadow:none !important;background:#000 !important;}
-  .hero .screen{border-radius:0 !important;width:100% !important;height:100% !important;}
+    border-radius:0 !important;padding:0 !important;box-shadow:none !important;
+    background:var(--cream) !important;}
+  .hero .screen{border-radius:0 !important;width:100% !important;height:100% !important;
+    background:var(--cream) !important;}
   .notch{display:none !important;}
   .replay{display:none !important;}
-  /* installed-as-app: real iOS status bar + safe areas, hide the fake bar */
   @media (display-mode: standalone){
-    html,body{background:#000;}
-    .hero .phone{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom) !important;background:#000 !important;}
-    .status{position:absolute;top:0;left:0;right:0;height:54px;z-index:55;display:flex;align-items:center;
-    justify-content:space-between;padding:18px 26px 0;font-size:14px;font-weight:600;color:var(--ink);}
-  @media (display-mode: standalone){ .status{display:none;} .pad{padding-top:18px !important;} }
+    .hero .phone{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom) !important;
+      background:var(--cream) !important;}
   }
 </style>
 </head>
