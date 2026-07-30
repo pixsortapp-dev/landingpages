@@ -131,23 +131,57 @@
   </div>
 
 <script>
-/* ================= TEMPLATE CONFIG =================
-   Swap this block per concept / per creator.
-   tile paths point at assets/template/ placeholders —
-   replace with a creator's real photos for their version. */
-const TOTAL_PHOTOS = 18432;
-const ALBUM_COUNT  = 12;
-const SCAN_STATES  = ["Scanning","Finding people","Finding places","Finding moments"];
-const DISCOVERIES  = [
-  {label:"Dogs",        count:382, tile:"assets/template/dogs-1.svg"},
-  {label:"Beaches",     count:91,  tile:"assets/template/beaches-1.svg"},
-  {label:"Hotels",      count:56,  tile:"assets/template/hotels-1.svg"},
-  {label:"Restaurants", count:247, tile:"assets/template/restaurants-1.svg"},
-  {label:"Receipts",    count:63,  tile:"assets/template/receipts-1.svg"},
-  {label:"Sunsets",     count:129, tile:"assets/template/sunset-1.svg"},
-  {label:"Italy",       count:214, tile:"assets/template/italy-1.svg"},
-];
-/* =================================================== */
+/* ================= CONCEPT REGISTRY =================
+   One page, many use cases. Pick with ?c=<name> in the URL
+   (e.g. pixsort_app_scan.html?c=evidence). Default: standard.
+   Add a concept = add an entry. Creator packs = swap tile paths. */
+const CONCEPTS = {
+  standard: {
+    total: 18432, albums: 12,
+    states: ["Scanning","Finding people","Finding places","Finding moments"],
+    discoveries: [
+      {label:"Dogs",        count:382, tile:"assets/template/dogs-1.svg"},
+      {label:"Beaches",     count:91,  tile:"assets/template/beaches-1.svg"},
+      {label:"Hotels",      count:56,  tile:"assets/template/hotels-1.svg"},
+      {label:"Restaurants", count:247, tile:"assets/template/restaurants-1.svg"},
+      {label:"Receipts",    count:63,  tile:"assets/template/receipts-1.svg"},
+      {label:"Sunsets",     count:129, tile:"assets/template/sunset-1.svg"},
+      {label:"Italy",       count:214, tile:"assets/template/italy-1.svg"},
+    ],
+  },
+  evidence: {
+    total: 2431, albums: 8,
+    states: ["Scanning","Finding screenshots","Finding places","Finding people"],
+    discoveries: [
+      {label:"Screenshots", count:247, tile:"assets/evidence/screenshots.jpg"},
+      {label:"DMs",         count:134, tile:"assets/evidence/dms.jpg"},
+      {label:"Late Nights", count:92,  tile:"assets/evidence/late-nights.jpg"},
+      {label:"Call Logs",   count:67,  tile:"assets/evidence/call-log.jpg"},
+      {label:"Locations",   count:58,  tile:"assets/evidence/locations.jpg"},
+      {label:"Receipts",    count:41,  tile:"assets/evidence/receipts.jpg"},
+      {label:"Her",         count:23,  tile:"assets/evidence/her.jpg"},
+      {label:"Hotels",      count:14,  tile:"assets/evidence/hotels.jpg"},
+    ],
+  },
+  calledout: {
+    total: 14208, albums: 10,
+    states: ["Scanning","Finding habits","Finding patterns","Judging you"],
+    discoveries: [
+      {label:"Screenshots You Never Opened", count:1204, tile:"assets/template/screenshots-1.svg"},
+      {label:"Food You Photographed First",  count:462,  tile:"assets/template/food-1.svg"},
+      {label:"Gym Check-Ins",                count:87,   tile:"assets/template/fitness-1.svg"},
+      {label:"The Same Selfie",              count:212,  tile:"assets/template/selfie-1.svg"},
+      {label:"Sunsets You Never Posted",     count:143,  tile:"assets/template/sunset-1.svg"},
+      {label:"Receipts",                     count:319,  tile:"assets/template/receipts-1.svg"},
+    ],
+  },
+};
+const CONCEPT = CONCEPTS[new URLSearchParams(location.search).get('c')] || CONCEPTS.standard;
+const TOTAL_PHOTOS = CONCEPT.total;
+const ALBUM_COUNT  = CONCEPT.albums;
+const SCAN_STATES  = CONCEPT.states;
+const DISCOVERIES  = CONCEPT.discoveries;
+/* ==================================================== */
 
 /* pool of images the scanner flips through (creator versions: swap for real photos) */
 const SCAN_POOL=["travel","food","fitness","selfie","screenshots","sunset"]
