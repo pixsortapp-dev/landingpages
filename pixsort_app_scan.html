@@ -189,8 +189,8 @@ function play(){
   $('stateTxt').textContent=SCAN_STATES[0];
   $('stateline').style.opacity='1';
 
-  const ROW_GAP=900;               // ms between discoveries
-  const SCAN_LEAD=1600;            // scanning beat before first find
+  const ROW_GAP=800;               // ms between discoveries
+  const SCAN_LEAD=600;             // scanning beat before first find
   const TOTAL_DUR=SCAN_LEAD+DISCOVERIES.length*ROW_GAP+600;
 
   // scanner card flips through photos the whole time (the "AI looking" visual)
