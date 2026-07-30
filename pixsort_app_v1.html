@@ -497,7 +497,7 @@ function runCluster(){
 // ---------- tap-driven: each tap advances one screen ----------
 let timers=[];
 function t(fn,ms){timers.push(setTimeout(fn,ms));}
-const ORDER=['s1','s2','s3','s4'];
+const ORDER=['s1','s2','s3'];
 let idx=0;
 function go(id){
   timers.forEach(clearTimeout);timers=[];
@@ -506,7 +506,6 @@ function go(id){
   setScene(id);
   if(id==='s1'){ resetSort(); t(()=>animateSort(2300, ()=>$('pushcta').classList.add('up')), 250); }
   if(id==='s2'){ runCluster(); }
-  if(id==='s4'){ ph.style.transition='none';ph.style.transform='none';ph.scrollTop=0; }
 }
 function forward(){
   if(ORDER[idx]==='s2'){ const b=$('syncbtn'); b.classList.add('press'); setTimeout(()=>b.classList.remove('press'),150); }
