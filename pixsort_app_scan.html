@@ -22,27 +22,48 @@
     padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
     display:flex;flex-direction:column;}
 
-  .sb{flex:0 0 auto;height:46px;display:flex;align-items:center;justify-content:space-between;
-    padding:14px 26px 0;font-size:14px;font-weight:600;}
-  .sb .r{display:flex;align-items:center;gap:6px;font-size:12px;}
-  .batt{border:1.4px solid var(--ink);border-radius:3px;width:22px;height:11px;position:relative;display:inline-block;}
-  .batt::after{content:"";position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:78%;background:var(--ink);border-radius:1px;}
-  .batt::before{content:"";position:absolute;right:-3px;top:3px;height:5px;width:2px;background:var(--ink);border-radius:1px;}
+  .sb{flex:0 0 auto;height:47px;display:flex;align-items:center;justify-content:space-between;
+    padding:15px 12px 0 30px;}
+  .sb .time{font-size:16px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
+  .sb .r{display:flex;align-items:center;gap:7px;padding-right:14px;}
+  .sig{display:flex;align-items:flex-end;gap:1.5px;height:11px;}
+  .sig i{width:3px;border-radius:1px;background:var(--ink);display:block;}
+  .sig i:nth-child(1){height:4px;} .sig i:nth-child(2){height:6px;}
+  .sig i:nth-child(3){height:8.5px;} .sig i:nth-child(4){height:11px;}
+  .battp{position:relative;width:27px;height:13px;border-radius:4px;background:rgba(43,41,38,.28);
+    display:flex;align-items:center;justify-content:center;}
+  .battp::after{content:"";position:absolute;right:-3.5px;top:4px;height:5px;width:2px;
+    background:rgba(43,41,38,.35);border-radius:0 2px 2px 0;}
+  .battp b{font-size:10.5px;font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1;}
 
   /* header: brand + big counter */
-  .head{flex:0 0 auto;text-align:center;padding:18px 24px 6px;}
+  .head{flex:0 0 auto;text-align:center;padding:10px 24px 4px;}
   .brand{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:800;letter-spacing:-.01em;}
   .brand img{width:24px;height:24px;border-radius:7px;}
   .stateline{margin-top:10px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
     color:var(--gold-d);font-weight:700;min-height:17px;}
   .stateline .dots::after{content:"";animation:d 1.2s steps(4) infinite;}
   @keyframes d{0%{content:""}25%{content:"."}50%{content:".."}75%{content:"..."}}
-  .bignum{font-size:48px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-top:4px;
+  /* live scanner: photo card flipping under a scan line */
+  .scanner{position:relative;width:96px;height:96px;margin:8px auto 0;}
+  .scanner .flip{position:absolute;inset:6px;border-radius:16px;background:#ddd center/cover;
+    border:3px solid #fff;box-shadow:0 10px 26px rgba(0,0,0,.18);}
+  .scanner .line{position:absolute;left:2px;right:2px;height:3px;border-radius:2px;z-index:3;
+    background:linear-gradient(90deg,transparent,var(--gold) 18%,#ffe9b8 50%,var(--gold) 82%,transparent);
+    box-shadow:0 0 14px rgba(191,160,92,.75);animation:sweep 1.15s ease-in-out infinite alternate;}
+  @keyframes sweep{from{top:6px;}to{top:calc(100% - 9px);}}
+  .scanner .br{position:absolute;width:20px;height:20px;border:3px solid var(--gold-d);z-index:2;}
+  .scanner .br.tl{top:-3px;left:-3px;border-right:none;border-bottom:none;border-radius:7px 0 0 0;}
+  .scanner .br.tr{top:-3px;right:-3px;border-left:none;border-bottom:none;border-radius:0 7px 0 0;}
+  .scanner .br.bl{bottom:-3px;left:-3px;border-right:none;border-top:none;border-radius:0 0 0 7px;}
+  .scanner .br.br2{bottom:-3px;right:-3px;border-left:none;border-top:none;border-radius:0 0 7px 0;}
+
+  .bignum{font-size:28px;font-weight:800;letter-spacing:-.02em;line-height:1.05;margin-top:8px;
     font-variant-numeric:tabular-nums;}
-  .bigsub{font-size:14px;color:var(--ink-dim);font-weight:600;margin-top:2px;}
+  .bignum small{font-size:15px;font-weight:600;color:var(--ink-dim);letter-spacing:0;margin-left:5px;}
 
   /* scan shimmer bar */
-  .scanbar{margin:12px auto 0;width:210px;height:6px;border-radius:5px;background:#e4dccb;overflow:hidden;position:relative;}
+  .scanbar{margin:9px auto 0;width:210px;height:6px;border-radius:5px;background:#e4dccb;overflow:hidden;position:relative;}
   .scanbar i{position:absolute;inset:0;border-radius:5px;background:var(--gold);width:0;}
   .scanbar::after{content:"";position:absolute;inset:0;
     background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);
@@ -51,13 +72,13 @@
   .divider{width:56px;height:1.5px;background:var(--line);margin:13px auto 0;}
 
   /* discovery feed */
-  .feed{flex:1 1 auto;overflow:hidden;padding:11px 24px 6px;display:flex;flex-direction:column;gap:8px;}
-  .row{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:15px;padding:8px 13px;
+  .feed{flex:1 1 auto;overflow:hidden;padding:9px 24px 4px;display:flex;flex-direction:column;gap:7px;}
+  .row{display:flex;align-items:center;gap:11px;background:var(--card);border-radius:14px;padding:7px 12px;
     box-shadow:0 6px 16px rgba(120,100,60,.08);
     opacity:0;transform:translateY(14px) scale(.94);}
   .row.in{animation:land .5s cubic-bezier(.2,.9,.3,1.25) forwards;}
   @keyframes land{60%{opacity:1;transform:translateY(-3px) scale(1.02);}100%{opacity:1;transform:none;}}
-  .row .th{width:40px;height:40px;border-radius:11px;background:#ddd center/cover;flex:0 0 auto;
+  .row .th{width:37px;height:37px;border-radius:11px;background:#ddd center/cover;flex:0 0 auto;
     border:1.5px solid #fff;box-shadow:0 3px 9px rgba(0,0,0,.14);}
   .row .tx{flex:1;}
   .row .t1{font-size:15px;font-weight:700;letter-spacing:-.01em;}
@@ -81,17 +102,24 @@
 <body>
   <div class="app" id="app">
     <div class="sb">
-      <span>9:41</span>
-      <span class="r">•••&nbsp;<svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 1C5 1 2.6 2 1 3.6l7 6.4 7-6.4C13.4 2 11 1 8 1Z" fill="#2b2926" opacity=".9"/></svg><span class="batt"></span></span>
+      <span class="time">11:56</span>
+      <span class="r">
+        <span class="sig"><i></i><i></i><i></i><i></i></span>
+        <svg width="17" height="12" viewBox="0 0 17 12" aria-hidden="true"><path d="M8.5 2.4c2.2 0 4.2.8 5.8 2.2.2.15.48.14.66-.04l1-1a.46.46 0 0 0-.02-.68A11.4 11.4 0 0 0 8.5 0C5.65 0 3.05 1.05 1.06 2.88a.46.46 0 0 0-.02.68l1 1c.18.18.46.19.66.04A8.9 8.9 0 0 1 8.5 2.4Zm0 3.9c1.2 0 2.3.44 3.15 1.17.2.16.48.15.66-.03l1-1a.46.46 0 0 0-.03-.69A7.5 7.5 0 0 0 8.5 4.05c-1.8 0-3.45.63-4.78 1.7a.46.46 0 0 0-.03.69l1 1c.18.18.47.19.66.03A4.9 4.9 0 0 1 8.5 6.3Zm2.1 3.06a.47.47 0 0 0 0-.72 3.4 3.4 0 0 0-4.2 0 .47.47 0 0 0 0 .72l1.77 1.77c.18.18.48.18.66 0l1.77-1.77Z" fill="#2b2926"/></svg>
+        <span class="battp"><b>95</b></span>
+      </span>
     </div>
 
     <div class="head">
       <div class="brand"><img src="assets/pixsort-icon.jpeg" alt="">PixSort</div>
       <div class="stateline" id="stateline"><span id="stateTxt">Scanning</span><span class="dots"></span></div>
-      <div class="bignum" id="bignum">0</div>
-      <div class="bigsub">photos</div>
+      <div class="scanner">
+        <div class="br tl"></div><div class="br tr"></div><div class="br bl"></div><div class="br br2"></div>
+        <div class="flip" id="flip"></div>
+        <div class="line"></div>
+      </div>
+      <div class="bignum"><span id="bignum">0</span><small>photos</small></div>
       <div class="scanbar"><i id="scanfill"></i></div>
-      <div class="divider"></div>
     </div>
 
     <div class="feed" id="feed"></div>
@@ -121,6 +149,11 @@ const DISCOVERIES  = [
 ];
 /* =================================================== */
 
+/* pool of images the scanner flips through (creator versions: swap for real photos) */
+const SCAN_POOL=["travel","food","fitness","selfie","screenshots","sunset"]
+  .flatMap(c=>[1,2,3].map(v=>`assets/template/${c}-${v}.svg`))
+  .concat(DISCOVERIES.map(d=>d.tile));
+
 const $=id=>document.getElementById(id);
 const feed=$('feed');
 
@@ -136,7 +169,7 @@ feed.innerHTML=DISCOVERIES.map(d=>`
   </div>`).join('');
 const rows=[...feed.children];
 
-let timers=[],rafs=[];
+let timers=[],rafs=[],flipTimer=null;
 const t=(fn,ms)=>timers.push(setTimeout(fn,ms));
 function countUp(el,target,dur,fmt){
   const start=performance.now();
@@ -149,6 +182,7 @@ function countUp(el,target,dur,fmt){
 
 function play(){
   timers.forEach(clearTimeout);timers=[];rafs.forEach(cancelAnimationFrame);rafs=[];
+  clearInterval(flipTimer);
   rows.forEach(r=>{r.classList.remove('in');r.querySelector('.cnt').textContent='0';});
   $('done').classList.remove('in');
   $('scanfill').style.transition='none';$('scanfill').style.width='0';
@@ -159,6 +193,15 @@ function play(){
   const SCAN_LEAD=1600;            // scanning beat before first find
   const TOTAL_DUR=SCAN_LEAD+DISCOVERIES.length*ROW_GAP+600;
 
+  // scanner card flips through photos the whole time (the "AI looking" visual)
+  let k=Math.floor(Math.random()*SCAN_POOL.length), hold=0;
+  $('flip').style.backgroundImage=`url('${SCAN_POOL[k]}')`;
+  flipTimer=setInterval(()=>{
+    if(hold>0){hold--;return;}                 // pause on a found tile for a beat
+    k=(k+1)%SCAN_POOL.length;
+    $('flip').style.backgroundImage=`url('${SCAN_POOL[k]}')`;
+  },90);
+
   // big counter + progress fill run across the whole scan
   countUp($('bignum'),TOTAL_PHOTOS,TOTAL_DUR,n=>n.toLocaleString());
   requestAnimationFrame(()=>{ $('scanfill').style.transition=`width ${TOTAL_DUR}ms linear`; $('scanfill').style.width='100%'; });
@@ -166,15 +209,17 @@ function play(){
   // rotate the scanning state line
   SCAN_STATES.forEach((s,i)=>t(()=>{$('stateTxt').textContent=s;}, i*Math.floor(TOTAL_DUR/SCAN_STATES.length)));
 
-  // discoveries land one by one, counts tick
+  // discoveries land one by one; the scanner locks onto the found tile for a beat
   DISCOVERIES.forEach((d,i)=>t(()=>{
+    $('flip').style.backgroundImage=`url('${d.tile}')`; hold=5;
     const r=rows[i];
     r.classList.add('in');
     countUp(r.querySelector('.cnt'),d.count,650,n=>n.toLocaleString());
   }, SCAN_LEAD+i*ROW_GAP));
 
-  // done
+  // done — scanner stops on the last find
   t(()=>{
+    clearInterval(flipTimer);
     $('stateline').style.opacity='0';
     $('doneSum').textContent=TOTAL_PHOTOS.toLocaleString()+" photos → "+ALBUM_COUNT+" albums";
     $('done').classList.add('in');
