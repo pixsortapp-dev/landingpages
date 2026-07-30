@@ -126,10 +126,10 @@
   .acard .ct{font-size:13px;color:var(--ink-faint);font-variant-numeric:tabular-nums;}
 
   /* flying photo thumbnails (the sort) */
-  .flyer{position:absolute;width:44px;height:44px;border-radius:9px;
-    background-size:cover;background-position:center;z-index:45;
-    box-shadow:0 8px 18px rgba(0,0,0,.28);will-change:transform,opacity;
-    border:2px solid #fff;}
+  .flyer{position:absolute;width:46px;height:46px;border-radius:10px;
+    background-size:cover;background-position:center;z-index:50;pointer-events:none;
+    box-shadow:0 10px 22px rgba(0,0,0,.3);will-change:transform,opacity;
+    border:2.5px solid #fff;}
 
   /* push CTA (rises after sort completes) */
   .pushcta{position:absolute;left:18px;right:18px;bottom:20px;z-index:40;
@@ -456,12 +456,45 @@ function libImg(k){const p=POOLS[k%4];return p[Math.floor(k/4)%p.length];}
    chip updates, the ring creeps past 2%, and album counts tick up.
    No overlays or effects the real app doesn't have. */
 const SORT_START=CONCEPT.start, SORT_TOTAL=CONCEPT.total;
-let sortTimer;
+let sortTimer, flyTimer, flyers=[];
 const fmt=n=>n.toLocaleString();
+
+/* photos physically fly from the "Sorting photos" card into their album */
+function center(el,host){const r=el.getBoundingClientRect();return {x:r.left-host.left+r.width/2,y:r.top-host.top+r.height/2};}
+const stage=document.querySelector('.hero .screen');
+function spawnFlyer(i){
+  const card=gridCards[i]; if(!card) return;
+  const host=stage.getBoundingClientRect();
+  const srcEl=s1.querySelector('.vidthumb')||s1.querySelector('.sortcard');
+  const thumb=card.querySelector('.thumb');
+  if(!srcEl||!thumb) return;
+  const tr=thumb.getBoundingClientRect();
+  // skip albums scrolled out of view
+  if(tr.bottom<host.top+40||tr.top>host.bottom-20) return;
+  const srcC=center(srcEl,host), tgtC=center(thumb,host);
+  const f=document.createElement('div');f.className='flyer';
+  f.style.backgroundImage=`url('${ALBUMS[i].cover}')`;
+  f.style.left=(srcC.x-23)+'px';f.style.top=(srcC.y-23)+'px';
+  stage.appendChild(f);flyers.push(f);
+  const dx=tgtC.x-srcC.x, dy=tgtC.y-srcC.y;
+  const anim=f.animate([
+    {transform:'translate(0,0) scale(.55) rotate(-6deg)', opacity:0},
+    {transform:`translate(${dx*0.15}px,${dy*0.15}px) scale(1) rotate(-2deg)`, opacity:1, offset:0.18},
+    {transform:`translate(${dx*0.85}px,${dy*0.85}px) scale(.95) rotate(4deg)`, opacity:1, offset:0.8},
+    {transform:`translate(${dx}px,${dy}px) scale(.25) rotate(8deg)`, opacity:0}
+  ],{duration:620, easing:'cubic-bezier(.4,0,.35,1)', fill:'forwards'});
+  setTimeout(()=>card.animate([{transform:'scale(1)'},{transform:'scale(1.045)'},{transform:'scale(1)'}],{duration:260,easing:'ease-out'}),540);
+  const kill=()=>{f.remove();flyers=flyers.filter(x=>x!==f);};
+  anim.onfinish=kill; setTimeout(kill,1500);   // guaranteed cleanup
+}
+
 function animateSort(){
-  clearInterval(sortTimer);
+  clearInterval(sortTimer);clearInterval(flyTimer);
   let sorted=SORT_START;
   const startCounts=ALBUMS.map(a=>a.ct);
+  // steady stream of photos flying into albums
+  let k=0;
+  flyTimer=setInterval(()=>{ spawnFlyer(k%Math.min(gridCards.length,6)); k++; },180);
   sortTimer=setInterval(()=>{
     // fast sort: big bursts so the numbers visibly rip
     const burst=140+Math.floor(Math.random()*220);
@@ -478,11 +511,12 @@ function animateSort(){
     });
     // clean up badge creeps too
     const b=$('cuBadge'); if(b && Math.random()<0.5) b.textContent=+b.textContent+1+Math.floor(Math.random()*3);
-    if(sorted>=SORT_TOTAL) clearInterval(sortTimer);
+    if(sorted>=SORT_TOTAL){ clearInterval(sortTimer); clearInterval(flyTimer); }
   },220);
 }
 function resetSort(){
-  clearInterval(sortTimer);
+  clearInterval(sortTimer);clearInterval(flyTimer);
+  document.querySelectorAll('.flyer').forEach(f=>f.remove());flyers=[];
   $('sortedNum').textContent=fmt(SORT_START);
   $('plusSort').textContent='+218 sorting…';
   const p0=SORT_START/SORT_TOTAL;
@@ -507,7 +541,8 @@ function go(id){
   idx=ORDER.indexOf(id);
   $('syncbtn').classList.remove('press');
   setScene(id);
-  if(id==='s1'){ resetSort(); t(animateSort, 400); } else { clearInterval(sortTimer); }
+  if(id==='s1'){ resetSort(); t(animateSort, 400); }
+  else { clearInterval(sortTimer);clearInterval(flyTimer);document.querySelectorAll('.flyer').forEach(f=>f.remove());flyers=[]; }
   if(id==='s2'){ runCluster(); }
 }
 function forward(){
