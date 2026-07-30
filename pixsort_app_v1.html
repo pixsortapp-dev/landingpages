@@ -109,9 +109,16 @@
     display:flex;align-items:center;justify-content:center;font-size:20px;flex:0 0 auto;}
   .sortcard .st1{font-size:15px;font-weight:700;letter-spacing:-.01em;}
   .sortcard .st2{font-size:12px;color:var(--ink-dim);margin-top:3px;}
-  .vidthumb{border-radius:14px;background:#ddd center/cover;min-height:70px;
-    box-shadow:0 8px 18px rgba(0,0,0,.14);transform:rotate(1.5deg);
-    clip-path:polygon(2% 1%, 97% 0%, 100% 96%, 1% 99%);}
+  /* stack of photos waiting to be sorted — the source of the flying photos */
+  .stackwrap{display:flex;align-items:center;justify-content:center;min-height:70px;}
+  .stack{position:relative;width:62px;height:62px;}
+  .stack i{position:absolute;inset:0;border-radius:11px;background-size:cover;background-position:center;
+    border:2.5px solid #fff;box-shadow:0 6px 14px rgba(0,0,0,.22);}
+  .stack i:nth-child(1){transform:rotate(-13deg) translate(-7px,3px);}
+  .stack i:nth-child(2){transform:rotate(-7deg) translate(-4px,2px);}
+  .stack i:nth-child(3){transform:rotate(-2deg) translate(-1px,1px);}
+  .stack i:nth-child(4){transform:rotate(4deg) translate(2px,0);}
+  .stack i:last-child{transform:rotate(0deg);}
 
   .createbtn{margin-top:10px;background:var(--gold);color:#fff;text-align:center;
     border-radius:26px;padding:12px;font-size:14px;font-weight:600;letter-spacing:.01em;
@@ -301,7 +308,11 @@
                 <div class="st2">No action needed</div>
               </div>
             </div>
-            <div class="vidthumb" style="background-image:url('assets/template/video-1.svg')"></div>
+            <div class="stackwrap">
+              <div class="stack" id="libStack">
+                <i></i><i></i><i></i><i></i><i></i>
+              </div>
+            </div>
           </div>
 
           <div class="createbtn">+ Create new album</div>
@@ -462,10 +473,19 @@ const fmt=n=>n.toLocaleString();
 /* photos physically fly from the "Sorting photos" card into their album */
 function center(el,host){const r=el.getBoundingClientRect();return {x:r.left-host.left+r.width/2,y:r.top-host.top+r.height/2};}
 const stage=document.querySelector('.hero .screen');
+/* seed the waiting stack with photos, front card = next photo to sort */
+function seedStack(){
+  const L=[...document.querySelectorAll('#libStack i')];
+  L.forEach((el,n)=>el.style.backgroundImage=`url('${ALBUMS[(n+2)%ALBUMS.length].cover}')`);
+}
+function showOnStack(i){
+  const front=document.querySelector('#libStack i:last-child');
+  if(front) front.style.backgroundImage=`url('${ALBUMS[i].cover}')`;
+}
 function spawnFlyer(i){
   const card=gridCards[i]; if(!card) return;
   const host=stage.getBoundingClientRect();
-  const srcEl=s1.querySelector('.vidthumb')||s1.querySelector('.sortcard');
+  const srcEl=document.getElementById('libStack')||s1.querySelector('.sortcard');
   const thumb=card.querySelector('.thumb');
   if(!srcEl||!thumb) return;
   const tr=thumb.getBoundingClientRect();
@@ -492,9 +512,15 @@ function animateSort(){
   clearInterval(sortTimer);clearInterval(flyTimer);
   let sorted=SORT_START;
   const startCounts=ALBUMS.map(a=>a.ct);
-  // steady stream of photos flying into albums
+  // steady stream: photo surfaces on the stack, then flies to its album
   let k=0;
-  flyTimer=setInterval(()=>{ spawnFlyer(k%Math.min(gridCards.length,6)); k++; },180);
+  seedStack();
+  flyTimer=setInterval(()=>{
+    const i=k%Math.min(gridCards.length,6);
+    showOnStack(i);                              // you see the photo…
+    setTimeout(()=>{ spawnFlyer(i); showOnStack((i+1)%Math.min(gridCards.length,6)); },150); // …then it moves to its place
+    k++;
+  },320);
   sortTimer=setInterval(()=>{
     // fast sort: big bursts so the numbers visibly rip
     const burst=140+Math.floor(Math.random()*220);
@@ -517,6 +543,7 @@ function animateSort(){
 function resetSort(){
   clearInterval(sortTimer);clearInterval(flyTimer);
   document.querySelectorAll('.flyer').forEach(f=>f.remove());flyers=[];
+  seedStack();
   $('sortedNum').textContent=fmt(SORT_START);
   $('plusSort').textContent='+218 sorting…';
   const p0=SORT_START/SORT_TOTAL;
