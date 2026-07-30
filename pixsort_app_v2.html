@@ -31,6 +31,7 @@
     background:#0a0a0c;border-radius:18px;z-index:60;}
   .status{position:absolute;top:0;left:0;right:0;height:54px;z-index:55;display:flex;align-items:center;
     justify-content:space-between;padding:18px 26px 0;font-size:14px;font-weight:600;color:var(--ink);}
+  @media (display-mode: standalone){ .status{display:none;} .pad{padding-top:18px !important;} }
   .status.light{color:#fff;}
   .status .right{display:flex;align-items:center;gap:6px;font-size:12px;}
   .batt{border:1.4px solid currentColor;border-radius:3px;width:22px;height:11px;position:relative;display:inline-block;}
@@ -196,7 +197,9 @@
   @media (display-mode: standalone){
     html,body{background:#000;}
     .hero .phone{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom) !important;background:#000 !important;}
-    .status{display:none !important;}
+    .status{position:absolute;top:0;left:0;right:0;height:54px;z-index:55;display:flex;align-items:center;
+    justify-content:space-between;padding:18px 26px 0;font-size:14px;font-weight:600;color:var(--ink);}
+  @media (display-mode: standalone){ .status{display:none;} .pad{padding-top:18px !important;} }
   }
 </style>
 </head>

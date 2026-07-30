@@ -24,6 +24,7 @@
 
   .sb{flex:0 0 auto;height:47px;display:flex;align-items:center;justify-content:space-between;
     padding:15px 12px 0 30px;}
+  @media (display-mode: standalone){ .sb{display:none;} }
   .sb .time{font-size:16px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
   .sb .r{display:flex;align-items:center;gap:7px;padding-right:14px;}
   .sig{display:flex;align-items:flex-end;gap:1.5px;height:11px;}
@@ -72,7 +73,10 @@
   .divider{width:56px;height:1.5px;background:var(--line);margin:13px auto 0;}
 
   /* discovery feed */
-  .feed{flex:1 1 auto;overflow:hidden;padding:9px 24px 4px;display:flex;flex-direction:column;gap:7px;}
+  .feed{flex:1 1 auto;overflow-y:auto;scrollbar-width:none;padding:9px 24px 4px;
+    display:flex;flex-direction:column;gap:7px;}
+  .feed::-webkit-scrollbar{display:none;}
+  .row{flex:0 0 auto;}
   .row{display:flex;align-items:center;gap:11px;background:var(--card);border-radius:14px;padding:7px 12px;
     box-shadow:0 6px 16px rgba(120,100,60,.08);
     opacity:0;transform:translateY(14px) scale(.94);}
@@ -137,16 +141,51 @@
    Add a concept = add an entry. Creator packs = swap tile paths. */
 const CONCEPTS = {
   standard: {
-    total: 18432, albums: 12,
-    states: ["Scanning","Finding people","Finding places","Finding moments"],
+    total: 18432, albums: 16,
+    states: ["Scanning","Finding people","Finding places","Finding food","Finding moments"],
     discoveries: [
       {label:"Dogs",        count:382, tile:"assets/template/dogs-1.svg"},
-      {label:"Beaches",     count:91,  tile:"assets/template/beaches-1.svg"},
+      {label:"Beaches",     count:91,  tile:"assets/travel/hawaii.jpg"},
       {label:"Hotels",      count:56,  tile:"assets/template/hotels-1.svg"},
       {label:"Restaurants", count:247, tile:"assets/template/restaurants-1.svg"},
       {label:"Receipts",    count:63,  tile:"assets/template/receipts-1.svg"},
       {label:"Sunsets",     count:129, tile:"assets/template/sunset-1.svg"},
-      {label:"Italy",       count:214, tile:"assets/template/italy-1.svg"},
+      {label:"Selfies",     count:318, tile:"assets/template/selfie-1.svg"},
+      {label:"Screenshots", count:1204,tile:"assets/template/screenshots-1.svg"},
+      {label:"Gym",         count:187, tile:"assets/template/fitness-1.svg"},
+      {label:"Waterfalls",  count:74,  tile:"assets/travel/bali.jpg"},
+      {label:"Temples",     count:143, tile:"assets/travel/thailand.jpg"},
+      {label:"Japan",       count:312, tile:"assets/travel/japan.jpg"},
+      {label:"France",      count:248, tile:"assets/travel/paris.jpg"},
+    ],
+  },
+  countries: {
+    total: 18432, albums: 10,
+    states: ["Scanning","Reading locations","Grouping by country","Finding trips"],
+    discoveries: [
+      {label:"Japan",     count:312, tile:"assets/travel/japan.jpg"},
+      {label:"France",    count:248, tile:"assets/travel/paris.jpg"},
+      {label:"Bali",      count:206, tile:"assets/travel/bali.jpg"},
+      {label:"Thailand",  count:184, tile:"assets/travel/thailand.jpg"},
+      {label:"Peru",      count:143, tile:"assets/travel/peru.jpg"},
+      {label:"Australia", count:97,  tile:"assets/travel/sydney.jpg"},
+      {label:"Taiwan",    count:88,  tile:"assets/travel/taiwan.jpg"},
+      {label:"Hawaii",    count:76,  tile:"assets/travel/hawaii.jpg"},
+      {label:"Amsterdam", count:64,  tile:"assets/travel/amsterdam.jpg"},
+      {label:"Sedona",    count:51,  tile:"assets/travel/sedona.jpg"},
+    ],
+  },
+  gym: {
+    total: 9840, albums: 7,
+    states: ["Scanning","Finding workouts","Finding progress","Finding meals"],
+    discoveries: [
+      {label:"Progress Pics",  count:284, tile:"assets/gym/progress.jpg"},
+      {label:"Mirror Selfies", count:212, tile:"assets/gym/mirror.jpg"},
+      {label:"Back Day",       count:143, tile:"assets/gym/back.jpg"},
+      {label:"Leg Day",        count:128, tile:"assets/gym/glutes.jpg"},
+      {label:"Arms",           count:96,  tile:"assets/gym/arms.jpg"},
+      {label:"Meals",          count:174, tile:"assets/gym/meals.jpg"},
+      {label:"Weigh-Ins",      count:67,  tile:"assets/gym/weight.jpg"},
     ],
   },
   evidence: {
@@ -218,6 +257,7 @@ function play(){
   timers.forEach(clearTimeout);timers=[];rafs.forEach(cancelAnimationFrame);rafs=[];
   clearInterval(flipTimer);
   rows.forEach(r=>{r.classList.remove('in');r.querySelector('.cnt').textContent='0';});
+  feed.scrollTop=0;
   $('done').classList.remove('in');
   $('scanfill').style.transition='none';$('scanfill').style.width='0';
   $('stateTxt').textContent=SCAN_STATES[0];
@@ -249,6 +289,7 @@ function play(){
     const r=rows[i];
     r.classList.add('in');
     countUp(r.querySelector('.cnt'),d.count,650,n=>n.toLocaleString());
+    feed.scrollTop=feed.scrollHeight;   // keep the newest find in view
   }, SCAN_LEAD+i*ROW_GAP));
 
   // done — scanner stops on the last find
