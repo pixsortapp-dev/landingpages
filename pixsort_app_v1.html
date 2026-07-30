@@ -57,10 +57,19 @@
     padding:18px 26px 0;font-size:14px;font-weight:600;color:var(--ink);
     background:var(--cream);
   }
-  .status .right{display:flex;align-items:center;gap:6px;font-size:12px;}
-  .batt{border:1.4px solid var(--ink);border-radius:3px;width:22px;height:11px;position:relative;display:inline-block;}
-  .batt::after{content:"";position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:70%;background:var(--ink);border-radius:1px;}
-  .batt::before{content:"";position:absolute;right:-3px;top:3px;height:5px;width:2px;background:var(--ink);border-radius:1px;}
+  .status .time{font-size:16px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
+  .status .moon{font-size:14px;}
+  .status .right{display:flex;align-items:center;gap:7px;}
+  .sig{display:flex;align-items:flex-end;gap:1.5px;height:11px;}
+  .sig i{width:3px;border-radius:1px;background:rgba(43,41,38,.3);display:block;}
+  .sig i.on{background:var(--ink);}
+  .sig i:nth-child(1){height:4px;} .sig i:nth-child(2){height:6px;}
+  .sig i:nth-child(3){height:8.5px;} .sig i:nth-child(4){height:11px;}
+  .battp{position:relative;width:27px;height:13px;border-radius:4px;background:rgba(43,41,38,.28);
+    display:flex;align-items:center;justify-content:center;}
+  .battp::after{content:"";position:absolute;right:-3.5px;top:4px;height:5px;width:2px;
+    background:rgba(43,41,38,.35);border-radius:0 2px 2px 0;}
+  .battp b{font-size:10.5px;font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1;}
 
   /* generic scene layer */
   .scene{
@@ -72,47 +81,49 @@
 
   /* ================= SCENE 1 : FAST SORT ================= */
   .tflight{position:absolute;top:36px;left:20px;font-size:11px;color:var(--ink-dim);z-index:56;}
-  .statcards{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:6px;}
-  .stat{background:var(--card);border-radius:18px;padding:14px 15px;box-shadow:0 6px 16px rgba(120,100,60,.06);}
+  .statcards{display:grid;grid-template-columns:1.16fr 1fr;gap:11px;margin-top:6px;}
+  .stat{background:var(--card);border-radius:20px;padding:14px 13px;min-width:0;overflow:hidden;box-shadow:0 6px 16px rgba(120,100,60,.06);}
   .stat .k{font-size:10px;letter-spacing:.16em;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:7px;}
-  .stat .big{font-size:34px;font-weight:700;letter-spacing:-.02em;line-height:1;}
-  .progrow{display:flex;align-items:center;gap:12px;}
-  .ring{width:50px;height:50px;flex:0 0 auto;}
+  .stat .big{font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1;}
+  .progrow{display:flex;align-items:center;gap:9px;min-width:0;}
+  .ring{width:46px;height:46px;flex:0 0 auto;}
   .ring circle{fill:none;stroke-width:7;}
   .ring .bg{stroke:#ece3d2;}
   .ring .fg{stroke:var(--gold);stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%;
     stroke-dasharray:119;stroke-dashoffset:119;transition:stroke-dashoffset .12s linear;}
-  .progrow .pct{font-size:24px;font-weight:700;letter-spacing:-.02em;}
-  .progrow .frac{font-size:11px;color:var(--ink-dim);margin-top:2px;}
+  .progrow .pct{font-size:21px;font-weight:700;letter-spacing:-.02em;}
+  .progrow .frac{font-size:10px;white-space:nowrap;color:var(--ink-dim);margin-top:2px;}
 
-  .libcard{background:var(--card);border-radius:16px;padding:13px 15px;margin-top:11px;
-    display:flex;align-items:center;justify-content:space-between;box-shadow:0 6px 16px rgba(120,100,60,.06);}
-  .libcard .lab{font-size:10px;letter-spacing:.14em;color:var(--gold);font-weight:700;text-transform:uppercase;}
-  .libcard .lib{font-size:16px;font-weight:700;margin-top:3px;letter-spacing:-.01em;}
-  .libcard .left{font-size:11px;color:var(--ink-dim);margin-top:4px;}
-  .stack{width:60px;height:56px;position:relative;flex:0 0 auto;
-    transition:transform .2s ease;transform-origin:80% 88%;}
-  .stack i{position:absolute;inset:0;border-radius:9px;background-size:cover;background-position:center;
-    border:1.6px solid #fff;box-shadow:0 5px 12px rgba(0,0,0,.22);transition:opacity .25s ease;}
-  .stack i:nth-child(1){transform:rotate(-18deg) translate(-12px,5px);}
-  .stack i:nth-child(2){transform:rotate(-11deg) translate(-8px,3px);}
-  .stack i:nth-child(3){transform:rotate(-5deg) translate(-4px,1px);}
-  .stack i:nth-child(4){transform:rotate(2deg) translate(-1px,0);}
-  .stack i:nth-child(5){transform:rotate(8deg) translate(3px,-1px);}
+  /* scene1 scrolls like the real app */
+  .s1scroll{position:absolute;left:18px;right:18px;top:60px;bottom:58px;scrollbar-width:none;
+    overflow-y:auto;-webkit-overflow-scrolling:touch;pointer-events:auto;padding-bottom:14px;}
+  .s1scroll::-webkit-scrollbar{display:none;}
+  .bigrow{display:flex;align-items:baseline;gap:8px;}
+  .plus{font-size:12.5px;font-weight:700;color:var(--gold-d);white-space:nowrap;}
+
+  /* "Sorting photos / No action needed" row + video thumb */
+  .sortrow{display:grid;grid-template-columns:1.55fr .9fr;gap:12px;margin-top:11px;align-items:stretch;}
+  .sortcard{background:var(--card);border-radius:18px;padding:16px 15px;display:flex;align-items:center;gap:12px;
+    box-shadow:0 6px 16px rgba(120,100,60,.06);}
+  .sortcard .spark{width:44px;height:44px;border-radius:50%;background:#f3ecdd;color:var(--gold-d);
+    display:flex;align-items:center;justify-content:center;font-size:20px;flex:0 0 auto;}
+  .sortcard .st1{font-size:16.5px;font-weight:700;letter-spacing:-.01em;}
+  .sortcard .st2{font-size:13px;color:var(--ink-dim);margin-top:3px;}
+  .vidthumb{border-radius:14px;background:#ddd center/cover;min-height:96px;
+    box-shadow:0 8px 18px rgba(0,0,0,.14);transform:rotate(1.5deg);
+    clip-path:polygon(2% 1%, 97% 0%, 100% 96%, 1% 99%);}
 
   .createbtn{margin-top:12px;background:var(--gold);color:#fff;text-align:center;
     border-radius:26px;padding:14px;font-size:14px;font-weight:600;letter-spacing:.01em;
     box-shadow:0 10px 22px rgba(150,120,60,.28);}
 
-  .albgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:13px;}
-  .acard{border-radius:14px;overflow:hidden;background:var(--card);box-shadow:0 6px 16px rgba(120,100,60,.07);
-    opacity:0;transform:scale(.9);}
-  .acard.in{animation:pop .32s cubic-bezier(.2,.8,.3,1.2) forwards;}
+  .albgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:14px;}
+  .acard{border-radius:14px;overflow:hidden;background:var(--card-2,#fffdf8);box-shadow:0 6px 16px rgba(120,100,60,.08);}
   @keyframes pop{to{opacity:1;transform:scale(1);}}
-  .acard .thumb{height:78px;background:#ddd center/cover no-repeat;}
-  .acard .meta{display:flex;align-items:center;justify-content:space-between;padding:8px 11px;}
-  .acard .nm{font-size:13px;font-weight:600;}
-  .acard .ct{font-size:12px;color:var(--ink-faint);}
+  .acard .thumb{aspect-ratio:3/2.05;background:#ddd center/cover no-repeat;}
+  .acard .meta{display:flex;align-items:center;justify-content:space-between;padding:11px 13px;}
+  .acard .nm{font-size:15.5px;font-weight:600;letter-spacing:-.01em;}
+  .acard .ct{font-size:14px;color:var(--ink-faint);font-variant-numeric:tabular-nums;}
 
   /* flying photo thumbnails (the sort) */
   .flyer{position:absolute;width:44px;height:44px;border-radius:9px;
@@ -194,9 +205,11 @@
   .tabbar{position:absolute;bottom:0;left:0;right:0;height:58px;background:rgba(250,247,239,.92);
     backdrop-filter:blur(8px);border-top:1px solid var(--line);
     display:flex;align-items:flex-start;justify-content:space-around;padding-top:9px;z-index:30;}
-  .tab{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9px;color:var(--ink-faint);}
+  .tab{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9px;color:var(--ink-faint);position:relative;}
   .tab.active{color:var(--gold);}
   .tab .gi{font-size:16px;line-height:1;}
+  .tab .badge{position:absolute;top:-6px;right:-12px;background:#b4485c;color:#fff;font-size:9px;font-weight:700;
+    border-radius:11px;padding:2.5px 6px;line-height:1;font-variant-numeric:tabular-nums;}
 
   /* ---------- page scaffold ---------- */
   body{display:block;}
@@ -252,54 +265,54 @@
     <div class="screen">
       <div class="notch"></div>
       <div class="status">
-        <span>9:41</span>
-        <span class="right">•••&nbsp; <svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 1C5 1 2.6 2 1 3.6l7 6.4 7-6.4C13.4 2 11 1 8 1Z" fill="#2b2926" opacity=".9"/></svg> <span class="batt"></span></span>
+        <span class="time">1:14 <span class="moon">☾</span></span>
+        <span class="right">
+          <span class="sig"><i class="on"></i><i class="on"></i><i></i><i></i></span>
+          <svg width="17" height="12" viewBox="0 0 17 12" aria-hidden="true"><path d="M8.5 2.4c2.2 0 4.2.8 5.8 2.2.2.15.48.14.66-.04l1-1a.46.46 0 0 0-.02-.68A11.4 11.4 0 0 0 8.5 0C5.65 0 3.05 1.05 1.06 2.88a.46.46 0 0 0-.02.68l1 1c.18.18.46.19.66.04A8.9 8.9 0 0 1 8.5 2.4Zm0 3.9c1.2 0 2.3.44 3.15 1.17.2.16.48.15.66-.03l1-1a.46.46 0 0 0-.03-.69A7.5 7.5 0 0 0 8.5 4.05c-1.8 0-3.45.63-4.78 1.7a.46.46 0 0 0-.03.69l1 1c.18.18.47.19.66.03A4.9 4.9 0 0 1 8.5 6.3Zm2.1 3.06a.47.47 0 0 0 0-.72 3.4 3.4 0 0 0-4.2 0 .47.47 0 0 0 0 .72l1.77 1.77c.18.18.48.18.66 0l1.77-1.77Z" fill="#2b2926"/></svg>
+          <span class="battp"><b>88</b></span>
+        </span>
       </div>
 
-      <!-- ============ SCENE 1 ============ -->
+      <!-- ============ SCENE 1 (1:1 with real app home) ============ -->
       <div class="scene" id="s1">
-        <div class="statcards">
-          <div class="stat">
-            <div class="k">Sorted</div>
-            <div class="big" id="sortedNum">0</div>
-          </div>
-          <div class="stat">
-            <div class="k">Progress</div>
-            <div class="progrow">
-              <svg class="ring" viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="19"/><circle class="fg" id="ring" cx="25" cy="25" r="19"/></svg>
-              <div>
-                <div class="pct" id="pct">0%</div>
-                <div class="frac" id="frac">0 / 500</div>
+        <div class="s1scroll">
+          <div class="statcards">
+            <div class="stat">
+              <div class="k">Sorted</div>
+              <div class="bigrow"><span class="big" id="sortedNum">1,094</span><span class="plus" id="plusSort">+23 sorting…</span></div>
+            </div>
+            <div class="stat">
+              <div class="k">Progress</div>
+              <div class="progrow">
+                <svg class="ring" viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="19"/><circle class="fg" id="ring" cx="25" cy="25" r="19"/></svg>
+                <div>
+                  <div class="pct" id="pct">2%</div>
+                  <div class="frac" id="frac">1,094 / 51,150</div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="libcard">
-          <div>
-            <div class="lab">Photos from</div>
-            <div class="lib">YOUR LIBRARY</div>
-            <div class="left" id="leftSort">500 left to sort</div>
+          <div class="sortrow">
+            <div class="sortcard">
+              <div class="spark">✦</div>
+              <div>
+                <div class="st1">Sorting photos</div>
+                <div class="st2">No action needed</div>
+              </div>
+            </div>
+            <div class="vidthumb" style="background-image:url('assets/template/video-1.svg')"></div>
           </div>
-          <div class="stack">
-            <i style="background-image:url('assets/template/food-1.svg')"></i>
-            <i style="background-image:url('assets/template/travel-1.svg')"></i>
-            <i style="background-image:url('assets/template/fitness-1.svg')"></i>
-            <i style="background-image:url('assets/template/screenshots-1.svg')"></i>
-            <i style="background-image:url('assets/template/sunset-1.svg')"></i>
-          </div>
+
+          <div class="createbtn">+ Create new album</div>
+
+          <div class="albgrid" id="albgrid"></div>
         </div>
-
-        <div class="createbtn">+ Create new album</div>
-
-        <div class="albgrid" id="albgrid"></div>
-
-        <div class="pushcta" id="pushcta">Push to Camera Roll<small>500 photos sorted — send them over</small></div>
 
         <div class="tabbar">
           <div class="tab active"><span class="gi">▦</span>Albums</div>
           <div class="tab"><span class="gi">⌕</span>Search</div>
-          <div class="tab"><span class="gi">✦</span>Clean Up</div>
+          <div class="tab cu"><span class="gi">✦</span>Clean Up<span class="badge" id="cuBadge">281</span></div>
           <div class="tab"><span class="gi">⚙</span>Settings</div>
         </div>
       </div>
@@ -349,35 +362,28 @@
 <script>
 const T = "assets/";
 // album definitions (cover + count target + thumbs)
+/* album set matches the real app home screen 1:1 (names, order, counts) */
 const ALBUMS = [
-  {nm:"Travel",  ct:104, c:"#cfe3e6", ic:"✈️", cover:T+"template/travel-2.svg",
+  {nm:"Travel",      ct:427, c:"#cfe3e6", ic:"✈️", cover:T+"template/travel-2.svg",
     thumbs:["template/travel-3.svg","template/travel-1.svg","template/travel-2.svg","template/travel-3.svg"]},
-  {nm:"Food",    ct:88,  c:"#f0d9c2", ic:"🍽️", cover:T+"template/food-2.svg",
-    thumbs:["template/food-3.svg","template/food-1.svg","template/food-2.svg","template/food-3.svg"]},
-  {nm:"Fitness", ct:96,  c:"#d8e0c6", ic:"🏋️", cover:T+"template/fitness-2.svg",
-    thumbs:["template/fitness-3.svg","template/fitness-1.svg","template/fitness-2.svg","template/fitness-3.svg"]},
-  {nm:"Sunset",  ct:42,  c:"#f0d2cb", ic:"🌅", cover:T+"template/sunset-2.svg",
-    thumbs:["template/sunset-3.svg","template/sunset-1.svg","template/travel-1.svg","template/travel-2.svg"]},
-  {nm:"Screenshots", ct:84, c:"#e6dcc2", ic:"📱", cover:T+"template/screenshots-2.svg",
+  {nm:"Screenshots", ct:244, c:"#e6dcc2", ic:"📱", cover:T+"template/screenshots-2.svg",
     thumbs:["template/screenshots-3.svg","template/screenshots-1.svg","template/screenshots-2.svg","template/screenshots-3.svg"]},
-  {nm:"You",     ct:86,  c:"#ddd2ea", ic:"👤", cover:T+"template/selfie-1.svg",
+  {nm:"You",         ct:115, c:"#ddd2ea", ic:"👤", cover:T+"template/selfie-1.svg",
     thumbs:["template/selfie-2.svg","template/selfie-3.svg","template/fitness-1.svg","template/fitness-2.svg"]},
-  {nm:"Beach",   ct:61,  c:"#cfe3e6", ic:"🏖️", cover:T+"template/travel-3.svg",
-    thumbs:["template/travel-1.svg","template/travel-2.svg","template/sunset-2.svg","template/travel-3.svg"]},
-  {nm:"Nature",  ct:53,  c:"#d8e0c6", ic:"🌿", cover:T+"template/travel-1.svg",
-    thumbs:["template/travel-2.svg","template/travel-3.svg","template/sunset-3.svg","template/travel-1.svg"]},
-  {nm:"Friends", ct:73,  c:"#ddd2ea", ic:"👯", cover:T+"template/fitness-3.svg",
-    thumbs:["template/fitness-1.svg","template/fitness-2.svg","template/fitness-3.svg","template/selfie-1.svg"]},
-  {nm:"Events",  ct:38,  c:"#f0d9c2", ic:"🎉", cover:T+"template/food-1.svg",
-    thumbs:["template/food-2.svg","template/food-3.svg","template/fitness-1.svg","template/food-1.svg"]},
+  {nm:"Food",        ct:61,  c:"#f0d9c2", ic:"🍽️", cover:T+"template/food-2.svg",
+    thumbs:["template/food-3.svg","template/food-1.svg","template/food-2.svg","template/food-3.svg"]},
+  {nm:"Nature",      ct:60,  c:"#d8e0c6", ic:"🌿", cover:T+"template/nature-1.svg",
+    thumbs:["template/travel-2.svg","template/travel-3.svg","template/sunset-3.svg","template/nature-1.svg"]},
+  {nm:"Friends",     ct:51,  c:"#ddd2ea", ic:"👯", cover:T+"template/friends-1.svg",
+    thumbs:["template/fitness-1.svg","template/fitness-2.svg","template/friends-1.svg","template/selfie-1.svg"]},
 ];
 
 // ---- build scene1 album grid ----
 const grid = document.getElementById('albgrid');
-ALBUMS.slice(0,4).forEach(a=>{
+ALBUMS.forEach(a=>{
   const d=document.createElement('div');d.className='acard';
   d.innerHTML=`<div class="thumb" style="background-image:url('${a.cover}')"></div>
-    <div class="meta"><span class="nm">${a.nm}</span><span class="ct">0</span></div>`;
+    <div class="meta"><span class="nm">${a.nm}</span><span class="ct">${a.ct}</span></div>`;
   grid.appendChild(d);
 });
 const gridCards=[...grid.children];
@@ -421,73 +427,43 @@ const POOLS=[
 // the photo that will be sorted on step k (cycles Travel→Food→Fitness→Sunset)
 function libImg(k){const p=POOLS[k%4];return p[Math.floor(k/4)%p.length];}
 
-function center(el,host){const r=el.getBoundingClientRect();return {x:r.left-host.left+r.width/2,y:r.top-host.top+r.height/2};}
-
-let raf, flyTimer, flyers=[];
-function spawnFlyer(srcC,tgtC,img,card){
-  const f=document.createElement('div');f.className='flyer';
-  f.style.backgroundImage=`url('${img}')`;
-  f.style.left=(srcC.x-22)+'px';f.style.top=(srcC.y-22)+'px';
-  s1.appendChild(f);flyers.push(f);
-  const dx=tgtC.x-srcC.x, dy=tgtC.y-srcC.y;
-  // photo stays full-size + fully visible as it travels, then pops into the album
-  const anim=f.animate([
-    {transform:'translate(0,0) scale(1) rotate(-5deg)', opacity:0},
-    {transform:`translate(${dx*0.12}px,${dy*0.12}px) scale(1.05) rotate(-2deg)`, opacity:1, offset:0.12},
-    {transform:`translate(${dx*0.82}px,${dy*0.82}px) scale(1) rotate(3deg)`, opacity:1, offset:0.78},
-    {transform:`translate(${dx}px,${dy}px) scale(.28) rotate(7deg)`, opacity:0}
-  ],{duration:680, easing:'cubic-bezier(.4,0,.4,1)', fill:'forwards'});
-  setTimeout(()=>card.animate([{transform:'scale(1)'},{transform:'scale(1.08)'},{transform:'scale(1)'}],{duration:280,easing:'ease-out'}),600);
-  anim.onfinish=()=>f.remove();
+/* live-sorting animation, matching the real app's passive sort:
+   the SORTED number climbs from 1,094 in small bursts, the "+N sorting…"
+   chip updates, the ring creeps past 2%, and album counts tick up.
+   No overlays or effects the real app doesn't have. */
+const SORT_START=1094, SORT_TOTAL=51150;
+let sortTimer;
+const fmt=n=>n.toLocaleString();
+function animateSort(){
+  clearInterval(sortTimer);
+  let sorted=SORT_START;
+  const startCounts=ALBUMS.map(a=>a.ct);
+  sortTimer=setInterval(()=>{
+    const burst=13+Math.floor(Math.random()*25);
+    sorted+=burst;
+    $('sortedNum').textContent=fmt(sorted);
+    $('plusSort').textContent='+'+burst+' sorting…';
+    const pctv=sorted/SORT_TOTAL;
+    $('pct').textContent=Math.max(2,Math.round(pctv*100))+'%';
+    $('frac').textContent=fmt(sorted)+' / '+fmt(SORT_TOTAL);
+    ring.style.strokeDashoffset=RINGLEN*(1-Math.max(.02,pctv));
+    // albums absorb a share of each burst
+    gridCards.forEach((c,i)=>{
+      if(Math.random()<0.4){ startCounts[i]+=1+Math.floor(Math.random()*3); c.querySelector('.ct').textContent=startCounts[i]; }
+    });
+    // clean up badge creeps too
+    const b=$('cuBadge'); if(b && Math.random()<0.25) b.textContent=+b.textContent+1;
+  },700);
 }
-
-function animateSort(dur,done){
-  const TARGET=500, start=performance.now();
-  const host=s1.getBoundingClientRect();
-  const stackEl=s1.querySelector('.stack');
-  const L=[...stackEl.querySelectorAll('i')];   // back ... front (last)
-  const stackFront=L[L.length-1];
-  const srcC=center(stackEl,host);
-  const tgts=gridCards.map(c=>center(c.querySelector('.thumb'),host));
-  // counters tick smoothly to 500
-  function step(now){
-    let p=Math.min(1,(now-start)/dur), e=easeOut(p);
-    const val=Math.round(e*TARGET);
-    $('sortedNum').textContent=val;
-    $('pct').textContent=Math.round(e*100)+'%';
-    $('frac').textContent=val+' / 500';
-    $('leftSort').textContent=(TARGET-val)+' left to sort';
-    ring.style.strokeDashoffset=RINGLEN*(1-e);
-    gridCards.forEach((c,i)=>c.querySelector('.ct').textContent=Math.round(Math.min(1,Math.max(0,(e-i*0.04)/0.92))*ALBUMS[i].ct));
-    // library pile shrinks + thins out card by card (from the back) as photos sort
-    stackEl.style.transform=`scale(${(1-e*0.30).toFixed(3)})`;
-    const k=L.length;
-    L.forEach((el,i)=>{const lim = i===k-1 ? 0.99 : (i+1)/k*0.82; el.style.opacity = e>lim?0:1;});
-    if(p<1) raf=requestAnimationFrame(step); else done&&done();
-  }
-  raf=requestAnimationFrame(step);
-  // stream of real photos flying out of the library into their album
-  let n=0; const total=22, gap=dur/total;
-  flyTimer=setInterval(()=>{
-    const idx=n%4;
-    spawnFlyer(srcC,tgts[idx],libImg(n),gridCards[idx]);
-    // the top of the library pile becomes the next photo in line to sort
-    if(stackFront) stackFront.style.backgroundImage=`url('${libImg(n+1)}')`;
-    n++; if(n>=total) clearInterval(flyTimer);
-  },gap);
-}
-
 function resetSort(){
-  clearInterval(flyTimer);cancelAnimationFrame(raf);
-  flyers.forEach(f=>f.remove());flyers=[];
-  $('sortedNum').textContent=0;$('pct').textContent='0%';$('frac').textContent='0 / 500';
-  $('leftSort').textContent='500 left to sort';ring.style.strokeDashoffset=RINGLEN;
-  $('pushcta').classList.remove('up');
-  gridCards.forEach(c=>{c.classList.add('in');c.querySelector('.ct').textContent='0';});
-  const st=s1.querySelector('.stack');
-  if(st){st.style.transform='scale(1)';st.querySelectorAll('i').forEach(i=>i.style.opacity='1');}
-  const sf=s1.querySelector('.stack i:last-child');
-  if(sf) sf.style.backgroundImage=`url('${libImg(0)}')`;
+  clearInterval(sortTimer);
+  $('sortedNum').textContent=fmt(SORT_START);
+  $('plusSort').textContent='+23 sorting…';
+  $('pct').textContent='2%';
+  $('frac').textContent=fmt(SORT_START)+' / '+fmt(SORT_TOTAL);
+  ring.style.strokeDashoffset=RINGLEN*0.98;
+  gridCards.forEach((c,i)=>c.querySelector('.ct').textContent=ALBUMS[i].ct);
+  const b=$('cuBadge'); if(b) b.textContent='281';
 }
 
 function runCluster(){
@@ -504,7 +480,7 @@ function go(id){
   idx=ORDER.indexOf(id);
   $('syncbtn').classList.remove('press');
   setScene(id);
-  if(id==='s1'){ resetSort(); t(()=>animateSort(2300, ()=>$('pushcta').classList.add('up')), 250); }
+  if(id==='s1'){ resetSort(); t(animateSort, 400); } else { clearInterval(sortTimer); }
   if(id==='s2'){ runCluster(); }
 }
 function forward(){
