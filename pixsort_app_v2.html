@@ -216,31 +216,12 @@
         <span class="right">•••&nbsp; <svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 1C5 1 2.6 2 1 3.6l7 6.4 7-6.4C13.4 2 11 1 8 1Z" fill="currentColor" opacity=".9"/></svg> <span class="batt"></span></span>
       </div>
 
-      <!-- S1 permission (now the opening screen) -->
-      <div class="scene show" id="s1">
-        <div class="sheet">
-          <div class="ic" style="background-image:url('assets/pixsort-icon.jpeg')"></div>
-          <h3>Allow PixSort to access<br>your photos?</h3>
-          <p>PixSort sorts everything on-device.<br>Your photos never leave your phone.</p>
-          <div class="allow" id="allowBtn">Give access to my photos</div>
-          <div class="deny">Not now</div>
-        </div>
-      </div>
-
-      <!-- S2 big rainbow SORT -->
-      <div class="scene pad sortscene" id="s2">
+      <!-- S2 big rainbow SORT (opening screen) -->
+      <div class="scene pad sortscene show" id="s2">
         <div class="brandrow"><img src="assets/pixsort-icon.jpeg" alt=""><span>PixSort</span></div>
         <div class="ready">2,431 photos ready to sort</div>
         <div class="sortbtn" id="sortBtn"><b>SORT</b></div>
         <div class="tip">one tap. that's it.</div>
-      </div>
-
-      <!-- S3 brand splash -->
-      <div class="scene splash" id="s3">
-        <div class="logo" style="background-image:url('assets/pixsort-icon.jpeg')"></div>
-        <div class="wm">PixSort</div>
-        <div class="sub">sorting your library…</div>
-        <div class="dots"><i></i><i></i><i></i></div>
       </div>
 
       <!-- S4 fast sort -->
@@ -332,8 +313,8 @@ $('albGrid').innerHTML=ALB.map(a=>`<div class="acard"><div class="thumb" style="
 const albCards=[...$('albGrid').children];
 $('appleGrid').innerHTML=appleCardsHTML;
 
-const SC=['s1','s2','s3','s4','s5','s6'];
-function show(id){SC.forEach(s=>$(s).classList.toggle('show',s===id));$('statusbar').classList.toggle('light', id==='s3');}
+const SC=['s2','s4','s5','s6'];
+function show(id){SC.forEach(s=>$(s).classList.toggle('show',s===id));}
 
 let rotTimer, rafSort;
 function runFastSort(dur){
@@ -356,7 +337,7 @@ let idx=0;
 function go(id){
   clearInterval(rotTimer);cancelAnimationFrame(rafSort);timers.forEach(clearTimeout);timers=[];
   idx=SC.indexOf(id);
-  $('sortBtn').classList.remove('press');$('allowBtn').classList.remove('press');$('a2aBtn').classList.remove('press');
+  $('sortBtn').classList.remove('press');$('a2aBtn').classList.remove('press');
   show(id);
   if(id==='s4'){ $('sortNum').textContent='0';$('sortBar').style.width='0'; runFastSort(2300); }
   if(id==='s5'){
@@ -367,12 +348,12 @@ function go(id){
   if(id==='s6'){ $('appleGrid').style.transition='none';$('appleGrid').style.transform='translateY(0)'; }
 }
 function advance(){
-  const btnId={s1:'allowBtn',s2:'sortBtn',s5:'a2aBtn'}[SC[idx]];
+  const btnId={s2:'sortBtn',s5:'a2aBtn'}[SC[idx]];
   if(btnId){const b=$(btnId);b.classList.add('press');setTimeout(()=>b.classList.remove('press'),150);}
   go(idx<SC.length-1?SC[idx+1]:SC[0]);
 }
 document.querySelector('.hero .phone').addEventListener('click',advance);
-go('s1');
+go('s2');
 
 // ================= STATIC SCREEN-BY-SCREEN =================
 const screenMessy=()=>`<div class="scene" style="opacity:1"><div class="wall">${wallTiles(65)}</div><div class="collbar"><div class="t">Collections</div><div class="x">2,431 photos · no albums yet</div></div><div class="collchip">😵‍💫 1,000s of photos, zero order</div></div>`;
