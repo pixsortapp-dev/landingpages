@@ -361,22 +361,46 @@
 
 <script>
 const T = "assets/";
-// album definitions (cover + count target + thumbs)
-/* album set matches the real app home screen 1:1 (names, order, counts) */
-const ALBUMS = [
-  {nm:"Travel",      ct:427, c:"#cfe3e6", ic:"✈️", cover:T+"template/travel-2.svg",
-    thumbs:["template/travel-3.svg","template/travel-1.svg","template/travel-2.svg","template/travel-3.svg"]},
-  {nm:"Screenshots", ct:244, c:"#e6dcc2", ic:"📱", cover:T+"template/screenshots-2.svg",
-    thumbs:["template/screenshots-3.svg","template/screenshots-1.svg","template/screenshots-2.svg","template/screenshots-3.svg"]},
-  {nm:"You",         ct:115, c:"#ddd2ea", ic:"👤", cover:T+"template/selfie-1.svg",
-    thumbs:["template/selfie-2.svg","template/selfie-3.svg","template/fitness-1.svg","template/fitness-2.svg"]},
-  {nm:"Food",        ct:61,  c:"#f0d9c2", ic:"🍽️", cover:T+"template/food-2.svg",
-    thumbs:["template/food-3.svg","template/food-1.svg","template/food-2.svg","template/food-3.svg"]},
-  {nm:"Nature",      ct:60,  c:"#d8e0c6", ic:"🌿", cover:T+"template/nature-1.svg",
-    thumbs:["template/travel-2.svg","template/travel-3.svg","template/sunset-3.svg","template/nature-1.svg"]},
-  {nm:"Friends",     ct:51,  c:"#ddd2ea", ic:"👯", cover:T+"template/friends-1.svg",
-    thumbs:["template/fitness-1.svg","template/fitness-2.svg","template/friends-1.svg","template/selfie-1.svg"]},
-];
+/* ================= CONCEPT REGISTRY =================
+   One page, many use cases. Pick with ?c=<name> in the URL:
+     (default)     — the real app home 1:1
+     ?c=countries  — Travel sorted by country (real iPhone photos)
+     ?c=evidence   — the cheating storyline
+   total = library size shown in the progress card. */
+const CONCEPTS = {
+  standard: { total:51150, start:1094, albums:[
+    {nm:"Travel",      ct:427, cover:T+"template/travel-2.svg"},
+    {nm:"Screenshots", ct:244, cover:T+"template/screenshots-2.svg"},
+    {nm:"You",         ct:115, cover:T+"template/selfie-1.svg"},
+    {nm:"Food",        ct:61,  cover:T+"template/food-2.svg"},
+    {nm:"Nature",      ct:60,  cover:T+"template/nature-1.svg"},
+    {nm:"Friends",     ct:51,  cover:T+"template/friends-1.svg"},
+  ]},
+  countries: { total:18432, start:2140, albums:[
+    {nm:"Japan",     ct:312, cover:T+"travel/japan.jpg"},
+    {nm:"France",    ct:248, cover:T+"travel/paris.jpg"},
+    {nm:"Bali",      ct:206, cover:T+"travel/bali.jpg"},
+    {nm:"Thailand",  ct:184, cover:T+"travel/thailand.jpg"},
+    {nm:"Peru",      ct:143, cover:T+"travel/peru.jpg"},
+    {nm:"Australia", ct:97,  cover:T+"travel/sydney.jpg"},
+    {nm:"Taiwan",    ct:88,  cover:T+"travel/taiwan.jpg"},
+    {nm:"Hawaii",    ct:76,  cover:T+"travel/hawaii.jpg"},
+    {nm:"Amsterdam", ct:64,  cover:T+"travel/amsterdam.jpg"},
+    {nm:"Sedona",    ct:51,  cover:T+"travel/sedona.jpg"},
+  ]},
+  evidence: { total:2431, start:318, albums:[
+    {nm:"Screenshots", ct:247, cover:T+"evidence/screenshots.jpg"},
+    {nm:"DMs",         ct:134, cover:T+"evidence/dms.jpg"},
+    {nm:"Late Nights", ct:92,  cover:T+"evidence/late-nights.jpg"},
+    {nm:"Call Logs",   ct:67,  cover:T+"evidence/call-log.jpg"},
+    {nm:"Locations",   ct:58,  cover:T+"evidence/locations.jpg"},
+    {nm:"Receipts",    ct:41,  cover:T+"evidence/receipts.jpg"},
+    {nm:"Her",         ct:23,  cover:T+"evidence/her.jpg"},
+    {nm:"Hotels",      ct:14,  cover:T+"evidence/hotels.jpg"},
+  ]},
+};
+const CONCEPT = CONCEPTS[new URLSearchParams(location.search).get('c')] || CONCEPTS.standard;
+const ALBUMS = CONCEPT.albums;
 
 // ---- build scene1 album grid ----
 const grid = document.getElementById('albgrid');
@@ -403,9 +427,9 @@ const bubbles=[...cluster.querySelectorAll('.bub')];
 // ---- build scene4 photos rows ----
 const ph=document.getElementById('phscroll');
 ALBUMS.forEach(a=>{
-  const r=document.createElement('div');r.className='prow';r.style.setProperty('--c',a.c);
-  const strip=a.thumbs.map(t=>`<div class="t" style="background-image:url('${T+t}')"></div>`).join('');
-  r.innerHTML=`<div class="top"><div class="ic">${a.ic}</div><div><div class="nm">${a.nm}</div><div class="ct">${a.ct} photos</div></div></div>
+  const r=document.createElement('div');r.className='prow';
+  const strip=Array.from({length:4},()=>`<div class="t" style="background-image:url('${a.cover}')"></div>`).join('');
+  r.innerHTML=`<div class="top"><div class="ic" style="background-image:url('${a.cover}');background-size:cover"></div><div><div class="nm">${a.nm}</div><div class="ct">${a.ct} photos</div></div></div>
     <div class="strip">${strip}<div class="more">+${a.ct-4}</div></div>`;
   ph.appendChild(r);
 });
@@ -431,7 +455,7 @@ function libImg(k){const p=POOLS[k%4];return p[Math.floor(k/4)%p.length];}
    the SORTED number climbs from 1,094 in small bursts, the "+N sorting…"
    chip updates, the ring creeps past 2%, and album counts tick up.
    No overlays or effects the real app doesn't have. */
-const SORT_START=1094, SORT_TOTAL=51150;
+const SORT_START=CONCEPT.start, SORT_TOTAL=CONCEPT.total;
 let sortTimer;
 const fmt=n=>n.toLocaleString();
 function animateSort(){
@@ -439,29 +463,32 @@ function animateSort(){
   let sorted=SORT_START;
   const startCounts=ALBUMS.map(a=>a.ct);
   sortTimer=setInterval(()=>{
-    const burst=13+Math.floor(Math.random()*25);
-    sorted+=burst;
+    // fast sort: big bursts so the numbers visibly rip
+    const burst=140+Math.floor(Math.random()*220);
+    sorted=Math.min(SORT_TOTAL,sorted+burst);
     $('sortedNum').textContent=fmt(sorted);
     $('plusSort').textContent='+'+burst+' sorting…';
     const pctv=sorted/SORT_TOTAL;
-    $('pct').textContent=Math.max(2,Math.round(pctv*100))+'%';
+    $('pct').textContent=Math.max(1,Math.round(pctv*100))+'%';
     $('frac').textContent=fmt(sorted)+' / '+fmt(SORT_TOTAL);
     ring.style.strokeDashoffset=RINGLEN*(1-Math.max(.02,pctv));
     // albums absorb a share of each burst
     gridCards.forEach((c,i)=>{
-      if(Math.random()<0.4){ startCounts[i]+=1+Math.floor(Math.random()*3); c.querySelector('.ct').textContent=startCounts[i]; }
+      if(Math.random()<0.75){ startCounts[i]+=2+Math.floor(Math.random()*9); c.querySelector('.ct').textContent=startCounts[i]; }
     });
     // clean up badge creeps too
-    const b=$('cuBadge'); if(b && Math.random()<0.25) b.textContent=+b.textContent+1;
-  },700);
+    const b=$('cuBadge'); if(b && Math.random()<0.5) b.textContent=+b.textContent+1+Math.floor(Math.random()*3);
+    if(sorted>=SORT_TOTAL) clearInterval(sortTimer);
+  },220);
 }
 function resetSort(){
   clearInterval(sortTimer);
   $('sortedNum').textContent=fmt(SORT_START);
-  $('plusSort').textContent='+23 sorting…';
-  $('pct').textContent='2%';
+  $('plusSort').textContent='+218 sorting…';
+  const p0=SORT_START/SORT_TOTAL;
+  $('pct').textContent=Math.max(1,Math.round(p0*100))+'%';
   $('frac').textContent=fmt(SORT_START)+' / '+fmt(SORT_TOTAL);
-  ring.style.strokeDashoffset=RINGLEN*0.98;
+  ring.style.strokeDashoffset=RINGLEN*(1-Math.max(.02,p0));
   gridCards.forEach((c,i)=>c.querySelector('.ct').textContent=ALBUMS[i].ct);
   const b=$('cuBadge'); if(b) b.textContent='281';
 }
@@ -536,7 +563,7 @@ const screenSynced=`<div class="scene" style="opacity:1;transform:none;display:f
   <p style="font-size:14px;color:var(--ink-dim);text-align:center;margin-top:12px;line-height:1.45"><b style="color:var(--ink)">500 photos</b> are now in your<br>camera roll, sorted into albums.</p>
 </div>`;
 
-const photosRows=()=>ALBUMS.map(a=>{const strip=a.thumbs.map(t=>`<div class="t" style="background-image:url('${T+t}')"></div>`).join('');return `<div class="prow" style="--c:${a.c}"><div class="top"><div class="ic">${a.ic}</div><div><div class="nm">${a.nm}</div><div class="ct">${a.ct} photos</div></div></div><div class="strip">${strip}<div class="more">+${a.ct-4}</div></div></div>`;}).join('');
+const photosRows=()=>ALBUMS.map(a=>{const strip=Array.from({length:4},()=>`<div class="t" style="background-image:url('${a.cover}')"></div>`).join('');return `<div class="prow"><div class="top"><div class="ic" style="background-image:url('${a.cover}');background-size:cover"></div><div><div class="nm">${a.nm}</div><div class="ct">${a.ct} photos</div></div></div><div class="strip">${strip}<div class="more">+${a.ct-4}</div></div></div>`;}).join('');
 
 const screenAlbums=`<div class="scene" style="opacity:1;transform:none;background:var(--cream);padding:60px 18px 0">
   <div class="ph-head"><div class="ttl">Your Albums<span>10</span></div><div class="edit">Edit</div></div>
