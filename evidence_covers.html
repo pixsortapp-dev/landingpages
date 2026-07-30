@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased;}
+  html,body{width:800px;height:800px;overflow:hidden;background:#000;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;}
+  .tile{width:800px;height:800px;position:relative;overflow:hidden;display:none;}
+  .tile.on{display:block;}
+
+  /* ---------- screenshots: iMessage thread (dark) ---------- */
+  #screenshots{background:#000;color:#fff;padding:56px 40px;}
+  .im-head{text-align:center;margin-bottom:60px;}
+  .im-avatar{width:100px;height:100px;border-radius:50%;background:#7d7d85;margin:0 auto;
+    display:flex;align-items:center;justify-content:center;font-size:44px;font-weight:600;color:#fff;}
+  .im-name{font-size:26px;margin-top:14px;color:#fff;font-weight:400;}
+  .im-name span{color:#8e8e93;font-size:22px;}
+  .im-time{text-align:center;color:#8e8e93;font-size:22px;margin-bottom:26px;}
+  .bub{max-width:66%;padding:20px 28px;border-radius:36px;font-size:30px;line-height:1.25;margin-bottom:16px;clear:both;}
+  .them{background:#26252a;color:#fff;float:left;border-bottom-left-radius:10px;}
+  .me{background:#0a84ff;color:#fff;float:right;border-bottom-right-radius:10px;}
+  .typing{background:#26252a;float:left;padding:26px 32px;border-radius:36px;border-bottom-left-radius:10px;}
+  .typing i{display:inline-block;width:14px;height:14px;border-radius:50%;background:#8e8e93;margin:0 4px;}
+
+  /* ---------- dms: IG chat (light) ---------- */
+  #dms{background:#fff;color:#111;padding:44px 36px;}
+  .ig-head{display:flex;align-items:center;gap:18px;border-bottom:1px solid #efefef;padding-bottom:24px;margin-bottom:44px;}
+  .ig-av{width:84px;height:84px;border-radius:50%;background:linear-gradient(135deg,#c98aa8,#8a5a78);position:relative;}
+  .ig-av::after{content:"";position:absolute;right:2px;bottom:2px;width:22px;height:22px;border-radius:50%;background:#4cd964;border:4px solid #fff;}
+  .ig-nm{font-size:30px;font-weight:700;}
+  .ig-st{font-size:22px;color:#8e8e93;margin-top:4px;}
+  .ig-them{background:#efefef;color:#111;max-width:70%;padding:20px 28px;border-radius:36px;font-size:29px;margin-bottom:18px;float:left;clear:both;border-bottom-left-radius:10px;}
+  .ig-me{background:#3797f0;color:#fff;max-width:70%;padding:20px 28px;border-radius:36px;font-size:29px;margin-bottom:18px;float:right;clear:both;border-bottom-right-radius:10px;}
+  .ig-heart{font-size:56px;padding:6px 10px;background:none;float:left;clear:both;margin-bottom:10px;}
+
+  /* ---------- late nights: dark bar + 2:17 AM ---------- */
+  #late-nights{background:
+    radial-gradient(60% 45% at 22% 26%, rgba(255,70,70,.5), transparent 70%),
+    radial-gradient(45% 38% at 78% 18%, rgba(160,40,120,.42), transparent 70%),
+    radial-gradient(55% 42% at 68% 82%, rgba(70,30,110,.55), transparent 70%),
+    linear-gradient(180deg,#17070c,#0a0508 70%,#060305);}
+  .bokeh{position:absolute;border-radius:50%;filter:blur(6px);}
+  .clock{position:absolute;left:0;right:0;top:40%;text-align:center;color:#fff;
+    font-size:150px;font-weight:300;letter-spacing:.02em;text-shadow:0 2px 30px rgba(0,0,0,.6);}
+  .clock small{font-size:56px;font-weight:400;vertical-align:18px;margin-left:10px;}
+  .glass{position:absolute;bottom:60px;left:90px;width:150px;height:210px;
+    background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.05));
+    border:3px solid rgba(255,255,255,.25);border-radius:14px 14px 22px 22px;backdrop-filter:blur(2px);}
+  .glass::after{content:"";position:absolute;left:8px;right:8px;bottom:10px;height:78px;
+    background:rgba(200,150,80,.5);border-radius:8px;}
+
+  /* ---------- call log: Recents (dark) ---------- */
+  #call-log{background:#000;color:#fff;padding:48px 40px;}
+  .cl-top{display:flex;justify-content:center;margin-bottom:30px;}
+  .seg2{background:#1c1c1e;border-radius:18px;display:flex;padding:4px;width:420px;}
+  .seg2 span{flex:1;text-align:center;font-size:26px;padding:12px;border-radius:14px;color:#fff;}
+  .seg2 .on{background:#636366;font-weight:600;}
+  .cl-title{font-size:52px;font-weight:800;margin-bottom:26px;}
+  .cl-row{display:flex;align-items:center;border-bottom:1px solid #1c1c1e;padding:22px 0;}
+  .cl-l{flex:1;}
+  .cl-nm{font-size:32px;color:#ff453a;font-weight:500;}
+  .cl-nm.w{color:#ff453a;}
+  .cl-sub{font-size:24px;color:#8e8e93;margin-top:4px;}
+  .cl-t{font-size:26px;color:#8e8e93;margin-right:16px;}
+  .cl-i{color:#0a84ff;font-size:30px;border:2.5px solid #0a84ff;border-radius:50%;
+    width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:600;}
+
+  /* ---------- locations: find my (dark map) ---------- */
+  #locations{background:
+    linear-gradient(115deg, transparent 47%, rgba(120,130,150,.16) 47.6%, rgba(120,130,150,.16) 49%, transparent 49.6%),
+    linear-gradient(25deg, transparent 30%, rgba(120,130,150,.13) 30.6%, rgba(120,130,150,.13) 32%, transparent 32.6%),
+    linear-gradient(65deg, transparent 62%, rgba(150,160,180,.18) 62.5%, rgba(150,160,180,.18) 64.5%, transparent 65%),
+    linear-gradient(160deg, transparent 74%, rgba(120,130,150,.12) 74.5%, rgba(120,130,150,.12) 76%, transparent 76.5%),
+    radial-gradient(70% 50% at 70% 75%, rgba(40,70,60,.5), transparent 70%),
+    linear-gradient(180deg,#1c2128,#151a21);}
+  .fm-sheet{position:absolute;top:0;left:0;right:0;background:rgba(28,28,30,.94);padding:36px 40px 30px;
+    border-bottom:1px solid rgba(255,255,255,.08);}
+  .fm-nm{font-size:40px;font-weight:800;color:#fff;display:flex;justify-content:space-between;align-items:center;}
+  .fm-x{width:56px;height:56px;border-radius:50%;background:#3a3a3c;color:#aeaeb2;font-size:30px;
+    display:flex;align-items:center;justify-content:center;font-weight:600;}
+  .fm-sub{font-size:26px;color:#8e8e93;margin-top:8px;}
+  .pin{position:absolute;left:50%;top:52%;transform:translate(-50%,-100%);}
+  .pin .head{width:64px;height:64px;border-radius:50%;background:#ff3b30;border:6px solid #fff;
+    box-shadow:0 8px 24px rgba(0,0,0,.5);}
+  .pin .tail{width:8px;height:34px;background:#fff;margin:-4px auto 0;border-radius:4px;}
+  .fm-road{position:absolute;left:70px;top:64%;background:#8e8e93;color:#1c1c1e;font-size:22px;font-weight:700;
+    padding:6px 14px;border-radius:10px;}
+  .fm-bar{position:absolute;bottom:0;left:0;right:0;display:flex;gap:20px;padding:30px 40px 40px;background:rgba(28,28,30,.94);}
+  .fm-btn{flex:1;background:#2c2c2e;border-radius:20px;color:#fff;font-size:28px;font-weight:600;
+    text-align:center;padding:26px;}
+  .fm-btn.b{background:#0a84ff;}
+
+  /* ---------- receipts: florist receipt ---------- */
+  #receipts{background:#6b5744;display:flex;align-items:center;justify-content:center;}
+  .rc{width:620px;background:#faf7f0;color:#222;padding:54px 50px;box-shadow:0 20px 60px rgba(0,0,0,.4);}
+  .rc h2{text-align:center;font-size:40px;font-weight:800;font-family:Georgia,serif;}
+  .rc .ad{text-align:center;font-size:23px;color:#555;margin-top:10px;line-height:1.4;}
+  .rc .ln{border-top:2px dashed #bbb;margin:28px 0;}
+  .rc .kv{display:flex;justify-content:space-between;font-size:25px;margin:12px 0;}
+  .rc .kv b{font-weight:700;}
+  .rc .tot{display:flex;justify-content:space-between;font-size:34px;font-weight:800;margin-top:18px;}
+  .rc .ty{text-align:center;font-size:23px;font-style:italic;color:#555;margin-top:26px;}
+
+  /* ---------- her: blocked contact card ---------- */
+  #her{background:linear-gradient(180deg,#1c1c1e,#0f0f10);color:#fff;display:flex;flex-direction:column;align-items:center;padding-top:90px;}
+  .hc-av{width:230px;height:230px;border-radius:50%;background:linear-gradient(135deg,#d59ab8,#8a4a70);
+    display:flex;align-items:center;justify-content:center;font-size:110px;font-weight:600;color:rgba(255,255,255,.9);}
+  .hc-nm{font-size:52px;font-weight:700;margin-top:34px;}
+  .hc-sub{font-size:26px;color:#8e8e93;margin-top:10px;}
+  .hc-row{display:flex;gap:22px;margin-top:44px;}
+  .hc-b{width:150px;background:#2c2c2e;border-radius:22px;text-align:center;padding:22px 0;color:#0a84ff;}
+  .hc-b .ic{font-size:38px;}
+  .hc-b .tx{font-size:20px;margin-top:6px;}
+  .hc-block{margin-top:54px;color:#ff453a;font-size:30px;font-weight:600;}
+
+  /* ---------- hotels: booking confirmation ---------- */
+  #hotels{background:#000;color:#fff;padding:50px 44px;}
+  .bk-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;}
+  .bk-top .l{color:#0a84ff;font-size:30px;}
+  .bk-top .t{font-size:32px;font-weight:700;}
+  .bk-ok{text-align:center;font-size:38px;font-weight:600;margin-bottom:36px;}
+  .bk-card{background:#1c1c1e;border-radius:24px;padding:34px;margin-bottom:22px;}
+  .bk-h{display:flex;gap:22px;align-items:center;}
+  .bk-img{width:110px;height:110px;border-radius:16px;background:linear-gradient(135deg,#6a5a8a,#3a3050);}
+  .bk-nm{font-size:36px;font-weight:800;}
+  .bk-ad{font-size:23px;color:#8e8e93;margin-top:8px;line-height:1.35;}
+  .bk-grid{display:flex;margin-top:6px;}
+  .bk-col{flex:1;}
+  .bk-k{font-size:23px;color:#8e8e93;}
+  .bk-v{font-size:29px;font-weight:700;margin-top:6px;}
+  .bk-kv{display:flex;justify-content:space-between;font-size:26px;margin:10px 0;}
+  .bk-kv b{font-weight:700;}
+</style>
+</head>
+<body>
+
+  <div class="tile" id="screenshots">
+    <div class="im-head">
+      <div class="im-avatar">B</div>
+      <div class="im-name">Baby <span>›</span></div>
+    </div>
+    <div class="im-time">Today 11:38 PM</div>
+    <div class="bub them">who is she</div>
+    <div class="bub me">no one</div>
+    <div class="bub them">we need to talk</div>
+    <div class="typing"><i></i><i></i><i></i></div>
+  </div>
+
+  <div class="tile" id="dms">
+    <div class="ig-head">
+      <div class="ig-av"></div>
+      <div><div class="ig-nm">sarahhh</div><div class="ig-st">Active now</div></div>
+    </div>
+    <div class="ig-them">had so much fun last night</div>
+    <div class="ig-heart">😏</div>
+    <div class="ig-them">❤️</div>
+    <div class="ig-me">me too ❤️</div>
+    <div class="ig-them">can't wait to see you again</div>
+    <div class="ig-heart">❤️</div>
+  </div>
+
+  <div class="tile" id="late-nights">
+    <div class="bokeh" style="left:80px;top:120px;width:60px;height:60px;background:rgba(255,120,120,.35)"></div>
+    <div class="bokeh" style="left:600px;top:90px;width:44px;height:44px;background:rgba(255,180,90,.3)"></div>
+    <div class="bokeh" style="left:660px;top:250px;width:30px;height:30px;background:rgba(255,90,150,.35)"></div>
+    <div class="bokeh" style="left:160px;top:300px;width:26px;height:26px;background:rgba(180,120,255,.3)"></div>
+    <div class="bokeh" style="left:520px;top:600px;width:52px;height:52px;background:rgba(255,140,90,.24)"></div>
+    <div class="clock">2:17<small>AM</small></div>
+    <div class="glass"></div>
+  </div>
+
+  <div class="tile" id="call-log">
+    <div class="cl-top"><div class="seg2"><span>All</span><span class="on">Missed</span></div></div>
+    <div class="cl-title">Recents</div>
+    <div class="cl-row"><div class="cl-l"><div class="cl-nm">Unknown</div><div class="cl-sub">Missed call</div></div><div class="cl-t">2:28 AM</div><i class="cl-i">i</i></div>
+    <div class="cl-row"><div class="cl-l"><div class="cl-nm">🚫 don't answer</div><div class="cl-sub">mobile</div></div><div class="cl-t">2:17 AM</div><i class="cl-i">i</i></div>
+    <div class="cl-row"><div class="cl-l"><div class="cl-nm">Unknown</div><div class="cl-sub">Missed call</div></div><div class="cl-t">1:58 AM</div><i class="cl-i">i</i></div>
+    <div class="cl-row"><div class="cl-l"><div class="cl-nm">Alex</div><div class="cl-sub">mobile</div></div><div class="cl-t">1:42 AM</div><i class="cl-i">i</i></div>
+    <div class="cl-row"><div class="cl-l"><div class="cl-nm">No Caller ID</div><div class="cl-sub">Missed call</div></div><div class="cl-t">12:59 AM</div><i class="cl-i">i</i></div>
+    <div class="cl-row"><div class="cl-l"><div class="cl-nm">Unknown</div><div class="cl-sub">Missed call</div></div><div class="cl-t">12:43 AM</div><i class="cl-i">i</i></div>
+  </div>
+
+  <div class="tile" id="locations">
+    <div class="fm-sheet">
+      <div class="fm-nm">Mark's Location <div class="fm-x">✕</div></div>
+      <div class="fm-sub">Now · With You</div>
+    </div>
+    <div class="pin"><div class="head"></div><div class="tail"></div></div>
+    <div class="fm-road">101</div>
+    <div class="fm-bar"><div class="fm-btn">Contact</div><div class="fm-btn b">Directions · 5 min</div></div>
+  </div>
+
+  <div class="tile" id="receipts">
+    <div class="rc">
+      <h2>River Oaks Florist</h2>
+      <div class="ad">2018 W Gray St, Houston, TX 77019<br>(713) 526-4181</div>
+      <div class="ln"></div>
+      <div class="kv"><span>Date:</span><b>May 12, 6:32 PM</b></div>
+      <div class="kv"><span>Payment:</span><b>Visa •••• 4242</b></div>
+      <div class="ln"></div>
+      <div class="kv"><span>Dozen Red Roses</span><b>$89.99</b></div>
+      <div class="kv"><span>Deluxe Arrangement</span><b>$29.99</b></div>
+      <div class="kv"><span>Delivery Fee</span><b>$12.00</b></div>
+      <div class="ln"></div>
+      <div class="tot"><span>Total</span><span>$131.98</span></div>
+      <div class="ty">Thank you for your order!</div>
+    </div>
+  </div>
+
+  <div class="tile" id="her">
+    <div class="hc-av">S</div>
+    <div class="hc-nm">Sarah ❤️</div>
+    <div class="hc-sub">mobile · saved 3 weeks ago</div>
+    <div class="hc-row">
+      <div class="hc-b"><div class="ic">💬</div><div class="tx">message</div></div>
+      <div class="hc-b"><div class="ic">📞</div><div class="tx">call</div></div>
+      <div class="hc-b"><div class="ic">🎥</div><div class="tx">video</div></div>
+    </div>
+    <div class="hc-block">Block Contact</div>
+  </div>
+
+  <div class="tile" id="hotels">
+    <div class="bk-top"><div class="l">‹ Back</div><div class="t">Confirmation</div><div class="l">Done</div></div>
+    <div class="bk-ok">Your booking is confirmed.</div>
+    <div class="bk-card">
+      <div class="bk-h">
+        <div class="bk-img"></div>
+        <div><div class="bk-nm">Hotel Zaza Houston</div><div class="bk-ad">5701 Main St, Houston, TX 77005</div></div>
+      </div>
+    </div>
+    <div class="bk-card">
+      <div class="bk-grid">
+        <div class="bk-col"><div class="bk-k">Check-in</div><div class="bk-v">Sat, May 11</div></div>
+        <div class="bk-col"><div class="bk-k">Check-out</div><div class="bk-v">Sun, May 12</div></div>
+      </div>
+      <div class="bk-k" style="margin-top:16px">1 night</div>
+    </div>
+    <div class="bk-card">
+      <div class="bk-kv"><span>Confirmation</span><b>38372659</b></div>
+      <div class="bk-kv"><span>Total Paid</span><b>$284.61</b></div>
+    </div>
+  </div>
+
+<script>
+  const t=new URLSearchParams(location.search).get('t')||'screenshots';
+  document.getElementById(t).classList.add('on');
+</script>
+</body>
+</html>
