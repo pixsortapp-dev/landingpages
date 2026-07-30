@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>PixSort</title>
+<meta name="theme-color" content="#000000" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="PixSort" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+<style>
+  :root{
+    --cream:#efe7da; --card:#fbf7ef; --gold:#bfa05c; --gold-d:#a98a47;
+    --ink:#2b2926; --ink-dim:#8d877a; --ink-faint:#b3ac9d; --line:#e7ded0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;background:#000;overflow:hidden;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;}
+  .app{position:fixed;inset:0;background:var(--cream);color:var(--ink);
+    padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+    display:flex;flex-direction:column;}
+
+  .sb{flex:0 0 auto;height:46px;display:flex;align-items:center;justify-content:space-between;
+    padding:14px 26px 0;font-size:14px;font-weight:600;}
+  .sb .r{display:flex;align-items:center;gap:6px;font-size:12px;}
+  .batt{border:1.4px solid var(--ink);border-radius:3px;width:22px;height:11px;position:relative;display:inline-block;}
+  .batt::after{content:"";position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:78%;background:var(--ink);border-radius:1px;}
+  .batt::before{content:"";position:absolute;right:-3px;top:3px;height:5px;width:2px;background:var(--ink);border-radius:1px;}
+
+  /* header: brand + big counter */
+  .head{flex:0 0 auto;text-align:center;padding:18px 24px 6px;}
+  .brand{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:800;letter-spacing:-.01em;}
+  .brand img{width:24px;height:24px;border-radius:7px;}
+  .stateline{margin-top:10px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold-d);font-weight:700;min-height:17px;}
+  .stateline .dots::after{content:"";animation:d 1.2s steps(4) infinite;}
+  @keyframes d{0%{content:""}25%{content:"."}50%{content:".."}75%{content:"..."}}
+  .bignum{font-size:48px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-top:4px;
+    font-variant-numeric:tabular-nums;}
+  .bigsub{font-size:14px;color:var(--ink-dim);font-weight:600;margin-top:2px;}
+
+  /* scan shimmer bar */
+  .scanbar{margin:12px auto 0;width:210px;height:6px;border-radius:5px;background:#e4dccb;overflow:hidden;position:relative;}
+  .scanbar i{position:absolute;inset:0;border-radius:5px;background:var(--gold);width:0;}
+  .scanbar::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);
+    transform:translateX(-100%);animation:sheen 1.4s ease-in-out infinite;}
+  @keyframes sheen{to{transform:translateX(100%);}}
+  .divider{width:56px;height:1.5px;background:var(--line);margin:13px auto 0;}
+
+  /* discovery feed */
+  .feed{flex:1 1 auto;overflow:hidden;padding:11px 24px 6px;display:flex;flex-direction:column;gap:8px;}
+  .row{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:15px;padding:8px 13px;
+    box-shadow:0 6px 16px rgba(120,100,60,.08);
+    opacity:0;transform:translateY(14px) scale(.94);}
+  .row.in{animation:land .5s cubic-bezier(.2,.9,.3,1.25) forwards;}
+  @keyframes land{60%{opacity:1;transform:translateY(-3px) scale(1.02);}100%{opacity:1;transform:none;}}
+  .row .th{width:40px;height:40px;border-radius:11px;background:#ddd center/cover;flex:0 0 auto;
+    border:1.5px solid #fff;box-shadow:0 3px 9px rgba(0,0,0,.14);}
+  .row .tx{flex:1;}
+  .row .t1{font-size:15px;font-weight:700;letter-spacing:-.01em;}
+  .row .t1 .sp{margin-right:5px;}
+  .row .t2{font-size:12px;color:var(--ink-dim);font-weight:600;margin-top:1px;font-variant-numeric:tabular-nums;}
+  .row .chk{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--gold);
+    display:flex;align-items:center;justify-content:center;transform:scale(0);}
+  .row.in .chk{animation:pop .35s cubic-bezier(.2,.9,.3,1.4) .18s forwards;}
+  @keyframes pop{to{transform:scale(1);}}
+  .row .chk svg{width:13px;height:13px;}
+  .row .chk path{stroke:#fff;stroke-width:9;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+
+  /* done state */
+  .done{flex:0 0 auto;text-align:center;padding:2px 24px calc(14px + env(safe-area-inset-bottom));
+    opacity:0;transform:translateY(10px);}
+  .done.in{animation:land .5s cubic-bezier(.2,.9,.3,1.25) forwards;}
+  .done .word{font-size:26px;font-weight:800;letter-spacing:-.02em;}
+  .done .sum{font-size:13.5px;color:var(--ink-dim);font-weight:600;margin-top:3px;}
+</style>
+</head>
+<body>
+  <div class="app" id="app">
+    <div class="sb">
+      <span>9:41</span>
+      <span class="r">•••&nbsp;<svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 1C5 1 2.6 2 1 3.6l7 6.4 7-6.4C13.4 2 11 1 8 1Z" fill="#2b2926" opacity=".9"/></svg><span class="batt"></span></span>
+    </div>
+
+    <div class="head">
+      <div class="brand"><img src="assets/pixsort-icon.jpeg" alt="">PixSort</div>
+      <div class="stateline" id="stateline"><span id="stateTxt">Scanning</span><span class="dots"></span></div>
+      <div class="bignum" id="bignum">0</div>
+      <div class="bigsub">photos</div>
+      <div class="scanbar"><i id="scanfill"></i></div>
+      <div class="divider"></div>
+    </div>
+
+    <div class="feed" id="feed"></div>
+
+    <div class="done" id="done">
+      <div class="word">Done.</div>
+      <div class="sum" id="doneSum"></div>
+    </div>
+  </div>
+
+<script>
+/* ================= TEMPLATE CONFIG =================
+   Swap this block per concept / per creator.
+   tile paths point at assets/template/ placeholders —
+   replace with a creator's real photos for their version. */
+const TOTAL_PHOTOS = 18432;
+const ALBUM_COUNT  = 12;
+const SCAN_STATES  = ["Scanning","Finding people","Finding places","Finding moments"];
+const DISCOVERIES  = [
+  {label:"Dogs",        count:382, tile:"assets/template/dogs-1.svg"},
+  {label:"Beaches",     count:91,  tile:"assets/template/beaches-1.svg"},
+  {label:"Hotels",      count:56,  tile:"assets/template/hotels-1.svg"},
+  {label:"Restaurants", count:247, tile:"assets/template/restaurants-1.svg"},
+  {label:"Receipts",    count:63,  tile:"assets/template/receipts-1.svg"},
+  {label:"Sunsets",     count:129, tile:"assets/template/sunset-1.svg"},
+  {label:"Italy",       count:214, tile:"assets/template/italy-1.svg"},
+];
+/* =================================================== */
+
+const $=id=>document.getElementById(id);
+const feed=$('feed');
+
+// build rows (hidden until their moment)
+feed.innerHTML=DISCOVERIES.map(d=>`
+  <div class="row">
+    <div class="th" style="background-image:url('${d.tile}')"></div>
+    <div class="tx">
+      <div class="t1"><span class="sp">✨</span>Found ${d.label}</div>
+      <div class="t2"><b class="cnt">0</b> photos</div>
+    </div>
+    <div class="chk"><svg viewBox="0 0 50 50"><path d="M13 26l8 8 16-17"/></svg></div>
+  </div>`).join('');
+const rows=[...feed.children];
+
+let timers=[],rafs=[];
+const t=(fn,ms)=>timers.push(setTimeout(fn,ms));
+function countUp(el,target,dur,fmt){
+  const start=performance.now();
+  (function step(now){
+    const p=Math.min(1,(now-start)/dur), e=1-Math.pow(1-p,3);
+    el.textContent=fmt(Math.round(e*target));
+    if(p<1) rafs.push(requestAnimationFrame(step));
+  })(start);
+}
+
+function play(){
+  timers.forEach(clearTimeout);timers=[];rafs.forEach(cancelAnimationFrame);rafs=[];
+  rows.forEach(r=>{r.classList.remove('in');r.querySelector('.cnt').textContent='0';});
+  $('done').classList.remove('in');
+  $('scanfill').style.transition='none';$('scanfill').style.width='0';
+  $('stateTxt').textContent=SCAN_STATES[0];
+  $('stateline').style.opacity='1';
+
+  const ROW_GAP=900;               // ms between discoveries
+  const SCAN_LEAD=1600;            // scanning beat before first find
+  const TOTAL_DUR=SCAN_LEAD+DISCOVERIES.length*ROW_GAP+600;
+
+  // big counter + progress fill run across the whole scan
+  countUp($('bignum'),TOTAL_PHOTOS,TOTAL_DUR,n=>n.toLocaleString());
+  requestAnimationFrame(()=>{ $('scanfill').style.transition=`width ${TOTAL_DUR}ms linear`; $('scanfill').style.width='100%'; });
+
+  // rotate the scanning state line
+  SCAN_STATES.forEach((s,i)=>t(()=>{$('stateTxt').textContent=s;}, i*Math.floor(TOTAL_DUR/SCAN_STATES.length)));
+
+  // discoveries land one by one, counts tick
+  DISCOVERIES.forEach((d,i)=>t(()=>{
+    const r=rows[i];
+    r.classList.add('in');
+    countUp(r.querySelector('.cnt'),d.count,650,n=>n.toLocaleString());
+  }, SCAN_LEAD+i*ROW_GAP));
+
+  // done
+  t(()=>{
+    $('stateline').style.opacity='0';
+    $('doneSum').textContent=TOTAL_PHOTOS.toLocaleString()+" photos → "+ALBUM_COUNT+" albums";
+    $('done').classList.add('in');
+  }, TOTAL_DUR);
+}
+
+$('app').addEventListener('click',play);
+play();
+</script>
+</body>
+</html>
