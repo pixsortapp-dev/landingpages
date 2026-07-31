@@ -77,10 +77,10 @@
 
   /* ================= SCENE 1 : FAST SORT ================= */
   .tflight{position:absolute;top:36px;left:20px;font-size:11px;color:var(--ink-dim);z-index:56;}
-  .statcards{display:grid;grid-template-columns:1.16fr 1fr;gap:11px;margin-top:6px;}
-  .stat{background:var(--card);border-radius:20px;padding:11px 12px;min-width:0;overflow:hidden;box-shadow:0 6px 16px rgba(120,100,60,.06);}
+  .statcards{display:grid;grid-template-columns:1fr 1.1fr;gap:11px;margin-top:0;flex:0 0 auto;}
+  .stat{background:var(--card);border-radius:22px;padding:16px 14px;min-width:0;overflow:hidden;box-shadow:0 6px 16px rgba(120,100,60,.06);}
   .stat .k{font-size:10px;letter-spacing:.16em;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:5px;}
-  .stat .big{font-size:27px;font-weight:700;letter-spacing:-.02em;line-height:1;}
+  .stat .big{font-size:29px;font-weight:700;letter-spacing:-.02em;line-height:1;white-space:nowrap;}
   .progrow{display:flex;align-items:center;gap:9px;min-width:0;}
   .ring{width:42px;height:42px;flex:0 0 auto;}
   .ring circle{fill:none;stroke-width:7;}
@@ -91,15 +91,18 @@
   .progrow .frac{font-size:10px;white-space:nowrap;color:var(--ink-dim);margin-top:2px;}
 
   /* scene1 scrolls like the real app */
-  .s1scroll{position:absolute;left:18px;right:18px;top:16px;bottom:58px;scrollbar-width:none;
-    overflow-y:auto;-webkit-overflow-scrolling:touch;pointer-events:auto;padding-bottom:14px;}
+  .s1scroll{position:absolute;left:18px;right:18px;
+    top:max(52px, calc(env(safe-area-inset-top, 0px) + 8px));
+    bottom:calc(60px + env(safe-area-inset-bottom, 0px));
+    scrollbar-width:none;overflow:hidden;pointer-events:auto;
+    display:flex;flex-direction:column;}
   .s1scroll::-webkit-scrollbar{display:none;}
-  .bigrow{display:flex;align-items:baseline;gap:8px;}
-  .plus{font-size:12.5px;font-weight:700;color:var(--gold-d);white-space:nowrap;}
+  .bigrow{display:flex;align-items:baseline;gap:6px;min-width:0;}
+  .plus{font-size:11px;font-weight:700;color:var(--gold-d);white-space:nowrap;}
 
   /* "Sorting photos / No action needed" row + video thumb */
-  .sortrow{display:grid;grid-template-columns:1.55fr .9fr;gap:10px;margin-top:9px;align-items:stretch;}
-  .sortcard{background:var(--card);border-radius:18px;padding:10px 12px;display:flex;align-items:center;gap:12px;
+  .sortrow{display:grid;grid-template-columns:1.55fr .9fr;gap:12px;margin-top:20px;align-items:stretch;flex:0 0 auto;}
+  .sortcard{background:var(--card);border-radius:20px;padding:16px 14px;display:flex;align-items:center;gap:12px;
     box-shadow:0 6px 16px rgba(120,100,60,.06);}
   .sortcard .spark{width:38px;height:38px;border-radius:50%;background:#f3ecdd;color:var(--gold-d);
     display:flex;align-items:center;justify-content:center;font-size:20px;flex:0 0 auto;}
@@ -116,15 +119,17 @@
   .stack i:nth-child(4){transform:rotate(4deg) translate(2px,0);}
   .stack i:last-child{transform:rotate(0deg);}
 
-  .createbtn{margin-top:10px;background:var(--gold);color:#fff;text-align:center;
-    border-radius:26px;padding:12px;font-size:14px;font-weight:600;letter-spacing:.01em;
+  .createbtn{margin-top:22px;flex:0 0 auto;background:var(--gold);color:#fff;text-align:center;
+    border-radius:28px;padding:15px;font-size:14px;font-weight:600;letter-spacing:.01em;
     box-shadow:0 10px 22px rgba(150,120,60,.28);}
 
-  .albgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:11px;}
-  .acard{border-radius:14px;overflow:hidden;background:var(--card-2,#fffdf8);box-shadow:0 6px 16px rgba(120,100,60,.08);}
+  .albgrid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,1fr);
+    gap:12px;margin-top:16px;flex:1 1 auto;min-height:0;padding-bottom:6px;}
+  .acard{border-radius:16px;overflow:hidden;background:var(--card-2,#fffdf8);
+    box-shadow:0 6px 16px rgba(120,100,60,.08);display:flex;flex-direction:column;min-height:0;}
   @keyframes pop{to{opacity:1;transform:scale(1);}}
-  .acard .thumb{aspect-ratio:3/1.62;background:#ddd center/cover no-repeat;}
-  .acard .meta{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;}
+  .acard .thumb{flex:1 1 auto;min-height:0;background:#ddd center/cover no-repeat;}
+  .acard .meta{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 13px;}
   .acard .nm{font-size:14.5px;font-weight:600;letter-spacing:-.01em;}
   .acard .ct{font-size:13px;color:var(--ink-faint);font-variant-numeric:tabular-nums;}
 
@@ -205,7 +210,7 @@
   .strip .more{font-size:12px;color:var(--ink-dim);font-weight:600;padding-left:2px;white-space:nowrap;}
 
   /* bottom tab bar (scenes 1 & 4) */
-  .tabbar{position:absolute;bottom:0;left:0;right:0;height:58px;background:rgba(250,247,239,.92);
+  .tabbar{position:absolute;bottom:0;left:0;right:0;height:calc(58px + env(safe-area-inset-bottom, 0px));padding-bottom:env(safe-area-inset-bottom, 0px);background:rgba(250,247,239,.92);
     backdrop-filter:blur(8px);border-top:1px solid var(--line);
     display:flex;align-items:flex-start;justify-content:space-around;padding-top:9px;z-index:30;}
   .tab{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9px;color:var(--ink-faint);position:relative;}
@@ -253,10 +258,7 @@
   .notch{display:none !important;}
   .replay{display:none !important;}
   /* installed-as-app: inset content past the notch/home indicator, but keep the fill cream */
-  @media (display-mode: standalone){
-    .hero .phone{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom) !important;
-      background:var(--cream) !important;}
-  }
+
 </style>
 </head>
 <body>
@@ -284,7 +286,7 @@
           <div class="statcards">
             <div class="stat">
               <div class="k">Sorted</div>
-              <div class="bigrow"><span class="big" id="sortedNum">1,094</span><span class="plus" id="plusSort">+23 sorting…</span></div>
+              <div class="bigrow"><span class="big" id="sortedNum">1,094</span></div>
             </div>
             <div class="stat">
               <div class="k">Progress</div>
@@ -527,7 +529,6 @@ function animateSort(){
     const burst=140+Math.floor(Math.random()*220);
     sorted=Math.min(SORT_TOTAL,sorted+burst);
     $('sortedNum').textContent=fmt(sorted);
-    $('plusSort').textContent='+'+burst+' sorting…';
     const pctv=sorted/SORT_TOTAL;
     $('pct').textContent=Math.max(1,Math.round(pctv*100))+'%';
     $('frac').textContent=fmt(sorted)+' / '+fmt(SORT_TOTAL);
@@ -546,7 +547,6 @@ function resetSort(){
   document.querySelectorAll('.flyer').forEach(f=>f.remove());flyers=[];
   seedStack();
   $('sortedNum').textContent=fmt(SORT_START);
-  $('plusSort').textContent='+218 sorting…';
   const p0=SORT_START/SORT_TOTAL;
   $('pct').textContent=Math.max(1,Math.round(p0*100))+'%';
   $('frac').textContent=fmt(SORT_START)+' / '+fmt(SORT_TOTAL);
