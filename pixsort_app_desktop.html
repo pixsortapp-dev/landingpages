@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PixSort for Mac</title>
+<meta name="theme-color" content="#efe7da" />
+<style>
+  :root{
+    --cream:#efe7da;
+    --cream-2:#f5efe4;
+    --card:#fbf7ef;
+    --card-2:#fffdf8;
+    --gold:#bfa05c;
+    --gold-d:#a98a47;
+    --gold-soft:#d8c391;
+    --ink:#2b2926;
+    --ink-dim:#8d877a;
+    --ink-faint:#b3ac9d;
+    --line:#e7ded0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;overflow:hidden;background:var(--cream);}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;
+    color:var(--ink);
+  }
+
+  /* ---------- app window fills the viewport (screen-record ready) ---------- */
+  .win{position:fixed;inset:0;display:flex;flex-direction:column;background:var(--cream);overflow:hidden;}
+
+  /* title bar — real Mac window chrome, so it reads as an app not a web page */
+  .titlebar{flex:0 0 auto;height:40px;display:flex;align-items:center;gap:14px;
+    padding:0 16px;background:var(--cream-2);border-bottom:1px solid var(--line);}
+  .lights{display:flex;gap:8px;}
+  .lights i{width:12px;height:12px;border-radius:50%;display:block;}
+  .lights i:nth-child(1){background:#ec6a5e;}
+  .lights i:nth-child(2){background:#f4bf50;}
+  .lights i:nth-child(3){background:#61c454;}
+  .wtitle{font-size:13px;font-weight:600;color:var(--ink-dim);letter-spacing:-.01em;}
+
+  .shell{flex:1 1 auto;display:flex;min-height:0;}
+
+  /* ---------- sidebar (the phone's tab bar, stood up) ---------- */
+  .side{flex:0 0 232px;background:var(--cream-2);border-right:1px solid var(--line);
+    display:flex;flex-direction:column;padding:22px 14px 16px;min-height:0;}
+  .brand{display:flex;align-items:center;gap:10px;padding:0 10px 20px;}
+  .brand .mark{width:30px;height:30px;border-radius:9px;background:var(--gold);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;
+    box-shadow:0 6px 14px rgba(150,120,60,.3);}
+  .brand .nm{font-size:16px;font-weight:700;letter-spacing:-.02em;}
+  .nav{display:flex;flex-direction:column;gap:3px;}
+  .nav a{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:11px;
+    font-size:14px;font-weight:600;color:var(--ink-dim);text-decoration:none;position:relative;}
+  .nav a .gi{font-size:16px;width:19px;text-align:center;line-height:1;}
+  .nav a.active{background:var(--card-2);color:var(--gold-d);box-shadow:0 4px 12px rgba(120,100,60,.07);}
+  .nav a .badge{margin-left:auto;background:#b4485c;color:#fff;font-size:10px;font-weight:700;
+    border-radius:11px;padding:3px 7px;line-height:1;font-variant-numeric:tabular-nums;}
+  .sidefoot{margin-top:auto;padding:14px 12px 0;border-top:1px solid var(--line);}
+  .sidefoot .lab{font-size:9.5px;letter-spacing:.16em;color:var(--gold);font-weight:700;text-transform:uppercase;}
+  .sidefoot .val{font-size:13px;color:var(--ink-dim);margin-top:5px;font-variant-numeric:tabular-nums;}
+
+  /* ---------- main ---------- */
+  .main{flex:1 1 auto;min-width:0;min-height:0;display:flex;flex-direction:column;
+    padding:22px 26px 24px;}
+
+  .mainhead{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+  .mainhead .ttl{font-size:25px;font-weight:700;letter-spacing:-.02em;}
+  .mainhead .ttl span{font-size:15px;color:var(--ink-faint);font-weight:500;margin-left:8px;}
+  .createbtn{background:var(--gold);color:#fff;border-radius:24px;padding:12px 22px;
+    font-size:14px;font-weight:600;letter-spacing:.01em;white-space:nowrap;
+    box-shadow:0 10px 22px rgba(150,120,60,.28);}
+
+  /* stat row: Sorted · Progress · Sorting photos + the waiting stack */
+  .statrow{flex:0 0 auto;display:grid;grid-template-columns:1fr 1.25fr 1.6fr;gap:16px;margin-top:20px;}
+  .stat{background:var(--card);border-radius:20px;padding:17px 18px;min-width:0;overflow:hidden;
+    box-shadow:0 6px 16px rgba(120,100,60,.06);display:flex;flex-direction:column;justify-content:center;}
+  .stat .k{font-size:10px;letter-spacing:.16em;color:var(--gold);font-weight:700;
+    text-transform:uppercase;margin-bottom:7px;}
+  .stat .big{font-size:31px;font-weight:700;letter-spacing:-.02em;line-height:1;white-space:nowrap;}
+  .progrow{display:flex;align-items:center;gap:13px;min-width:0;}
+  .ring{width:46px;height:46px;flex:0 0 auto;}
+  .ring circle{fill:none;stroke-width:7;}
+  .ring .bg{stroke:#ece3d2;}
+  .ring .fg{stroke:var(--gold);stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%;
+    stroke-dasharray:119;stroke-dashoffset:119;transition:stroke-dashoffset .12s linear;}
+  .progrow .pct{font-size:23px;font-weight:700;letter-spacing:-.02em;line-height:1;}
+  .progrow .frac{font-size:11px;white-space:nowrap;color:var(--ink-dim);margin-top:4px;
+    font-variant-numeric:tabular-nums;}
+
+  .sortcard{background:var(--card);border-radius:20px;padding:15px 18px;display:flex;align-items:center;gap:14px;
+    box-shadow:0 6px 16px rgba(120,100,60,.06);min-width:0;}
+  .sortcard .spark{width:40px;height:40px;border-radius:50%;background:#f3ecdd;color:var(--gold-d);
+    display:flex;align-items:center;justify-content:center;font-size:21px;flex:0 0 auto;}
+  .sortcard .txt{min-width:0;}
+  .sortcard .st1{font-size:15.5px;font-weight:700;letter-spacing:-.01em;white-space:nowrap;}
+  .sortcard .st2{font-size:12.5px;color:var(--ink-dim);margin-top:3px;white-space:nowrap;}
+  /* the stack of photos waiting to be sorted — source of the flyers */
+  .stack{position:relative;width:58px;height:58px;flex:0 0 auto;margin-left:auto;}
+  .stack i{position:absolute;inset:0;border-radius:11px;background-size:cover;background-position:center;
+    border:2.5px solid #fff;box-shadow:0 6px 14px rgba(0,0,0,.22);}
+  .stack i:nth-child(1){transform:rotate(-13deg) translate(-7px,3px);}
+  .stack i:nth-child(2){transform:rotate(-7deg) translate(-4px,2px);}
+  .stack i:nth-child(3){transform:rotate(-2deg) translate(-1px,1px);}
+  .stack i:nth-child(4){transform:rotate(4deg) translate(2px,0);}
+  .stack i:last-child{transform:rotate(0deg);}
+
+  /* album grid — 3 x 2, always exactly 6, fills to the bottom edge */
+  .albgrid{flex:1 1 auto;min-height:0;display:grid;
+    grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);
+    gap:18px;margin-top:20px;}
+  .acard{border-radius:18px;overflow:hidden;background:var(--card-2);
+    box-shadow:0 6px 16px rgba(120,100,60,.08);display:flex;flex-direction:column;min-height:0;}
+  .acard .thumb{flex:1 1 auto;min-height:0;background:#ddd center/cover no-repeat;}
+  .acard .meta{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;
+    padding:12px 16px;}
+  .acard .nm{font-size:15px;font-weight:600;letter-spacing:-.01em;}
+  .acard .ct{font-size:13.5px;color:var(--ink-faint);font-variant-numeric:tabular-nums;}
+
+  /* flying photos */
+  .flyer{position:fixed;width:52px;height:52px;border-radius:11px;
+    background-size:cover;background-position:center;z-index:50;pointer-events:none;
+    box-shadow:0 10px 22px rgba(0,0,0,.3);will-change:transform,opacity;
+    border:2.5px solid #fff;}
+
+  /* narrower laptops: keep 3 across but tighten */
+  @media (max-width:1180px){
+    .side{flex-basis:196px;}
+    .main{padding:18px 20px 20px;}
+    .statrow{gap:12px;}
+    .stat .big{font-size:27px;}
+    .albgrid{gap:14px;}
+  }
+  @media (max-width:980px){
+    .statrow{grid-template-columns:1fr 1.3fr;}
+    .sortcard{grid-column:1 / -1;}
+  }
+</style>
+</head>
+<body>
+ <div class="win">
+  <div class="titlebar">
+    <span class="lights"><i></i><i></i><i></i></span>
+    <span class="wtitle">PixSort</span>
+  </div>
+
+  <div class="shell">
+    <aside class="side">
+      <div class="brand"><span class="mark">✦</span><span class="nm">PixSort</span></div>
+      <nav class="nav">
+        <a class="active"><span class="gi">▦</span>Albums</a>
+        <a><span class="gi">⌕</span>Search</a>
+        <a><span class="gi">✦</span>Clean Up<span class="badge" id="cuBadge">281</span></a>
+        <a><span class="gi">⚙</span>Settings</a>
+      </nav>
+      <div class="sidefoot">
+        <div class="lab">Library</div>
+        <div class="val" id="libVal">14,208 photos</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="mainhead">
+        <div class="ttl">Your Albums<span id="albCount">6</span></div>
+        <div class="createbtn">+ Create new album</div>
+      </div>
+
+      <div class="statrow">
+        <div class="stat">
+          <div class="k">Sorted</div>
+          <div class="big" id="sortedNum">1,840</div>
+        </div>
+        <div class="stat">
+          <div class="k">Progress</div>
+          <div class="progrow">
+            <svg class="ring" viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="19"/><circle class="fg" id="ring" cx="25" cy="25" r="19"/></svg>
+            <div>
+              <div class="pct" id="pct">13%</div>
+              <div class="frac" id="frac">1,840 / 14,208</div>
+            </div>
+          </div>
+        </div>
+        <div class="sortcard">
+          <div class="spark">✦</div>
+          <div class="txt">
+            <div class="st1">Sorting photos</div>
+            <div class="st2">No action needed</div>
+          </div>
+          <div class="stack" id="libStack"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+
+      <div class="albgrid" id="albgrid"></div>
+    </main>
+  </div>
+ </div>
+
+<script>
+const T = "assets/";
+/* ================= CONCEPT REGISTRY =================
+   Same data contract as pixsort_app_v1.html. Pick with ?c=<name>.
+   Desktop defaults to `lauren` (digital marketing creator).
+   Every concept is exactly 6 albums so the 3x2 grid stays full. */
+const CONCEPTS = {
+  lauren: { total:14208, start:1840, albums:[
+    {nm:"Talking Heads", ct:342,  cover:T+"lauren/talking-heads.jpg"},
+    {nm:"B-Roll",        ct:528,  cover:T+"lauren/broll.jpg"},
+    {nm:"Product Shots", ct:214,  cover:T+"lauren/product.jpg"},
+    {nm:"Screenshots",   ct:1204, cover:T+"lauren/screenshots.jpg"},
+    {nm:"Receipts",      ct:86,   cover:T+"lauren/receipts.jpg"},
+    {nm:"Assets",        ct:173,  cover:T+"lauren/assets.jpg"},
+  ]},
+  countries: { total:18432, start:2140, albums:[
+    {nm:"Japan",     ct:312, cover:T+"travel/japan.jpg"},
+    {nm:"France",    ct:248, cover:T+"travel/paris.jpg"},
+    {nm:"Bali",      ct:206, cover:T+"travel/bali.jpg"},
+    {nm:"Thailand",  ct:184, cover:T+"travel/thailand.jpg"},
+    {nm:"Peru",      ct:143, cover:T+"travel/peru.jpg"},
+    {nm:"Australia", ct:97,  cover:T+"travel/sydney.jpg"},
+  ]},
+  family: { total:27480, start:3206, albums:[
+    {nm:"Birthdays",   ct:412, cover:T+"family/birthdays.jpg"},
+    {nm:"Christmas",   ct:386, cover:T+"family/christmas.jpg"},
+    {nm:"Vacation",    ct:274, cover:T+"family/vacation.jpg"},
+    {nm:"Halloween",   ct:168, cover:T+"family/halloween.jpg"},
+    {nm:"First Day",   ct:94,  cover:T+"family/first-day.jpg"},
+    {nm:"First Steps", ct:61,  cover:T+"family/first-steps.jpg"},
+  ]},
+  gym: { total:9840, start:1206, albums:[
+    {nm:"Progress Pics", ct:284, cover:T+"gym/arms.jpg"},
+    {nm:"Mirror Selfies",ct:212, cover:T+"gym/mirror.jpg"},
+    {nm:"Back Day",      ct:143, cover:T+"gym/back.jpg"},
+    {nm:"Leg Day",       ct:128, cover:T+"gym/glutes.jpg"},
+    {nm:"Meals",         ct:174, cover:T+"gym/meals.jpg"},
+    {nm:"Weigh-Ins",     ct:67,  cover:T+"gym/weight.jpg"},
+  ]},
+  evidence: { total:2431, start:318, albums:[
+    {nm:"Screenshots", ct:247, cover:T+"evidence/screenshots.jpg"},
+    {nm:"DMs",         ct:134, cover:T+"evidence/dms.jpg"},
+    {nm:"Hotels",      ct:92,  cover:T+"evidence/hotels.jpg"},
+    {nm:"Call Logs",   ct:67,  cover:T+"evidence/call-log.jpg"},
+    {nm:"Locations",   ct:58,  cover:T+"evidence/locations.jpg"},
+    {nm:"Her",         ct:23,  cover:T+"evidence/her.jpg"},
+  ]},
+};
+const CONCEPT = CONCEPTS[new URLSearchParams(location.search).get('c')] || CONCEPTS.lauren;
+const ALBUMS = CONCEPT.albums;
+
+const $=id=>document.getElementById(id);
+const fmt=n=>n.toLocaleString();
+
+// ---- build the album grid ----
+const grid = $('albgrid');
+ALBUMS.forEach(a=>{
+  const d=document.createElement('div');d.className='acard';
+  d.innerHTML=`<div class="thumb" style="background-image:url('${a.cover}')"></div>
+    <div class="meta"><span class="nm">${a.nm}</span><span class="ct">${a.ct}</span></div>`;
+  grid.appendChild(d);
+});
+const gridCards=[...grid.children];
+$('albCount').textContent=ALBUMS.length;
+$('libVal').textContent=fmt(CONCEPT.total)+' photos';
+
+// ---- live sort, same behaviour as v1 ----
+const ring=$('ring'), RINGLEN=119;
+const SORT_START=CONCEPT.start, SORT_TOTAL=CONCEPT.total;
+let sortTimer, flyTimer;
+
+function seedStack(){
+  [...document.querySelectorAll('#libStack i')]
+    .forEach((el,n)=>el.style.backgroundImage=`url('${ALBUMS[(n+2)%ALBUMS.length].cover}')`);
+}
+function showOnStack(i){
+  const front=document.querySelector('#libStack i:last-child');
+  if(front) front.style.backgroundImage=`url('${ALBUMS[i].cover}')`;
+}
+/* flyers use fixed positioning, so viewport coords are the coordinate space */
+function centerOf(el){const r=el.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2};}
+function spawnFlyer(i){
+  const card=gridCards[i]; if(!card) return;
+  const srcEl=$('libStack'), thumb=card.querySelector('.thumb');
+  if(!srcEl||!thumb) return;
+  const srcC=centerOf(srcEl), tgtC=centerOf(thumb);
+  const f=document.createElement('div');f.className='flyer';
+  f.style.backgroundImage=`url('${ALBUMS[i].cover}')`;
+  f.style.left=(srcC.x-26)+'px';f.style.top=(srcC.y-26)+'px';
+  document.body.appendChild(f);
+  const dx=tgtC.x-srcC.x, dy=tgtC.y-srcC.y;
+  const anim=f.animate([
+    {transform:'translate(0,0) scale(.55) rotate(-6deg)', opacity:0},
+    {transform:`translate(${dx*0.15}px,${dy*0.15}px) scale(1) rotate(-2deg)`, opacity:1, offset:0.18},
+    {transform:`translate(${dx*0.85}px,${dy*0.85}px) scale(.95) rotate(4deg)`, opacity:1, offset:0.8},
+    {transform:`translate(${dx}px,${dy}px) scale(.25) rotate(8deg)`, opacity:0}
+  ],{duration:620, easing:'cubic-bezier(.4,0,.35,1)', fill:'forwards'});
+  setTimeout(()=>card.animate([{transform:'scale(1)'},{transform:'scale(1.03)'},{transform:'scale(1)'}],
+    {duration:260,easing:'ease-out'}),540);
+  const kill=()=>f.remove();
+  anim.onfinish=kill; setTimeout(kill,1500);
+}
+
+function animateSort(){
+  clearInterval(sortTimer);clearInterval(flyTimer);
+  let sorted=SORT_START;
+  const startCounts=ALBUMS.map(a=>a.ct);
+  let k=0;
+  seedStack();
+  flyTimer=setInterval(()=>{
+    const i=k%gridCards.length;
+    showOnStack(i);
+    setTimeout(()=>{ spawnFlyer(i); showOnStack((i+1)%gridCards.length); },150);
+    k++;
+  },320);
+  sortTimer=setInterval(()=>{
+    const burst=140+Math.floor(Math.random()*220);
+    sorted=Math.min(SORT_TOTAL,sorted+burst);
+    $('sortedNum').textContent=fmt(sorted);
+    const pctv=sorted/SORT_TOTAL;
+    $('pct').textContent=Math.max(1,Math.round(pctv*100))+'%';
+    $('frac').textContent=fmt(sorted)+' / '+fmt(SORT_TOTAL);
+    ring.style.strokeDashoffset=RINGLEN*(1-Math.max(.02,pctv));
+    gridCards.forEach((c,i)=>{
+      if(Math.random()<0.75){ startCounts[i]+=2+Math.floor(Math.random()*9); c.querySelector('.ct').textContent=startCounts[i]; }
+    });
+    const b=$('cuBadge'); if(b && Math.random()<0.5) b.textContent=+b.textContent+1+Math.floor(Math.random()*3);
+    if(sorted>=SORT_TOTAL){ clearInterval(sortTimer); clearInterval(flyTimer); }
+  },220);
+}
+function resetSort(){
+  clearInterval(sortTimer);clearInterval(flyTimer);
+  document.querySelectorAll('.flyer').forEach(f=>f.remove());
+  seedStack();
+  $('sortedNum').textContent=fmt(SORT_START);
+  const p0=SORT_START/SORT_TOTAL;
+  $('pct').textContent=Math.max(1,Math.round(p0*100))+'%';
+  $('frac').textContent=fmt(SORT_START)+' / '+fmt(SORT_TOTAL);
+  ring.style.strokeDashoffset=RINGLEN*(1-Math.max(.02,p0));
+  gridCards.forEach((c,i)=>c.querySelector('.ct').textContent=ALBUMS[i].ct);
+  const b=$('cuBadge'); if(b) b.textContent='281';
+}
+
+// click anywhere to replay the sort
+document.addEventListener('click',()=>{ resetSort(); setTimeout(animateSort,300); });
+
+resetSort();
+setTimeout(animateSort,500);
+</script>
+</body>
+</html>
