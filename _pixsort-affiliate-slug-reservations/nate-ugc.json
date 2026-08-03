@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "partnerId": "nate-ugc",
+  "campaignId": "nate-ugc-2026-08",
+  "clickId": "pixsort-app-nate-ugc",
+  "rowId": "cac24721-11b4-4d66-9dec-e349cf948d8e",
+  "creatorName": "Nate UGC",
+  "destination": "direct_app_store",
+  "publicUrl": "https://pixsort-dashboard.vercel.app/r/nate-ugc?campaign_id=nate-ugc-2026-08&click_id=pixsort-app-nate-ugc&sig=ce5f7f87f9de9205786aeb0744fa4d65135bb185f6c0919ee3de797be44ce975",
+  "commissionRate": 0.25,
+  "reservedAt": "2026-08-03T21:45:28.790Z"
+}
